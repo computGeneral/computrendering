@@ -1,0 +1,19 @@
+#ifndef CONTROLLERS_COMMON_H_INCLUDED
+#define CONTROLLERS_COMMON_H_INCLUDED
+
+#include "../Common.h"
+#include "../D3DState/D3DState.h"
+#include "ResourceAssignationTable.h"
+
+#include <GPUReg.h>
+#include <GPUMath.h>
+#include <HAL.h>
+using namespace cg1gpu;
+
+#include "GPUProxy.h"
+#include "ShaderTranslator/Types.h"
+#include "ShaderGenerate.h"
+#include "Matrices.h"
+#include "Utils.h"
+
+#endif // COMMON_H_INCLUDED

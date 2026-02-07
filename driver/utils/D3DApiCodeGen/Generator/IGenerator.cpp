@@ -1,0 +1,59 @@
+/**************************************************************************
+ *
+ */
+
+////////////////////////////////////////////////////////////////////////////////
+
+#include "Generator/IGenerator.hpp"
+
+using namespace std;
+using namespace D3dApiCodeGen::Generator;
+
+////////////////////////////////////////////////////////////////////////////////
+
+void IGenerator::SetHeaderComment(const string& message)
+{
+  m_headerComment = message;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
+string& IGenerator::GetHeaderCommment()
+{
+  return m_headerComment;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
+ofstream* IGenerator::CreateFilename(const string& filename)
+{
+  ofstream* sortida = new ofstream(filename.c_str(), ios::out);
+  if (sortida)
+  {
+    WriteHeaderComment(sortida);
+  }
+  return sortida;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
+void IGenerator::WriteHeaderComment(ofstream* of)
+{
+  if (of && of->is_open())
+  {
+    *of << m_headerComment;
+  }
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
+void IGenerator::CloseFilename(ofstream* of)
+{
+  if (of && of->is_open())
+  {
+    of->close();
+    delete of;
+  }
+}
+
+////////////////////////////////////////////////////////////////////////////////

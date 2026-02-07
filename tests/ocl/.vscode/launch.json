@@ -1,0 +1,44 @@
+{
+    // 使用 IntelliSense 了解相关属性。 
+    // 悬停以查看现有属性的描述。
+    // 欲了解更多信息，请访问: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "(gdb) 启动",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "/home/mtarch/qinjie.lv/code/opencl_diagsys/build/bin/opencl_diagsys",
+            "args": [
+                "--type=uint",
+                "--vector_length=8",
+                "--dispatch=4",
+                "--global_workgroup=262144",
+                "--local_workgroup=128",
+                "--mem_size=128",
+                "--target_value=1111FEEBDAED0000",
+                "--flip_frequency=512",
+                "--platform=SUDI",
+                "--loop=10",
+                "| tee log.txt"
+            ],
+            "stopAtEntry": false,
+            "cwd": "/home/mtarch/qinjie.lv/code/opencl_diagsys/build/bin",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "setupCommands": [
+                {
+                    "description": "为 gdb 启用整齐打印",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                },
+                {
+                    "description": "将反汇编风格设置为 Intel",
+                    "text": "-gdb-set disassembly-flavor intel",
+                    "ignoreFailures": true
+                }
+            ]
+        }
+    ]
+}

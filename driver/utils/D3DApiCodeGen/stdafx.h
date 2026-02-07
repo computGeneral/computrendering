@@ -1,0 +1,35 @@
+/**************************************************************************
+ *
+ */
+
+///////////////////////////////////////////////////////////////////////////////
+
+#define pragma once
+
+///////////////////////////////////////////////////////////////////////////////
+
+#define WIN32_LEAN_AND_MEAN
+
+// Windows headers
+#include <windows.h>
+#include <shlobj.h>
+
+// STL headers
+#include <iostream>
+#include <fstream>
+#include <vector>
+#include <map>
+#include <string>
+#include <algorithm>
+
+// Standard C headers
+#include <sys/timeb.h>
+#include <ctime>
+#include <cstdlib>
+
+///////////////////////////////////////////////////////////////////////////////
+
+#include "Libgreta/regexpr2.h"
+#include "Libtinyxml/tinyxml.h"
+
+///////////////////////////////////////////////////////////////////////////////

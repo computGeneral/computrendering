@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>17.0</VCProjectVersion>
+    <ProjectGuid>{757A1189-B45D-4F93-A1C3-BD3E4C589C4B}</ProjectGuid>
+    <RootNamespace>CGL</RootNamespace>
+    <Keyword>Win32Proj</Keyword>
+    <ProjectName>CGAPI</ProjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>17.0.32203.90</_ProjectFileVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>$(CG1SDK)\lib\</OutDir>
+    <IntDir>$(CG1SDK)\$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <OutDir>$(CG1SDK)\lib\</OutDir>
+    <IntDir>$(CG1SDK)\$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>$(CG1SDK)\lib\</OutDir>
+    <IntDir>$(CG1SDK)\$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <OutDir>$(CG1SDK)\lib\</OutDir>
+    <IntDir>$(CG1SDK)\$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>$(CG1TOP)\arch\CG1Gpu;$(CG1TOP)\arch\funcmodel;$(CG1TOP)\arch\common;$(CG1TOP)\arch\behvmodel;$(CG1TOP)\arch\funcmodel\base;$(CG1TOP)\arch\win32patches;$(CG1TOP)\arch\funcmodel\CommandProcessor;$(CG1TOP)\arch\funcmodel\Shader;$(CG1TOP)\arch\funcmodel\Streamer;$(CG1TOP)\arch\funcmodel\MemoryController;$(CG1TOP)\arch\funcmodel\MemoryControllerV2;$(CG1TOP)\arch\funcmodel\Rasterizer;$(CG1TOP)\arch\funcmodel\Cache;$(CG1TOP)\arch\funcmodel\FragmentOperations;$(CG1TOP)\arch\funcmodel\PrimitiveAssembly;$(CG1TOP)\arch\funcmodel\DisplayController;$(CG1TOP)\arch\funcmodel\Clipper;$(CG1TOP)\driver\trace;$(CG1TOP)\driver\hal;$(CG1TOP)\driver\utils;$(CG1TOP)\driver\utils\TraceReader;$(CG1TOP)\driver\utils\Gen;$(CG1TOP)\driver\utils\GL;$(CG1TOP)\driver\ogl\OGL14;$(CG1TOP)\driver\ogl\OGL14\ARBP;$(CG1TOP)\driver\ogl\OGL14\ARBP\FragmentProgram;$(CG1TOP)\driver\ogl\OGL14\ARBP\VertexProgram;$(CG1TOP)\driver\ogl\OGL14\GLObject;$(CG1TOP)\driver\ogl\OGL14\BufferObject;$(CG1TOP)\driver\ogl\OGL14\Texture;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <PrecompiledHeader />
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Lib>
+      <AdditionalDependencies>zlibstat.lib;CG1Common.lib;CG1BMDL.lib;CG1CMDL.lib;OGL2.lib;HAL.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(CG1SDK)\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Midl>
+      <TargetEnvironment>X64</TargetEnvironment>
+    </Midl>
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>$(CG1TOP)\arch\CG1Gpu;$(CG1TOP)\arch\funcmodel;$(CG1TOP)\arch\common;$(CG1TOP)\arch\behvmodel;$(CG1TOP)\arch\funcmodel\base;$(CG1TOP)\arch\win32patches;$(CG1TOP)\arch\funcmodel\CommandProcessor;$(CG1TOP)\arch\funcmodel\Shader;$(CG1TOP)\arch\funcmodel\Streamer;$(CG1TOP)\arch\funcmodel\MemoryController;$(CG1TOP)\arch\funcmodel\MemoryControllerV2;$(CG1TOP)\arch\funcmodel\Rasterizer;$(CG1TOP)\arch\funcmodel\Cache;$(CG1TOP)\arch\funcmodel\FragmentOperations;$(CG1TOP)\arch\funcmodel\PrimitiveAssembly;$(CG1TOP)\arch\funcmodel\DisplayController;$(CG1TOP)\arch\funcmodel\Clipper;$(CG1TOP)\driver\trace;$(CG1TOP)\driver\hal;$(CG1TOP)\driver\utils;$(CG1TOP)\driver\utils\TraceReader;$(CG1TOP)\driver\utils\Gen;$(CG1TOP)\driver\utils\GL;$(CG1TOP)\driver\ogl\OGL14;$(CG1TOP)\driver\ogl\OGL14\ARBP;$(CG1TOP)\driver\ogl\OGL14\ARBP\FragmentProgram;$(CG1TOP)\driver\ogl\OGL14\ARBP\VertexProgram;$(CG1TOP)\driver\ogl\OGL14\GLObject;$(CG1TOP)\driver\ogl\OGL14\BufferObject;$(CG1TOP)\driver\ogl\OGL14\Texture;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <PrecompiledHeader />
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Lib>
+      <AdditionalDependencies>zlibstat.lib;CG1Common.lib;CG1BMDL.lib;CG1CMDL.lib;OGL2.lib;HAL.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(CG1SDK)\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>$(CG1TOP)\arch\CG1Gpu;$(CG1TOP)\arch\funcmodel;$(CG1TOP)\arch\common;$(CG1TOP)\arch\behvmodel;$(CG1TOP)\arch\funcmodel\base;$(CG1TOP)\arch\win32patches;$(CG1TOP)\arch\funcmodel\CommandProcessor;$(CG1TOP)\arch\funcmodel\Shader;$(CG1TOP)\arch\funcmodel\Streamer;$(CG1TOP)\arch\funcmodel\MemoryController;$(CG1TOP)\arch\funcmodel\MemoryControllerV2;$(CG1TOP)\arch\funcmodel\Rasterizer;$(CG1TOP)\arch\funcmodel\Cache;$(CG1TOP)\arch\funcmodel\FragmentOperations;$(CG1TOP)\arch\funcmodel\PrimitiveAssembly;$(CG1TOP)\arch\funcmodel\DisplayController;$(CG1TOP)\arch\funcmodel\Clipper;$(CG1TOP)\driver\trace;$(CG1TOP)\driver\hal;$(CG1TOP)\driver\utils;$(CG1TOP)\driver\utils\TraceReader;$(CG1TOP)\driver\utils\Gen;$(CG1TOP)\driver\utils\GL;$(CG1TOP)\driver\ogl\OGL14;$(CG1TOP)\driver\ogl\OGL14\ARBP;$(CG1TOP)\driver\ogl\OGL14\ARBP\FragmentProgram;$(CG1TOP)\driver\ogl\OGL14\ARBP\VertexProgram;$(CG1TOP)\driver\ogl\OGL14\GLObject;$(CG1TOP)\driver\ogl\OGL14\BufferObject;$(CG1TOP)\driver\ogl\OGL14\Texture;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <PrecompiledHeader />
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Lib>
+      <AdditionalDependencies>zlibstat.lib;CG1Common.lib;CG1BMDL.lib;CG1CMDL.lib;OGL2.lib;HAL.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(CG1SDK)\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Midl>
+      <TargetEnvironment>X64</TargetEnvironment>
+    </Midl>
+    <ClCompile>
+      <AdditionalIncludeDirectories>$(CG1TOP)\arch\CG1Gpu;$(CG1TOP)\arch\funcmodel;$(CG1TOP)\arch\common;$(CG1TOP)\arch\behvmodel;$(CG1TOP)\arch\funcmodel\base;$(CG1TOP)\arch\win32patches;$(CG1TOP)\arch\funcmodel\CommandProcessor;$(CG1TOP)\arch\funcmodel\Shader;$(CG1TOP)\arch\funcmodel\Streamer;$(CG1TOP)\arch\funcmodel\MemoryController;$(CG1TOP)\arch\funcmodel\MemoryControllerV2;$(CG1TOP)\arch\funcmodel\Rasterizer;$(CG1TOP)\arch\funcmodel\Cache;$(CG1TOP)\arch\funcmodel\FragmentOperations;$(CG1TOP)\arch\funcmodel\PrimitiveAssembly;$(CG1TOP)\arch\funcmodel\DisplayController;$(CG1TOP)\arch\funcmodel\Clipper;$(CG1TOP)\driver\trace;$(CG1TOP)\driver\hal;$(CG1TOP)\driver\utils;$(CG1TOP)\driver\utils\TraceReader;$(CG1TOP)\driver\utils\Gen;$(CG1TOP)\driver\utils\GL;$(CG1TOP)\driver\ogl\OGL14;$(CG1TOP)\driver\ogl\OGL14\ARBP;$(CG1TOP)\driver\ogl\OGL14\ARBP\FragmentProgram;$(CG1TOP)\driver\ogl\OGL14\ARBP\VertexProgram;$(CG1TOP)\driver\ogl\OGL14\GLObject;$(CG1TOP)\driver\ogl\OGL14\BufferObject;$(CG1TOP)\driver\ogl\OGL14\Texture;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <PrecompiledHeader />
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Lib>
+      <AdditionalDependencies>zlibstat.lib;CG1Common.lib;CG1BMDL.lib;CG1CMDL.lib;OGL2.lib;HAL.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(CG1SDK)\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="$(CG1TOP)\arch\CG1Gpu\ConfigLoader.cpp" />
+    <ClCompile Include="$(CG1TOP)\arch\utils\CGAPI\\ComputeGeneralLanguage.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="$(CG1TOP)\arch\CG1Gpu\ConfigLoader.h" />
+    <ClInclude Include="$(CG1TOP)\arch\utils\CGAPI\ComputeGeneralLanguage.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="$(CG1TOP)\arch\behvmodel\CG1BMDL.vcxproj">
+      <Project>{d6ed08ba-9650-4513-a4f4-e81d2e24c9a8}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+    <ProjectReference Include="$(CG1TOP)\driver\ogl\OGL14\OGL.vcxproj">
+      <Project>{6a081ebc-5616-4b1d-a753-755affce1010}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+    <ProjectReference Include="$(CG1TOP)\driver\hal\HAL.vcxproj">
+      <Project>{dc596c38-f5c4-4596-a961-0fe0d32c655b}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+    <ProjectReference Include="$(CG1TOP)\arch\funcmodel\CG1CMDL.vcxproj">
+      <Project>{4fdfd9dd-4472-424f-9aeb-088e01da6489}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+    <ProjectReference Include="$(CG1TOP)\arch\common\CG1Common.vcxproj">
+      <Project>{969b33ca-c16c-4a1d-a164-97911bf64839}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

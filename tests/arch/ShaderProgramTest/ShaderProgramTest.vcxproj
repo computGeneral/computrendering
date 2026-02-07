@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>17.0</VCProjectVersion>
+    <ProjectGuid>{D58F14AE-4FF2-4009-8B67-4D394872EFF5}</ProjectGuid>
+    <RootNamespace>MemoryControllerV2Test</RootNamespace>
+    <Keyword>Win32Proj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>17.0.32203.90</_ProjectFileVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>$(CG1SDK)\lib\</OutDir>
+    <IntDir>$(CG1SDK)\$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>$(CG1SDK)\lib\</OutDir>
+    <IntDir>$(CG1SDK)\$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>$(CG1TOP)\arch\CG1Gpu;$(CG1TOP)\arch\funcmodel;$(CG1TOP)\arch\common;$(CG1TOP)\arch\behvmodel;$(CG1TOP)\arch\funcmodel\base;$(CG1TOP)\tools\win32patches;$(CG1TOP)\arch\funcmodel\CommandProcessor;$(CG1TOP)\arch\funcmodel\Shader;$(CG1TOP)\arch\funcmodel\Streamer;$(CG1TOP)\arch\funcmodel\MemoryController;$(CG1TOP)\arch\funcmodel\MemoryControllerV2;$(CG1TOP)\arch\funcmodel\Rasterizer;$(CG1TOP)\arch\funcmodel\Cache;$(CG1TOP)\arch\funcmodel\FragmentOperations;$(CG1TOP)\arch\funcmodel\PrimitiveAssembly;$(CG1TOP)\arch\funcmodel\DisplayController;$(CG1TOP)\arch\funcmodel\Clipper;$(CG1TOP)\driver\trace;$(CG1TOP)\driver\hal;$(CG1TOP)\driver\utils;$(CG1TOP)\driver\utils\TraceReader;$(CG1TOP)\driver\utils\Gen;$(CG1TOP)\driver\utils\GL;$(CG1TOP)\driver\ogl\OGL14;$(CG1TOP)\driver\ogl\OGL14\ARBP;$(CG1TOP)\driver\ogl\OGL14\ARBP\FragmentProgram;$(CG1TOP)\driver\ogl\OGL14\ARBP\VertexProgram;$(CG1TOP)\driver\ogl\OGL14\GLObject;$(CG1TOP)\driver\ogl\OGL14\BufferObject;$(CG1TOP)\driver\ogl\OGL14\Texture;$(CG1TOP)\driver\gal\GALx\Implementation\ARBCompilers;$(CG1TOP)\driver\gal\GALx\Implementation;$(CG1TOP)\driver\gal\GAL\Interface;$(CG1TOP)\driver\gal\GAL\Implementation\ShaderOptimization;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_DEPRECATE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <PrecompiledHeader />
+      <PrecompiledHeaderFile />
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>zlibstat.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(OutDir)\$(ProjectName).exe</OutputFile>
+      <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AssemblyDebug>true</AssemblyDebug>
+      <SubSystem>NotSet</SubSystem>
+      <TargetMachine>MachineX86</TargetMachine>
+      <AdditionalLibraryDirectories>$(CG1SDK)\lib</AdditionalLibraryDirectories>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>$(CG1TOP)\arch\CG1Gpu;$(CG1TOP)\arch\funcmodel;$(CG1TOP)\arch\common;$(CG1TOP)\arch\behvmodel;$(CG1TOP)\arch\funcmodel\base;$(CG1TOP)\tools\win32patches;$(CG1TOP)\arch\funcmodel\CommandProcessor;$(CG1TOP)\arch\funcmodel\Shader;$(CG1TOP)\arch\funcmodel\Streamer;$(CG1TOP)\arch\funcmodel\MemoryController;$(CG1TOP)\arch\funcmodel\MemoryControllerV2;$(CG1TOP)\arch\funcmodel\Rasterizer;$(CG1TOP)\arch\funcmodel\Cache;$(CG1TOP)\arch\funcmodel\FragmentOperations;$(CG1TOP)\arch\funcmodel\PrimitiveAssembly;$(CG1TOP)\arch\funcmodel\DisplayController;$(CG1TOP)\arch\funcmodel\Clipper;$(CG1TOP)\driver\trace;$(CG1TOP)\driver\hal;$(CG1TOP)\driver\utils;$(CG1TOP)\driver\utils\TraceReader;$(CG1TOP)\driver\utils\Gen;$(CG1TOP)\driver\utils\GL;$(CG1TOP)\driver\ogl\OGL14;$(CG1TOP)\driver\ogl\OGL14\ARBP;$(CG1TOP)\driver\ogl\OGL14\ARBP\FragmentProgram;$(CG1TOP)\driver\ogl\OGL14\ARBP\VertexProgram;$(CG1TOP)\driver\ogl\OGL14\GLObject;$(CG1TOP)\driver\ogl\OGL14\BufferObject;$(CG1TOP)\driver\ogl\OGL14\Texture;$(CG1TOP)\driver\gal\GALx\Implementation\ARBCompilers;$(CG1TOP)\driver\gal\GALx\Implementation;$(CG1TOP)\driver\gal\GAL\Interface;$(CG1TOP)\driver\gal\GAL\Implementation\ShaderOptimization;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_DEPRECATE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <PrecompiledHeader />
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>zlibstat.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Console</SubSystem>
+      <OptimizeReferences />
+      <EnableCOMDATFolding />
+      <LinkTimeCodeGeneration />
+      <TargetMachine>NotSet</TargetMachine>
+      <AdditionalLibraryDirectories>$(CG1SDK)\lib</AdditionalLibraryDirectories>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="$(CG1TOP)\arch\CG1Gpu\ConfigLoader.cpp" />
+    <ClCompile Include="$(CG1TOP)\tests\mdl\ShaderProgramTest\ShaderProgramTest.cpp" />
+    <ClCompile Include="$(CG1TOP)\tests\mdl\ShaderProgramTest\ShaderProgramTestBase.cpp" />
+    <ClCompile Include="$(CG1TOP)\tests\mdl\ShaderProgramTest\SPTConsole.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="$(CG1TOP)\arch\CG1Gpu\ConfigLoader.h" />
+    <ClInclude Include="$(CG1TOP)\tests\mdl\ShaderProgramTest\ShaderProgramTest.h" />
+    <ClInclude Include="$(CG1TOP)\tests\mdl\ShaderProgramTest\ShaderProgramTestBase.h" />
+    <ClInclude Include="$(CG1TOP)\tests\mdl\ShaderProgramTest\SPTConsole.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="$(CG1TOP)\driver\gal\GAL\GAL.vcxproj">
+      <Project>{27666d70-ddab-46d2-8a6a-42e99a4a8704}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+    <ProjectReference Include="$(CG1TOP)\driver\gal\GALx\GALX.vcxproj">
+      <Project>{bc559856-085a-4495-95be-04ea27b162db}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+    <ProjectReference Include="$(CG1TOP)\arch\behvmodel\CG1BMDL.vcxproj">
+      <Project>{d6ed08ba-9650-4513-a4f4-e81d2e24c9a8}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+    <ProjectReference Include="$(CG1TOP)\arch\funcmodel\CG1CMDL.vcxproj">
+      <Project>{4fdfd9dd-4472-424f-9aeb-088e01da6489}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+    <ProjectReference Include="$(CG1TOP)\arch\common\CG1Common.vcxproj">
+      <Project>{969b33ca-c16c-4a1d-a164-97911bf64839}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

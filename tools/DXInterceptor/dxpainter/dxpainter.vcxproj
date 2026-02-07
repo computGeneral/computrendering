@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>17.0</VCProjectVersion>
+    <ProjectGuid>{094E35D1-3B2A-40B6-9951-84B8F0425C9C}</ProjectGuid>
+    <RootNamespace>dxpainter</RootNamespace>
+    <Keyword>Win32Proj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>17.0.32203.90</_ProjectFileVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>../win32/debug\</OutDir>
+    <IntDir>../win32/debug/dxpainter/obj\</IntDir>
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>../win32/release\</OutDir>
+    <IntDir>../win32/release/dxpainter/obj\</IntDir>
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <AdditionalOptions>/EHac %(AdditionalOptions)</AdditionalOptions>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>./;./dxinterceptorstub/;../dxcommon/;../dxautogen/;../dxtraceman/;../../../extern-libs/DXInterceptorLibs/greta;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;DLL_EXPORTS_ENABLED;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>true</MinimalRebuild>
+      <ExceptionHandling />
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <PrecompiledHeader />
+      <PrecompiledHeaderFile>stdafx.h</PrecompiledHeaderFile>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>shlwapi.lib;winmm.lib;psapi.lib;d3d9.lib;d3dx9.lib;dxerr.lib;lzo2d.lib;gretad.lib;dxcommond.lib;dxtracemand.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>../win32/debug/dxpainterd.dll</OutputFile>
+      <AdditionalLibraryDirectories>../../../extern-libs/DXInterceptorLibs/lib;../win32/debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <ModuleDefinitionFile />
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AssemblyDebug>true</AssemblyDebug>
+      <ProgramDatabaseFile>../win32/debug/dxpainterd.pdb</ProgramDatabaseFile>
+      <SubSystem>Windows</SubSystem>
+      <ImportLibrary>../win32/debug/dxpainterd.lib</ImportLibrary>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <AdditionalOptions>/EHac %(AdditionalOptions)</AdditionalOptions>
+      <Optimization>Full</Optimization>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <OmitFramePointers>true</OmitFramePointers>
+      <AdditionalIncludeDirectories>./;./dxinterceptorstub/;../dxcommon/;../dxautogen/;../dxtraceman/;../../../extern-libs/DXInterceptorLibs/greta;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;DLL_EXPORTS_ENABLED;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ExceptionHandling />
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <PrecompiledHeader />
+      <PrecompiledHeaderFile>stdafx.h</PrecompiledHeaderFile>
+      <WarningLevel>Level3</WarningLevel>
+      <TreatWarningAsError>false</TreatWarningAsError>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>shlwapi.lib;winmm.lib;psapi.lib;d3d9.lib;d3dx9.lib;dxerr.lib;lzo2.lib;greta.lib;dxcommon.lib;dxtraceman.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>../win32/release/dxpainter.dll</OutputFile>
+      <AdditionalLibraryDirectories>../../../extern-libs/DXInterceptorLibs/lib;../win32/release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <ModuleDefinitionFile />
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <ProgramDatabaseFile>../win32/release/dxpainter.pdb</ProgramDatabaseFile>
+      <SubSystem>Windows</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <ImportLibrary>../win32/release/dxpainter.lib</ImportLibrary>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\dxautogen\IDirect3D9InterceptorStub.cpp" />
+    <ClCompile Include="..\dxautogen\IDirect3DCubeTexture9InterceptorStub.cpp" />
+    <ClCompile Include="..\dxautogen\IDirect3DDevice9InterceptorStub.cpp" />
+    <ClCompile Include="..\dxautogen\IDirect3DIndexBuffer9InterceptorStub.cpp" />
+    <ClCompile Include="..\dxautogen\IDirect3DPixelShader9InterceptorStub.cpp" />
+    <ClCompile Include="..\dxautogen\IDirect3DQuery9InterceptorStub.cpp" />
+    <ClCompile Include="..\dxautogen\IDirect3DStateBlock9InterceptorStub.cpp" />
+    <ClCompile Include="..\dxautogen\IDirect3DSurface9InterceptorStub.cpp" />
+    <ClCompile Include="..\dxautogen\IDirect3DSwapChain9InterceptorStub.cpp" />
+    <ClCompile Include="..\dxautogen\IDirect3DTexture9InterceptorStub.cpp" />
+    <ClCompile Include="..\dxautogen\IDirect3DVertexBuffer9InterceptorStub.cpp" />
+    <ClCompile Include="..\dxautogen\IDirect3DVertexDeclaration9InterceptorStub.cpp" />
+    <ClCompile Include="..\dxautogen\IDirect3DVertexShader9InterceptorStub.cpp" />
+    <ClCompile Include="..\dxautogen\IDirect3DVolume9InterceptorStub.cpp" />
+    <ClCompile Include="..\dxautogen\IDirect3DVolumeTexture9InterceptorStub.cpp" />
+    <ClCompile Include="DXInterceptorStub\DXCreate9InterceptorStub.cpp" />
+    <ClCompile Include="DXInterceptorStub\DXInterceptorStub.cpp" />
+    <ClCompile Include="DXInterceptorStub\IDirect3D9StubSpecificCode.cpp" />
+    <ClCompile Include="DXInterceptorStub\IDirect3DCubeTexture9StubSpecificCode.cpp" />
+    <ClCompile Include="DXInterceptorStub\IDirect3DDevice9StubSpecificCode.cpp" />
+    <ClCompile Include="DXInterceptorStub\IDirect3DIndexBuffer9StubSpecificCode.cpp" />
+    <ClCompile Include="DXInterceptorStub\IDirect3DPixelShader9StubSpecificCode.cpp" />
+    <ClCompile Include="DXInterceptorStub\IDirect3DQuery9StubSpecificCode.cpp" />
+    <ClCompile Include="DXInterceptorStub\IDirect3DStateBlock9StubSpecificCode.cpp" />
+    <ClCompile Include="DXInterceptorStub\IDirect3DSurface9StubSpecificCode.cpp" />
+    <ClCompile Include="DXInterceptorStub\IDirect3DSwapChain9StubSpecificCode.cpp" />
+    <ClCompile Include="DXInterceptorStub\IDirect3DTexture9StubSpecificCode.cpp" />
+    <ClCompile Include="DXInterceptorStub\IDirect3DVertexBuffer9StubSpecificCode.cpp" />
+    <ClCompile Include="DXInterceptorStub\IDirect3DVertexDeclaration9StubSpecificCode.cpp" />
+    <ClCompile Include="DXInterceptorStub\IDirect3DVertexShader9StubSpecificCode.cpp" />
+    <ClCompile Include="DXInterceptorStub\IDirect3DVolume9StubSpecificCode.cpp" />
+    <ClCompile Include="DXInterceptorStub\IDirect3DVolumeTexture9StubSpecificCode.cpp" />
+    <ClCompile Include="DXInterceptorStub\IReferenceCounter.cpp" />
+    <ClCompile Include="DXPainter.cpp" />
+    <ClCompile Include="DXProfiler.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="stdafx.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\dxautogen\IDirect3D9InterceptorStub.h" />
+    <ClInclude Include="..\dxautogen\IDirect3DCubeTexture9InterceptorStub.h" />
+    <ClInclude Include="..\dxautogen\IDirect3DDevice9InterceptorStub.h" />
+    <ClInclude Include="..\dxautogen\IDirect3DIndexBuffer9InterceptorStub.h" />
+    <ClInclude Include="..\dxautogen\IDirect3DPixelShader9InterceptorStub.h" />
+    <ClInclude Include="..\dxautogen\IDirect3DQuery9InterceptorStub.h" />
+    <ClInclude Include="..\dxautogen\IDirect3DStateBlock9InterceptorStub.h" />
+    <ClInclude Include="..\dxautogen\IDirect3DSurface9InterceptorStub.h" />
+    <ClInclude Include="..\dxautogen\IDirect3DSwapChain9InterceptorStub.h" />
+    <ClInclude Include="..\dxautogen\IDirect3DTexture9InterceptorStub.h" />
+    <ClInclude Include="..\dxautogen\IDirect3DVertexBuffer9InterceptorStub.h" />
+    <ClInclude Include="..\dxautogen\IDirect3DVertexDeclaration9InterceptorStub.h" />
+    <ClInclude Include="..\dxautogen\IDirect3DVertexShader9InterceptorStub.h" />
+    <ClInclude Include="..\dxautogen\IDirect3DVolume9InterceptorStub.h" />
+    <ClInclude Include="..\dxautogen\IDirect3DVolumeTexture9InterceptorStub.h" />
+    <ClInclude Include="DXInterceptorStub\DXCreate9InterceptorStub.h" />
+    <ClInclude Include="DXInterceptorStub\DXInterceptorStub.h" />
+    <ClInclude Include="DXInterceptorStub\GeometryTypes.h" />
+    <ClInclude Include="DXInterceptorStub\IReferenceCounter.h" />
+    <ClInclude Include="DXPainter.h" />
+    <ClInclude Include="DXPainterHeaders.h" />
+    <ClInclude Include="DXProfiler.h" />
+    <ClInclude Include="main.h" />
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="stdafx.h" />
+    <ClInclude Include="version.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="version.ver">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Update %27version.ver%27 file incrementing the build number</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Update %27version.ver%27 file incrementing the build number</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"../tools/makeversion/makeversion.exe" /inc version.ver
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">t;%(Outputs)</Outputs>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="main.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\dxtraceman\dxtraceman.vcxproj">
+      <Project>{d76483c0-92cb-432e-bb6a-9c8e0fb4ec8c}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

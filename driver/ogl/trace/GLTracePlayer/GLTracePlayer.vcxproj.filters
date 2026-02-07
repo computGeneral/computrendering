@@ -1,0 +1,92 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="utils">
+      <UniqueIdentifier>{971d9c41-5c65-44e0-a367-75476c6a00af}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="utils\TraceReader">
+      <UniqueIdentifier>{f99843a9-671e-46a7-9766-f9ac06b81c82}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="utils\log">
+      <UniqueIdentifier>{a8846f2d-5706-4bbf-921c-313ae64fb55d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GLTracePlayer_net">
+      <UniqueIdentifier>{999ab46d-fd6d-4d08-9e44-d3bd2aa0de17}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="$(CG1TOP)\driver\utils\GLJumpTable.cpp">
+      <Filter>utils</Filter>
+    </ClCompile>
+    <ClCompile Include="$(CG1TOP)\driver\utils\GLResolver.cpp">
+      <Filter>utils</Filter>
+    </ClCompile>
+    <ClCompile Include="$(CG1TOP)\driver\utils\zfstream.cpp">
+      <Filter>utils</Filter>
+    </ClCompile>
+    <ClCompile Include="$(CG1TOP)\driver\utils\TraceReader\GLExec.cpp">
+      <Filter>utils\TraceReader</Filter>
+    </ClCompile>
+    <ClCompile Include="$(CG1TOP)\driver\utils\TraceReader\GLExecStats.cpp">
+      <Filter>utils\TraceReader</Filter>
+    </ClCompile>
+    <ClCompile Include="$(CG1TOP)\driver\utils\TraceReader\StubApiCalls.cpp">
+      <Filter>utils\TraceReader</Filter>
+    </ClCompile>
+    <ClCompile Include="$(CG1TOP)\driver\utils\TraceReader\TraceReader.cpp">
+      <Filter>utils\TraceReader</Filter>
+    </ClCompile>
+    <ClCompile Include="$(CG1TOP)\driver\utils\log\IncludeLog.cpp">
+      <Filter>utils\log</Filter>
+    </ClCompile>
+    <ClCompile Include="$(CG1TOP)\driver\utils\log\LogObject.cpp">
+      <Filter>utils\log</Filter>
+    </ClCompile>
+    <ClCompile Include="$(CG1TOP)\driver\utils\BufferDescriptor.cpp" />
+    <ClCompile Include="$(CG1TOP)\driver\utils\DArray.cpp" />
+    <ClCompile Include="$(CG1TOP)\driver\utils\MemoryRegion.cpp" />
+    <ClCompile Include="$(CG1TOP)\arch\common\support.cpp" />
+    <ClCompile Include="$(CG1TOP)\driver\ogl\GLTracePlayer\main.cpp" />
+    <ClCompile Include="$(CG1TOP)\driver\ogl\GLTracePlayer\ScreenUtils.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="$(CG1TOP)\driver\utils\GLJumpTable.h">
+      <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="$(CG1TOP)\driver\utils\GLResolver.h">
+      <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="$(CG1TOP)\driver\utils\zconf.h">
+      <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="$(CG1TOP)\driver\utils\zfstream.h">
+      <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="$(CG1TOP)\driver\utils\zlib.h">
+      <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="$(CG1TOP)\driver\utils\TraceReader\GLExec.h">
+      <Filter>utils\TraceReader</Filter>
+    </ClInclude>
+    <ClInclude Include="$(CG1TOP)\driver\utils\TraceReader\GLExecStats.h">
+      <Filter>utils\TraceReader</Filter>
+    </ClInclude>
+    <ClInclude Include="$(CG1TOP)\driver\utils\TraceReader\StubApiCalls.h">
+      <Filter>utils\TraceReader</Filter>
+    </ClInclude>
+    <ClInclude Include="$(CG1TOP)\driver\utils\TraceReader\TraceReader.h">
+      <Filter>utils\TraceReader</Filter>
+    </ClInclude>
+    <ClInclude Include="$(CG1TOP)\driver\utils\log\IncludeLog.h">
+      <Filter>utils\log</Filter>
+    </ClInclude>
+    <ClInclude Include="$(CG1TOP)\driver\utils\log\LogObject.h">
+      <Filter>utils\log</Filter>
+    </ClInclude>
+    <ClInclude Include="$(CG1TOP)\driver\utils\BufferDescriptor.h" />
+    <ClInclude Include="$(CG1TOP)\driver\utils\DArray.h" />
+    <ClInclude Include="$(CG1TOP)\driver\utils\MemoryRegion.h" />
+    <ClInclude Include="$(CG1TOP)\arch\common\support.h" />
+    <ClInclude Include="$(CG1TOP)\driver\ogl\GLTracePlayer\ScreenUtils.h" />
+  </ItemGroup>
+</Project>

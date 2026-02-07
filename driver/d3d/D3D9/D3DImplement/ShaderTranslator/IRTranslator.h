@@ -1,0 +1,832 @@
+/**************************************************************************
+ *
+ */
+
+/**
+ * @author Chema Solís
+ **/
+
+#ifndef __IR_TRANSLATOR
+#define __IR_TRANSLATOR
+
+#include "IR.h"
+#include "ShaderGenerate.h"
+#include <vector>
+#include <map>
+#include <stack>
+#include <set>
+
+class IRTranslator : public IRVisitor
+{
+public:
+
+    /**
+     *
+     *  Visitor function for end nodes.
+     *
+     *  @param n Pointer to the node to visit.
+     *
+     */
+
+    void visit(EndIRNode *n);
+
+    /**
+     *
+     *  Visitor function for declaration (dcl) nodes.
+     *
+     *  @param n Pointer to the node to visit.
+     *
+     */
+     
+    void visit(DeclarationIRNode *n);
+
+    /**
+     *
+     *  Visitor function for instruction nodes.
+     *
+     *  @param n Pointer to the node to visit.
+     *
+     */
+     
+    void visit(InstructionIRNode *n);
+
+
+    /**
+     *
+     *  Visitor function for version nodes.
+     *
+     *  @param n Pointer to the node to visit.
+     *
+     */
+     
+    void visit(VersionIRNode *n);
+
+
+    /**
+     *
+     *  Visitor function for definition (def) nodes.
+     *
+     *  @param n Pointer to the node to visit.
+     *
+     */
+     
+    void visit(DefinitionIRNode *n);
+
+    //  Empty functions.
+    void begin();
+    void visit(IRNode *n);
+    void visit(CommentIRNode *n);
+    void visit(CommentDataIRNode *n);
+    void visit(ParameterIRNode *n);
+    void visit(SourceParameterIRNode *n);
+    void visit(DestinationParameterIRNode *n);
+    void visit(BoolIRNode *n);
+    void visit(FloatIRNode *n);
+    void visit(IntegerIRNode *n);
+    void visit(SamplerInfoIRNode *n);
+    void visit(SemanticIRNode *n);
+    void visit(RelativeAddressingIRNode *n);
+    void end();
+
+    /**
+     *  
+     *  Builds a NativeShader object storing the shader program
+     *  translated to CG1 bytecode and related information
+     *  (register declarations, etc).
+     *
+     *  @return A pointer to a new NativeShader object storing the translated
+     *  shader program and associated information.
+     *
+     */
+     
+    NativeShader *build_native_shader();
+    
+    /**
+     *
+     *  Get a reference to the list with the translated CG1 instructions
+     *  for the shader program.
+     *
+     *  @return A reference to the list of CG1 shader instructions for
+     *  the translated shader program.
+     *
+     */
+    std::vector<cg1gpu::cgoShaderInstr *> &get_instructions();
+
+    /**
+     *
+     *  Sets the alpha test comparison function for alpha test code generation.
+     *
+     *  @param alpha_func The alpha test comparison function.
+     *
+     */
+	void setAlphaTest(D3DCMPFUNC alpha_func);
+	
+	/**
+	 *
+	 *  Sets if fog is enabled.
+	 *
+	 *  @param fog_enabled A boolean value storing if fog is enabled.
+	 *
+	 */
+	 
+	void setFogEnabled(bool fog_enabled);
+
+    /**
+     *
+     * Get if the shader has control flow instructions that couldn't be translated.
+     *
+     *  @return If the shader has control flow instruction that couldn't be translated.
+     *
+     */
+     
+    bool getUntranslatedControlFlow();
+    
+    /**
+     *
+     *  Get the number of shader instructions that couldn't be translated.
+     *
+     *  @return The number of instructions that couldn't be translated.
+     *
+     */
+     
+    U32 getUntranslatedInstructions();
+         
+    /** 
+     *
+     *  IRTranslator constructor.
+     *
+     *  @return A new initialized IRTranslator object.
+     *
+     */
+     
+    IRTranslator();
+
+    /** 
+     *
+     *  IRTranslator destructor.
+     *
+     */
+     
+    ~IRTranslator();
+    
+private:
+
+    static const U32 ALPHA_TEST_CONSTANT_MINUS_ONE = 288;
+    static const U32 ALPHA_TEST_CONSTANT_REF = 289;
+    static const U32 FOG_CONSTANT_COLOR = 290;
+    
+    static const U32 BOOLEAN_CONSTANT_START = 256;
+    static const U32 INTEGER_CONSTANT_START = 272;
+    
+    static const U32 IF_ELSE_MIN_INSTR_PER_JUMP = 4;
+    
+    //  Shader model for the program.
+    ShaderType type;                                //  Shader type (vertex shader, pixel shader) for the shader program to translate.  
+    DWORD version;                                  //  Shader model version for the shader program to translate.  
+	
+	//  Fixed function emulation.
+	D3DCMPFUNC alpha_func;                          //  Alpha test comparison function for alpha test emulation.  
+	bool fog_enabled;                               //  Defines if fog is enabled (?).  
+	AlphaTestDeclaration alpha_test_declaration;    //  Stores information about alpha test for alpha test emulation.  
+	FogDeclaration fog_declaration;                 //  Stores information about fog for fog emulation.  
+
+    //  Information about the current instruction.
+    std::vector<Operand> operands;                  //  Stores the operands for the current instruction.  
+    Result result;                                  //  Stores the result for the current instruction.  
+    RelativeMode relative;                          //  Stores information about relative mode addressing for the current instruction.  
+
+    /**
+     *
+     *  Stores information for a IF/ELSE/ENDIF code block.
+     *
+     */
+    struct IFBlockInfo
+    {
+        U32 predicateRegister;
+        bool predicateNegated;
+        bool insideIFBlock;
+        bool insideELSEBlock;
+        U32 jumpForIF;
+        U32 jumpForELSE;
+    };
+    
+    /**
+     *
+     *  Stores information for a REP/ENDREP code block.
+     */
+    struct REPBlockInfo
+    {
+        U32 start;           //  Stores the offset of the first instruction in the REP/ENDREP code block.  
+        U32 iterations;      //  Stores the number of iterations of the REP/ENDREP code block.  
+        bool foundBREAK;        //  Stores if a BREAK instruction was found inside the REP/ENDREP code block.  
+        U32 predicateREP;    //  Stores the predicate register for the REP block code.  
+        bool jumpBREAK;         //  Stores if a jump instruction was generated for the BREAK.  
+        U32 jumpForBREAK;    //  Sotres the position in the instruction stream of the jump instruction for the BREAK instruction.  
+        U32 tempCounter;     //  Stores the temporary register used as iteration counter.  
+        U32 headerInstr;     //  Stores the number of instructions in the REP block header.  
+        U32 footerInstr;     //  Stores the number of instructions in the REP block footer.  
+        
+        REPBlockInfo() : start(0), iterations(0), foundBREAK(false), headerInstr(0), footerInstr(0), jumpBREAK(false) {}
+    };
+    
+    //  Information about the shader program.
+    bool untranslatedControlFlow;                   //  Stores that control flow instructions that couldn't be translated were found.  
+    U32 untranslatedInstructions;                //  Stores the number of instructions that couldn't be translated.  
+    bool error;                                     //  Stores if the current instruction couldn't be translated.  
+    bool insideIFBlock;                             //  Stores if translating instructions inside an IF code block.  
+    bool insideELSEBlock;                           //  Stores if translating instructions inside an ELSE code block.  
+    std::vector<IFBlockInfo> currentIFBlocks;       //  Stores information about the current IF/ELSE/ENDIF code blocks.  
+    bool insideREPBlock;                            //  Stores if translating instructions inside a REP code block.  
+    std::vector<REPBlockInfo> currentREPBlocks;     //  Stores information for the current REP/ENDREP code blocks.  
+    std::vector<PredicationInfo> predication;       //  Stores information about predication for the next instructions.  
+    U32 lastJumpTarget;                          //  Stores the address of the last jump target.  
+    
+    std::vector<cg1gpu::cgoShaderInstr*> instructions;    //  Stores the list of CG1 shader instructions for the translated shader program.  
+    
+    //  Information about register availability.
+    std::set<GPURegisterId> availableConst;         //  Stores the currently available CG1 constant registers.  
+    std::set<GPURegisterId> availableTemp;          //  Stores the currently available CG1 temporary registers.  
+    std::set<GPURegisterId> availableInput;         //  Stores the currently available CG1 input registers.  
+    std::set<GPURegisterId> availableOutput;        //  Stores the currently available CG1 ouput registers.  
+    std::set<GPURegisterId> availableSamplers;      //  Stores the currently available CG1 sampler/texture registers.  
+    std::set<GPURegisterId> availablePredicates;    //  Stores the currently available CG1 predicate registers.  
+
+    //  Information about register declaration.    
+    std::list<ConstRegisterDeclaration> constDeclaration;       //  Stores the constant registers declared by the shader program.  
+    std::list<InputRegisterDeclaration> inputDeclaration;       //  Stores the input registers declared by the shader program.  
+    std::list<OutputRegisterDeclaration> outputDeclaration;     //  Stores the output registers declared by the shader program.  
+    std::list<SamplerDeclaration> samplerDeclaration;           //  Stores the sampler/texture registers declared by the shader program.  
+
+    //  Information about register mapping.
+    std::map<D3DUsageId, GPURegisterId> inputUsage;         //  Maps D3D9 input registers to CG1 registers (usage restrictions).  
+    std::map<D3DUsageId, GPURegisterId> outputUsage;        //  Maps D3D9 output registes to CG1 registers (usage restrictions).  
+    std::map<D3DRegisterId, GPURegisterId> registerMap;     //  Current mapping of D3D9 registers to CG1 registers.  
+
+    //  Static tables for instruction translation.    
+    std::map<D3DSHADER_INSTRUCTION_OPCODE_TYPE, cg1gpu::ShOpcode> opcodeMap;     //  Maps D3D9 opcodes to CG1 opcodes.  
+    std::map<DWORD, cg1gpu::MaskMode> maskModeMap;                               //  Maps D3D9 result mask modes to the corresponding CG1 result mask modes.  
+    std::map<DWORD, cg1gpu::SwizzleMode> swizzleModeMap;                         //  Maps D3D9 operand swizzle modes to the corresponding CG1 operand swizzle modes.  
+
+    /**
+     *
+     *  Deletes the CG1 shader instructions for the translated shader program.
+     *
+     */
+    void delete_instructions();
+    
+    /**
+     *
+     *  Generates extra code for fixed function emulation (alpha test and fog).
+     *
+     *  @param color_temp Identifier of an CG1 temporary register that stores
+     *  the color output from the translated shader program.
+     *  @param color_out Identifier of the an CG1 output register where the
+     *  final color output must be written.
+     * 
+     */
+     
+	void generate_extra_code(GPURegisterId color_temp, GPURegisterId color_out);
+    
+    /**
+     *
+     *  Visitor for source parameters node of instruction nodes.
+     *
+     *  @param n Pointer to the source parameter node.
+     *
+     */
+
+    void visitInstructionSource(SourceParameterIRNode *n);
+
+    /**
+     *
+     *  Visitor for destination parameters node of instruction nodes.
+     *
+     *  @param n Pointer to the destination parameter node.
+     *
+     */
+     
+    void visitInstructionDestination(DestinationParameterIRNode *n);  
+
+    /**
+     *
+     *  Used to select a modified component of the result as a placeholder
+     *  for temporal results in the emulation of complex shader instructions.    
+     *  The returned Operand object has all the flags cleared.
+     *
+     *  @param result An instruction result from which to extract a written component.
+     *  @param temp A reference to an instruction operand which swizzle mode will be
+     *  set to a broadcast of the selected result written component.
+     *
+     */
+     
+    void selectComponentFromResult(Result result, Operand &temp);
+    
+    /**
+     *
+     *  Select the component swizzled to a given component.
+     *
+     *  @param component The swizzled component to select in the input operand.
+     *  @param in The input operand from which the swizzled component will be selected.
+     *  @param out The output operand which swizzle mode will be set to a broadcast
+     *  to the selected input operand swizzled component.
+     *
+     */
+     
+    void selectSwizzledComponent(U32 component, Operand in, Operand &out);
+    
+    ///////////////////////////////////////////////////////////////////////////
+    //
+    //  Initializations
+    //
+    ///////////////////////////////////////////////////////////////////////////
+    
+    void initializeRegisters();
+    void initializeOpcodes();
+
+    
+    ///////////////////////////////////////////////////////////////////////////
+    //
+    //  Register management.
+    //
+    ///////////////////////////////////////////////////////////////////////////
+
+    
+    /**
+     *
+     *  Declares a D3D9 constant register, reserves an CG1 constant register and
+     *  maps the D3D9 constant register to the CG1 constant register.
+     *
+     *  @param d3dReg The D3D9 constant register identifier.
+     *
+     *  @return The identifier of the CG1 constant register to which the D3D9 constant register
+     *  has been mapped to.
+     *
+     */
+     
+    GPURegisterId declareMapAndReserveConst(D3DRegisterId d3dreg);
+    
+    /**
+     *
+     *  Declares a D3D9 constant register, reserves an CG1 constant register,
+     *  maps the D3D9 constant register to the CG1 constant register and sets
+     *  the value of the constant register.
+     *
+     *  @param d3dReg The D3D9 constant register identifier.
+     *  @param value Value of the constant register.
+     *
+     *  @return The identifier of the CG1 constant register to which the D3D9 constant register
+     *  has been mapped to.
+     *
+     */
+
+    GPURegisterId declareMapAndReserveConst(D3DRegisterId d3dreg, ConstValue value);
+
+    /** 
+     *
+     *  Checks if a D3D9 register is mapped to an CG1 register.
+     *
+     *  @param d3dreg Identifier of the D3D9 register.
+     *
+     *  @return Returns TRUE if the D3D9 register is mapped to an CG1 register, FALSE otherwise.
+     *
+     */
+     
+    bool isMapped(D3DRegisterId d3dreg);
+    
+    /**
+     *
+     *  Reserves an CG1 register and maps the D3D9 register to the CG1 register.
+     *
+     *  @param d3dreg Identifier of the D3D9 register.
+     *
+     *  @return The identifier of the CG1 register to which the D3D9 register has been mapped to.
+     *
+     */
+     
+    GPURegisterId mapAndReserveRegister(D3DRegisterId d3dreg);
+    
+    /**
+     *
+     *  Maps a D3D9 register to an CG1 register.
+     *
+     *  @param d3dreg Identifier of the D3D9 register.
+     *  @param gpureg Identifier of the CG1 register.
+     *
+     */
+     
+    void mapRegister(D3DRegisterId d3dreg, GPURegisterId gpureg);
+
+    /**
+     *
+     *  Removes existing mapping of a given D3D9 register to an CG1 register.
+     *
+     *  @param d3dreg Identifier of the D3D9 register.
+     *
+     *  @return The identifier of the CG1 register to which the D3D9 register has been mapped to.
+     *
+     */
+     
+    GPURegisterId unmapRegister(D3DRegisterId d3dreg);    
+
+    /**
+     *
+     *  Gets the mapping to an CG1 register of a D3D9 register.
+     *
+     *  @param d3dreg Identifier of the D3D9 register.
+     *
+     *  @return The identifier of CG1 register to which the D3D9 register has been mapped to.
+     *
+     */
+     
+    GPURegisterId mappedRegister(D3DRegisterId d3dreg);
+
+    /**
+     *
+     *  Reserves an CG1 temporary register
+     *
+     *  @return The identifier of the reserved CG1 temporary register.
+     *     
+     */
+     
+    GPURegisterId reserveTemp();
+
+    /**
+     *
+     *  Reserves an CG1 temporary register
+     *
+     *  @param gpu_temp_register Identifier of the CG1 temporary register to reserve.
+     *
+     *  @return The identifier of the reserved CG1 temporary register.
+     *     
+     */
+
+    GPURegisterId reserveTemp(GPURegisterId gpu_temp_register);
+
+    /**
+     *
+     *  Reserves an CG1 temporary register and maps the D3D9 register to the CG1 temporary register.
+     *
+     *  @param d3d_register Identifier of the D3D9 register.
+     *
+     *  @return The identifier of the reserved CG1 temporary register.
+     *     
+     */
+          
+    GPURegisterId reserveAndMapTemp(D3DRegisterId d3d_register);
+    
+    /**
+     *
+     *  Releases an CG1 temporary register.
+     *
+     *  @param reg Identifier of the CG1 temporary register to release.
+     *
+     */
+     
+    void releaseTemp(GPURegisterId reg);
+
+    /**
+     *
+     *  Declares a D3D9 input register, reserves an CG1 register and maps the D3D9 input register
+     *  to the CG1 register.
+     *
+     *  @param usage Defines the usage of the D3D9 input register.
+     *  @param d3d_register Identifier of the D3D9 input register.
+     *
+     *  @return Identifier of the CG1 register reserved and to which the D3D9 input register
+     *  was mapped to.
+     *
+     */
+     
+    GPURegisterId declareMapAndReserveInput(D3DUsageId usage, D3DRegisterId d3d_register);
+
+    /**
+     *
+     *  Declares a D3D9 output register, reserves an CG1 register and maps the D3D9 output register
+     *  to the CG1 register.
+     *
+     *  @param usage Defines the usage of the D3D9 output register.
+     *  @param d3d_register Identifier of the D3D9 output register.
+     *
+     *  @return Identifier of the CG1 register reserved and to which the D3D9 output register
+     *  was mapped to.
+     *
+     */
+
+    GPURegisterId declareMapAndReserveOutput(D3DUsageId usage, D3DRegisterId d3d_register);
+
+    /**
+     *
+     *  Declares a D3D9 sampler/texture register, reserves an CG1 texture register and maps the D3D9 texture register
+     *  to the CG1 texture register.
+     *
+     *  @param type Texture type (1D, 2D, CUBE, 3D, ...).
+     *  @param d3d_register Identifier of the D3D9 texture register.
+     *
+     *  @return Identifier of the CG1 texture register reserved and to which the D3D9 texture register
+     *  was mapped to.
+     *
+     */
+
+    GPURegisterId declareMapAndReserveSampler(D3DSAMPLER_TEXTURE_TYPE type, D3DRegisterId d3d_register);
+
+    /**
+     *
+     *  Reserves an CG1 predicate register.
+     *
+     *  @return The identifier of the reserved CG1 predicate register.  
+     *
+     */
+     
+    GPURegisterId reservePredicate();
+
+    /**
+     *
+     *  Reserves an CG1 predicate register.
+     *
+     *  @param gpu_pred_register The identifier of the CG1 predicate register to reserve.
+     *
+     *  @return The identifier of the reserved CG1 predicate register.  
+     *
+     */
+
+    GPURegisterId reservePredicate(GPURegisterId gpu_pred_register);
+    
+    /**
+     *
+     *  Reserves an CG1 predicate register and maps the D3D9 predicate register to the
+     *  CG1 predicate register.
+     *
+     *  @param d3d_register The identifier of the D3D9 predicate register.
+     *
+     *  @return The identifier of the reserved CG1 predicate register and to which the
+     *  D3D9 predicate register has been mapped to.  
+     *
+     */
+
+    GPURegisterId reserveAndMapPredicate(D3DRegisterId d3d_register);
+
+    /**
+     *
+     *  Releases an CG1 predicate register.
+     *
+     *  @param reg The identifier of the CG1 predicate register to release.
+     *
+     */
+
+    void releasePredicate(GPURegisterId reg);
+
+
+    ///////////////////////////////////////////////////////////////////////////
+    //
+    //  Instruction generation.
+    //
+    ///////////////////////////////////////////////////////////////////////////
+
+    /**
+     *
+     *  Generates the CG1 shader instructions to compute a predicate based
+     *  on the IF comparison operation.
+     *
+     *  @param compareOp The IF comparison operation.
+     *
+     */
+     
+    void computeIFPredication(D3DSHADER_COMPARISON compareOp);
+
+    /**
+     *
+     *  Generates the CG1 shader instructions to compute a predicate based
+     *  on the BREAKC comparison operation.
+     *
+     *  @param compareOp The BREAKC comparison operation.
+     *  @param predReg Predicate register into which store the result of the comparison.
+     *
+     */
+     
+    void computeBREAKCPredication(D3DSHADER_COMPARISON compareOp, U32 predReg);
+    
+    /**
+     *
+     *  Generate code for the start of IFC/ELSE/ENDIF code block.
+     *  Computes the IF condition predicate, updates the predication stack and the IF/ELSE/ENDIF block stack.
+     *
+     *  @param comparisonMode The D3D9 shader comparison mode defined for the IFC instruction.
+     *
+     */
+    
+    void generateCodeForIFC(D3DSHADER_COMPARISON comparisonMode);
+
+    /**
+     *
+     *  Generate code for the start of IFB/ELSE/ENDIF code block.
+     *  Loads the IFB boolean constant to a predicate, updates the predication stack and the IF/ELSE/ENDIF block stack.
+     *
+     */
+    
+    void generateCodeForIFB();
+
+    /**
+     *
+     *  Generate code for an ELSE instruction.
+     *  Patch the code at the start of the IF/ELSE/ENDIF block.
+     *  Update predication and IF/ELSE/ENDIF block state.
+     *
+     */
+
+    void generateCodeForELSE();    
+
+    /**
+     *
+     *  Generate code for an ENDIF instruction.
+     *  Patch the code at the start of the IF and ELSE sides of the code block.
+     *  Update predication and IF/ELSE/ENDIF block state.
+     *
+     */
+   
+    void generateCodeForENDIF();
+    
+    /**
+     *
+     *  Generate code at the start of a REP/ENDREP block.
+     *  Update predication and REP/ENDREP block state.
+     *
+     */
+     
+    void generateCodeForREP();
+    
+    /**
+     *
+     *  Generate code at the end of a REP/ENDREP block.
+     *  Patch code for BREAK if required.
+     *  Update predication and REP/ENDREP block state.
+     *
+     */
+
+    void generateCodeForENDREP();
+
+    /**
+     *
+     *  Generate a code for a BREAK instruction.
+     *  Update REP/ENDREP block state.
+     *
+     */
+     
+    void generateCodeForBREAK();
+    
+    /**
+     *
+     *  Generate a code for a BREAKC instruction.
+     *  Update REP/ENDREP block state.
+     *
+     *  @param comparisonMode The D3D shader comparison mode defined for the BREAKC instruction.
+     *
+     */
+     
+    void generateCodeForBREAKC(D3DSHADER_COMPARISON comparisonMode);
+    
+    /**
+     *
+     *  Generates a MOV shader instruction to copy the source register to the
+     *  destination register.
+     *
+     *  @param dest Identifier of the destination CG1 register.
+     *  @param src Identifier of the source CG1 register.
+     *
+     */
+    void generateMov(GPURegisterId dest, GPURegisterId src);
+    
+    /**
+     *
+     *  Generates a NOP shader instruction.
+     *
+     */
+     
+    void generateNOP();
+
+    /**
+     *
+     *  Translates the D3D9 result write mask mode to the corresponding CG1 result write mask mode.
+     *
+     *  @param d3dmm The D3D9 result write mask mode.
+     *
+     *  @return The corresponding CG1 result write mask mode.
+     *
+     */
+     
+    cg1gpu::MaskMode nativeMaskMode(DWORD d3dmm);
+    
+    /**
+     *
+     *  Translated the D3D9 operand swizzle mode to the corresponding CG1 operand swizzle mode.
+     *
+     *  @param d3dswizz The D3D9 operand swizzle mode.
+     *
+     *  @return The corresponding CG1 operand swizzle mode.
+     *
+     */
+     
+    cg1gpu::SwizzleMode nativeSwizzleMode(DWORD d3dswizz);
+
+
+
+    ///////////////////////////////////////////////////////////////////////////
+    //
+    //  Specific instruction translations.
+    //
+    ///////////////////////////////////////////////////////////////////////////
+    
+    /**
+     *
+     *  Generates the translation of a M4X4 D3D9 shader instruction to CG1 shader instructions.
+     *
+     *  @param n Pointer to the shader instruction node.
+     *
+     */
+     
+    void emulateM4X4(InstructionIRNode *n);
+    
+    /**
+     *
+     *  Generates the translation of a TEXLDL1314 D3D9 shader instruction to CG1 shader instructions.
+     *
+     *  @param n Pointer to the shader instruction node.
+     *
+     */
+
+    void emulateTEXLD1314(InstructionIRNode *n);
+
+    /**
+     *
+     *  Generates the translation of a SUB D3D9 shader instruction to CG1 shader instructions.
+     *
+     */
+     
+    void emulateSUB();
+
+    /**
+     *
+     *  Generates the translation of a LRP D3D9 shader instruction to CG1 shader instructions.
+     *
+     */
+
+    void emulateLRP();
+
+    /**
+     *
+     *  Generates the translation of a POW D3D9 shader instruction to CG1 shader instructions.
+     *
+     */
+
+    void emulatePOW();
+
+    /**
+     *
+     *  Generates the translation of a NRM D3D9 shader instruction to CG1 shader instructions.
+     *
+     */
+
+    void emulateNRM();
+
+    /**
+     *
+     *  Generates the translation of a CMP D3D9 shader instruction to CG1 shader instructions.
+     *
+     */
+
+    void emulateCMP();
+
+    /**
+     *
+     *  Generates the translation of a DP2ADD D3D9 shader instruction to CG1 shader instructions.
+     *
+     */
+
+    void emulateDP2ADD();
+
+    /**
+     *
+     *  Generates the translation of a ABS D3D9 shader instruction to CG1 shader instructions.
+     *
+     */
+
+    void emulateABS();
+
+    /**
+     *
+     *  Generates the translation of a SINCOS D3D9 shader instruction to CG1 shader instructions.
+     *
+     */
+
+    void emulateSINCOS();
+
+    /**
+     *
+     *  Generates the translation of a TEXKILL D3D9 shader instruction to CG1 shader instructions.
+     *
+     */
+
+    void emulateTEXKILL();
+
+};
+
+#endif

@@ -1,0 +1,389 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Source Files\GUI">
+      <UniqueIdentifier>{e2723b0e-a05b-4b16-b8b9-3e29c540f276}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\GUI\TreeList">
+      <UniqueIdentifier>{ef554773-7a4e-4703-b3a0-5a7be42f8085}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\GUI\ToolTip">
+      <UniqueIdentifier>{3af541df-ce78-47bf-8ed6-8fabcd18da3e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Header Files\GUI">
+      <UniqueIdentifier>{63a4b994-35d2-4ecb-accc-ca1629803331}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\GUI\TreeList">
+      <UniqueIdentifier>{8971b45f-aa2d-4d39-9cf4-927a606f96aa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\GUI\ToolTip">
+      <UniqueIdentifier>{14e5690d-9a70-4cd1-9ec5-c51b8da96344}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="DXPlayer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DXPlayerAboutDlg.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DXPlayerDocument.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DXPlayerMainFrame.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DXPlayerOptions.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DXPlayerOptionsDlg.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DXPlayerProjectInformationDlg.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DXPlayerStatisticsData.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DXPlayerStatisticViewerDlg.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DXPlayerStatisticViewerRollupDialogs.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DXPlayerTextureViewerDlg.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DXPlayerTraceViewerDlg.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DXPlayerView.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Gui\CLabel.cpp">
+      <Filter>Source Files\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GUI\ColourPickerXP.cpp">
+      <Filter>Source Files\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Gui\DXPlayerControlsBar.cpp">
+      <Filter>Source Files\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GUI\GdiPlusBitmapResource.cpp">
+      <Filter>Source Files\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Gui\GdiPlusHelper.cpp">
+      <Filter>Source Files\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GUI\GfxUtils.cpp">
+      <Filter>Source Files\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GUI\LayoutHelper.cpp">
+      <Filter>Source Files\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GUI\RollupCtrl.cpp">
+      <Filter>Source Files\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Gui\ThemeHelperST.cpp">
+      <Filter>Source Files\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Gui\XBtnST.cpp">
+      <Filter>Source Files\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Gui\XPStyleButtonST.cpp">
+      <Filter>Source Files\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GUI\XPTheme.cpp">
+      <Filter>Source Files\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GUI\TreeList\TreeListColumnDragWnd.cpp">
+      <Filter>Source Files\GUI\TreeList</Filter>
+    </ClCompile>
+    <ClCompile Include="GUI\TreeList\TreeListColumnDropWnd.cpp">
+      <Filter>Source Files\GUI\TreeList</Filter>
+    </ClCompile>
+    <ClCompile Include="GUI\TreeList\TreeListColumnInfo.cpp">
+      <Filter>Source Files\GUI\TreeList</Filter>
+    </ClCompile>
+    <ClCompile Include="GUI\TreeList\TreeListComboCtrl.cpp">
+      <Filter>Source Files\GUI\TreeList</Filter>
+    </ClCompile>
+    <ClCompile Include="GUI\TreeList\TreeListCtrl.cpp">
+      <Filter>Source Files\GUI\TreeList</Filter>
+    </ClCompile>
+    <ClCompile Include="GUI\TreeList\TreeListDC.cpp">
+      <Filter>Source Files\GUI\TreeList</Filter>
+    </ClCompile>
+    <ClCompile Include="GUI\TreeList\TreeListEditCtrl.cpp">
+      <Filter>Source Files\GUI\TreeList</Filter>
+    </ClCompile>
+    <ClCompile Include="GUI\TreeList\TreeListHeaderCtrl.cpp">
+      <Filter>Source Files\GUI\TreeList</Filter>
+    </ClCompile>
+    <ClCompile Include="GUI\TreeList\TreeListHeaderDragWnd.cpp">
+      <Filter>Source Files\GUI\TreeList</Filter>
+    </ClCompile>
+    <ClCompile Include="GUI\TreeList\TreeListHeaderDropWnd.cpp">
+      <Filter>Source Files\GUI\TreeList</Filter>
+    </ClCompile>
+    <ClCompile Include="GUI\TreeList\TreeListItem.cpp">
+      <Filter>Source Files\GUI\TreeList</Filter>
+    </ClCompile>
+    <ClCompile Include="GUI\TreeList\TreeListStaticCtrl.cpp">
+      <Filter>Source Files\GUI\TreeList</Filter>
+    </ClCompile>
+    <ClCompile Include="GUI\TreeList\TreeListTipCtrl.cpp">
+      <Filter>Source Files\GUI\TreeList</Filter>
+    </ClCompile>
+    <ClCompile Include="GUI\ToolTip\CeXDib.cpp">
+      <Filter>Source Files\GUI\ToolTip</Filter>
+    </ClCompile>
+    <ClCompile Include="GUI\ToolTip\PPDrawManager.cpp">
+      <Filter>Source Files\GUI\ToolTip</Filter>
+    </ClCompile>
+    <ClCompile Include="GUI\ToolTip\PPHtmlDrawer.cpp">
+      <Filter>Source Files\GUI\ToolTip</Filter>
+    </ClCompile>
+    <ClCompile Include="GUI\ToolTip\PPTooltip.cpp">
+      <Filter>Source Files\GUI\ToolTip</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="DXPlayer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DXPlayerAboutDlg.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DXPlayerDocument.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DXPlayerMainFrame.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DXPlayerOptions.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DXPlayerOptionsDlg.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DXPlayerProjectInformationDlg.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DXPlayerStatisticsData.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DXPlayerStatisticViewerDlg.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DXPlayerStatisticViewerRollupDialogs.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DXPlayerTextureViewerDlg.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DXPlayerTraceViewerDlg.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DXPlayerView.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="stdafx.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\extern-libs\DXInterceptorLibs\xgraph\xgraph_resources.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Gui\CLabel.h">
+      <Filter>Header Files\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="GUI\ColourPickerXP.h">
+      <Filter>Header Files\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Gui\DXPlayerControlsBar.h">
+      <Filter>Header Files\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="GUI\GdiPlusBitmapResource.h">
+      <Filter>Header Files\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Gui\GdiPlusHelper.h">
+      <Filter>Header Files\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="GUI\GfxUtils.h">
+      <Filter>Header Files\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="GUI\LayoutHelper.h">
+      <Filter>Header Files\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="GUI\RollupCtrl.h">
+      <Filter>Header Files\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Gui\ThemeHelperST.h">
+      <Filter>Header Files\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Gui\XBtnST.h">
+      <Filter>Header Files\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Gui\XPStyleButtonST.h">
+      <Filter>Header Files\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="GUI\XPTheme.h">
+      <Filter>Header Files\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="GUI\TreeList\TreeListColumnDragWnd.h">
+      <Filter>Header Files\GUI\TreeList</Filter>
+    </ClInclude>
+    <ClInclude Include="GUI\TreeList\TreeListColumnDropWnd.h">
+      <Filter>Header Files\GUI\TreeList</Filter>
+    </ClInclude>
+    <ClInclude Include="GUI\TreeList\TreeListColumnInfo.h">
+      <Filter>Header Files\GUI\TreeList</Filter>
+    </ClInclude>
+    <ClInclude Include="GUI\TreeList\TreeListComboCtrl.h">
+      <Filter>Header Files\GUI\TreeList</Filter>
+    </ClInclude>
+    <ClInclude Include="GUI\TreeList\TreeListCtrl.h">
+      <Filter>Header Files\GUI\TreeList</Filter>
+    </ClInclude>
+    <ClInclude Include="GUI\TreeList\TreeListCtrlHeaders.h">
+      <Filter>Header Files\GUI\TreeList</Filter>
+    </ClInclude>
+    <ClInclude Include="GUI\TreeList\TreeListDC.h">
+      <Filter>Header Files\GUI\TreeList</Filter>
+    </ClInclude>
+    <ClInclude Include="GUI\TreeList\TreeListEditCtrl.h">
+      <Filter>Header Files\GUI\TreeList</Filter>
+    </ClInclude>
+    <ClInclude Include="GUI\TreeList\TreeListHeaderCtrl.h">
+      <Filter>Header Files\GUI\TreeList</Filter>
+    </ClInclude>
+    <ClInclude Include="GUI\TreeList\TreeListHeaderDragWnd.h">
+      <Filter>Header Files\GUI\TreeList</Filter>
+    </ClInclude>
+    <ClInclude Include="GUI\TreeList\TreeListHeaderDropWnd.h">
+      <Filter>Header Files\GUI\TreeList</Filter>
+    </ClInclude>
+    <ClInclude Include="GUI\TreeList\TreeListItem.h">
+      <Filter>Header Files\GUI\TreeList</Filter>
+    </ClInclude>
+    <ClInclude Include="GUI\TreeList\TreeListStaticCtrl.h">
+      <Filter>Header Files\GUI\TreeList</Filter>
+    </ClInclude>
+    <ClInclude Include="GUI\TreeList\TreeListTipCtrl.h">
+      <Filter>Header Files\GUI\TreeList</Filter>
+    </ClInclude>
+    <ClInclude Include="GUI\ToolTip\CeXDib.h">
+      <Filter>Header Files\GUI\ToolTip</Filter>
+    </ClInclude>
+    <ClInclude Include="GUI\ToolTip\PPDrawManager.h">
+      <Filter>Header Files\GUI\ToolTip</Filter>
+    </ClInclude>
+    <ClInclude Include="GUI\ToolTip\PPHtmlDrawer.h">
+      <Filter>Header Files\GUI\ToolTip</Filter>
+    </ClInclude>
+    <ClInclude Include="GUI\ToolTip\PPTooltip.h">
+      <Filter>Header Files\GUI\ToolTip</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="res\TreeList\bm_bkgnd.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\TreeList\bm_bkgnd2.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\TreeList\bm_checkbox.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\TreeList\bm_def_head.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\TreeList\bm_def_sort.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\TreeList\bm_def_tree.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\TreeList\bm_lockbox.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\TreeList\bm_treeicons.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\controls.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\dxplayer.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\logo.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="res\TreeList\cur_button.cur">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="res\TreeList\cur_checkbox.cur">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="res\TreeList\cur_cross.cur">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="res\TreeList\cur_drop.cur">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="res\TreeList\cur_horz.cur">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="res\TreeList\cur_lockbox.cur">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="res\TreeList\cur_size.cur">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="res\TreeList\cur_split.cur">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="res\TreeList\cur_stop.cur">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="res\TreeList\cur_vert.cur">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="res\open_hand.cur">
+      <Filter>Resource Files</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="dxplayer.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
+    <ResourceCompile Include="..\..\..\extern-libs\DXInterceptorLibs\xgraph\xgraph_resources.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="res\dxplayer.manifest">
+      <Filter>Resource Files</Filter>
+    </CustomBuild>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,53 @@
+/**************************************************************************
+ *
+ */
+
+////////////////////////////////////////////////////////////////////////////////
+
+#include "Items/MethodDescription.hpp"
+#include "Items/ClassDescription.hpp"
+
+using namespace std;
+using namespace D3dApiCodeGen::Items;
+
+////////////////////////////////////////////////////////////////////////////////
+
+void ClassDescription::SetName(const string& name)
+{
+  m_name = name;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
+string& ClassDescription::GetName()
+{
+  return m_name;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
+void ClassDescription::AddMethod(const MethodDescription& method)
+{
+  m_lstMethods.push_back(method);
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
+unsigned int ClassDescription::GetMethodsCount()
+{
+  return (unsigned int) m_lstMethods.size();
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
+MethodDescription& ClassDescription::GetMethod(unsigned int position)
+{
+  static MethodDescription method;
+  if (m_lstMethods.size() && position < m_lstMethods.size())
+  {
+    return m_lstMethods[position];
+  }
+  return method;
+}
+
+////////////////////////////////////////////////////////////////////////////////

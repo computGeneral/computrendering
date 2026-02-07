@@ -1,0 +1,92 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="utils">
+      <UniqueIdentifier>{2ea580c1-9585-4001-ade4-544e8c13435d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="utils\log">
+      <UniqueIdentifier>{b54d868b-8962-4fcb-80c5-ef775c5b352e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GLInterceptor">
+      <UniqueIdentifier>{37968ea3-dda7-4eda-a5d7-b89754354f02}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="$(CG1TOP)\driver\utils\GLJumpTable.cpp">
+      <Filter>utils</Filter>
+    </ClCompile>
+    <ClCompile Include="$(CG1TOP)\driver\utils\GLResolver.cpp">
+      <Filter>utils</Filter>
+    </ClCompile>
+    <ClCompile Include="$(CG1TOP)\driver\utils\zfstream.cpp">
+      <Filter>utils</Filter>
+    </ClCompile>
+    <ClCompile Include="$(CG1TOP)\driver\utils\log\IncludeLog.cpp">
+      <Filter>utils\log</Filter>
+    </ClCompile>
+    <ClCompile Include="$(CG1TOP)\driver\utils\log\LogObject.cpp">
+      <Filter>utils\log</Filter>
+    </ClCompile>
+    <ClCompile Include="$(CG1TOP)\driver\utils\BufferDescriptor.cpp" />
+    <ClCompile Include="$(CG1TOP)\driver\utils\DArray.cpp" />
+    <ClCompile Include="$(CG1TOP)\driver\utils\MemoryRegion.cpp" />
+    <ClCompile Include="$(CG1TOP)\arch\common\support.cpp" />
+    <ClCompile Include="$(CG1TOP)\driver\ogl\GLInterceptor\BasicStats.cpp" />
+    <ClCompile Include="$(CG1TOP)\driver\ogl\GLInterceptor\CheckStats.cpp" />
+    <ClCompile Include="$(CG1TOP)\driver\ogl\GLInterceptor\GLInterceptor.cpp" />
+    <ClCompile Include="$(CG1TOP)\driver\ogl\GLInterceptor\GLIStatsManager.cpp" />
+    <ClCompile Include="$(CG1TOP)\driver\ogl\GLInterceptor\GLWrapper.cpp" />
+    <ClCompile Include="$(CG1TOP)\driver\ogl\GLInterceptor\ShaderStats.cpp" />
+    <ClCompile Include="$(CG1TOP)\driver\ogl\GLInterceptor\ShProgramInfo.cpp" />
+    <ClCompile Include="$(CG1TOP)\driver\ogl\GLInterceptor\Specific.cpp" />
+    <ClCompile Include="$(CG1TOP)\driver\ogl\GLInterceptor\SpecificStats.cpp" />
+    <ClCompile Include="$(CG1TOP)\driver\ogl\GLInterceptor\SpecificSupport.cpp" />
+    <ClCompile Include="$(CG1TOP)\driver\ogl\GLInterceptor\TraceWriter.cpp" />
+    <ClCompile Include="$(CG1TOP)\driver\ogl\GLInterceptor\UserStats.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="$(CG1TOP)\driver\utils\GLJumpTable.h">
+      <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="$(CG1TOP)\driver\utils\GLResolver.h">
+      <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="$(CG1TOP)\driver\utils\zconf.h">
+      <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="$(CG1TOP)\driver\utils\zfstream.h">
+      <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="$(CG1TOP)\driver\utils\zlib.h">
+      <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="$(CG1TOP)\driver\utils\log\IncludeLog.h">
+      <Filter>utils\log</Filter>
+    </ClInclude>
+    <ClInclude Include="$(CG1TOP)\driver\utils\log\LogObject.h">
+      <Filter>utils\log</Filter>
+    </ClInclude>
+    <ClInclude Include="$(CG1TOP)\driver\utils\BufferDescriptor.h" />
+    <ClInclude Include="$(CG1TOP)\driver\utils\DArray.h" />
+    <ClInclude Include="$(CG1TOP)\driver\utils\MemoryRegion.h" />
+    <ClInclude Include="$(CG1TOP)\arch\common\support.h" />
+    <ClInclude Include="$(CG1TOP)\driver\ogl\GLInterceptor\BasicStats.h" />
+    <ClInclude Include="$(CG1TOP)\driver\ogl\GLInterceptor\CheckStats.h" />
+    <ClInclude Include="$(CG1TOP)\driver\ogl\GLInterceptor\GLInterceptor.h" />
+    <ClInclude Include="$(CG1TOP)\driver\ogl\GLInterceptor\GLIStat.h" />
+    <ClInclude Include="$(CG1TOP)\driver\ogl\GLInterceptor\GLIStatsManager.h" />
+    <ClInclude Include="$(CG1TOP)\driver\ogl\GLInterceptor\GLIVersion.h" />
+    <ClInclude Include="$(CG1TOP)\driver\ogl\GLInterceptor\GLWrapper.h" />
+    <ClInclude Include="$(CG1TOP)\driver\ogl\GLInterceptor\resource.h" />
+    <ClInclude Include="$(CG1TOP)\driver\ogl\GLInterceptor\ShaderStats.h" />
+    <ClInclude Include="$(CG1TOP)\driver\ogl\GLInterceptor\ShProgramInfo.h" />
+    <ClInclude Include="$(CG1TOP)\driver\ogl\GLInterceptor\Specific.h" />
+    <ClInclude Include="$(CG1TOP)\driver\ogl\GLInterceptor\SpecificStats.h" />
+    <ClInclude Include="$(CG1TOP)\driver\ogl\GLInterceptor\SpecificSupport.h" />
+    <ClInclude Include="$(CG1TOP)\driver\ogl\GLInterceptor\TraceWriter.h" />
+    <ClInclude Include="$(CG1TOP)\driver\ogl\GLInterceptor\UserStats.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="$(CG1TOP)\driver\ogl\GLInterceptor\opengl32.def" />
+  </ItemGroup>
+</Project>

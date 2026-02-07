@@ -1,0 +1,5602 @@
+/////////////////////////////////////////////////
+// This file has been automatically generated  //
+// Do not modify this file                     //
+/////////////////////////////////////////////////
+
+#ifndef SWITCHBRANCHES_GEN
+    #define SWITCHBRANCHES_GEN
+
+case APICall_glAccum :
+    STUB_glAccum(tr,jt,uct);
+    break;
+case APICall_glActiveStencilFaceEXT :
+    STUB_glActiveStencilFaceEXT(tr,jt,uct);
+    break;
+case APICall_glActiveTexture :
+    STUB_glActiveTexture(tr,jt,uct);
+    break;
+case APICall_glActiveTextureARB :
+    STUB_glActiveTextureARB(tr,jt,uct);
+    break;
+case APICall_glActiveVaryingNV :
+    STUB_glActiveVaryingNV(tr,jt,uct);
+    break;
+case APICall_glAlphaFragmentOp1ATI :
+    STUB_glAlphaFragmentOp1ATI(tr,jt,uct);
+    break;
+case APICall_glAlphaFragmentOp2ATI :
+    STUB_glAlphaFragmentOp2ATI(tr,jt,uct);
+    break;
+case APICall_glAlphaFragmentOp3ATI :
+    STUB_glAlphaFragmentOp3ATI(tr,jt,uct);
+    break;
+case APICall_glAlphaFunc :
+    STUB_glAlphaFunc(tr,jt,uct);
+    break;
+case APICall_glApplyTextureEXT :
+    STUB_glApplyTextureEXT(tr,jt,uct);
+    break;
+case APICall_glAreProgramsResidentNV :
+    STUB_glAreProgramsResidentNV(tr,jt,uct);
+    break;
+case APICall_glAreTexturesResident :
+    STUB_glAreTexturesResident(tr,jt,uct);
+    break;
+case APICall_glAreTexturesResidentEXT :
+    STUB_glAreTexturesResidentEXT(tr,jt,uct);
+    break;
+case APICall_glArrayElement :
+    STUB_glArrayElement(tr,jt,uct);
+    break;
+case APICall_glArrayElementEXT :
+    STUB_glArrayElementEXT(tr,jt,uct);
+    break;
+case APICall_glArrayObjectATI :
+    STUB_glArrayObjectATI(tr,jt,uct);
+    break;
+case APICall_glAsyncMarkerSGIX :
+    STUB_glAsyncMarkerSGIX(tr,jt,uct);
+    break;
+case APICall_glAttachObjectARB :
+    STUB_glAttachObjectARB(tr,jt,uct);
+    break;
+case APICall_glAttachShader :
+    STUB_glAttachShader(tr,jt,uct);
+    break;
+case APICall_glBegin :
+    STUB_glBegin(tr,jt,uct);
+    break;
+case APICall_glBeginConditionalRender :
+    STUB_glBeginConditionalRender(tr,jt,uct);
+    break;
+case APICall_glBeginConditionalRenderNV :
+    STUB_glBeginConditionalRenderNV(tr,jt,uct);
+    break;
+case APICall_glBeginFragmentShaderATI :
+    STUB_glBeginFragmentShaderATI(tr,jt,uct);
+    break;
+case APICall_glBeginOcclusionQueryNV :
+    STUB_glBeginOcclusionQueryNV(tr,jt,uct);
+    break;
+case APICall_glBeginPerfMonitorAMD :
+    STUB_glBeginPerfMonitorAMD(tr,jt,uct);
+    break;
+case APICall_glBeginQuery :
+    STUB_glBeginQuery(tr,jt,uct);
+    break;
+case APICall_glBeginQueryARB :
+    STUB_glBeginQueryARB(tr,jt,uct);
+    break;
+case APICall_glBeginTransformFeedback :
+    STUB_glBeginTransformFeedback(tr,jt,uct);
+    break;
+case APICall_glBeginTransformFeedbackEXT :
+    STUB_glBeginTransformFeedbackEXT(tr,jt,uct);
+    break;
+case APICall_glBeginTransformFeedbackNV :
+    STUB_glBeginTransformFeedbackNV(tr,jt,uct);
+    break;
+case APICall_glBeginVertexShaderEXT :
+    STUB_glBeginVertexShaderEXT(tr,jt,uct);
+    break;
+case APICall_glBindAttribLocation :
+    STUB_glBindAttribLocation(tr,jt,uct);
+    break;
+case APICall_glBindAttribLocationARB :
+    STUB_glBindAttribLocationARB(tr,jt,uct);
+    break;
+case APICall_glBindBuffer :
+    STUB_glBindBuffer(tr,jt,uct);
+    break;
+case APICall_glBindBufferARB :
+    STUB_glBindBufferARB(tr,jt,uct);
+    break;
+case APICall_glBindBufferBase :
+    STUB_glBindBufferBase(tr,jt,uct);
+    break;
+case APICall_glBindBufferBaseEXT :
+    STUB_glBindBufferBaseEXT(tr,jt,uct);
+    break;
+case APICall_glBindBufferBaseNV :
+    STUB_glBindBufferBaseNV(tr,jt,uct);
+    break;
+case APICall_glBindBufferOffsetEXT :
+    STUB_glBindBufferOffsetEXT(tr,jt,uct);
+    break;
+case APICall_glBindBufferOffsetNV :
+    STUB_glBindBufferOffsetNV(tr,jt,uct);
+    break;
+case APICall_glBindBufferRange :
+    STUB_glBindBufferRange(tr,jt,uct);
+    break;
+case APICall_glBindBufferRangeEXT :
+    STUB_glBindBufferRangeEXT(tr,jt,uct);
+    break;
+case APICall_glBindBufferRangeNV :
+    STUB_glBindBufferRangeNV(tr,jt,uct);
+    break;
+case APICall_glBindFragDataLocation :
+    STUB_glBindFragDataLocation(tr,jt,uct);
+    break;
+case APICall_glBindFragDataLocationEXT :
+    STUB_glBindFragDataLocationEXT(tr,jt,uct);
+    break;
+case APICall_glBindFragmentShaderATI :
+    STUB_glBindFragmentShaderATI(tr,jt,uct);
+    break;
+case APICall_glBindFramebuffer :
+    STUB_glBindFramebuffer(tr,jt,uct);
+    break;
+case APICall_glBindFramebufferEXT :
+    STUB_glBindFramebufferEXT(tr,jt,uct);
+    break;
+case APICall_glBindLightParameterEXT :
+    STUB_glBindLightParameterEXT(tr,jt,uct);
+    break;
+case APICall_glBindMaterialParameterEXT :
+    STUB_glBindMaterialParameterEXT(tr,jt,uct);
+    break;
+case APICall_glBindMultiTextureEXT :
+    STUB_glBindMultiTextureEXT(tr,jt,uct);
+    break;
+case APICall_glBindParameterEXT :
+    STUB_glBindParameterEXT(tr,jt,uct);
+    break;
+case APICall_glBindProgramARB :
+    STUB_glBindProgramARB(tr,jt,uct);
+    break;
+case APICall_glBindProgramNV :
+    STUB_glBindProgramNV(tr,jt,uct);
+    break;
+case APICall_glBindRenderbuffer :
+    STUB_glBindRenderbuffer(tr,jt,uct);
+    break;
+case APICall_glBindRenderbufferEXT :
+    STUB_glBindRenderbufferEXT(tr,jt,uct);
+    break;
+case APICall_glBindTexGenParameterEXT :
+    STUB_glBindTexGenParameterEXT(tr,jt,uct);
+    break;
+case APICall_glBindTexture :
+    STUB_glBindTexture(tr,jt,uct);
+    break;
+case APICall_glBindTextureEXT :
+    STUB_glBindTextureEXT(tr,jt,uct);
+    break;
+case APICall_glBindTextureUnitParameterEXT :
+    STUB_glBindTextureUnitParameterEXT(tr,jt,uct);
+    break;
+case APICall_glBindTransformFeedbackNV :
+    STUB_glBindTransformFeedbackNV(tr,jt,uct);
+    break;
+case APICall_glBindVertexArray :
+    STUB_glBindVertexArray(tr,jt,uct);
+    break;
+case APICall_glBindVertexArrayAPPLE :
+    STUB_glBindVertexArrayAPPLE(tr,jt,uct);
+    break;
+case APICall_glBindVertexShaderEXT :
+    STUB_glBindVertexShaderEXT(tr,jt,uct);
+    break;
+case APICall_glBinormal3bEXT :
+    STUB_glBinormal3bEXT(tr,jt,uct);
+    break;
+case APICall_glBinormal3bvEXT :
+    STUB_glBinormal3bvEXT(tr,jt,uct);
+    break;
+case APICall_glBinormal3dEXT :
+    STUB_glBinormal3dEXT(tr,jt,uct);
+    break;
+case APICall_glBinormal3dvEXT :
+    STUB_glBinormal3dvEXT(tr,jt,uct);
+    break;
+case APICall_glBinormal3fEXT :
+    STUB_glBinormal3fEXT(tr,jt,uct);
+    break;
+case APICall_glBinormal3fvEXT :
+    STUB_glBinormal3fvEXT(tr,jt,uct);
+    break;
+case APICall_glBinormal3iEXT :
+    STUB_glBinormal3iEXT(tr,jt,uct);
+    break;
+case APICall_glBinormal3ivEXT :
+    STUB_glBinormal3ivEXT(tr,jt,uct);
+    break;
+case APICall_glBinormal3sEXT :
+    STUB_glBinormal3sEXT(tr,jt,uct);
+    break;
+case APICall_glBinormal3svEXT :
+    STUB_glBinormal3svEXT(tr,jt,uct);
+    break;
+case APICall_glBinormalPointerEXT :
+    STUB_glBinormalPointerEXT(tr,jt,uct);
+    break;
+case APICall_glBitmap :
+    STUB_glBitmap(tr,jt,uct);
+    break;
+case APICall_glBlendColor :
+    STUB_glBlendColor(tr,jt,uct);
+    break;
+case APICall_glBlendColorEXT :
+    STUB_glBlendColorEXT(tr,jt,uct);
+    break;
+case APICall_glBlendEquation :
+    STUB_glBlendEquation(tr,jt,uct);
+    break;
+case APICall_glBlendEquationEXT :
+    STUB_glBlendEquationEXT(tr,jt,uct);
+    break;
+case APICall_glBlendEquationSeparate :
+    STUB_glBlendEquationSeparate(tr,jt,uct);
+    break;
+case APICall_glBlendEquationSeparateATI :
+    STUB_glBlendEquationSeparateATI(tr,jt,uct);
+    break;
+case APICall_glBlendEquationSeparateEXT :
+    STUB_glBlendEquationSeparateEXT(tr,jt,uct);
+    break;
+case APICall_glBlendFunc :
+    STUB_glBlendFunc(tr,jt,uct);
+    break;
+case APICall_glBlendFuncSeparate :
+    STUB_glBlendFuncSeparate(tr,jt,uct);
+    break;
+case APICall_glBlendFuncSeparateEXT :
+    STUB_glBlendFuncSeparateEXT(tr,jt,uct);
+    break;
+case APICall_glBlendFuncSeparateINGR :
+    STUB_glBlendFuncSeparateINGR(tr,jt,uct);
+    break;
+case APICall_glBlitFramebuffer :
+    STUB_glBlitFramebuffer(tr,jt,uct);
+    break;
+case APICall_glBlitFramebufferEXT :
+    STUB_glBlitFramebufferEXT(tr,jt,uct);
+    break;
+case APICall_glBufferData :
+    STUB_glBufferData(tr,jt,uct);
+    break;
+case APICall_glBufferDataARB :
+    STUB_glBufferDataARB(tr,jt,uct);
+    break;
+case APICall_glBufferParameteriAPPLE :
+    STUB_glBufferParameteriAPPLE(tr,jt,uct);
+    break;
+case APICall_glBufferSubData :
+    STUB_glBufferSubData(tr,jt,uct);
+    break;
+case APICall_glBufferSubDataARB :
+    STUB_glBufferSubDataARB(tr,jt,uct);
+    break;
+case APICall_glCallList :
+    STUB_glCallList(tr,jt,uct);
+    break;
+case APICall_glCallLists :
+    STUB_glCallLists(tr,jt,uct);
+    break;
+case APICall_glCheckFramebufferStatus :
+    STUB_glCheckFramebufferStatus(tr,jt,uct);
+    break;
+case APICall_glCheckFramebufferStatusEXT :
+    STUB_glCheckFramebufferStatusEXT(tr,jt,uct);
+    break;
+case APICall_glCheckNamedFramebufferStatusEXT :
+    STUB_glCheckNamedFramebufferStatusEXT(tr,jt,uct);
+    break;
+case APICall_glClampColor :
+    STUB_glClampColor(tr,jt,uct);
+    break;
+case APICall_glClampColorARB :
+    STUB_glClampColorARB(tr,jt,uct);
+    break;
+case APICall_glClear :
+    STUB_glClear(tr,jt,uct);
+    break;
+case APICall_glClearAccum :
+    STUB_glClearAccum(tr,jt,uct);
+    break;
+case APICall_glClearBufferfi :
+    STUB_glClearBufferfi(tr,jt,uct);
+    break;
+case APICall_glClearBufferfv :
+    STUB_glClearBufferfv(tr,jt,uct);
+    break;
+case APICall_glClearBufferiv :
+    STUB_glClearBufferiv(tr,jt,uct);
+    break;
+case APICall_glClearBufferuiv :
+    STUB_glClearBufferuiv(tr,jt,uct);
+    break;
+case APICall_glClearColor :
+    STUB_glClearColor(tr,jt,uct);
+    break;
+case APICall_glClearColorIiEXT :
+    STUB_glClearColorIiEXT(tr,jt,uct);
+    break;
+case APICall_glClearColorIuiEXT :
+    STUB_glClearColorIuiEXT(tr,jt,uct);
+    break;
+case APICall_glClearDepth :
+    STUB_glClearDepth(tr,jt,uct);
+    break;
+case APICall_glClearDepthdNV :
+    STUB_glClearDepthdNV(tr,jt,uct);
+    break;
+case APICall_glClearIndex :
+    STUB_glClearIndex(tr,jt,uct);
+    break;
+case APICall_glClearStencil :
+    STUB_glClearStencil(tr,jt,uct);
+    break;
+case APICall_glClientActiveTexture :
+    STUB_glClientActiveTexture(tr,jt,uct);
+    break;
+case APICall_glClientActiveTextureARB :
+    STUB_glClientActiveTextureARB(tr,jt,uct);
+    break;
+case APICall_glClientActiveVertexStreamATI :
+    STUB_glClientActiveVertexStreamATI(tr,jt,uct);
+    break;
+case APICall_glClientAttribDefaultEXT :
+    STUB_glClientAttribDefaultEXT(tr,jt,uct);
+    break;
+case APICall_glClipPlane :
+    STUB_glClipPlane(tr,jt,uct);
+    break;
+case APICall_glColor3b :
+    STUB_glColor3b(tr,jt,uct);
+    break;
+case APICall_glColor3bv :
+    STUB_glColor3bv(tr,jt,uct);
+    break;
+case APICall_glColor3d :
+    STUB_glColor3d(tr,jt,uct);
+    break;
+case APICall_glColor3dv :
+    STUB_glColor3dv(tr,jt,uct);
+    break;
+case APICall_glColor3f :
+    STUB_glColor3f(tr,jt,uct);
+    break;
+case APICall_glColor3fv :
+    STUB_glColor3fv(tr,jt,uct);
+    break;
+case APICall_glColor3hNV :
+    STUB_glColor3hNV(tr,jt,uct);
+    break;
+case APICall_glColor3hvNV :
+    STUB_glColor3hvNV(tr,jt,uct);
+    break;
+case APICall_glColor3i :
+    STUB_glColor3i(tr,jt,uct);
+    break;
+case APICall_glColor3iv :
+    STUB_glColor3iv(tr,jt,uct);
+    break;
+case APICall_glColor3s :
+    STUB_glColor3s(tr,jt,uct);
+    break;
+case APICall_glColor3sv :
+    STUB_glColor3sv(tr,jt,uct);
+    break;
+case APICall_glColor3ub :
+    STUB_glColor3ub(tr,jt,uct);
+    break;
+case APICall_glColor3ubv :
+    STUB_glColor3ubv(tr,jt,uct);
+    break;
+case APICall_glColor3ui :
+    STUB_glColor3ui(tr,jt,uct);
+    break;
+case APICall_glColor3uiv :
+    STUB_glColor3uiv(tr,jt,uct);
+    break;
+case APICall_glColor3us :
+    STUB_glColor3us(tr,jt,uct);
+    break;
+case APICall_glColor3usv :
+    STUB_glColor3usv(tr,jt,uct);
+    break;
+case APICall_glColor4b :
+    STUB_glColor4b(tr,jt,uct);
+    break;
+case APICall_glColor4bv :
+    STUB_glColor4bv(tr,jt,uct);
+    break;
+case APICall_glColor4d :
+    STUB_glColor4d(tr,jt,uct);
+    break;
+case APICall_glColor4dv :
+    STUB_glColor4dv(tr,jt,uct);
+    break;
+case APICall_glColor4f :
+    STUB_glColor4f(tr,jt,uct);
+    break;
+case APICall_glColor4fv :
+    STUB_glColor4fv(tr,jt,uct);
+    break;
+case APICall_glColor4hNV :
+    STUB_glColor4hNV(tr,jt,uct);
+    break;
+case APICall_glColor4hvNV :
+    STUB_glColor4hvNV(tr,jt,uct);
+    break;
+case APICall_glColor4i :
+    STUB_glColor4i(tr,jt,uct);
+    break;
+case APICall_glColor4iv :
+    STUB_glColor4iv(tr,jt,uct);
+    break;
+case APICall_glColor4s :
+    STUB_glColor4s(tr,jt,uct);
+    break;
+case APICall_glColor4sv :
+    STUB_glColor4sv(tr,jt,uct);
+    break;
+case APICall_glColor4ub :
+    STUB_glColor4ub(tr,jt,uct);
+    break;
+case APICall_glColor4ubv :
+    STUB_glColor4ubv(tr,jt,uct);
+    break;
+case APICall_glColor4ui :
+    STUB_glColor4ui(tr,jt,uct);
+    break;
+case APICall_glColor4uiv :
+    STUB_glColor4uiv(tr,jt,uct);
+    break;
+case APICall_glColor4us :
+    STUB_glColor4us(tr,jt,uct);
+    break;
+case APICall_glColor4usv :
+    STUB_glColor4usv(tr,jt,uct);
+    break;
+case APICall_glColorFragmentOp1ATI :
+    STUB_glColorFragmentOp1ATI(tr,jt,uct);
+    break;
+case APICall_glColorFragmentOp2ATI :
+    STUB_glColorFragmentOp2ATI(tr,jt,uct);
+    break;
+case APICall_glColorFragmentOp3ATI :
+    STUB_glColorFragmentOp3ATI(tr,jt,uct);
+    break;
+case APICall_glColorMask :
+    STUB_glColorMask(tr,jt,uct);
+    break;
+case APICall_glColorMaskIndexedEXT :
+    STUB_glColorMaskIndexedEXT(tr,jt,uct);
+    break;
+case APICall_glColorMaski :
+    STUB_glColorMaski(tr,jt,uct);
+    break;
+case APICall_glColorMaterial :
+    STUB_glColorMaterial(tr,jt,uct);
+    break;
+case APICall_glColorPointer :
+    STUB_glColorPointer(tr,jt,uct);
+    break;
+case APICall_glColorPointerEXT :
+    STUB_glColorPointerEXT(tr,jt,uct);
+    break;
+case APICall_glColorPointervINTEL :
+    STUB_glColorPointervINTEL(tr,jt,uct);
+    break;
+case APICall_glColorSubTable :
+    STUB_glColorSubTable(tr,jt,uct);
+    break;
+case APICall_glColorSubTableEXT :
+    STUB_glColorSubTableEXT(tr,jt,uct);
+    break;
+case APICall_glColorTable :
+    STUB_glColorTable(tr,jt,uct);
+    break;
+case APICall_glColorTableEXT :
+    STUB_glColorTableEXT(tr,jt,uct);
+    break;
+case APICall_glColorTableParameterfv :
+    STUB_glColorTableParameterfv(tr,jt,uct);
+    break;
+case APICall_glColorTableParameterfvSGI :
+    STUB_glColorTableParameterfvSGI(tr,jt,uct);
+    break;
+case APICall_glColorTableParameteriv :
+    STUB_glColorTableParameteriv(tr,jt,uct);
+    break;
+case APICall_glColorTableParameterivSGI :
+    STUB_glColorTableParameterivSGI(tr,jt,uct);
+    break;
+case APICall_glColorTableSGI :
+    STUB_glColorTableSGI(tr,jt,uct);
+    break;
+case APICall_glCombinerInputNV :
+    STUB_glCombinerInputNV(tr,jt,uct);
+    break;
+case APICall_glCombinerOutputNV :
+    STUB_glCombinerOutputNV(tr,jt,uct);
+    break;
+case APICall_glCombinerParameterfNV :
+    STUB_glCombinerParameterfNV(tr,jt,uct);
+    break;
+case APICall_glCombinerParameterfvNV :
+    STUB_glCombinerParameterfvNV(tr,jt,uct);
+    break;
+case APICall_glCombinerParameteriNV :
+    STUB_glCombinerParameteriNV(tr,jt,uct);
+    break;
+case APICall_glCombinerParameterivNV :
+    STUB_glCombinerParameterivNV(tr,jt,uct);
+    break;
+case APICall_glCombinerStageParameterfvNV :
+    STUB_glCombinerStageParameterfvNV(tr,jt,uct);
+    break;
+case APICall_glCompileShader :
+    STUB_glCompileShader(tr,jt,uct);
+    break;
+case APICall_glCompileShaderARB :
+    STUB_glCompileShaderARB(tr,jt,uct);
+    break;
+case APICall_glCompressedMultiTexImage1DEXT :
+    STUB_glCompressedMultiTexImage1DEXT(tr,jt,uct);
+    break;
+case APICall_glCompressedMultiTexImage2DEXT :
+    STUB_glCompressedMultiTexImage2DEXT(tr,jt,uct);
+    break;
+case APICall_glCompressedMultiTexImage3DEXT :
+    STUB_glCompressedMultiTexImage3DEXT(tr,jt,uct);
+    break;
+case APICall_glCompressedMultiTexSubImage1DEXT :
+    STUB_glCompressedMultiTexSubImage1DEXT(tr,jt,uct);
+    break;
+case APICall_glCompressedMultiTexSubImage2DEXT :
+    STUB_glCompressedMultiTexSubImage2DEXT(tr,jt,uct);
+    break;
+case APICall_glCompressedMultiTexSubImage3DEXT :
+    STUB_glCompressedMultiTexSubImage3DEXT(tr,jt,uct);
+    break;
+case APICall_glCompressedTexImage1D :
+    STUB_glCompressedTexImage1D(tr,jt,uct);
+    break;
+case APICall_glCompressedTexImage1DARB :
+    STUB_glCompressedTexImage1DARB(tr,jt,uct);
+    break;
+case APICall_glCompressedTexImage2D :
+    STUB_glCompressedTexImage2D(tr,jt,uct);
+    break;
+case APICall_glCompressedTexImage2DARB :
+    STUB_glCompressedTexImage2DARB(tr,jt,uct);
+    break;
+case APICall_glCompressedTexImage3D :
+    STUB_glCompressedTexImage3D(tr,jt,uct);
+    break;
+case APICall_glCompressedTexImage3DARB :
+    STUB_glCompressedTexImage3DARB(tr,jt,uct);
+    break;
+case APICall_glCompressedTexSubImage1D :
+    STUB_glCompressedTexSubImage1D(tr,jt,uct);
+    break;
+case APICall_glCompressedTexSubImage1DARB :
+    STUB_glCompressedTexSubImage1DARB(tr,jt,uct);
+    break;
+case APICall_glCompressedTexSubImage2D :
+    STUB_glCompressedTexSubImage2D(tr,jt,uct);
+    break;
+case APICall_glCompressedTexSubImage2DARB :
+    STUB_glCompressedTexSubImage2DARB(tr,jt,uct);
+    break;
+case APICall_glCompressedTexSubImage3D :
+    STUB_glCompressedTexSubImage3D(tr,jt,uct);
+    break;
+case APICall_glCompressedTexSubImage3DARB :
+    STUB_glCompressedTexSubImage3DARB(tr,jt,uct);
+    break;
+case APICall_glCompressedTextureImage1DEXT :
+    STUB_glCompressedTextureImage1DEXT(tr,jt,uct);
+    break;
+case APICall_glCompressedTextureImage2DEXT :
+    STUB_glCompressedTextureImage2DEXT(tr,jt,uct);
+    break;
+case APICall_glCompressedTextureImage3DEXT :
+    STUB_glCompressedTextureImage3DEXT(tr,jt,uct);
+    break;
+case APICall_glCompressedTextureSubImage1DEXT :
+    STUB_glCompressedTextureSubImage1DEXT(tr,jt,uct);
+    break;
+case APICall_glCompressedTextureSubImage2DEXT :
+    STUB_glCompressedTextureSubImage2DEXT(tr,jt,uct);
+    break;
+case APICall_glCompressedTextureSubImage3DEXT :
+    STUB_glCompressedTextureSubImage3DEXT(tr,jt,uct);
+    break;
+case APICall_glConvolutionFilter1D :
+    STUB_glConvolutionFilter1D(tr,jt,uct);
+    break;
+case APICall_glConvolutionFilter1DEXT :
+    STUB_glConvolutionFilter1DEXT(tr,jt,uct);
+    break;
+case APICall_glConvolutionFilter2D :
+    STUB_glConvolutionFilter2D(tr,jt,uct);
+    break;
+case APICall_glConvolutionFilter2DEXT :
+    STUB_glConvolutionFilter2DEXT(tr,jt,uct);
+    break;
+case APICall_glConvolutionParameterf :
+    STUB_glConvolutionParameterf(tr,jt,uct);
+    break;
+case APICall_glConvolutionParameterfEXT :
+    STUB_glConvolutionParameterfEXT(tr,jt,uct);
+    break;
+case APICall_glConvolutionParameterfv :
+    STUB_glConvolutionParameterfv(tr,jt,uct);
+    break;
+case APICall_glConvolutionParameterfvEXT :
+    STUB_glConvolutionParameterfvEXT(tr,jt,uct);
+    break;
+case APICall_glConvolutionParameteri :
+    STUB_glConvolutionParameteri(tr,jt,uct);
+    break;
+case APICall_glConvolutionParameteriEXT :
+    STUB_glConvolutionParameteriEXT(tr,jt,uct);
+    break;
+case APICall_glConvolutionParameteriv :
+    STUB_glConvolutionParameteriv(tr,jt,uct);
+    break;
+case APICall_glConvolutionParameterivEXT :
+    STUB_glConvolutionParameterivEXT(tr,jt,uct);
+    break;
+case APICall_glCopyBufferSubData :
+    STUB_glCopyBufferSubData(tr,jt,uct);
+    break;
+case APICall_glCopyColorSubTable :
+    STUB_glCopyColorSubTable(tr,jt,uct);
+    break;
+case APICall_glCopyColorSubTableEXT :
+    STUB_glCopyColorSubTableEXT(tr,jt,uct);
+    break;
+case APICall_glCopyColorTable :
+    STUB_glCopyColorTable(tr,jt,uct);
+    break;
+case APICall_glCopyColorTableSGI :
+    STUB_glCopyColorTableSGI(tr,jt,uct);
+    break;
+case APICall_glCopyConvolutionFilter1D :
+    STUB_glCopyConvolutionFilter1D(tr,jt,uct);
+    break;
+case APICall_glCopyConvolutionFilter1DEXT :
+    STUB_glCopyConvolutionFilter1DEXT(tr,jt,uct);
+    break;
+case APICall_glCopyConvolutionFilter2D :
+    STUB_glCopyConvolutionFilter2D(tr,jt,uct);
+    break;
+case APICall_glCopyConvolutionFilter2DEXT :
+    STUB_glCopyConvolutionFilter2DEXT(tr,jt,uct);
+    break;
+case APICall_glCopyMultiTexImage1DEXT :
+    STUB_glCopyMultiTexImage1DEXT(tr,jt,uct);
+    break;
+case APICall_glCopyMultiTexImage2DEXT :
+    STUB_glCopyMultiTexImage2DEXT(tr,jt,uct);
+    break;
+case APICall_glCopyMultiTexSubImage1DEXT :
+    STUB_glCopyMultiTexSubImage1DEXT(tr,jt,uct);
+    break;
+case APICall_glCopyMultiTexSubImage2DEXT :
+    STUB_glCopyMultiTexSubImage2DEXT(tr,jt,uct);
+    break;
+case APICall_glCopyMultiTexSubImage3DEXT :
+    STUB_glCopyMultiTexSubImage3DEXT(tr,jt,uct);
+    break;
+case APICall_glCopyPixels :
+    STUB_glCopyPixels(tr,jt,uct);
+    break;
+case APICall_glCopyTexImage1D :
+    STUB_glCopyTexImage1D(tr,jt,uct);
+    break;
+case APICall_glCopyTexImage1DEXT :
+    STUB_glCopyTexImage1DEXT(tr,jt,uct);
+    break;
+case APICall_glCopyTexImage2D :
+    STUB_glCopyTexImage2D(tr,jt,uct);
+    break;
+case APICall_glCopyTexImage2DEXT :
+    STUB_glCopyTexImage2DEXT(tr,jt,uct);
+    break;
+case APICall_glCopyTexSubImage1D :
+    STUB_glCopyTexSubImage1D(tr,jt,uct);
+    break;
+case APICall_glCopyTexSubImage1DEXT :
+    STUB_glCopyTexSubImage1DEXT(tr,jt,uct);
+    break;
+case APICall_glCopyTexSubImage2D :
+    STUB_glCopyTexSubImage2D(tr,jt,uct);
+    break;
+case APICall_glCopyTexSubImage2DEXT :
+    STUB_glCopyTexSubImage2DEXT(tr,jt,uct);
+    break;
+case APICall_glCopyTexSubImage3D :
+    STUB_glCopyTexSubImage3D(tr,jt,uct);
+    break;
+case APICall_glCopyTexSubImage3DEXT :
+    STUB_glCopyTexSubImage3DEXT(tr,jt,uct);
+    break;
+case APICall_glCopyTextureImage1DEXT :
+    STUB_glCopyTextureImage1DEXT(tr,jt,uct);
+    break;
+case APICall_glCopyTextureImage2DEXT :
+    STUB_glCopyTextureImage2DEXT(tr,jt,uct);
+    break;
+case APICall_glCopyTextureSubImage1DEXT :
+    STUB_glCopyTextureSubImage1DEXT(tr,jt,uct);
+    break;
+case APICall_glCopyTextureSubImage2DEXT :
+    STUB_glCopyTextureSubImage2DEXT(tr,jt,uct);
+    break;
+case APICall_glCopyTextureSubImage3DEXT :
+    STUB_glCopyTextureSubImage3DEXT(tr,jt,uct);
+    break;
+case APICall_glCreateProgram :
+    STUB_glCreateProgram(tr,jt,uct);
+    break;
+case APICall_glCreateProgramObjectARB :
+    STUB_glCreateProgramObjectARB(tr,jt,uct);
+    break;
+case APICall_glCreateShader :
+    STUB_glCreateShader(tr,jt,uct);
+    break;
+case APICall_glCreateShaderObjectARB :
+    STUB_glCreateShaderObjectARB(tr,jt,uct);
+    break;
+case APICall_glCullFace :
+    STUB_glCullFace(tr,jt,uct);
+    break;
+case APICall_glCullParameterdvEXT :
+    STUB_glCullParameterdvEXT(tr,jt,uct);
+    break;
+case APICall_glCullParameterfvEXT :
+    STUB_glCullParameterfvEXT(tr,jt,uct);
+    break;
+case APICall_glCurrentPaletteMatrixARB :
+    STUB_glCurrentPaletteMatrixARB(tr,jt,uct);
+    break;
+case APICall_glDeformSGIX :
+    STUB_glDeformSGIX(tr,jt,uct);
+    break;
+case APICall_glDeformationMap3dSGIX :
+    STUB_glDeformationMap3dSGIX(tr,jt,uct);
+    break;
+case APICall_glDeformationMap3fSGIX :
+    STUB_glDeformationMap3fSGIX(tr,jt,uct);
+    break;
+case APICall_glDeleteAsyncMarkersSGIX :
+    STUB_glDeleteAsyncMarkersSGIX(tr,jt,uct);
+    break;
+case APICall_glDeleteBuffers :
+    STUB_glDeleteBuffers(tr,jt,uct);
+    break;
+case APICall_glDeleteBuffersARB :
+    STUB_glDeleteBuffersARB(tr,jt,uct);
+    break;
+case APICall_glDeleteFencesAPPLE :
+    STUB_glDeleteFencesAPPLE(tr,jt,uct);
+    break;
+case APICall_glDeleteFencesNV :
+    STUB_glDeleteFencesNV(tr,jt,uct);
+    break;
+case APICall_glDeleteFragmentShaderATI :
+    STUB_glDeleteFragmentShaderATI(tr,jt,uct);
+    break;
+case APICall_glDeleteFramebuffers :
+    STUB_glDeleteFramebuffers(tr,jt,uct);
+    break;
+case APICall_glDeleteFramebuffersEXT :
+    STUB_glDeleteFramebuffersEXT(tr,jt,uct);
+    break;
+case APICall_glDeleteLists :
+    STUB_glDeleteLists(tr,jt,uct);
+    break;
+case APICall_glDeleteObjectARB :
+    STUB_glDeleteObjectARB(tr,jt,uct);
+    break;
+case APICall_glDeleteObjectBufferATI :
+    STUB_glDeleteObjectBufferATI(tr,jt,uct);
+    break;
+case APICall_glDeleteOcclusionQueriesNV :
+    STUB_glDeleteOcclusionQueriesNV(tr,jt,uct);
+    break;
+case APICall_glDeletePerfMonitorsAMD :
+    STUB_glDeletePerfMonitorsAMD(tr,jt,uct);
+    break;
+case APICall_glDeleteProgram :
+    STUB_glDeleteProgram(tr,jt,uct);
+    break;
+case APICall_glDeleteProgramsARB :
+    STUB_glDeleteProgramsARB(tr,jt,uct);
+    break;
+case APICall_glDeleteProgramsNV :
+    STUB_glDeleteProgramsNV(tr,jt,uct);
+    break;
+case APICall_glDeleteQueries :
+    STUB_glDeleteQueries(tr,jt,uct);
+    break;
+case APICall_glDeleteQueriesARB :
+    STUB_glDeleteQueriesARB(tr,jt,uct);
+    break;
+case APICall_glDeleteRenderbuffers :
+    STUB_glDeleteRenderbuffers(tr,jt,uct);
+    break;
+case APICall_glDeleteRenderbuffersEXT :
+    STUB_glDeleteRenderbuffersEXT(tr,jt,uct);
+    break;
+case APICall_glDeleteShader :
+    STUB_glDeleteShader(tr,jt,uct);
+    break;
+case APICall_glDeleteTextures :
+    STUB_glDeleteTextures(tr,jt,uct);
+    break;
+case APICall_glDeleteTexturesEXT :
+    STUB_glDeleteTexturesEXT(tr,jt,uct);
+    break;
+case APICall_glDeleteTransformFeedbacksNV :
+    STUB_glDeleteTransformFeedbacksNV(tr,jt,uct);
+    break;
+case APICall_glDeleteVertexArrays :
+    STUB_glDeleteVertexArrays(tr,jt,uct);
+    break;
+case APICall_glDeleteVertexArraysAPPLE :
+    STUB_glDeleteVertexArraysAPPLE(tr,jt,uct);
+    break;
+case APICall_glDeleteVertexShaderEXT :
+    STUB_glDeleteVertexShaderEXT(tr,jt,uct);
+    break;
+case APICall_glDepthBoundsEXT :
+    STUB_glDepthBoundsEXT(tr,jt,uct);
+    break;
+case APICall_glDepthBoundsdNV :
+    STUB_glDepthBoundsdNV(tr,jt,uct);
+    break;
+case APICall_glDepthFunc :
+    STUB_glDepthFunc(tr,jt,uct);
+    break;
+case APICall_glDepthMask :
+    STUB_glDepthMask(tr,jt,uct);
+    break;
+case APICall_glDepthRange :
+    STUB_glDepthRange(tr,jt,uct);
+    break;
+case APICall_glDepthRangedNV :
+    STUB_glDepthRangedNV(tr,jt,uct);
+    break;
+case APICall_glDetachObjectARB :
+    STUB_glDetachObjectARB(tr,jt,uct);
+    break;
+case APICall_glDetachShader :
+    STUB_glDetachShader(tr,jt,uct);
+    break;
+case APICall_glDetailTexFuncSGIS :
+    STUB_glDetailTexFuncSGIS(tr,jt,uct);
+    break;
+case APICall_glDisable :
+    STUB_glDisable(tr,jt,uct);
+    break;
+case APICall_glDisableClientState :
+    STUB_glDisableClientState(tr,jt,uct);
+    break;
+case APICall_glDisableClientStateIndexedEXT :
+    STUB_glDisableClientStateIndexedEXT(tr,jt,uct);
+    break;
+case APICall_glDisableIndexedEXT :
+    STUB_glDisableIndexedEXT(tr,jt,uct);
+    break;
+case APICall_glDisableVariantClientStateEXT :
+    STUB_glDisableVariantClientStateEXT(tr,jt,uct);
+    break;
+case APICall_glDisableVertexAttribArray :
+    STUB_glDisableVertexAttribArray(tr,jt,uct);
+    break;
+case APICall_glDisableVertexAttribArrayARB :
+    STUB_glDisableVertexAttribArrayARB(tr,jt,uct);
+    break;
+case APICall_glDisablei :
+    STUB_glDisablei(tr,jt,uct);
+    break;
+case APICall_glDrawArrays :
+    STUB_glDrawArrays(tr,jt,uct);
+    break;
+case APICall_glDrawArraysEXT :
+    STUB_glDrawArraysEXT(tr,jt,uct);
+    break;
+case APICall_glDrawArraysInstanced :
+    STUB_glDrawArraysInstanced(tr,jt,uct);
+    break;
+case APICall_glDrawArraysInstancedARB :
+    STUB_glDrawArraysInstancedARB(tr,jt,uct);
+    break;
+case APICall_glDrawArraysInstancedEXT :
+    STUB_glDrawArraysInstancedEXT(tr,jt,uct);
+    break;
+case APICall_glDrawBuffer :
+    STUB_glDrawBuffer(tr,jt,uct);
+    break;
+case APICall_glDrawBuffers :
+    STUB_glDrawBuffers(tr,jt,uct);
+    break;
+case APICall_glDrawBuffersARB :
+    STUB_glDrawBuffersARB(tr,jt,uct);
+    break;
+case APICall_glDrawBuffersATI :
+    STUB_glDrawBuffersATI(tr,jt,uct);
+    break;
+case APICall_glDrawElementArrayAPPLE :
+    STUB_glDrawElementArrayAPPLE(tr,jt,uct);
+    break;
+case APICall_glDrawElementArrayATI :
+    STUB_glDrawElementArrayATI(tr,jt,uct);
+    break;
+case APICall_glDrawElements :
+    STUB_glDrawElements(tr,jt,uct);
+    break;
+case APICall_glDrawElementsInstanced :
+    STUB_glDrawElementsInstanced(tr,jt,uct);
+    break;
+case APICall_glDrawElementsInstancedARB :
+    STUB_glDrawElementsInstancedARB(tr,jt,uct);
+    break;
+case APICall_glDrawElementsInstancedEXT :
+    STUB_glDrawElementsInstancedEXT(tr,jt,uct);
+    break;
+case APICall_glDrawPixels :
+    STUB_glDrawPixels(tr,jt,uct);
+    break;
+case APICall_glDrawRangeElementArrayAPPLE :
+    STUB_glDrawRangeElementArrayAPPLE(tr,jt,uct);
+    break;
+case APICall_glDrawRangeElementArrayATI :
+    STUB_glDrawRangeElementArrayATI(tr,jt,uct);
+    break;
+case APICall_glDrawRangeElements :
+    STUB_glDrawRangeElements(tr,jt,uct);
+    break;
+case APICall_glDrawRangeElementsEXT :
+    STUB_glDrawRangeElementsEXT(tr,jt,uct);
+    break;
+case APICall_glDrawTransformFeedbackNV :
+    STUB_glDrawTransformFeedbackNV(tr,jt,uct);
+    break;
+case APICall_glEdgeFlag :
+    STUB_glEdgeFlag(tr,jt,uct);
+    break;
+case APICall_glEdgeFlagPointer :
+    STUB_glEdgeFlagPointer(tr,jt,uct);
+    break;
+case APICall_glEdgeFlagPointerEXT :
+    STUB_glEdgeFlagPointerEXT(tr,jt,uct);
+    break;
+case APICall_glEdgeFlagv :
+    STUB_glEdgeFlagv(tr,jt,uct);
+    break;
+case APICall_glElementPointerAPPLE :
+    STUB_glElementPointerAPPLE(tr,jt,uct);
+    break;
+case APICall_glElementPointerATI :
+    STUB_glElementPointerATI(tr,jt,uct);
+    break;
+case APICall_glEnable :
+    STUB_glEnable(tr,jt,uct);
+    break;
+case APICall_glEnableClientState :
+    STUB_glEnableClientState(tr,jt,uct);
+    break;
+case APICall_glEnableClientStateIndexedEXT :
+    STUB_glEnableClientStateIndexedEXT(tr,jt,uct);
+    break;
+case APICall_glEnableIndexedEXT :
+    STUB_glEnableIndexedEXT(tr,jt,uct);
+    break;
+case APICall_glEnableVariantClientStateEXT :
+    STUB_glEnableVariantClientStateEXT(tr,jt,uct);
+    break;
+case APICall_glEnableVertexAttribArray :
+    STUB_glEnableVertexAttribArray(tr,jt,uct);
+    break;
+case APICall_glEnableVertexAttribArrayARB :
+    STUB_glEnableVertexAttribArrayARB(tr,jt,uct);
+    break;
+case APICall_glEnablei :
+    STUB_glEnablei(tr,jt,uct);
+    break;
+case APICall_glEnd :
+    STUB_glEnd(tr,jt,uct);
+    break;
+case APICall_glEndConditionalRender :
+    STUB_glEndConditionalRender(tr,jt,uct);
+    break;
+case APICall_glEndConditionalRenderNV :
+    STUB_glEndConditionalRenderNV(tr,jt,uct);
+    break;
+case APICall_glEndFragmentShaderATI :
+    STUB_glEndFragmentShaderATI(tr,jt,uct);
+    break;
+case APICall_glEndList :
+    STUB_glEndList(tr,jt,uct);
+    break;
+case APICall_glEndOcclusionQueryNV :
+    STUB_glEndOcclusionQueryNV(tr,jt,uct);
+    break;
+case APICall_glEndPerfMonitorAMD :
+    STUB_glEndPerfMonitorAMD(tr,jt,uct);
+    break;
+case APICall_glEndQuery :
+    STUB_glEndQuery(tr,jt,uct);
+    break;
+case APICall_glEndQueryARB :
+    STUB_glEndQueryARB(tr,jt,uct);
+    break;
+case APICall_glEndTransformFeedback :
+    STUB_glEndTransformFeedback(tr,jt,uct);
+    break;
+case APICall_glEndTransformFeedbackEXT :
+    STUB_glEndTransformFeedbackEXT(tr,jt,uct);
+    break;
+case APICall_glEndTransformFeedbackNV :
+    STUB_glEndTransformFeedbackNV(tr,jt,uct);
+    break;
+case APICall_glEndVertexShaderEXT :
+    STUB_glEndVertexShaderEXT(tr,jt,uct);
+    break;
+case APICall_glEvalCoord1d :
+    STUB_glEvalCoord1d(tr,jt,uct);
+    break;
+case APICall_glEvalCoord1dv :
+    STUB_glEvalCoord1dv(tr,jt,uct);
+    break;
+case APICall_glEvalCoord1f :
+    STUB_glEvalCoord1f(tr,jt,uct);
+    break;
+case APICall_glEvalCoord1fv :
+    STUB_glEvalCoord1fv(tr,jt,uct);
+    break;
+case APICall_glEvalCoord2d :
+    STUB_glEvalCoord2d(tr,jt,uct);
+    break;
+case APICall_glEvalCoord2dv :
+    STUB_glEvalCoord2dv(tr,jt,uct);
+    break;
+case APICall_glEvalCoord2f :
+    STUB_glEvalCoord2f(tr,jt,uct);
+    break;
+case APICall_glEvalCoord2fv :
+    STUB_glEvalCoord2fv(tr,jt,uct);
+    break;
+case APICall_glEvalMapsNV :
+    STUB_glEvalMapsNV(tr,jt,uct);
+    break;
+case APICall_glEvalMesh1 :
+    STUB_glEvalMesh1(tr,jt,uct);
+    break;
+case APICall_glEvalMesh2 :
+    STUB_glEvalMesh2(tr,jt,uct);
+    break;
+case APICall_glEvalPoint1 :
+    STUB_glEvalPoint1(tr,jt,uct);
+    break;
+case APICall_glEvalPoint2 :
+    STUB_glEvalPoint2(tr,jt,uct);
+    break;
+case APICall_glExecuteProgramNV :
+    STUB_glExecuteProgramNV(tr,jt,uct);
+    break;
+case APICall_glExtractComponentEXT :
+    STUB_glExtractComponentEXT(tr,jt,uct);
+    break;
+case APICall_glFeedbackBuffer :
+    STUB_glFeedbackBuffer(tr,jt,uct);
+    break;
+case APICall_glFinalCombinerInputNV :
+    STUB_glFinalCombinerInputNV(tr,jt,uct);
+    break;
+case APICall_glFinish :
+    STUB_glFinish(tr,jt,uct);
+    break;
+case APICall_glFinishAsyncSGIX :
+    STUB_glFinishAsyncSGIX(tr,jt,uct);
+    break;
+case APICall_glFinishFenceAPPLE :
+    STUB_glFinishFenceAPPLE(tr,jt,uct);
+    break;
+case APICall_glFinishFenceNV :
+    STUB_glFinishFenceNV(tr,jt,uct);
+    break;
+case APICall_glFinishObjectAPPLE :
+    STUB_glFinishObjectAPPLE(tr,jt,uct);
+    break;
+case APICall_glFlush :
+    STUB_glFlush(tr,jt,uct);
+    break;
+case APICall_glFlushMappedBufferRange :
+    STUB_glFlushMappedBufferRange(tr,jt,uct);
+    break;
+case APICall_glFlushMappedBufferRangeAPPLE :
+    STUB_glFlushMappedBufferRangeAPPLE(tr,jt,uct);
+    break;
+case APICall_glFlushPixelDataRangeNV :
+    STUB_glFlushPixelDataRangeNV(tr,jt,uct);
+    break;
+case APICall_glFlushRasterSGIX :
+    STUB_glFlushRasterSGIX(tr,jt,uct);
+    break;
+case APICall_glFlushVertexArrayRangeAPPLE :
+    STUB_glFlushVertexArrayRangeAPPLE(tr,jt,uct);
+    break;
+case APICall_glFlushVertexArrayRangeNV :
+    STUB_glFlushVertexArrayRangeNV(tr,jt,uct);
+    break;
+case APICall_glFogCoordPointer :
+    STUB_glFogCoordPointer(tr,jt,uct);
+    break;
+case APICall_glFogCoordPointerEXT :
+    STUB_glFogCoordPointerEXT(tr,jt,uct);
+    break;
+case APICall_glFogCoordd :
+    STUB_glFogCoordd(tr,jt,uct);
+    break;
+case APICall_glFogCoorddEXT :
+    STUB_glFogCoorddEXT(tr,jt,uct);
+    break;
+case APICall_glFogCoorddv :
+    STUB_glFogCoorddv(tr,jt,uct);
+    break;
+case APICall_glFogCoorddvEXT :
+    STUB_glFogCoorddvEXT(tr,jt,uct);
+    break;
+case APICall_glFogCoordf :
+    STUB_glFogCoordf(tr,jt,uct);
+    break;
+case APICall_glFogCoordfEXT :
+    STUB_glFogCoordfEXT(tr,jt,uct);
+    break;
+case APICall_glFogCoordfv :
+    STUB_glFogCoordfv(tr,jt,uct);
+    break;
+case APICall_glFogCoordfvEXT :
+    STUB_glFogCoordfvEXT(tr,jt,uct);
+    break;
+case APICall_glFogCoordhNV :
+    STUB_glFogCoordhNV(tr,jt,uct);
+    break;
+case APICall_glFogCoordhvNV :
+    STUB_glFogCoordhvNV(tr,jt,uct);
+    break;
+case APICall_glFogFuncSGIS :
+    STUB_glFogFuncSGIS(tr,jt,uct);
+    break;
+case APICall_glFogf :
+    STUB_glFogf(tr,jt,uct);
+    break;
+case APICall_glFogfv :
+    STUB_glFogfv(tr,jt,uct);
+    break;
+case APICall_glFogi :
+    STUB_glFogi(tr,jt,uct);
+    break;
+case APICall_glFogiv :
+    STUB_glFogiv(tr,jt,uct);
+    break;
+case APICall_glFragmentColorMaterialSGIX :
+    STUB_glFragmentColorMaterialSGIX(tr,jt,uct);
+    break;
+case APICall_glFragmentLightModelfSGIX :
+    STUB_glFragmentLightModelfSGIX(tr,jt,uct);
+    break;
+case APICall_glFragmentLightModelfvSGIX :
+    STUB_glFragmentLightModelfvSGIX(tr,jt,uct);
+    break;
+case APICall_glFragmentLightModeliSGIX :
+    STUB_glFragmentLightModeliSGIX(tr,jt,uct);
+    break;
+case APICall_glFragmentLightModelivSGIX :
+    STUB_glFragmentLightModelivSGIX(tr,jt,uct);
+    break;
+case APICall_glFragmentLightfSGIX :
+    STUB_glFragmentLightfSGIX(tr,jt,uct);
+    break;
+case APICall_glFragmentLightfvSGIX :
+    STUB_glFragmentLightfvSGIX(tr,jt,uct);
+    break;
+case APICall_glFragmentLightiSGIX :
+    STUB_glFragmentLightiSGIX(tr,jt,uct);
+    break;
+case APICall_glFragmentLightivSGIX :
+    STUB_glFragmentLightivSGIX(tr,jt,uct);
+    break;
+case APICall_glFragmentMaterialfSGIX :
+    STUB_glFragmentMaterialfSGIX(tr,jt,uct);
+    break;
+case APICall_glFragmentMaterialfvSGIX :
+    STUB_glFragmentMaterialfvSGIX(tr,jt,uct);
+    break;
+case APICall_glFragmentMaterialiSGIX :
+    STUB_glFragmentMaterialiSGIX(tr,jt,uct);
+    break;
+case APICall_glFragmentMaterialivSGIX :
+    STUB_glFragmentMaterialivSGIX(tr,jt,uct);
+    break;
+case APICall_glFrameTerminatorGREMEDY :
+    STUB_glFrameTerminatorGREMEDY(tr,jt,uct);
+    break;
+case APICall_glFrameZoomSGIX :
+    STUB_glFrameZoomSGIX(tr,jt,uct);
+    break;
+case APICall_glFramebufferDrawBufferEXT :
+    STUB_glFramebufferDrawBufferEXT(tr,jt,uct);
+    break;
+case APICall_glFramebufferDrawBuffersEXT :
+    STUB_glFramebufferDrawBuffersEXT(tr,jt,uct);
+    break;
+case APICall_glFramebufferReadBufferEXT :
+    STUB_glFramebufferReadBufferEXT(tr,jt,uct);
+    break;
+case APICall_glFramebufferRenderbuffer :
+    STUB_glFramebufferRenderbuffer(tr,jt,uct);
+    break;
+case APICall_glFramebufferRenderbufferEXT :
+    STUB_glFramebufferRenderbufferEXT(tr,jt,uct);
+    break;
+case APICall_glFramebufferTexture1D :
+    STUB_glFramebufferTexture1D(tr,jt,uct);
+    break;
+case APICall_glFramebufferTexture1DEXT :
+    STUB_glFramebufferTexture1DEXT(tr,jt,uct);
+    break;
+case APICall_glFramebufferTexture2D :
+    STUB_glFramebufferTexture2D(tr,jt,uct);
+    break;
+case APICall_glFramebufferTexture2DEXT :
+    STUB_glFramebufferTexture2DEXT(tr,jt,uct);
+    break;
+case APICall_glFramebufferTexture3D :
+    STUB_glFramebufferTexture3D(tr,jt,uct);
+    break;
+case APICall_glFramebufferTexture3DEXT :
+    STUB_glFramebufferTexture3DEXT(tr,jt,uct);
+    break;
+case APICall_glFramebufferTextureARB :
+    STUB_glFramebufferTextureARB(tr,jt,uct);
+    break;
+case APICall_glFramebufferTextureEXT :
+    STUB_glFramebufferTextureEXT(tr,jt,uct);
+    break;
+case APICall_glFramebufferTextureFaceARB :
+    STUB_glFramebufferTextureFaceARB(tr,jt,uct);
+    break;
+case APICall_glFramebufferTextureFaceEXT :
+    STUB_glFramebufferTextureFaceEXT(tr,jt,uct);
+    break;
+case APICall_glFramebufferTextureLayer :
+    STUB_glFramebufferTextureLayer(tr,jt,uct);
+    break;
+case APICall_glFramebufferTextureLayerARB :
+    STUB_glFramebufferTextureLayerARB(tr,jt,uct);
+    break;
+case APICall_glFramebufferTextureLayerEXT :
+    STUB_glFramebufferTextureLayerEXT(tr,jt,uct);
+    break;
+case APICall_glFreeObjectBufferATI :
+    STUB_glFreeObjectBufferATI(tr,jt,uct);
+    break;
+case APICall_glFrontFace :
+    STUB_glFrontFace(tr,jt,uct);
+    break;
+case APICall_glFrustum :
+    STUB_glFrustum(tr,jt,uct);
+    break;
+case APICall_glGenAsyncMarkersSGIX :
+    STUB_glGenAsyncMarkersSGIX(tr,jt,uct);
+    break;
+case APICall_glGenBuffers :
+    STUB_glGenBuffers(tr,jt,uct);
+    break;
+case APICall_glGenBuffersARB :
+    STUB_glGenBuffersARB(tr,jt,uct);
+    break;
+case APICall_glGenFencesAPPLE :
+    STUB_glGenFencesAPPLE(tr,jt,uct);
+    break;
+case APICall_glGenFencesNV :
+    STUB_glGenFencesNV(tr,jt,uct);
+    break;
+case APICall_glGenFragmentShadersATI :
+    STUB_glGenFragmentShadersATI(tr,jt,uct);
+    break;
+case APICall_glGenFramebuffers :
+    STUB_glGenFramebuffers(tr,jt,uct);
+    break;
+case APICall_glGenFramebuffersEXT :
+    STUB_glGenFramebuffersEXT(tr,jt,uct);
+    break;
+case APICall_glGenLists :
+    STUB_glGenLists(tr,jt,uct);
+    break;
+case APICall_glGenOcclusionQueriesNV :
+    STUB_glGenOcclusionQueriesNV(tr,jt,uct);
+    break;
+case APICall_glGenPerfMonitorsAMD :
+    STUB_glGenPerfMonitorsAMD(tr,jt,uct);
+    break;
+case APICall_glGenProgramsARB :
+    STUB_glGenProgramsARB(tr,jt,uct);
+    break;
+case APICall_glGenProgramsNV :
+    STUB_glGenProgramsNV(tr,jt,uct);
+    break;
+case APICall_glGenQueries :
+    STUB_glGenQueries(tr,jt,uct);
+    break;
+case APICall_glGenQueriesARB :
+    STUB_glGenQueriesARB(tr,jt,uct);
+    break;
+case APICall_glGenRenderbuffers :
+    STUB_glGenRenderbuffers(tr,jt,uct);
+    break;
+case APICall_glGenRenderbuffersEXT :
+    STUB_glGenRenderbuffersEXT(tr,jt,uct);
+    break;
+case APICall_glGenSymbolsEXT :
+    STUB_glGenSymbolsEXT(tr,jt,uct);
+    break;
+case APICall_glGenTextures :
+    STUB_glGenTextures(tr,jt,uct);
+    break;
+case APICall_glGenTexturesEXT :
+    STUB_glGenTexturesEXT(tr,jt,uct);
+    break;
+case APICall_glGenTransformFeedbacksNV :
+    STUB_glGenTransformFeedbacksNV(tr,jt,uct);
+    break;
+case APICall_glGenVertexArrays :
+    STUB_glGenVertexArrays(tr,jt,uct);
+    break;
+case APICall_glGenVertexArraysAPPLE :
+    STUB_glGenVertexArraysAPPLE(tr,jt,uct);
+    break;
+case APICall_glGenVertexShadersEXT :
+    STUB_glGenVertexShadersEXT(tr,jt,uct);
+    break;
+case APICall_glGenerateMipmap :
+    STUB_glGenerateMipmap(tr,jt,uct);
+    break;
+case APICall_glGenerateMipmapEXT :
+    STUB_glGenerateMipmapEXT(tr,jt,uct);
+    break;
+case APICall_glGenerateMultiTexMipmapEXT :
+    STUB_glGenerateMultiTexMipmapEXT(tr,jt,uct);
+    break;
+case APICall_glGenerateTextureMipmapEXT :
+    STUB_glGenerateTextureMipmapEXT(tr,jt,uct);
+    break;
+case APICall_glGetActiveAttrib :
+    STUB_glGetActiveAttrib(tr,jt,uct);
+    break;
+case APICall_glGetActiveAttribARB :
+    STUB_glGetActiveAttribARB(tr,jt,uct);
+    break;
+case APICall_glGetActiveUniform :
+    STUB_glGetActiveUniform(tr,jt,uct);
+    break;
+case APICall_glGetActiveUniformARB :
+    STUB_glGetActiveUniformARB(tr,jt,uct);
+    break;
+case APICall_glGetActiveUniformBlockName :
+    STUB_glGetActiveUniformBlockName(tr,jt,uct);
+    break;
+case APICall_glGetActiveUniformBlockiv :
+    STUB_glGetActiveUniformBlockiv(tr,jt,uct);
+    break;
+case APICall_glGetActiveUniformName :
+    STUB_glGetActiveUniformName(tr,jt,uct);
+    break;
+case APICall_glGetActiveUniformsiv :
+    STUB_glGetActiveUniformsiv(tr,jt,uct);
+    break;
+case APICall_glGetActiveVaryingNV :
+    STUB_glGetActiveVaryingNV(tr,jt,uct);
+    break;
+case APICall_glGetArrayObjectfvATI :
+    STUB_glGetArrayObjectfvATI(tr,jt,uct);
+    break;
+case APICall_glGetArrayObjectivATI :
+    STUB_glGetArrayObjectivATI(tr,jt,uct);
+    break;
+case APICall_glGetAttachedObjectsARB :
+    STUB_glGetAttachedObjectsARB(tr,jt,uct);
+    break;
+case APICall_glGetAttachedShaders :
+    STUB_glGetAttachedShaders(tr,jt,uct);
+    break;
+case APICall_glGetAttribLocation :
+    STUB_glGetAttribLocation(tr,jt,uct);
+    break;
+case APICall_glGetAttribLocationARB :
+    STUB_glGetAttribLocationARB(tr,jt,uct);
+    break;
+case APICall_glGetBooleanIndexedvEXT :
+    STUB_glGetBooleanIndexedvEXT(tr,jt,uct);
+    break;
+case APICall_glGetBooleani_v :
+    STUB_glGetBooleani_v(tr,jt,uct);
+    break;
+case APICall_glGetBooleanv :
+    STUB_glGetBooleanv(tr,jt,uct);
+    break;
+case APICall_glGetBufferParameteriv :
+    STUB_glGetBufferParameteriv(tr,jt,uct);
+    break;
+case APICall_glGetBufferParameterivARB :
+    STUB_glGetBufferParameterivARB(tr,jt,uct);
+    break;
+case APICall_glGetBufferPointerv :
+    STUB_glGetBufferPointerv(tr,jt,uct);
+    break;
+case APICall_glGetBufferPointervARB :
+    STUB_glGetBufferPointervARB(tr,jt,uct);
+    break;
+case APICall_glGetBufferSubData :
+    STUB_glGetBufferSubData(tr,jt,uct);
+    break;
+case APICall_glGetBufferSubDataARB :
+    STUB_glGetBufferSubDataARB(tr,jt,uct);
+    break;
+case APICall_glGetClipPlane :
+    STUB_glGetClipPlane(tr,jt,uct);
+    break;
+case APICall_glGetColorTable :
+    STUB_glGetColorTable(tr,jt,uct);
+    break;
+case APICall_glGetColorTableEXT :
+    STUB_glGetColorTableEXT(tr,jt,uct);
+    break;
+case APICall_glGetColorTableParameterfv :
+    STUB_glGetColorTableParameterfv(tr,jt,uct);
+    break;
+case APICall_glGetColorTableParameterfvEXT :
+    STUB_glGetColorTableParameterfvEXT(tr,jt,uct);
+    break;
+case APICall_glGetColorTableParameterfvSGI :
+    STUB_glGetColorTableParameterfvSGI(tr,jt,uct);
+    break;
+case APICall_glGetColorTableParameteriv :
+    STUB_glGetColorTableParameteriv(tr,jt,uct);
+    break;
+case APICall_glGetColorTableParameterivEXT :
+    STUB_glGetColorTableParameterivEXT(tr,jt,uct);
+    break;
+case APICall_glGetColorTableParameterivSGI :
+    STUB_glGetColorTableParameterivSGI(tr,jt,uct);
+    break;
+case APICall_glGetColorTableSGI :
+    STUB_glGetColorTableSGI(tr,jt,uct);
+    break;
+case APICall_glGetCombinerInputParameterfvNV :
+    STUB_glGetCombinerInputParameterfvNV(tr,jt,uct);
+    break;
+case APICall_glGetCombinerInputParameterivNV :
+    STUB_glGetCombinerInputParameterivNV(tr,jt,uct);
+    break;
+case APICall_glGetCombinerOutputParameterfvNV :
+    STUB_glGetCombinerOutputParameterfvNV(tr,jt,uct);
+    break;
+case APICall_glGetCombinerOutputParameterivNV :
+    STUB_glGetCombinerOutputParameterivNV(tr,jt,uct);
+    break;
+case APICall_glGetCombinerStageParameterfvNV :
+    STUB_glGetCombinerStageParameterfvNV(tr,jt,uct);
+    break;
+case APICall_glGetCompressedMultiTexImageEXT :
+    STUB_glGetCompressedMultiTexImageEXT(tr,jt,uct);
+    break;
+case APICall_glGetCompressedTexImage :
+    STUB_glGetCompressedTexImage(tr,jt,uct);
+    break;
+case APICall_glGetCompressedTexImageARB :
+    STUB_glGetCompressedTexImageARB(tr,jt,uct);
+    break;
+case APICall_glGetCompressedTextureImageEXT :
+    STUB_glGetCompressedTextureImageEXT(tr,jt,uct);
+    break;
+case APICall_glGetConvolutionFilter :
+    STUB_glGetConvolutionFilter(tr,jt,uct);
+    break;
+case APICall_glGetConvolutionFilterEXT :
+    STUB_glGetConvolutionFilterEXT(tr,jt,uct);
+    break;
+case APICall_glGetConvolutionParameterfv :
+    STUB_glGetConvolutionParameterfv(tr,jt,uct);
+    break;
+case APICall_glGetConvolutionParameterfvEXT :
+    STUB_glGetConvolutionParameterfvEXT(tr,jt,uct);
+    break;
+case APICall_glGetConvolutionParameteriv :
+    STUB_glGetConvolutionParameteriv(tr,jt,uct);
+    break;
+case APICall_glGetConvolutionParameterivEXT :
+    STUB_glGetConvolutionParameterivEXT(tr,jt,uct);
+    break;
+case APICall_glGetDetailTexFuncSGIS :
+    STUB_glGetDetailTexFuncSGIS(tr,jt,uct);
+    break;
+case APICall_glGetDoubleIndexedvEXT :
+    STUB_glGetDoubleIndexedvEXT(tr,jt,uct);
+    break;
+case APICall_glGetDoublev :
+    STUB_glGetDoublev(tr,jt,uct);
+    break;
+case APICall_glGetError :
+    STUB_glGetError(tr,jt,uct);
+    break;
+case APICall_glGetFenceivNV :
+    STUB_glGetFenceivNV(tr,jt,uct);
+    break;
+case APICall_glGetFinalCombinerInputParameterfvNV :
+    STUB_glGetFinalCombinerInputParameterfvNV(tr,jt,uct);
+    break;
+case APICall_glGetFinalCombinerInputParameterivNV :
+    STUB_glGetFinalCombinerInputParameterivNV(tr,jt,uct);
+    break;
+case APICall_glGetFloatIndexedvEXT :
+    STUB_glGetFloatIndexedvEXT(tr,jt,uct);
+    break;
+case APICall_glGetFloatv :
+    STUB_glGetFloatv(tr,jt,uct);
+    break;
+case APICall_glGetFogFuncSGIS :
+    STUB_glGetFogFuncSGIS(tr,jt,uct);
+    break;
+case APICall_glGetFragDataLocation :
+    STUB_glGetFragDataLocation(tr,jt,uct);
+    break;
+case APICall_glGetFragDataLocationEXT :
+    STUB_glGetFragDataLocationEXT(tr,jt,uct);
+    break;
+case APICall_glGetFragmentLightfvSGIX :
+    STUB_glGetFragmentLightfvSGIX(tr,jt,uct);
+    break;
+case APICall_glGetFragmentLightivSGIX :
+    STUB_glGetFragmentLightivSGIX(tr,jt,uct);
+    break;
+case APICall_glGetFragmentMaterialfvSGIX :
+    STUB_glGetFragmentMaterialfvSGIX(tr,jt,uct);
+    break;
+case APICall_glGetFragmentMaterialivSGIX :
+    STUB_glGetFragmentMaterialivSGIX(tr,jt,uct);
+    break;
+case APICall_glGetFramebufferAttachmentParameteriv :
+    STUB_glGetFramebufferAttachmentParameteriv(tr,jt,uct);
+    break;
+case APICall_glGetFramebufferAttachmentParameterivEXT :
+    STUB_glGetFramebufferAttachmentParameterivEXT(tr,jt,uct);
+    break;
+case APICall_glGetFramebufferParameterivEXT :
+    STUB_glGetFramebufferParameterivEXT(tr,jt,uct);
+    break;
+case APICall_glGetHandleARB :
+    STUB_glGetHandleARB(tr,jt,uct);
+    break;
+case APICall_glGetHistogram :
+    STUB_glGetHistogram(tr,jt,uct);
+    break;
+case APICall_glGetHistogramEXT :
+    STUB_glGetHistogramEXT(tr,jt,uct);
+    break;
+case APICall_glGetHistogramParameterfv :
+    STUB_glGetHistogramParameterfv(tr,jt,uct);
+    break;
+case APICall_glGetHistogramParameterfvEXT :
+    STUB_glGetHistogramParameterfvEXT(tr,jt,uct);
+    break;
+case APICall_glGetHistogramParameteriv :
+    STUB_glGetHistogramParameteriv(tr,jt,uct);
+    break;
+case APICall_glGetHistogramParameterivEXT :
+    STUB_glGetHistogramParameterivEXT(tr,jt,uct);
+    break;
+case APICall_glGetImageTransformParameterfvHP :
+    STUB_glGetImageTransformParameterfvHP(tr,jt,uct);
+    break;
+case APICall_glGetImageTransformParameterivHP :
+    STUB_glGetImageTransformParameterivHP(tr,jt,uct);
+    break;
+case APICall_glGetInfoLogARB :
+    STUB_glGetInfoLogARB(tr,jt,uct);
+    break;
+case APICall_glGetInstrumentsSGIX :
+    STUB_glGetInstrumentsSGIX(tr,jt,uct);
+    break;
+case APICall_glGetIntegerIndexedvEXT :
+    STUB_glGetIntegerIndexedvEXT(tr,jt,uct);
+    break;
+case APICall_glGetIntegeri_v :
+    STUB_glGetIntegeri_v(tr,jt,uct);
+    break;
+case APICall_glGetIntegerv :
+    STUB_glGetIntegerv(tr,jt,uct);
+    break;
+case APICall_glGetInvariantBooleanvEXT :
+    STUB_glGetInvariantBooleanvEXT(tr,jt,uct);
+    break;
+case APICall_glGetInvariantFloatvEXT :
+    STUB_glGetInvariantFloatvEXT(tr,jt,uct);
+    break;
+case APICall_glGetInvariantIntegervEXT :
+    STUB_glGetInvariantIntegervEXT(tr,jt,uct);
+    break;
+case APICall_glGetLightfv :
+    STUB_glGetLightfv(tr,jt,uct);
+    break;
+case APICall_glGetLightiv :
+    STUB_glGetLightiv(tr,jt,uct);
+    break;
+case APICall_glGetListParameterfvSGIX :
+    STUB_glGetListParameterfvSGIX(tr,jt,uct);
+    break;
+case APICall_glGetListParameterivSGIX :
+    STUB_glGetListParameterivSGIX(tr,jt,uct);
+    break;
+case APICall_glGetLocalConstantBooleanvEXT :
+    STUB_glGetLocalConstantBooleanvEXT(tr,jt,uct);
+    break;
+case APICall_glGetLocalConstantFloatvEXT :
+    STUB_glGetLocalConstantFloatvEXT(tr,jt,uct);
+    break;
+case APICall_glGetLocalConstantIntegervEXT :
+    STUB_glGetLocalConstantIntegervEXT(tr,jt,uct);
+    break;
+case APICall_glGetMapAttribParameterfvNV :
+    STUB_glGetMapAttribParameterfvNV(tr,jt,uct);
+    break;
+case APICall_glGetMapAttribParameterivNV :
+    STUB_glGetMapAttribParameterivNV(tr,jt,uct);
+    break;
+case APICall_glGetMapControlPointsNV :
+    STUB_glGetMapControlPointsNV(tr,jt,uct);
+    break;
+case APICall_glGetMapParameterfvNV :
+    STUB_glGetMapParameterfvNV(tr,jt,uct);
+    break;
+case APICall_glGetMapParameterivNV :
+    STUB_glGetMapParameterivNV(tr,jt,uct);
+    break;
+case APICall_glGetMapdv :
+    STUB_glGetMapdv(tr,jt,uct);
+    break;
+case APICall_glGetMapfv :
+    STUB_glGetMapfv(tr,jt,uct);
+    break;
+case APICall_glGetMapiv :
+    STUB_glGetMapiv(tr,jt,uct);
+    break;
+case APICall_glGetMaterialfv :
+    STUB_glGetMaterialfv(tr,jt,uct);
+    break;
+case APICall_glGetMaterialiv :
+    STUB_glGetMaterialiv(tr,jt,uct);
+    break;
+case APICall_glGetMinmax :
+    STUB_glGetMinmax(tr,jt,uct);
+    break;
+case APICall_glGetMinmaxEXT :
+    STUB_glGetMinmaxEXT(tr,jt,uct);
+    break;
+case APICall_glGetMinmaxParameterfv :
+    STUB_glGetMinmaxParameterfv(tr,jt,uct);
+    break;
+case APICall_glGetMinmaxParameterfvEXT :
+    STUB_glGetMinmaxParameterfvEXT(tr,jt,uct);
+    break;
+case APICall_glGetMinmaxParameteriv :
+    STUB_glGetMinmaxParameteriv(tr,jt,uct);
+    break;
+case APICall_glGetMinmaxParameterivEXT :
+    STUB_glGetMinmaxParameterivEXT(tr,jt,uct);
+    break;
+case APICall_glGetMultiTexEnvfvEXT :
+    STUB_glGetMultiTexEnvfvEXT(tr,jt,uct);
+    break;
+case APICall_glGetMultiTexEnvivEXT :
+    STUB_glGetMultiTexEnvivEXT(tr,jt,uct);
+    break;
+case APICall_glGetMultiTexGendvEXT :
+    STUB_glGetMultiTexGendvEXT(tr,jt,uct);
+    break;
+case APICall_glGetMultiTexGenfvEXT :
+    STUB_glGetMultiTexGenfvEXT(tr,jt,uct);
+    break;
+case APICall_glGetMultiTexGenivEXT :
+    STUB_glGetMultiTexGenivEXT(tr,jt,uct);
+    break;
+case APICall_glGetMultiTexImageEXT :
+    STUB_glGetMultiTexImageEXT(tr,jt,uct);
+    break;
+case APICall_glGetMultiTexLevelParameterfvEXT :
+    STUB_glGetMultiTexLevelParameterfvEXT(tr,jt,uct);
+    break;
+case APICall_glGetMultiTexLevelParameterivEXT :
+    STUB_glGetMultiTexLevelParameterivEXT(tr,jt,uct);
+    break;
+case APICall_glGetMultiTexParameterIivEXT :
+    STUB_glGetMultiTexParameterIivEXT(tr,jt,uct);
+    break;
+case APICall_glGetMultiTexParameterIuivEXT :
+    STUB_glGetMultiTexParameterIuivEXT(tr,jt,uct);
+    break;
+case APICall_glGetMultiTexParameterfvEXT :
+    STUB_glGetMultiTexParameterfvEXT(tr,jt,uct);
+    break;
+case APICall_glGetMultiTexParameterivEXT :
+    STUB_glGetMultiTexParameterivEXT(tr,jt,uct);
+    break;
+case APICall_glGetMultisamplefvNV :
+    STUB_glGetMultisamplefvNV(tr,jt,uct);
+    break;
+case APICall_glGetNamedBufferParameterivEXT :
+    STUB_glGetNamedBufferParameterivEXT(tr,jt,uct);
+    break;
+case APICall_glGetNamedBufferPointervEXT :
+    STUB_glGetNamedBufferPointervEXT(tr,jt,uct);
+    break;
+case APICall_glGetNamedBufferSubDataEXT :
+    STUB_glGetNamedBufferSubDataEXT(tr,jt,uct);
+    break;
+case APICall_glGetNamedFramebufferAttachmentParameterivEXT :
+    STUB_glGetNamedFramebufferAttachmentParameterivEXT(tr,jt,uct);
+    break;
+case APICall_glGetNamedProgramLocalParameterIivEXT :
+    STUB_glGetNamedProgramLocalParameterIivEXT(tr,jt,uct);
+    break;
+case APICall_glGetNamedProgramLocalParameterIuivEXT :
+    STUB_glGetNamedProgramLocalParameterIuivEXT(tr,jt,uct);
+    break;
+case APICall_glGetNamedProgramLocalParameterdvEXT :
+    STUB_glGetNamedProgramLocalParameterdvEXT(tr,jt,uct);
+    break;
+case APICall_glGetNamedProgramLocalParameterfvEXT :
+    STUB_glGetNamedProgramLocalParameterfvEXT(tr,jt,uct);
+    break;
+case APICall_glGetNamedProgramStringEXT :
+    STUB_glGetNamedProgramStringEXT(tr,jt,uct);
+    break;
+case APICall_glGetNamedProgramivEXT :
+    STUB_glGetNamedProgramivEXT(tr,jt,uct);
+    break;
+case APICall_glGetNamedRenderbufferParameterivEXT :
+    STUB_glGetNamedRenderbufferParameterivEXT(tr,jt,uct);
+    break;
+case APICall_glGetObjectBufferfvATI :
+    STUB_glGetObjectBufferfvATI(tr,jt,uct);
+    break;
+case APICall_glGetObjectBufferivATI :
+    STUB_glGetObjectBufferivATI(tr,jt,uct);
+    break;
+case APICall_glGetObjectParameterfvARB :
+    STUB_glGetObjectParameterfvARB(tr,jt,uct);
+    break;
+case APICall_glGetObjectParameterivARB :
+    STUB_glGetObjectParameterivARB(tr,jt,uct);
+    break;
+case APICall_glGetOcclusionQueryivNV :
+    STUB_glGetOcclusionQueryivNV(tr,jt,uct);
+    break;
+case APICall_glGetOcclusionQueryuivNV :
+    STUB_glGetOcclusionQueryuivNV(tr,jt,uct);
+    break;
+case APICall_glGetPerfMonitorCounterDataAMD :
+    STUB_glGetPerfMonitorCounterDataAMD(tr,jt,uct);
+    break;
+case APICall_glGetPerfMonitorCounterInfoAMD :
+    STUB_glGetPerfMonitorCounterInfoAMD(tr,jt,uct);
+    break;
+case APICall_glGetPerfMonitorCounterStringAMD :
+    STUB_glGetPerfMonitorCounterStringAMD(tr,jt,uct);
+    break;
+case APICall_glGetPerfMonitorCountersAMD :
+    STUB_glGetPerfMonitorCountersAMD(tr,jt,uct);
+    break;
+case APICall_glGetPerfMonitorGroupStringAMD :
+    STUB_glGetPerfMonitorGroupStringAMD(tr,jt,uct);
+    break;
+case APICall_glGetPerfMonitorGroupsAMD :
+    STUB_glGetPerfMonitorGroupsAMD(tr,jt,uct);
+    break;
+case APICall_glGetPixelMapfv :
+    STUB_glGetPixelMapfv(tr,jt,uct);
+    break;
+case APICall_glGetPixelMapuiv :
+    STUB_glGetPixelMapuiv(tr,jt,uct);
+    break;
+case APICall_glGetPixelMapusv :
+    STUB_glGetPixelMapusv(tr,jt,uct);
+    break;
+case APICall_glGetPixelTexGenParameterfvSGIS :
+    STUB_glGetPixelTexGenParameterfvSGIS(tr,jt,uct);
+    break;
+case APICall_glGetPixelTexGenParameterivSGIS :
+    STUB_glGetPixelTexGenParameterivSGIS(tr,jt,uct);
+    break;
+case APICall_glGetPointerIndexedvEXT :
+    STUB_glGetPointerIndexedvEXT(tr,jt,uct);
+    break;
+case APICall_glGetPointerv :
+    STUB_glGetPointerv(tr,jt,uct);
+    break;
+case APICall_glGetPointervEXT :
+    STUB_glGetPointervEXT(tr,jt,uct);
+    break;
+case APICall_glGetPolygonStipple :
+    STUB_glGetPolygonStipple(tr,jt,uct);
+    break;
+case APICall_glGetProgramEnvParameterIivNV :
+    STUB_glGetProgramEnvParameterIivNV(tr,jt,uct);
+    break;
+case APICall_glGetProgramEnvParameterIuivNV :
+    STUB_glGetProgramEnvParameterIuivNV(tr,jt,uct);
+    break;
+case APICall_glGetProgramEnvParameterdvARB :
+    STUB_glGetProgramEnvParameterdvARB(tr,jt,uct);
+    break;
+case APICall_glGetProgramEnvParameterfvARB :
+    STUB_glGetProgramEnvParameterfvARB(tr,jt,uct);
+    break;
+case APICall_glGetProgramInfoLog :
+    STUB_glGetProgramInfoLog(tr,jt,uct);
+    break;
+case APICall_glGetProgramLocalParameterIivNV :
+    STUB_glGetProgramLocalParameterIivNV(tr,jt,uct);
+    break;
+case APICall_glGetProgramLocalParameterIuivNV :
+    STUB_glGetProgramLocalParameterIuivNV(tr,jt,uct);
+    break;
+case APICall_glGetProgramLocalParameterdvARB :
+    STUB_glGetProgramLocalParameterdvARB(tr,jt,uct);
+    break;
+case APICall_glGetProgramLocalParameterfvARB :
+    STUB_glGetProgramLocalParameterfvARB(tr,jt,uct);
+    break;
+case APICall_glGetProgramNamedParameterdvNV :
+    STUB_glGetProgramNamedParameterdvNV(tr,jt,uct);
+    break;
+case APICall_glGetProgramNamedParameterfvNV :
+    STUB_glGetProgramNamedParameterfvNV(tr,jt,uct);
+    break;
+case APICall_glGetProgramParameterdvNV :
+    STUB_glGetProgramParameterdvNV(tr,jt,uct);
+    break;
+case APICall_glGetProgramParameterfvNV :
+    STUB_glGetProgramParameterfvNV(tr,jt,uct);
+    break;
+case APICall_glGetProgramStringARB :
+    STUB_glGetProgramStringARB(tr,jt,uct);
+    break;
+case APICall_glGetProgramStringNV :
+    STUB_glGetProgramStringNV(tr,jt,uct);
+    break;
+case APICall_glGetProgramiv :
+    STUB_glGetProgramiv(tr,jt,uct);
+    break;
+case APICall_glGetProgramivARB :
+    STUB_glGetProgramivARB(tr,jt,uct);
+    break;
+case APICall_glGetProgramivNV :
+    STUB_glGetProgramivNV(tr,jt,uct);
+    break;
+case APICall_glGetQueryObjecti64vEXT :
+    STUB_glGetQueryObjecti64vEXT(tr,jt,uct);
+    break;
+case APICall_glGetQueryObjectiv :
+    STUB_glGetQueryObjectiv(tr,jt,uct);
+    break;
+case APICall_glGetQueryObjectivARB :
+    STUB_glGetQueryObjectivARB(tr,jt,uct);
+    break;
+case APICall_glGetQueryObjectui64vEXT :
+    STUB_glGetQueryObjectui64vEXT(tr,jt,uct);
+    break;
+case APICall_glGetQueryObjectuiv :
+    STUB_glGetQueryObjectuiv(tr,jt,uct);
+    break;
+case APICall_glGetQueryObjectuivARB :
+    STUB_glGetQueryObjectuivARB(tr,jt,uct);
+    break;
+case APICall_glGetQueryiv :
+    STUB_glGetQueryiv(tr,jt,uct);
+    break;
+case APICall_glGetQueryivARB :
+    STUB_glGetQueryivARB(tr,jt,uct);
+    break;
+case APICall_glGetRenderbufferParameteriv :
+    STUB_glGetRenderbufferParameteriv(tr,jt,uct);
+    break;
+case APICall_glGetRenderbufferParameterivEXT :
+    STUB_glGetRenderbufferParameterivEXT(tr,jt,uct);
+    break;
+case APICall_glGetSeparableFilter :
+    STUB_glGetSeparableFilter(tr,jt,uct);
+    break;
+case APICall_glGetSeparableFilterEXT :
+    STUB_glGetSeparableFilterEXT(tr,jt,uct);
+    break;
+case APICall_glGetShaderInfoLog :
+    STUB_glGetShaderInfoLog(tr,jt,uct);
+    break;
+case APICall_glGetShaderSource :
+    STUB_glGetShaderSource(tr,jt,uct);
+    break;
+case APICall_glGetShaderSourceARB :
+    STUB_glGetShaderSourceARB(tr,jt,uct);
+    break;
+case APICall_glGetShaderiv :
+    STUB_glGetShaderiv(tr,jt,uct);
+    break;
+case APICall_glGetSharpenTexFuncSGIS :
+    STUB_glGetSharpenTexFuncSGIS(tr,jt,uct);
+    break;
+case APICall_glGetString :
+    STUB_glGetString(tr,jt,uct);
+    break;
+case APICall_glGetStringi :
+    STUB_glGetStringi(tr,jt,uct);
+    break;
+case APICall_glGetTexBumpParameterfvATI :
+    STUB_glGetTexBumpParameterfvATI(tr,jt,uct);
+    break;
+case APICall_glGetTexBumpParameterivATI :
+    STUB_glGetTexBumpParameterivATI(tr,jt,uct);
+    break;
+case APICall_glGetTexEnvfv :
+    STUB_glGetTexEnvfv(tr,jt,uct);
+    break;
+case APICall_glGetTexEnviv :
+    STUB_glGetTexEnviv(tr,jt,uct);
+    break;
+case APICall_glGetTexFilterFuncSGIS :
+    STUB_glGetTexFilterFuncSGIS(tr,jt,uct);
+    break;
+case APICall_glGetTexGendv :
+    STUB_glGetTexGendv(tr,jt,uct);
+    break;
+case APICall_glGetTexGenfv :
+    STUB_glGetTexGenfv(tr,jt,uct);
+    break;
+case APICall_glGetTexGeniv :
+    STUB_glGetTexGeniv(tr,jt,uct);
+    break;
+case APICall_glGetTexImage :
+    STUB_glGetTexImage(tr,jt,uct);
+    break;
+case APICall_glGetTexLevelParameterfv :
+    STUB_glGetTexLevelParameterfv(tr,jt,uct);
+    break;
+case APICall_glGetTexLevelParameteriv :
+    STUB_glGetTexLevelParameteriv(tr,jt,uct);
+    break;
+case APICall_glGetTexParameterIiv :
+    STUB_glGetTexParameterIiv(tr,jt,uct);
+    break;
+case APICall_glGetTexParameterIivEXT :
+    STUB_glGetTexParameterIivEXT(tr,jt,uct);
+    break;
+case APICall_glGetTexParameterIuiv :
+    STUB_glGetTexParameterIuiv(tr,jt,uct);
+    break;
+case APICall_glGetTexParameterIuivEXT :
+    STUB_glGetTexParameterIuivEXT(tr,jt,uct);
+    break;
+case APICall_glGetTexParameterfv :
+    STUB_glGetTexParameterfv(tr,jt,uct);
+    break;
+case APICall_glGetTexParameteriv :
+    STUB_glGetTexParameteriv(tr,jt,uct);
+    break;
+case APICall_glGetTextureImageEXT :
+    STUB_glGetTextureImageEXT(tr,jt,uct);
+    break;
+case APICall_glGetTextureLevelParameterfvEXT :
+    STUB_glGetTextureLevelParameterfvEXT(tr,jt,uct);
+    break;
+case APICall_glGetTextureLevelParameterivEXT :
+    STUB_glGetTextureLevelParameterivEXT(tr,jt,uct);
+    break;
+case APICall_glGetTextureParameterIivEXT :
+    STUB_glGetTextureParameterIivEXT(tr,jt,uct);
+    break;
+case APICall_glGetTextureParameterIuivEXT :
+    STUB_glGetTextureParameterIuivEXT(tr,jt,uct);
+    break;
+case APICall_glGetTextureParameterfvEXT :
+    STUB_glGetTextureParameterfvEXT(tr,jt,uct);
+    break;
+case APICall_glGetTextureParameterivEXT :
+    STUB_glGetTextureParameterivEXT(tr,jt,uct);
+    break;
+case APICall_glGetTrackMatrixivNV :
+    STUB_glGetTrackMatrixivNV(tr,jt,uct);
+    break;
+case APICall_glGetTransformFeedbackVarying :
+    STUB_glGetTransformFeedbackVarying(tr,jt,uct);
+    break;
+case APICall_glGetTransformFeedbackVaryingEXT :
+    STUB_glGetTransformFeedbackVaryingEXT(tr,jt,uct);
+    break;
+case APICall_glGetTransformFeedbackVaryingNV :
+    STUB_glGetTransformFeedbackVaryingNV(tr,jt,uct);
+    break;
+case APICall_glGetUniformBlockIndex :
+    STUB_glGetUniformBlockIndex(tr,jt,uct);
+    break;
+case APICall_glGetUniformBufferSizeEXT :
+    STUB_glGetUniformBufferSizeEXT(tr,jt,uct);
+    break;
+case APICall_glGetUniformIndices :
+    STUB_glGetUniformIndices(tr,jt,uct);
+    break;
+case APICall_glGetUniformLocation :
+    STUB_glGetUniformLocation(tr,jt,uct);
+    break;
+case APICall_glGetUniformLocationARB :
+    STUB_glGetUniformLocationARB(tr,jt,uct);
+    break;
+case APICall_glGetUniformOffsetEXT :
+    STUB_glGetUniformOffsetEXT(tr,jt,uct);
+    break;
+case APICall_glGetUniformfv :
+    STUB_glGetUniformfv(tr,jt,uct);
+    break;
+case APICall_glGetUniformfvARB :
+    STUB_glGetUniformfvARB(tr,jt,uct);
+    break;
+case APICall_glGetUniformiv :
+    STUB_glGetUniformiv(tr,jt,uct);
+    break;
+case APICall_glGetUniformivARB :
+    STUB_glGetUniformivARB(tr,jt,uct);
+    break;
+case APICall_glGetUniformuiv :
+    STUB_glGetUniformuiv(tr,jt,uct);
+    break;
+case APICall_glGetUniformuivEXT :
+    STUB_glGetUniformuivEXT(tr,jt,uct);
+    break;
+case APICall_glGetVariantArrayObjectfvATI :
+    STUB_glGetVariantArrayObjectfvATI(tr,jt,uct);
+    break;
+case APICall_glGetVariantArrayObjectivATI :
+    STUB_glGetVariantArrayObjectivATI(tr,jt,uct);
+    break;
+case APICall_glGetVariantBooleanvEXT :
+    STUB_glGetVariantBooleanvEXT(tr,jt,uct);
+    break;
+case APICall_glGetVariantFloatvEXT :
+    STUB_glGetVariantFloatvEXT(tr,jt,uct);
+    break;
+case APICall_glGetVariantIntegervEXT :
+    STUB_glGetVariantIntegervEXT(tr,jt,uct);
+    break;
+case APICall_glGetVariantPointervEXT :
+    STUB_glGetVariantPointervEXT(tr,jt,uct);
+    break;
+case APICall_glGetVaryingLocationNV :
+    STUB_glGetVaryingLocationNV(tr,jt,uct);
+    break;
+case APICall_glGetVertexAttribArrayObjectfvATI :
+    STUB_glGetVertexAttribArrayObjectfvATI(tr,jt,uct);
+    break;
+case APICall_glGetVertexAttribArrayObjectivATI :
+    STUB_glGetVertexAttribArrayObjectivATI(tr,jt,uct);
+    break;
+case APICall_glGetVertexAttribIiv :
+    STUB_glGetVertexAttribIiv(tr,jt,uct);
+    break;
+case APICall_glGetVertexAttribIivEXT :
+    STUB_glGetVertexAttribIivEXT(tr,jt,uct);
+    break;
+case APICall_glGetVertexAttribIuiv :
+    STUB_glGetVertexAttribIuiv(tr,jt,uct);
+    break;
+case APICall_glGetVertexAttribIuivEXT :
+    STUB_glGetVertexAttribIuivEXT(tr,jt,uct);
+    break;
+case APICall_glGetVertexAttribPointerv :
+    STUB_glGetVertexAttribPointerv(tr,jt,uct);
+    break;
+case APICall_glGetVertexAttribPointervARB :
+    STUB_glGetVertexAttribPointervARB(tr,jt,uct);
+    break;
+case APICall_glGetVertexAttribPointervNV :
+    STUB_glGetVertexAttribPointervNV(tr,jt,uct);
+    break;
+case APICall_glGetVertexAttribdv :
+    STUB_glGetVertexAttribdv(tr,jt,uct);
+    break;
+case APICall_glGetVertexAttribdvARB :
+    STUB_glGetVertexAttribdvARB(tr,jt,uct);
+    break;
+case APICall_glGetVertexAttribdvNV :
+    STUB_glGetVertexAttribdvNV(tr,jt,uct);
+    break;
+case APICall_glGetVertexAttribfv :
+    STUB_glGetVertexAttribfv(tr,jt,uct);
+    break;
+case APICall_glGetVertexAttribfvARB :
+    STUB_glGetVertexAttribfvARB(tr,jt,uct);
+    break;
+case APICall_glGetVertexAttribfvNV :
+    STUB_glGetVertexAttribfvNV(tr,jt,uct);
+    break;
+case APICall_glGetVertexAttribiv :
+    STUB_glGetVertexAttribiv(tr,jt,uct);
+    break;
+case APICall_glGetVertexAttribivARB :
+    STUB_glGetVertexAttribivARB(tr,jt,uct);
+    break;
+case APICall_glGetVertexAttribivNV :
+    STUB_glGetVertexAttribivNV(tr,jt,uct);
+    break;
+case APICall_glGetVideoi64vNV :
+    STUB_glGetVideoi64vNV(tr,jt,uct);
+    break;
+case APICall_glGetVideoivNV :
+    STUB_glGetVideoivNV(tr,jt,uct);
+    break;
+case APICall_glGetVideoui64vNV :
+    STUB_glGetVideoui64vNV(tr,jt,uct);
+    break;
+case APICall_glGetVideouivNV :
+    STUB_glGetVideouivNV(tr,jt,uct);
+    break;
+case APICall_glHint :
+    STUB_glHint(tr,jt,uct);
+    break;
+case APICall_glHintPGI :
+    STUB_glHintPGI(tr,jt,uct);
+    break;
+case APICall_glHistogram :
+    STUB_glHistogram(tr,jt,uct);
+    break;
+case APICall_glHistogramEXT :
+    STUB_glHistogramEXT(tr,jt,uct);
+    break;
+case APICall_glIglooInterfaceSGIX :
+    STUB_glIglooInterfaceSGIX(tr,jt,uct);
+    break;
+case APICall_glImageTransformParameterfHP :
+    STUB_glImageTransformParameterfHP(tr,jt,uct);
+    break;
+case APICall_glImageTransformParameterfvHP :
+    STUB_glImageTransformParameterfvHP(tr,jt,uct);
+    break;
+case APICall_glImageTransformParameteriHP :
+    STUB_glImageTransformParameteriHP(tr,jt,uct);
+    break;
+case APICall_glImageTransformParameterivHP :
+    STUB_glImageTransformParameterivHP(tr,jt,uct);
+    break;
+case APICall_glIndexFuncEXT :
+    STUB_glIndexFuncEXT(tr,jt,uct);
+    break;
+case APICall_glIndexMask :
+    STUB_glIndexMask(tr,jt,uct);
+    break;
+case APICall_glIndexMaterialEXT :
+    STUB_glIndexMaterialEXT(tr,jt,uct);
+    break;
+case APICall_glIndexPointer :
+    STUB_glIndexPointer(tr,jt,uct);
+    break;
+case APICall_glIndexPointerEXT :
+    STUB_glIndexPointerEXT(tr,jt,uct);
+    break;
+case APICall_glIndexd :
+    STUB_glIndexd(tr,jt,uct);
+    break;
+case APICall_glIndexdv :
+    STUB_glIndexdv(tr,jt,uct);
+    break;
+case APICall_glIndexf :
+    STUB_glIndexf(tr,jt,uct);
+    break;
+case APICall_glIndexfv :
+    STUB_glIndexfv(tr,jt,uct);
+    break;
+case APICall_glIndexi :
+    STUB_glIndexi(tr,jt,uct);
+    break;
+case APICall_glIndexiv :
+    STUB_glIndexiv(tr,jt,uct);
+    break;
+case APICall_glIndexs :
+    STUB_glIndexs(tr,jt,uct);
+    break;
+case APICall_glIndexsv :
+    STUB_glIndexsv(tr,jt,uct);
+    break;
+case APICall_glIndexub :
+    STUB_glIndexub(tr,jt,uct);
+    break;
+case APICall_glIndexubv :
+    STUB_glIndexubv(tr,jt,uct);
+    break;
+case APICall_glInitNames :
+    STUB_glInitNames(tr,jt,uct);
+    break;
+case APICall_glInsertComponentEXT :
+    STUB_glInsertComponentEXT(tr,jt,uct);
+    break;
+case APICall_glInstrumentsBufferSGIX :
+    STUB_glInstrumentsBufferSGIX(tr,jt,uct);
+    break;
+case APICall_glInterleavedArrays :
+    STUB_glInterleavedArrays(tr,jt,uct);
+    break;
+case APICall_glIsAsyncMarkerSGIX :
+    STUB_glIsAsyncMarkerSGIX(tr,jt,uct);
+    break;
+case APICall_glIsBuffer :
+    STUB_glIsBuffer(tr,jt,uct);
+    break;
+case APICall_glIsBufferARB :
+    STUB_glIsBufferARB(tr,jt,uct);
+    break;
+case APICall_glIsEnabled :
+    STUB_glIsEnabled(tr,jt,uct);
+    break;
+case APICall_glIsEnabledIndexedEXT :
+    STUB_glIsEnabledIndexedEXT(tr,jt,uct);
+    break;
+case APICall_glIsEnabledi :
+    STUB_glIsEnabledi(tr,jt,uct);
+    break;
+case APICall_glIsFenceAPPLE :
+    STUB_glIsFenceAPPLE(tr,jt,uct);
+    break;
+case APICall_glIsFenceNV :
+    STUB_glIsFenceNV(tr,jt,uct);
+    break;
+case APICall_glIsFramebuffer :
+    STUB_glIsFramebuffer(tr,jt,uct);
+    break;
+case APICall_glIsFramebufferEXT :
+    STUB_glIsFramebufferEXT(tr,jt,uct);
+    break;
+case APICall_glIsList :
+    STUB_glIsList(tr,jt,uct);
+    break;
+case APICall_glIsObjectBufferATI :
+    STUB_glIsObjectBufferATI(tr,jt,uct);
+    break;
+case APICall_glIsOcclusionQueryNV :
+    STUB_glIsOcclusionQueryNV(tr,jt,uct);
+    break;
+case APICall_glIsProgram :
+    STUB_glIsProgram(tr,jt,uct);
+    break;
+case APICall_glIsProgramARB :
+    STUB_glIsProgramARB(tr,jt,uct);
+    break;
+case APICall_glIsProgramNV :
+    STUB_glIsProgramNV(tr,jt,uct);
+    break;
+case APICall_glIsQuery :
+    STUB_glIsQuery(tr,jt,uct);
+    break;
+case APICall_glIsQueryARB :
+    STUB_glIsQueryARB(tr,jt,uct);
+    break;
+case APICall_glIsRenderbuffer :
+    STUB_glIsRenderbuffer(tr,jt,uct);
+    break;
+case APICall_glIsRenderbufferEXT :
+    STUB_glIsRenderbufferEXT(tr,jt,uct);
+    break;
+case APICall_glIsShader :
+    STUB_glIsShader(tr,jt,uct);
+    break;
+case APICall_glIsTexture :
+    STUB_glIsTexture(tr,jt,uct);
+    break;
+case APICall_glIsTextureEXT :
+    STUB_glIsTextureEXT(tr,jt,uct);
+    break;
+case APICall_glIsTransformFeedbackNV :
+    STUB_glIsTransformFeedbackNV(tr,jt,uct);
+    break;
+case APICall_glIsVariantEnabledEXT :
+    STUB_glIsVariantEnabledEXT(tr,jt,uct);
+    break;
+case APICall_glIsVertexArray :
+    STUB_glIsVertexArray(tr,jt,uct);
+    break;
+case APICall_glIsVertexArrayAPPLE :
+    STUB_glIsVertexArrayAPPLE(tr,jt,uct);
+    break;
+case APICall_glLightEnviSGIX :
+    STUB_glLightEnviSGIX(tr,jt,uct);
+    break;
+case APICall_glLightModelf :
+    STUB_glLightModelf(tr,jt,uct);
+    break;
+case APICall_glLightModelfv :
+    STUB_glLightModelfv(tr,jt,uct);
+    break;
+case APICall_glLightModeli :
+    STUB_glLightModeli(tr,jt,uct);
+    break;
+case APICall_glLightModeliv :
+    STUB_glLightModeliv(tr,jt,uct);
+    break;
+case APICall_glLightf :
+    STUB_glLightf(tr,jt,uct);
+    break;
+case APICall_glLightfv :
+    STUB_glLightfv(tr,jt,uct);
+    break;
+case APICall_glLighti :
+    STUB_glLighti(tr,jt,uct);
+    break;
+case APICall_glLightiv :
+    STUB_glLightiv(tr,jt,uct);
+    break;
+case APICall_glLineStipple :
+    STUB_glLineStipple(tr,jt,uct);
+    break;
+case APICall_glLineWidth :
+    STUB_glLineWidth(tr,jt,uct);
+    break;
+case APICall_glLinkProgram :
+    STUB_glLinkProgram(tr,jt,uct);
+    break;
+case APICall_glLinkProgramARB :
+    STUB_glLinkProgramARB(tr,jt,uct);
+    break;
+case APICall_glListBase :
+    STUB_glListBase(tr,jt,uct);
+    break;
+case APICall_glListParameterfSGIX :
+    STUB_glListParameterfSGIX(tr,jt,uct);
+    break;
+case APICall_glListParameterfvSGIX :
+    STUB_glListParameterfvSGIX(tr,jt,uct);
+    break;
+case APICall_glListParameteriSGIX :
+    STUB_glListParameteriSGIX(tr,jt,uct);
+    break;
+case APICall_glListParameterivSGIX :
+    STUB_glListParameterivSGIX(tr,jt,uct);
+    break;
+case APICall_glLoadIdentity :
+    STUB_glLoadIdentity(tr,jt,uct);
+    break;
+case APICall_glLoadIdentityDeformationMapSGIX :
+    STUB_glLoadIdentityDeformationMapSGIX(tr,jt,uct);
+    break;
+case APICall_glLoadMatrixd :
+    STUB_glLoadMatrixd(tr,jt,uct);
+    break;
+case APICall_glLoadMatrixf :
+    STUB_glLoadMatrixf(tr,jt,uct);
+    break;
+case APICall_glLoadName :
+    STUB_glLoadName(tr,jt,uct);
+    break;
+case APICall_glLoadProgramNV :
+    STUB_glLoadProgramNV(tr,jt,uct);
+    break;
+case APICall_glLoadTransposeMatrixd :
+    STUB_glLoadTransposeMatrixd(tr,jt,uct);
+    break;
+case APICall_glLoadTransposeMatrixdARB :
+    STUB_glLoadTransposeMatrixdARB(tr,jt,uct);
+    break;
+case APICall_glLoadTransposeMatrixf :
+    STUB_glLoadTransposeMatrixf(tr,jt,uct);
+    break;
+case APICall_glLoadTransposeMatrixfARB :
+    STUB_glLoadTransposeMatrixfARB(tr,jt,uct);
+    break;
+case APICall_glLockArraysEXT :
+    STUB_glLockArraysEXT(tr,jt,uct);
+    break;
+case APICall_glLogicOp :
+    STUB_glLogicOp(tr,jt,uct);
+    break;
+case APICall_glMap1d :
+    STUB_glMap1d(tr,jt,uct);
+    break;
+case APICall_glMap1f :
+    STUB_glMap1f(tr,jt,uct);
+    break;
+case APICall_glMap2d :
+    STUB_glMap2d(tr,jt,uct);
+    break;
+case APICall_glMap2f :
+    STUB_glMap2f(tr,jt,uct);
+    break;
+case APICall_glMapBuffer :
+    STUB_glMapBuffer(tr,jt,uct);
+    break;
+case APICall_glMapBufferARB :
+    STUB_glMapBufferARB(tr,jt,uct);
+    break;
+case APICall_glMapBufferRange :
+    STUB_glMapBufferRange(tr,jt,uct);
+    break;
+case APICall_glMapControlPointsNV :
+    STUB_glMapControlPointsNV(tr,jt,uct);
+    break;
+case APICall_glMapGrid1d :
+    STUB_glMapGrid1d(tr,jt,uct);
+    break;
+case APICall_glMapGrid1f :
+    STUB_glMapGrid1f(tr,jt,uct);
+    break;
+case APICall_glMapGrid2d :
+    STUB_glMapGrid2d(tr,jt,uct);
+    break;
+case APICall_glMapGrid2f :
+    STUB_glMapGrid2f(tr,jt,uct);
+    break;
+case APICall_glMapNamedBufferEXT :
+    STUB_glMapNamedBufferEXT(tr,jt,uct);
+    break;
+case APICall_glMapObjectBufferATI :
+    STUB_glMapObjectBufferATI(tr,jt,uct);
+    break;
+case APICall_glMapParameterfvNV :
+    STUB_glMapParameterfvNV(tr,jt,uct);
+    break;
+case APICall_glMapParameterivNV :
+    STUB_glMapParameterivNV(tr,jt,uct);
+    break;
+case APICall_glMaterialf :
+    STUB_glMaterialf(tr,jt,uct);
+    break;
+case APICall_glMaterialfv :
+    STUB_glMaterialfv(tr,jt,uct);
+    break;
+case APICall_glMateriali :
+    STUB_glMateriali(tr,jt,uct);
+    break;
+case APICall_glMaterialiv :
+    STUB_glMaterialiv(tr,jt,uct);
+    break;
+case APICall_glMatrixFrustumEXT :
+    STUB_glMatrixFrustumEXT(tr,jt,uct);
+    break;
+case APICall_glMatrixIndexPointerARB :
+    STUB_glMatrixIndexPointerARB(tr,jt,uct);
+    break;
+case APICall_glMatrixIndexubvARB :
+    STUB_glMatrixIndexubvARB(tr,jt,uct);
+    break;
+case APICall_glMatrixIndexuivARB :
+    STUB_glMatrixIndexuivARB(tr,jt,uct);
+    break;
+case APICall_glMatrixIndexusvARB :
+    STUB_glMatrixIndexusvARB(tr,jt,uct);
+    break;
+case APICall_glMatrixLoadIdentityEXT :
+    STUB_glMatrixLoadIdentityEXT(tr,jt,uct);
+    break;
+case APICall_glMatrixLoadTransposedEXT :
+    STUB_glMatrixLoadTransposedEXT(tr,jt,uct);
+    break;
+case APICall_glMatrixLoadTransposefEXT :
+    STUB_glMatrixLoadTransposefEXT(tr,jt,uct);
+    break;
+case APICall_glMatrixLoaddEXT :
+    STUB_glMatrixLoaddEXT(tr,jt,uct);
+    break;
+case APICall_glMatrixLoadfEXT :
+    STUB_glMatrixLoadfEXT(tr,jt,uct);
+    break;
+case APICall_glMatrixMode :
+    STUB_glMatrixMode(tr,jt,uct);
+    break;
+case APICall_glMatrixMultTransposedEXT :
+    STUB_glMatrixMultTransposedEXT(tr,jt,uct);
+    break;
+case APICall_glMatrixMultTransposefEXT :
+    STUB_glMatrixMultTransposefEXT(tr,jt,uct);
+    break;
+case APICall_glMatrixMultdEXT :
+    STUB_glMatrixMultdEXT(tr,jt,uct);
+    break;
+case APICall_glMatrixMultfEXT :
+    STUB_glMatrixMultfEXT(tr,jt,uct);
+    break;
+case APICall_glMatrixOrthoEXT :
+    STUB_glMatrixOrthoEXT(tr,jt,uct);
+    break;
+case APICall_glMatrixPopEXT :
+    STUB_glMatrixPopEXT(tr,jt,uct);
+    break;
+case APICall_glMatrixPushEXT :
+    STUB_glMatrixPushEXT(tr,jt,uct);
+    break;
+case APICall_glMatrixRotatedEXT :
+    STUB_glMatrixRotatedEXT(tr,jt,uct);
+    break;
+case APICall_glMatrixRotatefEXT :
+    STUB_glMatrixRotatefEXT(tr,jt,uct);
+    break;
+case APICall_glMatrixScaledEXT :
+    STUB_glMatrixScaledEXT(tr,jt,uct);
+    break;
+case APICall_glMatrixScalefEXT :
+    STUB_glMatrixScalefEXT(tr,jt,uct);
+    break;
+case APICall_glMatrixTranslatedEXT :
+    STUB_glMatrixTranslatedEXT(tr,jt,uct);
+    break;
+case APICall_glMatrixTranslatefEXT :
+    STUB_glMatrixTranslatefEXT(tr,jt,uct);
+    break;
+case APICall_glMinmax :
+    STUB_glMinmax(tr,jt,uct);
+    break;
+case APICall_glMinmaxEXT :
+    STUB_glMinmaxEXT(tr,jt,uct);
+    break;
+case APICall_glMultMatrixd :
+    STUB_glMultMatrixd(tr,jt,uct);
+    break;
+case APICall_glMultMatrixf :
+    STUB_glMultMatrixf(tr,jt,uct);
+    break;
+case APICall_glMultTransposeMatrixd :
+    STUB_glMultTransposeMatrixd(tr,jt,uct);
+    break;
+case APICall_glMultTransposeMatrixdARB :
+    STUB_glMultTransposeMatrixdARB(tr,jt,uct);
+    break;
+case APICall_glMultTransposeMatrixf :
+    STUB_glMultTransposeMatrixf(tr,jt,uct);
+    break;
+case APICall_glMultTransposeMatrixfARB :
+    STUB_glMultTransposeMatrixfARB(tr,jt,uct);
+    break;
+case APICall_glMultiDrawArrays :
+    STUB_glMultiDrawArrays(tr,jt,uct);
+    break;
+case APICall_glMultiDrawArraysEXT :
+    STUB_glMultiDrawArraysEXT(tr,jt,uct);
+    break;
+case APICall_glMultiDrawElementArrayAPPLE :
+    STUB_glMultiDrawElementArrayAPPLE(tr,jt,uct);
+    break;
+case APICall_glMultiDrawElements :
+    STUB_glMultiDrawElements(tr,jt,uct);
+    break;
+case APICall_glMultiDrawElementsEXT :
+    STUB_glMultiDrawElementsEXT(tr,jt,uct);
+    break;
+case APICall_glMultiDrawRangeElementArrayAPPLE :
+    STUB_glMultiDrawRangeElementArrayAPPLE(tr,jt,uct);
+    break;
+case APICall_glMultiTexBufferEXT :
+    STUB_glMultiTexBufferEXT(tr,jt,uct);
+    break;
+case APICall_glMultiTexCoord1d :
+    STUB_glMultiTexCoord1d(tr,jt,uct);
+    break;
+case APICall_glMultiTexCoord1dARB :
+    STUB_glMultiTexCoord1dARB(tr,jt,uct);
+    break;
+case APICall_glMultiTexCoord1dv :
+    STUB_glMultiTexCoord1dv(tr,jt,uct);
+    break;
+case APICall_glMultiTexCoord1dvARB :
+    STUB_glMultiTexCoord1dvARB(tr,jt,uct);
+    break;
+case APICall_glMultiTexCoord1f :
+    STUB_glMultiTexCoord1f(tr,jt,uct);
+    break;
+case APICall_glMultiTexCoord1fARB :
+    STUB_glMultiTexCoord1fARB(tr,jt,uct);
+    break;
+case APICall_glMultiTexCoord1fv :
+    STUB_glMultiTexCoord1fv(tr,jt,uct);
+    break;
+case APICall_glMultiTexCoord1fvARB :
+    STUB_glMultiTexCoord1fvARB(tr,jt,uct);
+    break;
+case APICall_glMultiTexCoord1hNV :
+    STUB_glMultiTexCoord1hNV(tr,jt,uct);
+    break;
+case APICall_glMultiTexCoord1hvNV :
+    STUB_glMultiTexCoord1hvNV(tr,jt,uct);
+    break;
+case APICall_glMultiTexCoord1i :
+    STUB_glMultiTexCoord1i(tr,jt,uct);
+    break;
+case APICall_glMultiTexCoord1iARB :
+    STUB_glMultiTexCoord1iARB(tr,jt,uct);
+    break;
+case APICall_glMultiTexCoord1iv :
+    STUB_glMultiTexCoord1iv(tr,jt,uct);
+    break;
+case APICall_glMultiTexCoord1ivARB :
+    STUB_glMultiTexCoord1ivARB(tr,jt,uct);
+    break;
+case APICall_glMultiTexCoord1s :
+    STUB_glMultiTexCoord1s(tr,jt,uct);
+    break;
+case APICall_glMultiTexCoord1sARB :
+    STUB_glMultiTexCoord1sARB(tr,jt,uct);
+    break;
+case APICall_glMultiTexCoord1sv :
+    STUB_glMultiTexCoord1sv(tr,jt,uct);
+    break;
+case APICall_glMultiTexCoord1svARB :
+    STUB_glMultiTexCoord1svARB(tr,jt,uct);
+    break;
+case APICall_glMultiTexCoord2d :
+    STUB_glMultiTexCoord2d(tr,jt,uct);
+    break;
+case APICall_glMultiTexCoord2dARB :
+    STUB_glMultiTexCoord2dARB(tr,jt,uct);
+    break;
+case APICall_glMultiTexCoord2dv :
+    STUB_glMultiTexCoord2dv(tr,jt,uct);
+    break;
+case APICall_glMultiTexCoord2dvARB :
+    STUB_glMultiTexCoord2dvARB(tr,jt,uct);
+    break;
+case APICall_glMultiTexCoord2f :
+    STUB_glMultiTexCoord2f(tr,jt,uct);
+    break;
+case APICall_glMultiTexCoord2fARB :
+    STUB_glMultiTexCoord2fARB(tr,jt,uct);
+    break;
+case APICall_glMultiTexCoord2fv :
+    STUB_glMultiTexCoord2fv(tr,jt,uct);
+    break;
+case APICall_glMultiTexCoord2fvARB :
+    STUB_glMultiTexCoord2fvARB(tr,jt,uct);
+    break;
+case APICall_glMultiTexCoord2hNV :
+    STUB_glMultiTexCoord2hNV(tr,jt,uct);
+    break;
+case APICall_glMultiTexCoord2hvNV :
+    STUB_glMultiTexCoord2hvNV(tr,jt,uct);
+    break;
+case APICall_glMultiTexCoord2i :
+    STUB_glMultiTexCoord2i(tr,jt,uct);
+    break;
+case APICall_glMultiTexCoord2iARB :
+    STUB_glMultiTexCoord2iARB(tr,jt,uct);
+    break;
+case APICall_glMultiTexCoord2iv :
+    STUB_glMultiTexCoord2iv(tr,jt,uct);
+    break;
+case APICall_glMultiTexCoord2ivARB :
+    STUB_glMultiTexCoord2ivARB(tr,jt,uct);
+    break;
+case APICall_glMultiTexCoord2s :
+    STUB_glMultiTexCoord2s(tr,jt,uct);
+    break;
+case APICall_glMultiTexCoord2sARB :
+    STUB_glMultiTexCoord2sARB(tr,jt,uct);
+    break;
+case APICall_glMultiTexCoord2sv :
+    STUB_glMultiTexCoord2sv(tr,jt,uct);
+    break;
+case APICall_glMultiTexCoord2svARB :
+    STUB_glMultiTexCoord2svARB(tr,jt,uct);
+    break;
+case APICall_glMultiTexCoord3d :
+    STUB_glMultiTexCoord3d(tr,jt,uct);
+    break;
+case APICall_glMultiTexCoord3dARB :
+    STUB_glMultiTexCoord3dARB(tr,jt,uct);
+    break;
+case APICall_glMultiTexCoord3dv :
+    STUB_glMultiTexCoord3dv(tr,jt,uct);
+    break;
+case APICall_glMultiTexCoord3dvARB :
+    STUB_glMultiTexCoord3dvARB(tr,jt,uct);
+    break;
+case APICall_glMultiTexCoord3f :
+    STUB_glMultiTexCoord3f(tr,jt,uct);
+    break;
+case APICall_glMultiTexCoord3fARB :
+    STUB_glMultiTexCoord3fARB(tr,jt,uct);
+    break;
+case APICall_glMultiTexCoord3fv :
+    STUB_glMultiTexCoord3fv(tr,jt,uct);
+    break;
+case APICall_glMultiTexCoord3fvARB :
+    STUB_glMultiTexCoord3fvARB(tr,jt,uct);
+    break;
+case APICall_glMultiTexCoord3hNV :
+    STUB_glMultiTexCoord3hNV(tr,jt,uct);
+    break;
+case APICall_glMultiTexCoord3hvNV :
+    STUB_glMultiTexCoord3hvNV(tr,jt,uct);
+    break;
+case APICall_glMultiTexCoord3i :
+    STUB_glMultiTexCoord3i(tr,jt,uct);
+    break;
+case APICall_glMultiTexCoord3iARB :
+    STUB_glMultiTexCoord3iARB(tr,jt,uct);
+    break;
+case APICall_glMultiTexCoord3iv :
+    STUB_glMultiTexCoord3iv(tr,jt,uct);
+    break;
+case APICall_glMultiTexCoord3ivARB :
+    STUB_glMultiTexCoord3ivARB(tr,jt,uct);
+    break;
+case APICall_glMultiTexCoord3s :
+    STUB_glMultiTexCoord3s(tr,jt,uct);
+    break;
+case APICall_glMultiTexCoord3sARB :
+    STUB_glMultiTexCoord3sARB(tr,jt,uct);
+    break;
+case APICall_glMultiTexCoord3sv :
+    STUB_glMultiTexCoord3sv(tr,jt,uct);
+    break;
+case APICall_glMultiTexCoord3svARB :
+    STUB_glMultiTexCoord3svARB(tr,jt,uct);
+    break;
+case APICall_glMultiTexCoord4d :
+    STUB_glMultiTexCoord4d(tr,jt,uct);
+    break;
+case APICall_glMultiTexCoord4dARB :
+    STUB_glMultiTexCoord4dARB(tr,jt,uct);
+    break;
+case APICall_glMultiTexCoord4dv :
+    STUB_glMultiTexCoord4dv(tr,jt,uct);
+    break;
+case APICall_glMultiTexCoord4dvARB :
+    STUB_glMultiTexCoord4dvARB(tr,jt,uct);
+    break;
+case APICall_glMultiTexCoord4f :
+    STUB_glMultiTexCoord4f(tr,jt,uct);
+    break;
+case APICall_glMultiTexCoord4fARB :
+    STUB_glMultiTexCoord4fARB(tr,jt,uct);
+    break;
+case APICall_glMultiTexCoord4fv :
+    STUB_glMultiTexCoord4fv(tr,jt,uct);
+    break;
+case APICall_glMultiTexCoord4fvARB :
+    STUB_glMultiTexCoord4fvARB(tr,jt,uct);
+    break;
+case APICall_glMultiTexCoord4hNV :
+    STUB_glMultiTexCoord4hNV(tr,jt,uct);
+    break;
+case APICall_glMultiTexCoord4hvNV :
+    STUB_glMultiTexCoord4hvNV(tr,jt,uct);
+    break;
+case APICall_glMultiTexCoord4i :
+    STUB_glMultiTexCoord4i(tr,jt,uct);
+    break;
+case APICall_glMultiTexCoord4iARB :
+    STUB_glMultiTexCoord4iARB(tr,jt,uct);
+    break;
+case APICall_glMultiTexCoord4iv :
+    STUB_glMultiTexCoord4iv(tr,jt,uct);
+    break;
+case APICall_glMultiTexCoord4ivARB :
+    STUB_glMultiTexCoord4ivARB(tr,jt,uct);
+    break;
+case APICall_glMultiTexCoord4s :
+    STUB_glMultiTexCoord4s(tr,jt,uct);
+    break;
+case APICall_glMultiTexCoord4sARB :
+    STUB_glMultiTexCoord4sARB(tr,jt,uct);
+    break;
+case APICall_glMultiTexCoord4sv :
+    STUB_glMultiTexCoord4sv(tr,jt,uct);
+    break;
+case APICall_glMultiTexCoord4svARB :
+    STUB_glMultiTexCoord4svARB(tr,jt,uct);
+    break;
+case APICall_glMultiTexCoordPointerEXT :
+    STUB_glMultiTexCoordPointerEXT(tr,jt,uct);
+    break;
+case APICall_glMultiTexEnvfEXT :
+    STUB_glMultiTexEnvfEXT(tr,jt,uct);
+    break;
+case APICall_glMultiTexEnvfvEXT :
+    STUB_glMultiTexEnvfvEXT(tr,jt,uct);
+    break;
+case APICall_glMultiTexEnviEXT :
+    STUB_glMultiTexEnviEXT(tr,jt,uct);
+    break;
+case APICall_glMultiTexEnvivEXT :
+    STUB_glMultiTexEnvivEXT(tr,jt,uct);
+    break;
+case APICall_glMultiTexGendEXT :
+    STUB_glMultiTexGendEXT(tr,jt,uct);
+    break;
+case APICall_glMultiTexGendvEXT :
+    STUB_glMultiTexGendvEXT(tr,jt,uct);
+    break;
+case APICall_glMultiTexGenfEXT :
+    STUB_glMultiTexGenfEXT(tr,jt,uct);
+    break;
+case APICall_glMultiTexGenfvEXT :
+    STUB_glMultiTexGenfvEXT(tr,jt,uct);
+    break;
+case APICall_glMultiTexGeniEXT :
+    STUB_glMultiTexGeniEXT(tr,jt,uct);
+    break;
+case APICall_glMultiTexGenivEXT :
+    STUB_glMultiTexGenivEXT(tr,jt,uct);
+    break;
+case APICall_glMultiTexImage1DEXT :
+    STUB_glMultiTexImage1DEXT(tr,jt,uct);
+    break;
+case APICall_glMultiTexImage2DEXT :
+    STUB_glMultiTexImage2DEXT(tr,jt,uct);
+    break;
+case APICall_glMultiTexImage3DEXT :
+    STUB_glMultiTexImage3DEXT(tr,jt,uct);
+    break;
+case APICall_glMultiTexParameterIivEXT :
+    STUB_glMultiTexParameterIivEXT(tr,jt,uct);
+    break;
+case APICall_glMultiTexParameterIuivEXT :
+    STUB_glMultiTexParameterIuivEXT(tr,jt,uct);
+    break;
+case APICall_glMultiTexParameterfEXT :
+    STUB_glMultiTexParameterfEXT(tr,jt,uct);
+    break;
+case APICall_glMultiTexParameterfvEXT :
+    STUB_glMultiTexParameterfvEXT(tr,jt,uct);
+    break;
+case APICall_glMultiTexParameteriEXT :
+    STUB_glMultiTexParameteriEXT(tr,jt,uct);
+    break;
+case APICall_glMultiTexParameterivEXT :
+    STUB_glMultiTexParameterivEXT(tr,jt,uct);
+    break;
+case APICall_glMultiTexRenderbufferEXT :
+    STUB_glMultiTexRenderbufferEXT(tr,jt,uct);
+    break;
+case APICall_glMultiTexSubImage1DEXT :
+    STUB_glMultiTexSubImage1DEXT(tr,jt,uct);
+    break;
+case APICall_glMultiTexSubImage2DEXT :
+    STUB_glMultiTexSubImage2DEXT(tr,jt,uct);
+    break;
+case APICall_glMultiTexSubImage3DEXT :
+    STUB_glMultiTexSubImage3DEXT(tr,jt,uct);
+    break;
+case APICall_glNamedBufferDataEXT :
+    STUB_glNamedBufferDataEXT(tr,jt,uct);
+    break;
+case APICall_glNamedBufferSubDataEXT :
+    STUB_glNamedBufferSubDataEXT(tr,jt,uct);
+    break;
+case APICall_glNamedFramebufferRenderbufferEXT :
+    STUB_glNamedFramebufferRenderbufferEXT(tr,jt,uct);
+    break;
+case APICall_glNamedFramebufferTexture1DEXT :
+    STUB_glNamedFramebufferTexture1DEXT(tr,jt,uct);
+    break;
+case APICall_glNamedFramebufferTexture2DEXT :
+    STUB_glNamedFramebufferTexture2DEXT(tr,jt,uct);
+    break;
+case APICall_glNamedFramebufferTexture3DEXT :
+    STUB_glNamedFramebufferTexture3DEXT(tr,jt,uct);
+    break;
+case APICall_glNamedFramebufferTextureEXT :
+    STUB_glNamedFramebufferTextureEXT(tr,jt,uct);
+    break;
+case APICall_glNamedFramebufferTextureFaceEXT :
+    STUB_glNamedFramebufferTextureFaceEXT(tr,jt,uct);
+    break;
+case APICall_glNamedFramebufferTextureLayerEXT :
+    STUB_glNamedFramebufferTextureLayerEXT(tr,jt,uct);
+    break;
+case APICall_glNamedProgramLocalParameter4dEXT :
+    STUB_glNamedProgramLocalParameter4dEXT(tr,jt,uct);
+    break;
+case APICall_glNamedProgramLocalParameter4dvEXT :
+    STUB_glNamedProgramLocalParameter4dvEXT(tr,jt,uct);
+    break;
+case APICall_glNamedProgramLocalParameter4fEXT :
+    STUB_glNamedProgramLocalParameter4fEXT(tr,jt,uct);
+    break;
+case APICall_glNamedProgramLocalParameter4fvEXT :
+    STUB_glNamedProgramLocalParameter4fvEXT(tr,jt,uct);
+    break;
+case APICall_glNamedProgramLocalParameterI4iEXT :
+    STUB_glNamedProgramLocalParameterI4iEXT(tr,jt,uct);
+    break;
+case APICall_glNamedProgramLocalParameterI4ivEXT :
+    STUB_glNamedProgramLocalParameterI4ivEXT(tr,jt,uct);
+    break;
+case APICall_glNamedProgramLocalParameterI4uiEXT :
+    STUB_glNamedProgramLocalParameterI4uiEXT(tr,jt,uct);
+    break;
+case APICall_glNamedProgramLocalParameterI4uivEXT :
+    STUB_glNamedProgramLocalParameterI4uivEXT(tr,jt,uct);
+    break;
+case APICall_glNamedProgramLocalParameters4fvEXT :
+    STUB_glNamedProgramLocalParameters4fvEXT(tr,jt,uct);
+    break;
+case APICall_glNamedProgramLocalParametersI4ivEXT :
+    STUB_glNamedProgramLocalParametersI4ivEXT(tr,jt,uct);
+    break;
+case APICall_glNamedProgramLocalParametersI4uivEXT :
+    STUB_glNamedProgramLocalParametersI4uivEXT(tr,jt,uct);
+    break;
+case APICall_glNamedProgramStringEXT :
+    STUB_glNamedProgramStringEXT(tr,jt,uct);
+    break;
+case APICall_glNamedRenderbufferStorageEXT :
+    STUB_glNamedRenderbufferStorageEXT(tr,jt,uct);
+    break;
+case APICall_glNamedRenderbufferStorageMultisampleCoverageEXT :
+    STUB_glNamedRenderbufferStorageMultisampleCoverageEXT(tr,jt,uct);
+    break;
+case APICall_glNamedRenderbufferStorageMultisampleEXT :
+    STUB_glNamedRenderbufferStorageMultisampleEXT(tr,jt,uct);
+    break;
+case APICall_glNewList :
+    STUB_glNewList(tr,jt,uct);
+    break;
+case APICall_glNewObjectBufferATI :
+    STUB_glNewObjectBufferATI(tr,jt,uct);
+    break;
+case APICall_glNormal3b :
+    STUB_glNormal3b(tr,jt,uct);
+    break;
+case APICall_glNormal3bv :
+    STUB_glNormal3bv(tr,jt,uct);
+    break;
+case APICall_glNormal3d :
+    STUB_glNormal3d(tr,jt,uct);
+    break;
+case APICall_glNormal3dv :
+    STUB_glNormal3dv(tr,jt,uct);
+    break;
+case APICall_glNormal3f :
+    STUB_glNormal3f(tr,jt,uct);
+    break;
+case APICall_glNormal3fv :
+    STUB_glNormal3fv(tr,jt,uct);
+    break;
+case APICall_glNormal3hNV :
+    STUB_glNormal3hNV(tr,jt,uct);
+    break;
+case APICall_glNormal3hvNV :
+    STUB_glNormal3hvNV(tr,jt,uct);
+    break;
+case APICall_glNormal3i :
+    STUB_glNormal3i(tr,jt,uct);
+    break;
+case APICall_glNormal3iv :
+    STUB_glNormal3iv(tr,jt,uct);
+    break;
+case APICall_glNormal3s :
+    STUB_glNormal3s(tr,jt,uct);
+    break;
+case APICall_glNormal3sv :
+    STUB_glNormal3sv(tr,jt,uct);
+    break;
+case APICall_glNormalPointer :
+    STUB_glNormalPointer(tr,jt,uct);
+    break;
+case APICall_glNormalPointerEXT :
+    STUB_glNormalPointerEXT(tr,jt,uct);
+    break;
+case APICall_glNormalPointervINTEL :
+    STUB_glNormalPointervINTEL(tr,jt,uct);
+    break;
+case APICall_glNormalStream3bATI :
+    STUB_glNormalStream3bATI(tr,jt,uct);
+    break;
+case APICall_glNormalStream3bvATI :
+    STUB_glNormalStream3bvATI(tr,jt,uct);
+    break;
+case APICall_glNormalStream3dATI :
+    STUB_glNormalStream3dATI(tr,jt,uct);
+    break;
+case APICall_glNormalStream3dvATI :
+    STUB_glNormalStream3dvATI(tr,jt,uct);
+    break;
+case APICall_glNormalStream3fATI :
+    STUB_glNormalStream3fATI(tr,jt,uct);
+    break;
+case APICall_glNormalStream3fvATI :
+    STUB_glNormalStream3fvATI(tr,jt,uct);
+    break;
+case APICall_glNormalStream3iATI :
+    STUB_glNormalStream3iATI(tr,jt,uct);
+    break;
+case APICall_glNormalStream3ivATI :
+    STUB_glNormalStream3ivATI(tr,jt,uct);
+    break;
+case APICall_glNormalStream3sATI :
+    STUB_glNormalStream3sATI(tr,jt,uct);
+    break;
+case APICall_glNormalStream3svATI :
+    STUB_glNormalStream3svATI(tr,jt,uct);
+    break;
+case APICall_glOrtho :
+    STUB_glOrtho(tr,jt,uct);
+    break;
+case APICall_glPNTrianglesfATI :
+    STUB_glPNTrianglesfATI(tr,jt,uct);
+    break;
+case APICall_glPNTrianglesiATI :
+    STUB_glPNTrianglesiATI(tr,jt,uct);
+    break;
+case APICall_glPassTexCoordATI :
+    STUB_glPassTexCoordATI(tr,jt,uct);
+    break;
+case APICall_glPassThrough :
+    STUB_glPassThrough(tr,jt,uct);
+    break;
+case APICall_glPauseTransformFeedbackNV :
+    STUB_glPauseTransformFeedbackNV(tr,jt,uct);
+    break;
+case APICall_glPixelDataRangeNV :
+    STUB_glPixelDataRangeNV(tr,jt,uct);
+    break;
+case APICall_glPixelMapfv :
+    STUB_glPixelMapfv(tr,jt,uct);
+    break;
+case APICall_glPixelMapuiv :
+    STUB_glPixelMapuiv(tr,jt,uct);
+    break;
+case APICall_glPixelMapusv :
+    STUB_glPixelMapusv(tr,jt,uct);
+    break;
+case APICall_glPixelStoref :
+    STUB_glPixelStoref(tr,jt,uct);
+    break;
+case APICall_glPixelStorei :
+    STUB_glPixelStorei(tr,jt,uct);
+    break;
+case APICall_glPixelTexGenParameterfSGIS :
+    STUB_glPixelTexGenParameterfSGIS(tr,jt,uct);
+    break;
+case APICall_glPixelTexGenParameterfvSGIS :
+    STUB_glPixelTexGenParameterfvSGIS(tr,jt,uct);
+    break;
+case APICall_glPixelTexGenParameteriSGIS :
+    STUB_glPixelTexGenParameteriSGIS(tr,jt,uct);
+    break;
+case APICall_glPixelTexGenParameterivSGIS :
+    STUB_glPixelTexGenParameterivSGIS(tr,jt,uct);
+    break;
+case APICall_glPixelTexGenSGIX :
+    STUB_glPixelTexGenSGIX(tr,jt,uct);
+    break;
+case APICall_glPixelTransferf :
+    STUB_glPixelTransferf(tr,jt,uct);
+    break;
+case APICall_glPixelTransferi :
+    STUB_glPixelTransferi(tr,jt,uct);
+    break;
+case APICall_glPixelTransformParameterfEXT :
+    STUB_glPixelTransformParameterfEXT(tr,jt,uct);
+    break;
+case APICall_glPixelTransformParameterfvEXT :
+    STUB_glPixelTransformParameterfvEXT(tr,jt,uct);
+    break;
+case APICall_glPixelTransformParameteriEXT :
+    STUB_glPixelTransformParameteriEXT(tr,jt,uct);
+    break;
+case APICall_glPixelTransformParameterivEXT :
+    STUB_glPixelTransformParameterivEXT(tr,jt,uct);
+    break;
+case APICall_glPixelZoom :
+    STUB_glPixelZoom(tr,jt,uct);
+    break;
+case APICall_glPointParameterf :
+    STUB_glPointParameterf(tr,jt,uct);
+    break;
+case APICall_glPointParameterfARB :
+    STUB_glPointParameterfARB(tr,jt,uct);
+    break;
+case APICall_glPointParameterfEXT :
+    STUB_glPointParameterfEXT(tr,jt,uct);
+    break;
+case APICall_glPointParameterfSGIS :
+    STUB_glPointParameterfSGIS(tr,jt,uct);
+    break;
+case APICall_glPointParameterfv :
+    STUB_glPointParameterfv(tr,jt,uct);
+    break;
+case APICall_glPointParameterfvARB :
+    STUB_glPointParameterfvARB(tr,jt,uct);
+    break;
+case APICall_glPointParameterfvEXT :
+    STUB_glPointParameterfvEXT(tr,jt,uct);
+    break;
+case APICall_glPointParameterfvSGIS :
+    STUB_glPointParameterfvSGIS(tr,jt,uct);
+    break;
+case APICall_glPointParameteri :
+    STUB_glPointParameteri(tr,jt,uct);
+    break;
+case APICall_glPointParameteriNV :
+    STUB_glPointParameteriNV(tr,jt,uct);
+    break;
+case APICall_glPointParameteriv :
+    STUB_glPointParameteriv(tr,jt,uct);
+    break;
+case APICall_glPointParameterivNV :
+    STUB_glPointParameterivNV(tr,jt,uct);
+    break;
+case APICall_glPointSize :
+    STUB_glPointSize(tr,jt,uct);
+    break;
+case APICall_glPollAsyncSGIX :
+    STUB_glPollAsyncSGIX(tr,jt,uct);
+    break;
+case APICall_glPollInstrumentsSGIX :
+    STUB_glPollInstrumentsSGIX(tr,jt,uct);
+    break;
+case APICall_glPolygonMode :
+    STUB_glPolygonMode(tr,jt,uct);
+    break;
+case APICall_glPolygonOffset :
+    STUB_glPolygonOffset(tr,jt,uct);
+    break;
+case APICall_glPolygonOffsetEXT :
+    STUB_glPolygonOffsetEXT(tr,jt,uct);
+    break;
+case APICall_glPolygonStipple :
+    STUB_glPolygonStipple(tr,jt,uct);
+    break;
+case APICall_glPopAttrib :
+    STUB_glPopAttrib(tr,jt,uct);
+    break;
+case APICall_glPopClientAttrib :
+    STUB_glPopClientAttrib(tr,jt,uct);
+    break;
+case APICall_glPopMatrix :
+    STUB_glPopMatrix(tr,jt,uct);
+    break;
+case APICall_glPopName :
+    STUB_glPopName(tr,jt,uct);
+    break;
+case APICall_glPresentFrameDualFillNV :
+    STUB_glPresentFrameDualFillNV(tr,jt,uct);
+    break;
+case APICall_glPresentFrameKeyedNV :
+    STUB_glPresentFrameKeyedNV(tr,jt,uct);
+    break;
+case APICall_glPrimitiveRestartIndex :
+    STUB_glPrimitiveRestartIndex(tr,jt,uct);
+    break;
+case APICall_glPrimitiveRestartIndexNV :
+    STUB_glPrimitiveRestartIndexNV(tr,jt,uct);
+    break;
+case APICall_glPrimitiveRestartNV :
+    STUB_glPrimitiveRestartNV(tr,jt,uct);
+    break;
+case APICall_glPrioritizeTextures :
+    STUB_glPrioritizeTextures(tr,jt,uct);
+    break;
+case APICall_glPrioritizeTexturesEXT :
+    STUB_glPrioritizeTexturesEXT(tr,jt,uct);
+    break;
+case APICall_glProgramBufferParametersIivNV :
+    STUB_glProgramBufferParametersIivNV(tr,jt,uct);
+    break;
+case APICall_glProgramBufferParametersIuivNV :
+    STUB_glProgramBufferParametersIuivNV(tr,jt,uct);
+    break;
+case APICall_glProgramBufferParametersfvNV :
+    STUB_glProgramBufferParametersfvNV(tr,jt,uct);
+    break;
+case APICall_glProgramEnvParameter4dARB :
+    STUB_glProgramEnvParameter4dARB(tr,jt,uct);
+    break;
+case APICall_glProgramEnvParameter4dvARB :
+    STUB_glProgramEnvParameter4dvARB(tr,jt,uct);
+    break;
+case APICall_glProgramEnvParameter4fARB :
+    STUB_glProgramEnvParameter4fARB(tr,jt,uct);
+    break;
+case APICall_glProgramEnvParameter4fvARB :
+    STUB_glProgramEnvParameter4fvARB(tr,jt,uct);
+    break;
+case APICall_glProgramEnvParameterI4iNV :
+    STUB_glProgramEnvParameterI4iNV(tr,jt,uct);
+    break;
+case APICall_glProgramEnvParameterI4ivNV :
+    STUB_glProgramEnvParameterI4ivNV(tr,jt,uct);
+    break;
+case APICall_glProgramEnvParameterI4uiNV :
+    STUB_glProgramEnvParameterI4uiNV(tr,jt,uct);
+    break;
+case APICall_glProgramEnvParameterI4uivNV :
+    STUB_glProgramEnvParameterI4uivNV(tr,jt,uct);
+    break;
+case APICall_glProgramEnvParameters4fvEXT :
+    STUB_glProgramEnvParameters4fvEXT(tr,jt,uct);
+    break;
+case APICall_glProgramEnvParametersI4ivNV :
+    STUB_glProgramEnvParametersI4ivNV(tr,jt,uct);
+    break;
+case APICall_glProgramEnvParametersI4uivNV :
+    STUB_glProgramEnvParametersI4uivNV(tr,jt,uct);
+    break;
+case APICall_glProgramLocalParameter4dARB :
+    STUB_glProgramLocalParameter4dARB(tr,jt,uct);
+    break;
+case APICall_glProgramLocalParameter4dvARB :
+    STUB_glProgramLocalParameter4dvARB(tr,jt,uct);
+    break;
+case APICall_glProgramLocalParameter4fARB :
+    STUB_glProgramLocalParameter4fARB(tr,jt,uct);
+    break;
+case APICall_glProgramLocalParameter4fvARB :
+    STUB_glProgramLocalParameter4fvARB(tr,jt,uct);
+    break;
+case APICall_glProgramLocalParameterI4iNV :
+    STUB_glProgramLocalParameterI4iNV(tr,jt,uct);
+    break;
+case APICall_glProgramLocalParameterI4ivNV :
+    STUB_glProgramLocalParameterI4ivNV(tr,jt,uct);
+    break;
+case APICall_glProgramLocalParameterI4uiNV :
+    STUB_glProgramLocalParameterI4uiNV(tr,jt,uct);
+    break;
+case APICall_glProgramLocalParameterI4uivNV :
+    STUB_glProgramLocalParameterI4uivNV(tr,jt,uct);
+    break;
+case APICall_glProgramLocalParameters4fvEXT :
+    STUB_glProgramLocalParameters4fvEXT(tr,jt,uct);
+    break;
+case APICall_glProgramLocalParametersI4ivNV :
+    STUB_glProgramLocalParametersI4ivNV(tr,jt,uct);
+    break;
+case APICall_glProgramLocalParametersI4uivNV :
+    STUB_glProgramLocalParametersI4uivNV(tr,jt,uct);
+    break;
+case APICall_glProgramNamedParameter4dNV :
+    STUB_glProgramNamedParameter4dNV(tr,jt,uct);
+    break;
+case APICall_glProgramNamedParameter4dvNV :
+    STUB_glProgramNamedParameter4dvNV(tr,jt,uct);
+    break;
+case APICall_glProgramNamedParameter4fNV :
+    STUB_glProgramNamedParameter4fNV(tr,jt,uct);
+    break;
+case APICall_glProgramNamedParameter4fvNV :
+    STUB_glProgramNamedParameter4fvNV(tr,jt,uct);
+    break;
+case APICall_glProgramParameter4dNV :
+    STUB_glProgramParameter4dNV(tr,jt,uct);
+    break;
+case APICall_glProgramParameter4dvNV :
+    STUB_glProgramParameter4dvNV(tr,jt,uct);
+    break;
+case APICall_glProgramParameter4fNV :
+    STUB_glProgramParameter4fNV(tr,jt,uct);
+    break;
+case APICall_glProgramParameter4fvNV :
+    STUB_glProgramParameter4fvNV(tr,jt,uct);
+    break;
+case APICall_glProgramParameteriARB :
+    STUB_glProgramParameteriARB(tr,jt,uct);
+    break;
+case APICall_glProgramParameteriEXT :
+    STUB_glProgramParameteriEXT(tr,jt,uct);
+    break;
+case APICall_glProgramParameters4dvNV :
+    STUB_glProgramParameters4dvNV(tr,jt,uct);
+    break;
+case APICall_glProgramParameters4fvNV :
+    STUB_glProgramParameters4fvNV(tr,jt,uct);
+    break;
+case APICall_glProgramStringARB :
+    STUB_glProgramStringARB(tr,jt,uct);
+    break;
+case APICall_glProgramUniform1fEXT :
+    STUB_glProgramUniform1fEXT(tr,jt,uct);
+    break;
+case APICall_glProgramUniform1fvEXT :
+    STUB_glProgramUniform1fvEXT(tr,jt,uct);
+    break;
+case APICall_glProgramUniform1iEXT :
+    STUB_glProgramUniform1iEXT(tr,jt,uct);
+    break;
+case APICall_glProgramUniform1ivEXT :
+    STUB_glProgramUniform1ivEXT(tr,jt,uct);
+    break;
+case APICall_glProgramUniform1uiEXT :
+    STUB_glProgramUniform1uiEXT(tr,jt,uct);
+    break;
+case APICall_glProgramUniform1uivEXT :
+    STUB_glProgramUniform1uivEXT(tr,jt,uct);
+    break;
+case APICall_glProgramUniform2fEXT :
+    STUB_glProgramUniform2fEXT(tr,jt,uct);
+    break;
+case APICall_glProgramUniform2fvEXT :
+    STUB_glProgramUniform2fvEXT(tr,jt,uct);
+    break;
+case APICall_glProgramUniform2iEXT :
+    STUB_glProgramUniform2iEXT(tr,jt,uct);
+    break;
+case APICall_glProgramUniform2ivEXT :
+    STUB_glProgramUniform2ivEXT(tr,jt,uct);
+    break;
+case APICall_glProgramUniform2uiEXT :
+    STUB_glProgramUniform2uiEXT(tr,jt,uct);
+    break;
+case APICall_glProgramUniform2uivEXT :
+    STUB_glProgramUniform2uivEXT(tr,jt,uct);
+    break;
+case APICall_glProgramUniform3fEXT :
+    STUB_glProgramUniform3fEXT(tr,jt,uct);
+    break;
+case APICall_glProgramUniform3fvEXT :
+    STUB_glProgramUniform3fvEXT(tr,jt,uct);
+    break;
+case APICall_glProgramUniform3iEXT :
+    STUB_glProgramUniform3iEXT(tr,jt,uct);
+    break;
+case APICall_glProgramUniform3ivEXT :
+    STUB_glProgramUniform3ivEXT(tr,jt,uct);
+    break;
+case APICall_glProgramUniform3uiEXT :
+    STUB_glProgramUniform3uiEXT(tr,jt,uct);
+    break;
+case APICall_glProgramUniform3uivEXT :
+    STUB_glProgramUniform3uivEXT(tr,jt,uct);
+    break;
+case APICall_glProgramUniform4fEXT :
+    STUB_glProgramUniform4fEXT(tr,jt,uct);
+    break;
+case APICall_glProgramUniform4fvEXT :
+    STUB_glProgramUniform4fvEXT(tr,jt,uct);
+    break;
+case APICall_glProgramUniform4iEXT :
+    STUB_glProgramUniform4iEXT(tr,jt,uct);
+    break;
+case APICall_glProgramUniform4ivEXT :
+    STUB_glProgramUniform4ivEXT(tr,jt,uct);
+    break;
+case APICall_glProgramUniform4uiEXT :
+    STUB_glProgramUniform4uiEXT(tr,jt,uct);
+    break;
+case APICall_glProgramUniform4uivEXT :
+    STUB_glProgramUniform4uivEXT(tr,jt,uct);
+    break;
+case APICall_glProgramUniformMatrix2fvEXT :
+    STUB_glProgramUniformMatrix2fvEXT(tr,jt,uct);
+    break;
+case APICall_glProgramUniformMatrix2x3fvEXT :
+    STUB_glProgramUniformMatrix2x3fvEXT(tr,jt,uct);
+    break;
+case APICall_glProgramUniformMatrix2x4fvEXT :
+    STUB_glProgramUniformMatrix2x4fvEXT(tr,jt,uct);
+    break;
+case APICall_glProgramUniformMatrix3fvEXT :
+    STUB_glProgramUniformMatrix3fvEXT(tr,jt,uct);
+    break;
+case APICall_glProgramUniformMatrix3x2fvEXT :
+    STUB_glProgramUniformMatrix3x2fvEXT(tr,jt,uct);
+    break;
+case APICall_glProgramUniformMatrix3x4fvEXT :
+    STUB_glProgramUniformMatrix3x4fvEXT(tr,jt,uct);
+    break;
+case APICall_glProgramUniformMatrix4fvEXT :
+    STUB_glProgramUniformMatrix4fvEXT(tr,jt,uct);
+    break;
+case APICall_glProgramUniformMatrix4x2fvEXT :
+    STUB_glProgramUniformMatrix4x2fvEXT(tr,jt,uct);
+    break;
+case APICall_glProgramUniformMatrix4x3fvEXT :
+    STUB_glProgramUniformMatrix4x3fvEXT(tr,jt,uct);
+    break;
+case APICall_glProgramVertexLimitNV :
+    STUB_glProgramVertexLimitNV(tr,jt,uct);
+    break;
+case APICall_glProvokingVertexEXT :
+    STUB_glProvokingVertexEXT(tr,jt,uct);
+    break;
+case APICall_glPushAttrib :
+    STUB_glPushAttrib(tr,jt,uct);
+    break;
+case APICall_glPushClientAttrib :
+    STUB_glPushClientAttrib(tr,jt,uct);
+    break;
+case APICall_glPushClientAttribDefaultEXT :
+    STUB_glPushClientAttribDefaultEXT(tr,jt,uct);
+    break;
+case APICall_glPushMatrix :
+    STUB_glPushMatrix(tr,jt,uct);
+    break;
+case APICall_glPushName :
+    STUB_glPushName(tr,jt,uct);
+    break;
+case APICall_glRasterPos2d :
+    STUB_glRasterPos2d(tr,jt,uct);
+    break;
+case APICall_glRasterPos2dv :
+    STUB_glRasterPos2dv(tr,jt,uct);
+    break;
+case APICall_glRasterPos2f :
+    STUB_glRasterPos2f(tr,jt,uct);
+    break;
+case APICall_glRasterPos2fv :
+    STUB_glRasterPos2fv(tr,jt,uct);
+    break;
+case APICall_glRasterPos2i :
+    STUB_glRasterPos2i(tr,jt,uct);
+    break;
+case APICall_glRasterPos2iv :
+    STUB_glRasterPos2iv(tr,jt,uct);
+    break;
+case APICall_glRasterPos2s :
+    STUB_glRasterPos2s(tr,jt,uct);
+    break;
+case APICall_glRasterPos2sv :
+    STUB_glRasterPos2sv(tr,jt,uct);
+    break;
+case APICall_glRasterPos3d :
+    STUB_glRasterPos3d(tr,jt,uct);
+    break;
+case APICall_glRasterPos3dv :
+    STUB_glRasterPos3dv(tr,jt,uct);
+    break;
+case APICall_glRasterPos3f :
+    STUB_glRasterPos3f(tr,jt,uct);
+    break;
+case APICall_glRasterPos3fv :
+    STUB_glRasterPos3fv(tr,jt,uct);
+    break;
+case APICall_glRasterPos3i :
+    STUB_glRasterPos3i(tr,jt,uct);
+    break;
+case APICall_glRasterPos3iv :
+    STUB_glRasterPos3iv(tr,jt,uct);
+    break;
+case APICall_glRasterPos3s :
+    STUB_glRasterPos3s(tr,jt,uct);
+    break;
+case APICall_glRasterPos3sv :
+    STUB_glRasterPos3sv(tr,jt,uct);
+    break;
+case APICall_glRasterPos4d :
+    STUB_glRasterPos4d(tr,jt,uct);
+    break;
+case APICall_glRasterPos4dv :
+    STUB_glRasterPos4dv(tr,jt,uct);
+    break;
+case APICall_glRasterPos4f :
+    STUB_glRasterPos4f(tr,jt,uct);
+    break;
+case APICall_glRasterPos4fv :
+    STUB_glRasterPos4fv(tr,jt,uct);
+    break;
+case APICall_glRasterPos4i :
+    STUB_glRasterPos4i(tr,jt,uct);
+    break;
+case APICall_glRasterPos4iv :
+    STUB_glRasterPos4iv(tr,jt,uct);
+    break;
+case APICall_glRasterPos4s :
+    STUB_glRasterPos4s(tr,jt,uct);
+    break;
+case APICall_glRasterPos4sv :
+    STUB_glRasterPos4sv(tr,jt,uct);
+    break;
+case APICall_glReadBuffer :
+    STUB_glReadBuffer(tr,jt,uct);
+    break;
+case APICall_glReadInstrumentsSGIX :
+    STUB_glReadInstrumentsSGIX(tr,jt,uct);
+    break;
+case APICall_glReadPixels :
+    STUB_glReadPixels(tr,jt,uct);
+    break;
+case APICall_glRectd :
+    STUB_glRectd(tr,jt,uct);
+    break;
+case APICall_glRectdv :
+    STUB_glRectdv(tr,jt,uct);
+    break;
+case APICall_glRectf :
+    STUB_glRectf(tr,jt,uct);
+    break;
+case APICall_glRectfv :
+    STUB_glRectfv(tr,jt,uct);
+    break;
+case APICall_glRecti :
+    STUB_glRecti(tr,jt,uct);
+    break;
+case APICall_glRectiv :
+    STUB_glRectiv(tr,jt,uct);
+    break;
+case APICall_glRects :
+    STUB_glRects(tr,jt,uct);
+    break;
+case APICall_glRectsv :
+    STUB_glRectsv(tr,jt,uct);
+    break;
+case APICall_glReferencePlaneSGIX :
+    STUB_glReferencePlaneSGIX(tr,jt,uct);
+    break;
+case APICall_glRenderMode :
+    STUB_glRenderMode(tr,jt,uct);
+    break;
+case APICall_glRenderbufferStorage :
+    STUB_glRenderbufferStorage(tr,jt,uct);
+    break;
+case APICall_glRenderbufferStorageEXT :
+    STUB_glRenderbufferStorageEXT(tr,jt,uct);
+    break;
+case APICall_glRenderbufferStorageMultisample :
+    STUB_glRenderbufferStorageMultisample(tr,jt,uct);
+    break;
+case APICall_glRenderbufferStorageMultisampleCoverageNV :
+    STUB_glRenderbufferStorageMultisampleCoverageNV(tr,jt,uct);
+    break;
+case APICall_glRenderbufferStorageMultisampleEXT :
+    STUB_glRenderbufferStorageMultisampleEXT(tr,jt,uct);
+    break;
+case APICall_glRequestResidentProgramsNV :
+    STUB_glRequestResidentProgramsNV(tr,jt,uct);
+    break;
+case APICall_glResetHistogram :
+    STUB_glResetHistogram(tr,jt,uct);
+    break;
+case APICall_glResetHistogramEXT :
+    STUB_glResetHistogramEXT(tr,jt,uct);
+    break;
+case APICall_glResetMinmax :
+    STUB_glResetMinmax(tr,jt,uct);
+    break;
+case APICall_glResetMinmaxEXT :
+    STUB_glResetMinmaxEXT(tr,jt,uct);
+    break;
+case APICall_glResumeTransformFeedbackNV :
+    STUB_glResumeTransformFeedbackNV(tr,jt,uct);
+    break;
+case APICall_glRotated :
+    STUB_glRotated(tr,jt,uct);
+    break;
+case APICall_glRotatef :
+    STUB_glRotatef(tr,jt,uct);
+    break;
+case APICall_glSampleCoverage :
+    STUB_glSampleCoverage(tr,jt,uct);
+    break;
+case APICall_glSampleCoverageARB :
+    STUB_glSampleCoverageARB(tr,jt,uct);
+    break;
+case APICall_glSampleMapATI :
+    STUB_glSampleMapATI(tr,jt,uct);
+    break;
+case APICall_glSampleMaskEXT :
+    STUB_glSampleMaskEXT(tr,jt,uct);
+    break;
+case APICall_glSampleMaskIndexedNV :
+    STUB_glSampleMaskIndexedNV(tr,jt,uct);
+    break;
+case APICall_glSampleMaskSGIS :
+    STUB_glSampleMaskSGIS(tr,jt,uct);
+    break;
+case APICall_glSamplePatternEXT :
+    STUB_glSamplePatternEXT(tr,jt,uct);
+    break;
+case APICall_glSamplePatternSGIS :
+    STUB_glSamplePatternSGIS(tr,jt,uct);
+    break;
+case APICall_glScaled :
+    STUB_glScaled(tr,jt,uct);
+    break;
+case APICall_glScalef :
+    STUB_glScalef(tr,jt,uct);
+    break;
+case APICall_glScissor :
+    STUB_glScissor(tr,jt,uct);
+    break;
+case APICall_glSecondaryColor3b :
+    STUB_glSecondaryColor3b(tr,jt,uct);
+    break;
+case APICall_glSecondaryColor3bEXT :
+    STUB_glSecondaryColor3bEXT(tr,jt,uct);
+    break;
+case APICall_glSecondaryColor3bv :
+    STUB_glSecondaryColor3bv(tr,jt,uct);
+    break;
+case APICall_glSecondaryColor3bvEXT :
+    STUB_glSecondaryColor3bvEXT(tr,jt,uct);
+    break;
+case APICall_glSecondaryColor3d :
+    STUB_glSecondaryColor3d(tr,jt,uct);
+    break;
+case APICall_glSecondaryColor3dEXT :
+    STUB_glSecondaryColor3dEXT(tr,jt,uct);
+    break;
+case APICall_glSecondaryColor3dv :
+    STUB_glSecondaryColor3dv(tr,jt,uct);
+    break;
+case APICall_glSecondaryColor3dvEXT :
+    STUB_glSecondaryColor3dvEXT(tr,jt,uct);
+    break;
+case APICall_glSecondaryColor3f :
+    STUB_glSecondaryColor3f(tr,jt,uct);
+    break;
+case APICall_glSecondaryColor3fEXT :
+    STUB_glSecondaryColor3fEXT(tr,jt,uct);
+    break;
+case APICall_glSecondaryColor3fv :
+    STUB_glSecondaryColor3fv(tr,jt,uct);
+    break;
+case APICall_glSecondaryColor3fvEXT :
+    STUB_glSecondaryColor3fvEXT(tr,jt,uct);
+    break;
+case APICall_glSecondaryColor3hNV :
+    STUB_glSecondaryColor3hNV(tr,jt,uct);
+    break;
+case APICall_glSecondaryColor3hvNV :
+    STUB_glSecondaryColor3hvNV(tr,jt,uct);
+    break;
+case APICall_glSecondaryColor3i :
+    STUB_glSecondaryColor3i(tr,jt,uct);
+    break;
+case APICall_glSecondaryColor3iEXT :
+    STUB_glSecondaryColor3iEXT(tr,jt,uct);
+    break;
+case APICall_glSecondaryColor3iv :
+    STUB_glSecondaryColor3iv(tr,jt,uct);
+    break;
+case APICall_glSecondaryColor3ivEXT :
+    STUB_glSecondaryColor3ivEXT(tr,jt,uct);
+    break;
+case APICall_glSecondaryColor3s :
+    STUB_glSecondaryColor3s(tr,jt,uct);
+    break;
+case APICall_glSecondaryColor3sEXT :
+    STUB_glSecondaryColor3sEXT(tr,jt,uct);
+    break;
+case APICall_glSecondaryColor3sv :
+    STUB_glSecondaryColor3sv(tr,jt,uct);
+    break;
+case APICall_glSecondaryColor3svEXT :
+    STUB_glSecondaryColor3svEXT(tr,jt,uct);
+    break;
+case APICall_glSecondaryColor3ub :
+    STUB_glSecondaryColor3ub(tr,jt,uct);
+    break;
+case APICall_glSecondaryColor3ubEXT :
+    STUB_glSecondaryColor3ubEXT(tr,jt,uct);
+    break;
+case APICall_glSecondaryColor3ubv :
+    STUB_glSecondaryColor3ubv(tr,jt,uct);
+    break;
+case APICall_glSecondaryColor3ubvEXT :
+    STUB_glSecondaryColor3ubvEXT(tr,jt,uct);
+    break;
+case APICall_glSecondaryColor3ui :
+    STUB_glSecondaryColor3ui(tr,jt,uct);
+    break;
+case APICall_glSecondaryColor3uiEXT :
+    STUB_glSecondaryColor3uiEXT(tr,jt,uct);
+    break;
+case APICall_glSecondaryColor3uiv :
+    STUB_glSecondaryColor3uiv(tr,jt,uct);
+    break;
+case APICall_glSecondaryColor3uivEXT :
+    STUB_glSecondaryColor3uivEXT(tr,jt,uct);
+    break;
+case APICall_glSecondaryColor3us :
+    STUB_glSecondaryColor3us(tr,jt,uct);
+    break;
+case APICall_glSecondaryColor3usEXT :
+    STUB_glSecondaryColor3usEXT(tr,jt,uct);
+    break;
+case APICall_glSecondaryColor3usv :
+    STUB_glSecondaryColor3usv(tr,jt,uct);
+    break;
+case APICall_glSecondaryColor3usvEXT :
+    STUB_glSecondaryColor3usvEXT(tr,jt,uct);
+    break;
+case APICall_glSecondaryColorPointer :
+    STUB_glSecondaryColorPointer(tr,jt,uct);
+    break;
+case APICall_glSecondaryColorPointerEXT :
+    STUB_glSecondaryColorPointerEXT(tr,jt,uct);
+    break;
+case APICall_glSelectBuffer :
+    STUB_glSelectBuffer(tr,jt,uct);
+    break;
+case APICall_glSelectPerfMonitorCountersAMD :
+    STUB_glSelectPerfMonitorCountersAMD(tr,jt,uct);
+    break;
+case APICall_glSeparableFilter2D :
+    STUB_glSeparableFilter2D(tr,jt,uct);
+    break;
+case APICall_glSeparableFilter2DEXT :
+    STUB_glSeparableFilter2DEXT(tr,jt,uct);
+    break;
+case APICall_glSetFenceAPPLE :
+    STUB_glSetFenceAPPLE(tr,jt,uct);
+    break;
+case APICall_glSetFenceNV :
+    STUB_glSetFenceNV(tr,jt,uct);
+    break;
+case APICall_glSetFragmentShaderConstantATI :
+    STUB_glSetFragmentShaderConstantATI(tr,jt,uct);
+    break;
+case APICall_glSetInvariantEXT :
+    STUB_glSetInvariantEXT(tr,jt,uct);
+    break;
+case APICall_glSetLocalConstantEXT :
+    STUB_glSetLocalConstantEXT(tr,jt,uct);
+    break;
+case APICall_glShadeModel :
+    STUB_glShadeModel(tr,jt,uct);
+    break;
+case APICall_glShaderOp1EXT :
+    STUB_glShaderOp1EXT(tr,jt,uct);
+    break;
+case APICall_glShaderOp2EXT :
+    STUB_glShaderOp2EXT(tr,jt,uct);
+    break;
+case APICall_glShaderOp3EXT :
+    STUB_glShaderOp3EXT(tr,jt,uct);
+    break;
+case APICall_glShaderSource :
+    STUB_glShaderSource(tr,jt,uct);
+    break;
+case APICall_glShaderSourceARB :
+    STUB_glShaderSourceARB(tr,jt,uct);
+    break;
+case APICall_glSharpenTexFuncSGIS :
+    STUB_glSharpenTexFuncSGIS(tr,jt,uct);
+    break;
+case APICall_glSpriteParameterfSGIX :
+    STUB_glSpriteParameterfSGIX(tr,jt,uct);
+    break;
+case APICall_glSpriteParameterfvSGIX :
+    STUB_glSpriteParameterfvSGIX(tr,jt,uct);
+    break;
+case APICall_glSpriteParameteriSGIX :
+    STUB_glSpriteParameteriSGIX(tr,jt,uct);
+    break;
+case APICall_glSpriteParameterivSGIX :
+    STUB_glSpriteParameterivSGIX(tr,jt,uct);
+    break;
+case APICall_glStartInstrumentsSGIX :
+    STUB_glStartInstrumentsSGIX(tr,jt,uct);
+    break;
+case APICall_glStencilClearTagEXT :
+    STUB_glStencilClearTagEXT(tr,jt,uct);
+    break;
+case APICall_glStencilFunc :
+    STUB_glStencilFunc(tr,jt,uct);
+    break;
+case APICall_glStencilFuncSeparate :
+    STUB_glStencilFuncSeparate(tr,jt,uct);
+    break;
+case APICall_glStencilFuncSeparateATI :
+    STUB_glStencilFuncSeparateATI(tr,jt,uct);
+    break;
+case APICall_glStencilMask :
+    STUB_glStencilMask(tr,jt,uct);
+    break;
+case APICall_glStencilMaskSeparate :
+    STUB_glStencilMaskSeparate(tr,jt,uct);
+    break;
+case APICall_glStencilOp :
+    STUB_glStencilOp(tr,jt,uct);
+    break;
+case APICall_glStencilOpSeparate :
+    STUB_glStencilOpSeparate(tr,jt,uct);
+    break;
+case APICall_glStencilOpSeparateATI :
+    STUB_glStencilOpSeparateATI(tr,jt,uct);
+    break;
+case APICall_glStopInstrumentsSGIX :
+    STUB_glStopInstrumentsSGIX(tr,jt,uct);
+    break;
+case APICall_glStringMarkerGREMEDY :
+    STUB_glStringMarkerGREMEDY(tr,jt,uct);
+    break;
+case APICall_glSwizzleEXT :
+    STUB_glSwizzleEXT(tr,jt,uct);
+    break;
+case APICall_glTagSampleBufferSGIX :
+    STUB_glTagSampleBufferSGIX(tr,jt,uct);
+    break;
+case APICall_glTangent3bEXT :
+    STUB_glTangent3bEXT(tr,jt,uct);
+    break;
+case APICall_glTangent3bvEXT :
+    STUB_glTangent3bvEXT(tr,jt,uct);
+    break;
+case APICall_glTangent3dEXT :
+    STUB_glTangent3dEXT(tr,jt,uct);
+    break;
+case APICall_glTangent3dvEXT :
+    STUB_glTangent3dvEXT(tr,jt,uct);
+    break;
+case APICall_glTangent3fEXT :
+    STUB_glTangent3fEXT(tr,jt,uct);
+    break;
+case APICall_glTangent3fvEXT :
+    STUB_glTangent3fvEXT(tr,jt,uct);
+    break;
+case APICall_glTangent3iEXT :
+    STUB_glTangent3iEXT(tr,jt,uct);
+    break;
+case APICall_glTangent3ivEXT :
+    STUB_glTangent3ivEXT(tr,jt,uct);
+    break;
+case APICall_glTangent3sEXT :
+    STUB_glTangent3sEXT(tr,jt,uct);
+    break;
+case APICall_glTangent3svEXT :
+    STUB_glTangent3svEXT(tr,jt,uct);
+    break;
+case APICall_glTangentPointerEXT :
+    STUB_glTangentPointerEXT(tr,jt,uct);
+    break;
+case APICall_glTbufferMask3DFX :
+    STUB_glTbufferMask3DFX(tr,jt,uct);
+    break;
+case APICall_glTessellationFactorAMD :
+    STUB_glTessellationFactorAMD(tr,jt,uct);
+    break;
+case APICall_glTessellationModeAMD :
+    STUB_glTessellationModeAMD(tr,jt,uct);
+    break;
+case APICall_glTestFenceAPPLE :
+    STUB_glTestFenceAPPLE(tr,jt,uct);
+    break;
+case APICall_glTestFenceNV :
+    STUB_glTestFenceNV(tr,jt,uct);
+    break;
+case APICall_glTestObjectAPPLE :
+    STUB_glTestObjectAPPLE(tr,jt,uct);
+    break;
+case APICall_glTexBuffer :
+    STUB_glTexBuffer(tr,jt,uct);
+    break;
+case APICall_glTexBufferARB :
+    STUB_glTexBufferARB(tr,jt,uct);
+    break;
+case APICall_glTexBufferEXT :
+    STUB_glTexBufferEXT(tr,jt,uct);
+    break;
+case APICall_glTexBumpParameterfvATI :
+    STUB_glTexBumpParameterfvATI(tr,jt,uct);
+    break;
+case APICall_glTexBumpParameterivATI :
+    STUB_glTexBumpParameterivATI(tr,jt,uct);
+    break;
+case APICall_glTexCoord1d :
+    STUB_glTexCoord1d(tr,jt,uct);
+    break;
+case APICall_glTexCoord1dv :
+    STUB_glTexCoord1dv(tr,jt,uct);
+    break;
+case APICall_glTexCoord1f :
+    STUB_glTexCoord1f(tr,jt,uct);
+    break;
+case APICall_glTexCoord1fv :
+    STUB_glTexCoord1fv(tr,jt,uct);
+    break;
+case APICall_glTexCoord1hNV :
+    STUB_glTexCoord1hNV(tr,jt,uct);
+    break;
+case APICall_glTexCoord1hvNV :
+    STUB_glTexCoord1hvNV(tr,jt,uct);
+    break;
+case APICall_glTexCoord1i :
+    STUB_glTexCoord1i(tr,jt,uct);
+    break;
+case APICall_glTexCoord1iv :
+    STUB_glTexCoord1iv(tr,jt,uct);
+    break;
+case APICall_glTexCoord1s :
+    STUB_glTexCoord1s(tr,jt,uct);
+    break;
+case APICall_glTexCoord1sv :
+    STUB_glTexCoord1sv(tr,jt,uct);
+    break;
+case APICall_glTexCoord2d :
+    STUB_glTexCoord2d(tr,jt,uct);
+    break;
+case APICall_glTexCoord2dv :
+    STUB_glTexCoord2dv(tr,jt,uct);
+    break;
+case APICall_glTexCoord2f :
+    STUB_glTexCoord2f(tr,jt,uct);
+    break;
+case APICall_glTexCoord2fv :
+    STUB_glTexCoord2fv(tr,jt,uct);
+    break;
+case APICall_glTexCoord2hNV :
+    STUB_glTexCoord2hNV(tr,jt,uct);
+    break;
+case APICall_glTexCoord2hvNV :
+    STUB_glTexCoord2hvNV(tr,jt,uct);
+    break;
+case APICall_glTexCoord2i :
+    STUB_glTexCoord2i(tr,jt,uct);
+    break;
+case APICall_glTexCoord2iv :
+    STUB_glTexCoord2iv(tr,jt,uct);
+    break;
+case APICall_glTexCoord2s :
+    STUB_glTexCoord2s(tr,jt,uct);
+    break;
+case APICall_glTexCoord2sv :
+    STUB_glTexCoord2sv(tr,jt,uct);
+    break;
+case APICall_glTexCoord3d :
+    STUB_glTexCoord3d(tr,jt,uct);
+    break;
+case APICall_glTexCoord3dv :
+    STUB_glTexCoord3dv(tr,jt,uct);
+    break;
+case APICall_glTexCoord3f :
+    STUB_glTexCoord3f(tr,jt,uct);
+    break;
+case APICall_glTexCoord3fv :
+    STUB_glTexCoord3fv(tr,jt,uct);
+    break;
+case APICall_glTexCoord3hNV :
+    STUB_glTexCoord3hNV(tr,jt,uct);
+    break;
+case APICall_glTexCoord3hvNV :
+    STUB_glTexCoord3hvNV(tr,jt,uct);
+    break;
+case APICall_glTexCoord3i :
+    STUB_glTexCoord3i(tr,jt,uct);
+    break;
+case APICall_glTexCoord3iv :
+    STUB_glTexCoord3iv(tr,jt,uct);
+    break;
+case APICall_glTexCoord3s :
+    STUB_glTexCoord3s(tr,jt,uct);
+    break;
+case APICall_glTexCoord3sv :
+    STUB_glTexCoord3sv(tr,jt,uct);
+    break;
+case APICall_glTexCoord4d :
+    STUB_glTexCoord4d(tr,jt,uct);
+    break;
+case APICall_glTexCoord4dv :
+    STUB_glTexCoord4dv(tr,jt,uct);
+    break;
+case APICall_glTexCoord4f :
+    STUB_glTexCoord4f(tr,jt,uct);
+    break;
+case APICall_glTexCoord4fv :
+    STUB_glTexCoord4fv(tr,jt,uct);
+    break;
+case APICall_glTexCoord4hNV :
+    STUB_glTexCoord4hNV(tr,jt,uct);
+    break;
+case APICall_glTexCoord4hvNV :
+    STUB_glTexCoord4hvNV(tr,jt,uct);
+    break;
+case APICall_glTexCoord4i :
+    STUB_glTexCoord4i(tr,jt,uct);
+    break;
+case APICall_glTexCoord4iv :
+    STUB_glTexCoord4iv(tr,jt,uct);
+    break;
+case APICall_glTexCoord4s :
+    STUB_glTexCoord4s(tr,jt,uct);
+    break;
+case APICall_glTexCoord4sv :
+    STUB_glTexCoord4sv(tr,jt,uct);
+    break;
+case APICall_glTexCoordPointer :
+    STUB_glTexCoordPointer(tr,jt,uct);
+    break;
+case APICall_glTexCoordPointerEXT :
+    STUB_glTexCoordPointerEXT(tr,jt,uct);
+    break;
+case APICall_glTexCoordPointervINTEL :
+    STUB_glTexCoordPointervINTEL(tr,jt,uct);
+    break;
+case APICall_glTexEnvf :
+    STUB_glTexEnvf(tr,jt,uct);
+    break;
+case APICall_glTexEnvfv :
+    STUB_glTexEnvfv(tr,jt,uct);
+    break;
+case APICall_glTexEnvi :
+    STUB_glTexEnvi(tr,jt,uct);
+    break;
+case APICall_glTexEnviv :
+    STUB_glTexEnviv(tr,jt,uct);
+    break;
+case APICall_glTexFilterFuncSGIS :
+    STUB_glTexFilterFuncSGIS(tr,jt,uct);
+    break;
+case APICall_glTexGend :
+    STUB_glTexGend(tr,jt,uct);
+    break;
+case APICall_glTexGendv :
+    STUB_glTexGendv(tr,jt,uct);
+    break;
+case APICall_glTexGenf :
+    STUB_glTexGenf(tr,jt,uct);
+    break;
+case APICall_glTexGenfv :
+    STUB_glTexGenfv(tr,jt,uct);
+    break;
+case APICall_glTexGeni :
+    STUB_glTexGeni(tr,jt,uct);
+    break;
+case APICall_glTexGeniv :
+    STUB_glTexGeniv(tr,jt,uct);
+    break;
+case APICall_glTexImage1D :
+    STUB_glTexImage1D(tr,jt,uct);
+    break;
+case APICall_glTexImage2D :
+    STUB_glTexImage2D(tr,jt,uct);
+    break;
+case APICall_glTexImage3D :
+    STUB_glTexImage3D(tr,jt,uct);
+    break;
+case APICall_glTexImage3DEXT :
+    STUB_glTexImage3DEXT(tr,jt,uct);
+    break;
+case APICall_glTexImage4DSGIS :
+    STUB_glTexImage4DSGIS(tr,jt,uct);
+    break;
+case APICall_glTexParameterIiv :
+    STUB_glTexParameterIiv(tr,jt,uct);
+    break;
+case APICall_glTexParameterIivEXT :
+    STUB_glTexParameterIivEXT(tr,jt,uct);
+    break;
+case APICall_glTexParameterIuiv :
+    STUB_glTexParameterIuiv(tr,jt,uct);
+    break;
+case APICall_glTexParameterIuivEXT :
+    STUB_glTexParameterIuivEXT(tr,jt,uct);
+    break;
+case APICall_glTexParameterf :
+    STUB_glTexParameterf(tr,jt,uct);
+    break;
+case APICall_glTexParameterfv :
+    STUB_glTexParameterfv(tr,jt,uct);
+    break;
+case APICall_glTexParameteri :
+    STUB_glTexParameteri(tr,jt,uct);
+    break;
+case APICall_glTexParameteriv :
+    STUB_glTexParameteriv(tr,jt,uct);
+    break;
+case APICall_glTexRenderbufferNV :
+    STUB_glTexRenderbufferNV(tr,jt,uct);
+    break;
+case APICall_glTexSubImage1D :
+    STUB_glTexSubImage1D(tr,jt,uct);
+    break;
+case APICall_glTexSubImage1DEXT :
+    STUB_glTexSubImage1DEXT(tr,jt,uct);
+    break;
+case APICall_glTexSubImage2D :
+    STUB_glTexSubImage2D(tr,jt,uct);
+    break;
+case APICall_glTexSubImage2DEXT :
+    STUB_glTexSubImage2DEXT(tr,jt,uct);
+    break;
+case APICall_glTexSubImage3D :
+    STUB_glTexSubImage3D(tr,jt,uct);
+    break;
+case APICall_glTexSubImage3DEXT :
+    STUB_glTexSubImage3DEXT(tr,jt,uct);
+    break;
+case APICall_glTexSubImage4DSGIS :
+    STUB_glTexSubImage4DSGIS(tr,jt,uct);
+    break;
+case APICall_glTextureBufferEXT :
+    STUB_glTextureBufferEXT(tr,jt,uct);
+    break;
+case APICall_glTextureColorMaskSGIS :
+    STUB_glTextureColorMaskSGIS(tr,jt,uct);
+    break;
+case APICall_glTextureImage1DEXT :
+    STUB_glTextureImage1DEXT(tr,jt,uct);
+    break;
+case APICall_glTextureImage2DEXT :
+    STUB_glTextureImage2DEXT(tr,jt,uct);
+    break;
+case APICall_glTextureImage3DEXT :
+    STUB_glTextureImage3DEXT(tr,jt,uct);
+    break;
+case APICall_glTextureLightEXT :
+    STUB_glTextureLightEXT(tr,jt,uct);
+    break;
+case APICall_glTextureMaterialEXT :
+    STUB_glTextureMaterialEXT(tr,jt,uct);
+    break;
+case APICall_glTextureNormalEXT :
+    STUB_glTextureNormalEXT(tr,jt,uct);
+    break;
+case APICall_glTextureParameterIivEXT :
+    STUB_glTextureParameterIivEXT(tr,jt,uct);
+    break;
+case APICall_glTextureParameterIuivEXT :
+    STUB_glTextureParameterIuivEXT(tr,jt,uct);
+    break;
+case APICall_glTextureParameterfEXT :
+    STUB_glTextureParameterfEXT(tr,jt,uct);
+    break;
+case APICall_glTextureParameterfvEXT :
+    STUB_glTextureParameterfvEXT(tr,jt,uct);
+    break;
+case APICall_glTextureParameteriEXT :
+    STUB_glTextureParameteriEXT(tr,jt,uct);
+    break;
+case APICall_glTextureParameterivEXT :
+    STUB_glTextureParameterivEXT(tr,jt,uct);
+    break;
+case APICall_glTextureRenderbufferEXT :
+    STUB_glTextureRenderbufferEXT(tr,jt,uct);
+    break;
+case APICall_glTextureSubImage1DEXT :
+    STUB_glTextureSubImage1DEXT(tr,jt,uct);
+    break;
+case APICall_glTextureSubImage2DEXT :
+    STUB_glTextureSubImage2DEXT(tr,jt,uct);
+    break;
+case APICall_glTextureSubImage3DEXT :
+    STUB_glTextureSubImage3DEXT(tr,jt,uct);
+    break;
+case APICall_glTrackMatrixNV :
+    STUB_glTrackMatrixNV(tr,jt,uct);
+    break;
+case APICall_glTransformFeedbackAttribsNV :
+    STUB_glTransformFeedbackAttribsNV(tr,jt,uct);
+    break;
+case APICall_glTransformFeedbackVaryings :
+    STUB_glTransformFeedbackVaryings(tr,jt,uct);
+    break;
+case APICall_glTransformFeedbackVaryingsEXT :
+    STUB_glTransformFeedbackVaryingsEXT(tr,jt,uct);
+    break;
+case APICall_glTransformFeedbackVaryingsNV :
+    STUB_glTransformFeedbackVaryingsNV(tr,jt,uct);
+    break;
+case APICall_glTranslated :
+    STUB_glTranslated(tr,jt,uct);
+    break;
+case APICall_glTranslatef :
+    STUB_glTranslatef(tr,jt,uct);
+    break;
+case APICall_glUniform1f :
+    STUB_glUniform1f(tr,jt,uct);
+    break;
+case APICall_glUniform1fARB :
+    STUB_glUniform1fARB(tr,jt,uct);
+    break;
+case APICall_glUniform1fv :
+    STUB_glUniform1fv(tr,jt,uct);
+    break;
+case APICall_glUniform1fvARB :
+    STUB_glUniform1fvARB(tr,jt,uct);
+    break;
+case APICall_glUniform1i :
+    STUB_glUniform1i(tr,jt,uct);
+    break;
+case APICall_glUniform1iARB :
+    STUB_glUniform1iARB(tr,jt,uct);
+    break;
+case APICall_glUniform1iv :
+    STUB_glUniform1iv(tr,jt,uct);
+    break;
+case APICall_glUniform1ivARB :
+    STUB_glUniform1ivARB(tr,jt,uct);
+    break;
+case APICall_glUniform1ui :
+    STUB_glUniform1ui(tr,jt,uct);
+    break;
+case APICall_glUniform1uiEXT :
+    STUB_glUniform1uiEXT(tr,jt,uct);
+    break;
+case APICall_glUniform1uiv :
+    STUB_glUniform1uiv(tr,jt,uct);
+    break;
+case APICall_glUniform1uivEXT :
+    STUB_glUniform1uivEXT(tr,jt,uct);
+    break;
+case APICall_glUniform2f :
+    STUB_glUniform2f(tr,jt,uct);
+    break;
+case APICall_glUniform2fARB :
+    STUB_glUniform2fARB(tr,jt,uct);
+    break;
+case APICall_glUniform2fv :
+    STUB_glUniform2fv(tr,jt,uct);
+    break;
+case APICall_glUniform2fvARB :
+    STUB_glUniform2fvARB(tr,jt,uct);
+    break;
+case APICall_glUniform2i :
+    STUB_glUniform2i(tr,jt,uct);
+    break;
+case APICall_glUniform2iARB :
+    STUB_glUniform2iARB(tr,jt,uct);
+    break;
+case APICall_glUniform2iv :
+    STUB_glUniform2iv(tr,jt,uct);
+    break;
+case APICall_glUniform2ivARB :
+    STUB_glUniform2ivARB(tr,jt,uct);
+    break;
+case APICall_glUniform2ui :
+    STUB_glUniform2ui(tr,jt,uct);
+    break;
+case APICall_glUniform2uiEXT :
+    STUB_glUniform2uiEXT(tr,jt,uct);
+    break;
+case APICall_glUniform2uiv :
+    STUB_glUniform2uiv(tr,jt,uct);
+    break;
+case APICall_glUniform2uivEXT :
+    STUB_glUniform2uivEXT(tr,jt,uct);
+    break;
+case APICall_glUniform3f :
+    STUB_glUniform3f(tr,jt,uct);
+    break;
+case APICall_glUniform3fARB :
+    STUB_glUniform3fARB(tr,jt,uct);
+    break;
+case APICall_glUniform3fv :
+    STUB_glUniform3fv(tr,jt,uct);
+    break;
+case APICall_glUniform3fvARB :
+    STUB_glUniform3fvARB(tr,jt,uct);
+    break;
+case APICall_glUniform3i :
+    STUB_glUniform3i(tr,jt,uct);
+    break;
+case APICall_glUniform3iARB :
+    STUB_glUniform3iARB(tr,jt,uct);
+    break;
+case APICall_glUniform3iv :
+    STUB_glUniform3iv(tr,jt,uct);
+    break;
+case APICall_glUniform3ivARB :
+    STUB_glUniform3ivARB(tr,jt,uct);
+    break;
+case APICall_glUniform3ui :
+    STUB_glUniform3ui(tr,jt,uct);
+    break;
+case APICall_glUniform3uiEXT :
+    STUB_glUniform3uiEXT(tr,jt,uct);
+    break;
+case APICall_glUniform3uiv :
+    STUB_glUniform3uiv(tr,jt,uct);
+    break;
+case APICall_glUniform3uivEXT :
+    STUB_glUniform3uivEXT(tr,jt,uct);
+    break;
+case APICall_glUniform4f :
+    STUB_glUniform4f(tr,jt,uct);
+    break;
+case APICall_glUniform4fARB :
+    STUB_glUniform4fARB(tr,jt,uct);
+    break;
+case APICall_glUniform4fv :
+    STUB_glUniform4fv(tr,jt,uct);
+    break;
+case APICall_glUniform4fvARB :
+    STUB_glUniform4fvARB(tr,jt,uct);
+    break;
+case APICall_glUniform4i :
+    STUB_glUniform4i(tr,jt,uct);
+    break;
+case APICall_glUniform4iARB :
+    STUB_glUniform4iARB(tr,jt,uct);
+    break;
+case APICall_glUniform4iv :
+    STUB_glUniform4iv(tr,jt,uct);
+    break;
+case APICall_glUniform4ivARB :
+    STUB_glUniform4ivARB(tr,jt,uct);
+    break;
+case APICall_glUniform4ui :
+    STUB_glUniform4ui(tr,jt,uct);
+    break;
+case APICall_glUniform4uiEXT :
+    STUB_glUniform4uiEXT(tr,jt,uct);
+    break;
+case APICall_glUniform4uiv :
+    STUB_glUniform4uiv(tr,jt,uct);
+    break;
+case APICall_glUniform4uivEXT :
+    STUB_glUniform4uivEXT(tr,jt,uct);
+    break;
+case APICall_glUniformBlockBinding :
+    STUB_glUniformBlockBinding(tr,jt,uct);
+    break;
+case APICall_glUniformBufferEXT :
+    STUB_glUniformBufferEXT(tr,jt,uct);
+    break;
+case APICall_glUniformMatrix2fv :
+    STUB_glUniformMatrix2fv(tr,jt,uct);
+    break;
+case APICall_glUniformMatrix2fvARB :
+    STUB_glUniformMatrix2fvARB(tr,jt,uct);
+    break;
+case APICall_glUniformMatrix2x3fv :
+    STUB_glUniformMatrix2x3fv(tr,jt,uct);
+    break;
+case APICall_glUniformMatrix2x4fv :
+    STUB_glUniformMatrix2x4fv(tr,jt,uct);
+    break;
+case APICall_glUniformMatrix3fv :
+    STUB_glUniformMatrix3fv(tr,jt,uct);
+    break;
+case APICall_glUniformMatrix3fvARB :
+    STUB_glUniformMatrix3fvARB(tr,jt,uct);
+    break;
+case APICall_glUniformMatrix3x2fv :
+    STUB_glUniformMatrix3x2fv(tr,jt,uct);
+    break;
+case APICall_glUniformMatrix3x4fv :
+    STUB_glUniformMatrix3x4fv(tr,jt,uct);
+    break;
+case APICall_glUniformMatrix4fv :
+    STUB_glUniformMatrix4fv(tr,jt,uct);
+    break;
+case APICall_glUniformMatrix4fvARB :
+    STUB_glUniformMatrix4fvARB(tr,jt,uct);
+    break;
+case APICall_glUniformMatrix4x2fv :
+    STUB_glUniformMatrix4x2fv(tr,jt,uct);
+    break;
+case APICall_glUniformMatrix4x3fv :
+    STUB_glUniformMatrix4x3fv(tr,jt,uct);
+    break;
+case APICall_glUnlockArraysEXT :
+    STUB_glUnlockArraysEXT(tr,jt,uct);
+    break;
+case APICall_glUnmapBuffer :
+    STUB_glUnmapBuffer(tr,jt,uct);
+    break;
+case APICall_glUnmapBufferARB :
+    STUB_glUnmapBufferARB(tr,jt,uct);
+    break;
+case APICall_glUnmapNamedBufferEXT :
+    STUB_glUnmapNamedBufferEXT(tr,jt,uct);
+    break;
+case APICall_glUnmapObjectBufferATI :
+    STUB_glUnmapObjectBufferATI(tr,jt,uct);
+    break;
+case APICall_glUpdateObjectBufferATI :
+    STUB_glUpdateObjectBufferATI(tr,jt,uct);
+    break;
+case APICall_glUseProgram :
+    STUB_glUseProgram(tr,jt,uct);
+    break;
+case APICall_glUseProgramObjectARB :
+    STUB_glUseProgramObjectARB(tr,jt,uct);
+    break;
+case APICall_glValidateProgram :
+    STUB_glValidateProgram(tr,jt,uct);
+    break;
+case APICall_glValidateProgramARB :
+    STUB_glValidateProgramARB(tr,jt,uct);
+    break;
+case APICall_glVariantArrayObjectATI :
+    STUB_glVariantArrayObjectATI(tr,jt,uct);
+    break;
+case APICall_glVariantPointerEXT :
+    STUB_glVariantPointerEXT(tr,jt,uct);
+    break;
+case APICall_glVariantbvEXT :
+    STUB_glVariantbvEXT(tr,jt,uct);
+    break;
+case APICall_glVariantdvEXT :
+    STUB_glVariantdvEXT(tr,jt,uct);
+    break;
+case APICall_glVariantfvEXT :
+    STUB_glVariantfvEXT(tr,jt,uct);
+    break;
+case APICall_glVariantivEXT :
+    STUB_glVariantivEXT(tr,jt,uct);
+    break;
+case APICall_glVariantsvEXT :
+    STUB_glVariantsvEXT(tr,jt,uct);
+    break;
+case APICall_glVariantubvEXT :
+    STUB_glVariantubvEXT(tr,jt,uct);
+    break;
+case APICall_glVariantuivEXT :
+    STUB_glVariantuivEXT(tr,jt,uct);
+    break;
+case APICall_glVariantusvEXT :
+    STUB_glVariantusvEXT(tr,jt,uct);
+    break;
+case APICall_glVertex2d :
+    STUB_glVertex2d(tr,jt,uct);
+    break;
+case APICall_glVertex2dv :
+    STUB_glVertex2dv(tr,jt,uct);
+    break;
+case APICall_glVertex2f :
+    STUB_glVertex2f(tr,jt,uct);
+    break;
+case APICall_glVertex2fv :
+    STUB_glVertex2fv(tr,jt,uct);
+    break;
+case APICall_glVertex2hNV :
+    STUB_glVertex2hNV(tr,jt,uct);
+    break;
+case APICall_glVertex2hvNV :
+    STUB_glVertex2hvNV(tr,jt,uct);
+    break;
+case APICall_glVertex2i :
+    STUB_glVertex2i(tr,jt,uct);
+    break;
+case APICall_glVertex2iv :
+    STUB_glVertex2iv(tr,jt,uct);
+    break;
+case APICall_glVertex2s :
+    STUB_glVertex2s(tr,jt,uct);
+    break;
+case APICall_glVertex2sv :
+    STUB_glVertex2sv(tr,jt,uct);
+    break;
+case APICall_glVertex3d :
+    STUB_glVertex3d(tr,jt,uct);
+    break;
+case APICall_glVertex3dv :
+    STUB_glVertex3dv(tr,jt,uct);
+    break;
+case APICall_glVertex3f :
+    STUB_glVertex3f(tr,jt,uct);
+    break;
+case APICall_glVertex3fv :
+    STUB_glVertex3fv(tr,jt,uct);
+    break;
+case APICall_glVertex3hNV :
+    STUB_glVertex3hNV(tr,jt,uct);
+    break;
+case APICall_glVertex3hvNV :
+    STUB_glVertex3hvNV(tr,jt,uct);
+    break;
+case APICall_glVertex3i :
+    STUB_glVertex3i(tr,jt,uct);
+    break;
+case APICall_glVertex3iv :
+    STUB_glVertex3iv(tr,jt,uct);
+    break;
+case APICall_glVertex3s :
+    STUB_glVertex3s(tr,jt,uct);
+    break;
+case APICall_glVertex3sv :
+    STUB_glVertex3sv(tr,jt,uct);
+    break;
+case APICall_glVertex4d :
+    STUB_glVertex4d(tr,jt,uct);
+    break;
+case APICall_glVertex4dv :
+    STUB_glVertex4dv(tr,jt,uct);
+    break;
+case APICall_glVertex4f :
+    STUB_glVertex4f(tr,jt,uct);
+    break;
+case APICall_glVertex4fv :
+    STUB_glVertex4fv(tr,jt,uct);
+    break;
+case APICall_glVertex4hNV :
+    STUB_glVertex4hNV(tr,jt,uct);
+    break;
+case APICall_glVertex4hvNV :
+    STUB_glVertex4hvNV(tr,jt,uct);
+    break;
+case APICall_glVertex4i :
+    STUB_glVertex4i(tr,jt,uct);
+    break;
+case APICall_glVertex4iv :
+    STUB_glVertex4iv(tr,jt,uct);
+    break;
+case APICall_glVertex4s :
+    STUB_glVertex4s(tr,jt,uct);
+    break;
+case APICall_glVertex4sv :
+    STUB_glVertex4sv(tr,jt,uct);
+    break;
+case APICall_glVertexArrayParameteriAPPLE :
+    STUB_glVertexArrayParameteriAPPLE(tr,jt,uct);
+    break;
+case APICall_glVertexArrayRangeAPPLE :
+    STUB_glVertexArrayRangeAPPLE(tr,jt,uct);
+    break;
+case APICall_glVertexArrayRangeNV :
+    STUB_glVertexArrayRangeNV(tr,jt,uct);
+    break;
+case APICall_glVertexAttrib1d :
+    STUB_glVertexAttrib1d(tr,jt,uct);
+    break;
+case APICall_glVertexAttrib1dARB :
+    STUB_glVertexAttrib1dARB(tr,jt,uct);
+    break;
+case APICall_glVertexAttrib1dNV :
+    STUB_glVertexAttrib1dNV(tr,jt,uct);
+    break;
+case APICall_glVertexAttrib1dv :
+    STUB_glVertexAttrib1dv(tr,jt,uct);
+    break;
+case APICall_glVertexAttrib1dvARB :
+    STUB_glVertexAttrib1dvARB(tr,jt,uct);
+    break;
+case APICall_glVertexAttrib1dvNV :
+    STUB_glVertexAttrib1dvNV(tr,jt,uct);
+    break;
+case APICall_glVertexAttrib1f :
+    STUB_glVertexAttrib1f(tr,jt,uct);
+    break;
+case APICall_glVertexAttrib1fARB :
+    STUB_glVertexAttrib1fARB(tr,jt,uct);
+    break;
+case APICall_glVertexAttrib1fNV :
+    STUB_glVertexAttrib1fNV(tr,jt,uct);
+    break;
+case APICall_glVertexAttrib1fv :
+    STUB_glVertexAttrib1fv(tr,jt,uct);
+    break;
+case APICall_glVertexAttrib1fvARB :
+    STUB_glVertexAttrib1fvARB(tr,jt,uct);
+    break;
+case APICall_glVertexAttrib1fvNV :
+    STUB_glVertexAttrib1fvNV(tr,jt,uct);
+    break;
+case APICall_glVertexAttrib1hNV :
+    STUB_glVertexAttrib1hNV(tr,jt,uct);
+    break;
+case APICall_glVertexAttrib1hvNV :
+    STUB_glVertexAttrib1hvNV(tr,jt,uct);
+    break;
+case APICall_glVertexAttrib1s :
+    STUB_glVertexAttrib1s(tr,jt,uct);
+    break;
+case APICall_glVertexAttrib1sARB :
+    STUB_glVertexAttrib1sARB(tr,jt,uct);
+    break;
+case APICall_glVertexAttrib1sNV :
+    STUB_glVertexAttrib1sNV(tr,jt,uct);
+    break;
+case APICall_glVertexAttrib1sv :
+    STUB_glVertexAttrib1sv(tr,jt,uct);
+    break;
+case APICall_glVertexAttrib1svARB :
+    STUB_glVertexAttrib1svARB(tr,jt,uct);
+    break;
+case APICall_glVertexAttrib1svNV :
+    STUB_glVertexAttrib1svNV(tr,jt,uct);
+    break;
+case APICall_glVertexAttrib2d :
+    STUB_glVertexAttrib2d(tr,jt,uct);
+    break;
+case APICall_glVertexAttrib2dARB :
+    STUB_glVertexAttrib2dARB(tr,jt,uct);
+    break;
+case APICall_glVertexAttrib2dNV :
+    STUB_glVertexAttrib2dNV(tr,jt,uct);
+    break;
+case APICall_glVertexAttrib2dv :
+    STUB_glVertexAttrib2dv(tr,jt,uct);
+    break;
+case APICall_glVertexAttrib2dvARB :
+    STUB_glVertexAttrib2dvARB(tr,jt,uct);
+    break;
+case APICall_glVertexAttrib2dvNV :
+    STUB_glVertexAttrib2dvNV(tr,jt,uct);
+    break;
+case APICall_glVertexAttrib2f :
+    STUB_glVertexAttrib2f(tr,jt,uct);
+    break;
+case APICall_glVertexAttrib2fARB :
+    STUB_glVertexAttrib2fARB(tr,jt,uct);
+    break;
+case APICall_glVertexAttrib2fNV :
+    STUB_glVertexAttrib2fNV(tr,jt,uct);
+    break;
+case APICall_glVertexAttrib2fv :
+    STUB_glVertexAttrib2fv(tr,jt,uct);
+    break;
+case APICall_glVertexAttrib2fvARB :
+    STUB_glVertexAttrib2fvARB(tr,jt,uct);
+    break;
+case APICall_glVertexAttrib2fvNV :
+    STUB_glVertexAttrib2fvNV(tr,jt,uct);
+    break;
+case APICall_glVertexAttrib2hNV :
+    STUB_glVertexAttrib2hNV(tr,jt,uct);
+    break;
+case APICall_glVertexAttrib2hvNV :
+    STUB_glVertexAttrib2hvNV(tr,jt,uct);
+    break;
+case APICall_glVertexAttrib2s :
+    STUB_glVertexAttrib2s(tr,jt,uct);
+    break;
+case APICall_glVertexAttrib2sARB :
+    STUB_glVertexAttrib2sARB(tr,jt,uct);
+    break;
+case APICall_glVertexAttrib2sNV :
+    STUB_glVertexAttrib2sNV(tr,jt,uct);
+    break;
+case APICall_glVertexAttrib2sv :
+    STUB_glVertexAttrib2sv(tr,jt,uct);
+    break;
+case APICall_glVertexAttrib2svARB :
+    STUB_glVertexAttrib2svARB(tr,jt,uct);
+    break;
+case APICall_glVertexAttrib2svNV :
+    STUB_glVertexAttrib2svNV(tr,jt,uct);
+    break;
+case APICall_glVertexAttrib3d :
+    STUB_glVertexAttrib3d(tr,jt,uct);
+    break;
+case APICall_glVertexAttrib3dARB :
+    STUB_glVertexAttrib3dARB(tr,jt,uct);
+    break;
+case APICall_glVertexAttrib3dNV :
+    STUB_glVertexAttrib3dNV(tr,jt,uct);
+    break;
+case APICall_glVertexAttrib3dv :
+    STUB_glVertexAttrib3dv(tr,jt,uct);
+    break;
+case APICall_glVertexAttrib3dvARB :
+    STUB_glVertexAttrib3dvARB(tr,jt,uct);
+    break;
+case APICall_glVertexAttrib3dvNV :
+    STUB_glVertexAttrib3dvNV(tr,jt,uct);
+    break;
+case APICall_glVertexAttrib3f :
+    STUB_glVertexAttrib3f(tr,jt,uct);
+    break;
+case APICall_glVertexAttrib3fARB :
+    STUB_glVertexAttrib3fARB(tr,jt,uct);
+    break;
+case APICall_glVertexAttrib3fNV :
+    STUB_glVertexAttrib3fNV(tr,jt,uct);
+    break;
+case APICall_glVertexAttrib3fv :
+    STUB_glVertexAttrib3fv(tr,jt,uct);
+    break;
+case APICall_glVertexAttrib3fvARB :
+    STUB_glVertexAttrib3fvARB(tr,jt,uct);
+    break;
+case APICall_glVertexAttrib3fvNV :
+    STUB_glVertexAttrib3fvNV(tr,jt,uct);
+    break;
+case APICall_glVertexAttrib3hNV :
+    STUB_glVertexAttrib3hNV(tr,jt,uct);
+    break;
+case APICall_glVertexAttrib3hvNV :
+    STUB_glVertexAttrib3hvNV(tr,jt,uct);
+    break;
+case APICall_glVertexAttrib3s :
+    STUB_glVertexAttrib3s(tr,jt,uct);
+    break;
+case APICall_glVertexAttrib3sARB :
+    STUB_glVertexAttrib3sARB(tr,jt,uct);
+    break;
+case APICall_glVertexAttrib3sNV :
+    STUB_glVertexAttrib3sNV(tr,jt,uct);
+    break;
+case APICall_glVertexAttrib3sv :
+    STUB_glVertexAttrib3sv(tr,jt,uct);
+    break;
+case APICall_glVertexAttrib3svARB :
+    STUB_glVertexAttrib3svARB(tr,jt,uct);
+    break;
+case APICall_glVertexAttrib3svNV :
+    STUB_glVertexAttrib3svNV(tr,jt,uct);
+    break;
+case APICall_glVertexAttrib4Nbv :
+    STUB_glVertexAttrib4Nbv(tr,jt,uct);
+    break;
+case APICall_glVertexAttrib4NbvARB :
+    STUB_glVertexAttrib4NbvARB(tr,jt,uct);
+    break;
+case APICall_glVertexAttrib4Niv :
+    STUB_glVertexAttrib4Niv(tr,jt,uct);
+    break;
+case APICall_glVertexAttrib4NivARB :
+    STUB_glVertexAttrib4NivARB(tr,jt,uct);
+    break;
+case APICall_glVertexAttrib4Nsv :
+    STUB_glVertexAttrib4Nsv(tr,jt,uct);
+    break;
+case APICall_glVertexAttrib4NsvARB :
+    STUB_glVertexAttrib4NsvARB(tr,jt,uct);
+    break;
+case APICall_glVertexAttrib4Nub :
+    STUB_glVertexAttrib4Nub(tr,jt,uct);
+    break;
+case APICall_glVertexAttrib4NubARB :
+    STUB_glVertexAttrib4NubARB(tr,jt,uct);
+    break;
+case APICall_glVertexAttrib4Nubv :
+    STUB_glVertexAttrib4Nubv(tr,jt,uct);
+    break;
+case APICall_glVertexAttrib4NubvARB :
+    STUB_glVertexAttrib4NubvARB(tr,jt,uct);
+    break;
+case APICall_glVertexAttrib4Nuiv :
+    STUB_glVertexAttrib4Nuiv(tr,jt,uct);
+    break;
+case APICall_glVertexAttrib4NuivARB :
+    STUB_glVertexAttrib4NuivARB(tr,jt,uct);
+    break;
+case APICall_glVertexAttrib4Nusv :
+    STUB_glVertexAttrib4Nusv(tr,jt,uct);
+    break;
+case APICall_glVertexAttrib4NusvARB :
+    STUB_glVertexAttrib4NusvARB(tr,jt,uct);
+    break;
+case APICall_glVertexAttrib4bv :
+    STUB_glVertexAttrib4bv(tr,jt,uct);
+    break;
+case APICall_glVertexAttrib4bvARB :
+    STUB_glVertexAttrib4bvARB(tr,jt,uct);
+    break;
+case APICall_glVertexAttrib4d :
+    STUB_glVertexAttrib4d(tr,jt,uct);
+    break;
+case APICall_glVertexAttrib4dARB :
+    STUB_glVertexAttrib4dARB(tr,jt,uct);
+    break;
+case APICall_glVertexAttrib4dNV :
+    STUB_glVertexAttrib4dNV(tr,jt,uct);
+    break;
+case APICall_glVertexAttrib4dv :
+    STUB_glVertexAttrib4dv(tr,jt,uct);
+    break;
+case APICall_glVertexAttrib4dvARB :
+    STUB_glVertexAttrib4dvARB(tr,jt,uct);
+    break;
+case APICall_glVertexAttrib4dvNV :
+    STUB_glVertexAttrib4dvNV(tr,jt,uct);
+    break;
+case APICall_glVertexAttrib4f :
+    STUB_glVertexAttrib4f(tr,jt,uct);
+    break;
+case APICall_glVertexAttrib4fARB :
+    STUB_glVertexAttrib4fARB(tr,jt,uct);
+    break;
+case APICall_glVertexAttrib4fNV :
+    STUB_glVertexAttrib4fNV(tr,jt,uct);
+    break;
+case APICall_glVertexAttrib4fv :
+    STUB_glVertexAttrib4fv(tr,jt,uct);
+    break;
+case APICall_glVertexAttrib4fvARB :
+    STUB_glVertexAttrib4fvARB(tr,jt,uct);
+    break;
+case APICall_glVertexAttrib4fvNV :
+    STUB_glVertexAttrib4fvNV(tr,jt,uct);
+    break;
+case APICall_glVertexAttrib4hNV :
+    STUB_glVertexAttrib4hNV(tr,jt,uct);
+    break;
+case APICall_glVertexAttrib4hvNV :
+    STUB_glVertexAttrib4hvNV(tr,jt,uct);
+    break;
+case APICall_glVertexAttrib4iv :
+    STUB_glVertexAttrib4iv(tr,jt,uct);
+    break;
+case APICall_glVertexAttrib4ivARB :
+    STUB_glVertexAttrib4ivARB(tr,jt,uct);
+    break;
+case APICall_glVertexAttrib4s :
+    STUB_glVertexAttrib4s(tr,jt,uct);
+    break;
+case APICall_glVertexAttrib4sARB :
+    STUB_glVertexAttrib4sARB(tr,jt,uct);
+    break;
+case APICall_glVertexAttrib4sNV :
+    STUB_glVertexAttrib4sNV(tr,jt,uct);
+    break;
+case APICall_glVertexAttrib4sv :
+    STUB_glVertexAttrib4sv(tr,jt,uct);
+    break;
+case APICall_glVertexAttrib4svARB :
+    STUB_glVertexAttrib4svARB(tr,jt,uct);
+    break;
+case APICall_glVertexAttrib4svNV :
+    STUB_glVertexAttrib4svNV(tr,jt,uct);
+    break;
+case APICall_glVertexAttrib4ubNV :
+    STUB_glVertexAttrib4ubNV(tr,jt,uct);
+    break;
+case APICall_glVertexAttrib4ubv :
+    STUB_glVertexAttrib4ubv(tr,jt,uct);
+    break;
+case APICall_glVertexAttrib4ubvARB :
+    STUB_glVertexAttrib4ubvARB(tr,jt,uct);
+    break;
+case APICall_glVertexAttrib4ubvNV :
+    STUB_glVertexAttrib4ubvNV(tr,jt,uct);
+    break;
+case APICall_glVertexAttrib4uiv :
+    STUB_glVertexAttrib4uiv(tr,jt,uct);
+    break;
+case APICall_glVertexAttrib4uivARB :
+    STUB_glVertexAttrib4uivARB(tr,jt,uct);
+    break;
+case APICall_glVertexAttrib4usv :
+    STUB_glVertexAttrib4usv(tr,jt,uct);
+    break;
+case APICall_glVertexAttrib4usvARB :
+    STUB_glVertexAttrib4usvARB(tr,jt,uct);
+    break;
+case APICall_glVertexAttribArrayObjectATI :
+    STUB_glVertexAttribArrayObjectATI(tr,jt,uct);
+    break;
+case APICall_glVertexAttribDivisorARB :
+    STUB_glVertexAttribDivisorARB(tr,jt,uct);
+    break;
+case APICall_glVertexAttribI1i :
+    STUB_glVertexAttribI1i(tr,jt,uct);
+    break;
+case APICall_glVertexAttribI1iEXT :
+    STUB_glVertexAttribI1iEXT(tr,jt,uct);
+    break;
+case APICall_glVertexAttribI1iv :
+    STUB_glVertexAttribI1iv(tr,jt,uct);
+    break;
+case APICall_glVertexAttribI1ivEXT :
+    STUB_glVertexAttribI1ivEXT(tr,jt,uct);
+    break;
+case APICall_glVertexAttribI1ui :
+    STUB_glVertexAttribI1ui(tr,jt,uct);
+    break;
+case APICall_glVertexAttribI1uiEXT :
+    STUB_glVertexAttribI1uiEXT(tr,jt,uct);
+    break;
+case APICall_glVertexAttribI1uiv :
+    STUB_glVertexAttribI1uiv(tr,jt,uct);
+    break;
+case APICall_glVertexAttribI1uivEXT :
+    STUB_glVertexAttribI1uivEXT(tr,jt,uct);
+    break;
+case APICall_glVertexAttribI2i :
+    STUB_glVertexAttribI2i(tr,jt,uct);
+    break;
+case APICall_glVertexAttribI2iEXT :
+    STUB_glVertexAttribI2iEXT(tr,jt,uct);
+    break;
+case APICall_glVertexAttribI2iv :
+    STUB_glVertexAttribI2iv(tr,jt,uct);
+    break;
+case APICall_glVertexAttribI2ivEXT :
+    STUB_glVertexAttribI2ivEXT(tr,jt,uct);
+    break;
+case APICall_glVertexAttribI2ui :
+    STUB_glVertexAttribI2ui(tr,jt,uct);
+    break;
+case APICall_glVertexAttribI2uiEXT :
+    STUB_glVertexAttribI2uiEXT(tr,jt,uct);
+    break;
+case APICall_glVertexAttribI2uiv :
+    STUB_glVertexAttribI2uiv(tr,jt,uct);
+    break;
+case APICall_glVertexAttribI2uivEXT :
+    STUB_glVertexAttribI2uivEXT(tr,jt,uct);
+    break;
+case APICall_glVertexAttribI3i :
+    STUB_glVertexAttribI3i(tr,jt,uct);
+    break;
+case APICall_glVertexAttribI3iEXT :
+    STUB_glVertexAttribI3iEXT(tr,jt,uct);
+    break;
+case APICall_glVertexAttribI3iv :
+    STUB_glVertexAttribI3iv(tr,jt,uct);
+    break;
+case APICall_glVertexAttribI3ivEXT :
+    STUB_glVertexAttribI3ivEXT(tr,jt,uct);
+    break;
+case APICall_glVertexAttribI3ui :
+    STUB_glVertexAttribI3ui(tr,jt,uct);
+    break;
+case APICall_glVertexAttribI3uiEXT :
+    STUB_glVertexAttribI3uiEXT(tr,jt,uct);
+    break;
+case APICall_glVertexAttribI3uiv :
+    STUB_glVertexAttribI3uiv(tr,jt,uct);
+    break;
+case APICall_glVertexAttribI3uivEXT :
+    STUB_glVertexAttribI3uivEXT(tr,jt,uct);
+    break;
+case APICall_glVertexAttribI4bv :
+    STUB_glVertexAttribI4bv(tr,jt,uct);
+    break;
+case APICall_glVertexAttribI4bvEXT :
+    STUB_glVertexAttribI4bvEXT(tr,jt,uct);
+    break;
+case APICall_glVertexAttribI4i :
+    STUB_glVertexAttribI4i(tr,jt,uct);
+    break;
+case APICall_glVertexAttribI4iEXT :
+    STUB_glVertexAttribI4iEXT(tr,jt,uct);
+    break;
+case APICall_glVertexAttribI4iv :
+    STUB_glVertexAttribI4iv(tr,jt,uct);
+    break;
+case APICall_glVertexAttribI4ivEXT :
+    STUB_glVertexAttribI4ivEXT(tr,jt,uct);
+    break;
+case APICall_glVertexAttribI4sv :
+    STUB_glVertexAttribI4sv(tr,jt,uct);
+    break;
+case APICall_glVertexAttribI4svEXT :
+    STUB_glVertexAttribI4svEXT(tr,jt,uct);
+    break;
+case APICall_glVertexAttribI4ubv :
+    STUB_glVertexAttribI4ubv(tr,jt,uct);
+    break;
+case APICall_glVertexAttribI4ubvEXT :
+    STUB_glVertexAttribI4ubvEXT(tr,jt,uct);
+    break;
+case APICall_glVertexAttribI4ui :
+    STUB_glVertexAttribI4ui(tr,jt,uct);
+    break;
+case APICall_glVertexAttribI4uiEXT :
+    STUB_glVertexAttribI4uiEXT(tr,jt,uct);
+    break;
+case APICall_glVertexAttribI4uiv :
+    STUB_glVertexAttribI4uiv(tr,jt,uct);
+    break;
+case APICall_glVertexAttribI4uivEXT :
+    STUB_glVertexAttribI4uivEXT(tr,jt,uct);
+    break;
+case APICall_glVertexAttribI4usv :
+    STUB_glVertexAttribI4usv(tr,jt,uct);
+    break;
+case APICall_glVertexAttribI4usvEXT :
+    STUB_glVertexAttribI4usvEXT(tr,jt,uct);
+    break;
+case APICall_glVertexAttribIPointer :
+    STUB_glVertexAttribIPointer(tr,jt,uct);
+    break;
+case APICall_glVertexAttribIPointerEXT :
+    STUB_glVertexAttribIPointerEXT(tr,jt,uct);
+    break;
+case APICall_glVertexAttribPointer :
+    STUB_glVertexAttribPointer(tr,jt,uct);
+    break;
+case APICall_glVertexAttribPointerARB :
+    STUB_glVertexAttribPointerARB(tr,jt,uct);
+    break;
+case APICall_glVertexAttribPointerNV :
+    STUB_glVertexAttribPointerNV(tr,jt,uct);
+    break;
+case APICall_glVertexAttribs1dvNV :
+    STUB_glVertexAttribs1dvNV(tr,jt,uct);
+    break;
+case APICall_glVertexAttribs1fvNV :
+    STUB_glVertexAttribs1fvNV(tr,jt,uct);
+    break;
+case APICall_glVertexAttribs1hvNV :
+    STUB_glVertexAttribs1hvNV(tr,jt,uct);
+    break;
+case APICall_glVertexAttribs1svNV :
+    STUB_glVertexAttribs1svNV(tr,jt,uct);
+    break;
+case APICall_glVertexAttribs2dvNV :
+    STUB_glVertexAttribs2dvNV(tr,jt,uct);
+    break;
+case APICall_glVertexAttribs2fvNV :
+    STUB_glVertexAttribs2fvNV(tr,jt,uct);
+    break;
+case APICall_glVertexAttribs2hvNV :
+    STUB_glVertexAttribs2hvNV(tr,jt,uct);
+    break;
+case APICall_glVertexAttribs2svNV :
+    STUB_glVertexAttribs2svNV(tr,jt,uct);
+    break;
+case APICall_glVertexAttribs3dvNV :
+    STUB_glVertexAttribs3dvNV(tr,jt,uct);
+    break;
+case APICall_glVertexAttribs3fvNV :
+    STUB_glVertexAttribs3fvNV(tr,jt,uct);
+    break;
+case APICall_glVertexAttribs3hvNV :
+    STUB_glVertexAttribs3hvNV(tr,jt,uct);
+    break;
+case APICall_glVertexAttribs3svNV :
+    STUB_glVertexAttribs3svNV(tr,jt,uct);
+    break;
+case APICall_glVertexAttribs4dvNV :
+    STUB_glVertexAttribs4dvNV(tr,jt,uct);
+    break;
+case APICall_glVertexAttribs4fvNV :
+    STUB_glVertexAttribs4fvNV(tr,jt,uct);
+    break;
+case APICall_glVertexAttribs4hvNV :
+    STUB_glVertexAttribs4hvNV(tr,jt,uct);
+    break;
+case APICall_glVertexAttribs4svNV :
+    STUB_glVertexAttribs4svNV(tr,jt,uct);
+    break;
+case APICall_glVertexAttribs4ubvNV :
+    STUB_glVertexAttribs4ubvNV(tr,jt,uct);
+    break;
+case APICall_glVertexBlendARB :
+    STUB_glVertexBlendARB(tr,jt,uct);
+    break;
+case APICall_glVertexBlendEnvfATI :
+    STUB_glVertexBlendEnvfATI(tr,jt,uct);
+    break;
+case APICall_glVertexBlendEnviATI :
+    STUB_glVertexBlendEnviATI(tr,jt,uct);
+    break;
+case APICall_glVertexPointer :
+    STUB_glVertexPointer(tr,jt,uct);
+    break;
+case APICall_glVertexPointerEXT :
+    STUB_glVertexPointerEXT(tr,jt,uct);
+    break;
+case APICall_glVertexPointervINTEL :
+    STUB_glVertexPointervINTEL(tr,jt,uct);
+    break;
+case APICall_glVertexStream1dATI :
+    STUB_glVertexStream1dATI(tr,jt,uct);
+    break;
+case APICall_glVertexStream1dvATI :
+    STUB_glVertexStream1dvATI(tr,jt,uct);
+    break;
+case APICall_glVertexStream1fATI :
+    STUB_glVertexStream1fATI(tr,jt,uct);
+    break;
+case APICall_glVertexStream1fvATI :
+    STUB_glVertexStream1fvATI(tr,jt,uct);
+    break;
+case APICall_glVertexStream1iATI :
+    STUB_glVertexStream1iATI(tr,jt,uct);
+    break;
+case APICall_glVertexStream1ivATI :
+    STUB_glVertexStream1ivATI(tr,jt,uct);
+    break;
+case APICall_glVertexStream1sATI :
+    STUB_glVertexStream1sATI(tr,jt,uct);
+    break;
+case APICall_glVertexStream1svATI :
+    STUB_glVertexStream1svATI(tr,jt,uct);
+    break;
+case APICall_glVertexStream2dATI :
+    STUB_glVertexStream2dATI(tr,jt,uct);
+    break;
+case APICall_glVertexStream2dvATI :
+    STUB_glVertexStream2dvATI(tr,jt,uct);
+    break;
+case APICall_glVertexStream2fATI :
+    STUB_glVertexStream2fATI(tr,jt,uct);
+    break;
+case APICall_glVertexStream2fvATI :
+    STUB_glVertexStream2fvATI(tr,jt,uct);
+    break;
+case APICall_glVertexStream2iATI :
+    STUB_glVertexStream2iATI(tr,jt,uct);
+    break;
+case APICall_glVertexStream2ivATI :
+    STUB_glVertexStream2ivATI(tr,jt,uct);
+    break;
+case APICall_glVertexStream2sATI :
+    STUB_glVertexStream2sATI(tr,jt,uct);
+    break;
+case APICall_glVertexStream2svATI :
+    STUB_glVertexStream2svATI(tr,jt,uct);
+    break;
+case APICall_glVertexStream3dATI :
+    STUB_glVertexStream3dATI(tr,jt,uct);
+    break;
+case APICall_glVertexStream3dvATI :
+    STUB_glVertexStream3dvATI(tr,jt,uct);
+    break;
+case APICall_glVertexStream3fATI :
+    STUB_glVertexStream3fATI(tr,jt,uct);
+    break;
+case APICall_glVertexStream3fvATI :
+    STUB_glVertexStream3fvATI(tr,jt,uct);
+    break;
+case APICall_glVertexStream3iATI :
+    STUB_glVertexStream3iATI(tr,jt,uct);
+    break;
+case APICall_glVertexStream3ivATI :
+    STUB_glVertexStream3ivATI(tr,jt,uct);
+    break;
+case APICall_glVertexStream3sATI :
+    STUB_glVertexStream3sATI(tr,jt,uct);
+    break;
+case APICall_glVertexStream3svATI :
+    STUB_glVertexStream3svATI(tr,jt,uct);
+    break;
+case APICall_glVertexStream4dATI :
+    STUB_glVertexStream4dATI(tr,jt,uct);
+    break;
+case APICall_glVertexStream4dvATI :
+    STUB_glVertexStream4dvATI(tr,jt,uct);
+    break;
+case APICall_glVertexStream4fATI :
+    STUB_glVertexStream4fATI(tr,jt,uct);
+    break;
+case APICall_glVertexStream4fvATI :
+    STUB_glVertexStream4fvATI(tr,jt,uct);
+    break;
+case APICall_glVertexStream4iATI :
+    STUB_glVertexStream4iATI(tr,jt,uct);
+    break;
+case APICall_glVertexStream4ivATI :
+    STUB_glVertexStream4ivATI(tr,jt,uct);
+    break;
+case APICall_glVertexStream4sATI :
+    STUB_glVertexStream4sATI(tr,jt,uct);
+    break;
+case APICall_glVertexStream4svATI :
+    STUB_glVertexStream4svATI(tr,jt,uct);
+    break;
+case APICall_glVertexWeightPointerEXT :
+    STUB_glVertexWeightPointerEXT(tr,jt,uct);
+    break;
+case APICall_glVertexWeightfEXT :
+    STUB_glVertexWeightfEXT(tr,jt,uct);
+    break;
+case APICall_glVertexWeightfvEXT :
+    STUB_glVertexWeightfvEXT(tr,jt,uct);
+    break;
+case APICall_glVertexWeighthNV :
+    STUB_glVertexWeighthNV(tr,jt,uct);
+    break;
+case APICall_glVertexWeighthvNV :
+    STUB_glVertexWeighthvNV(tr,jt,uct);
+    break;
+case APICall_glViewport :
+    STUB_glViewport(tr,jt,uct);
+    break;
+case APICall_glWeightPointerARB :
+    STUB_glWeightPointerARB(tr,jt,uct);
+    break;
+case APICall_glWeightbvARB :
+    STUB_glWeightbvARB(tr,jt,uct);
+    break;
+case APICall_glWeightdvARB :
+    STUB_glWeightdvARB(tr,jt,uct);
+    break;
+case APICall_glWeightfvARB :
+    STUB_glWeightfvARB(tr,jt,uct);
+    break;
+case APICall_glWeightivARB :
+    STUB_glWeightivARB(tr,jt,uct);
+    break;
+case APICall_glWeightsvARB :
+    STUB_glWeightsvARB(tr,jt,uct);
+    break;
+case APICall_glWeightubvARB :
+    STUB_glWeightubvARB(tr,jt,uct);
+    break;
+case APICall_glWeightuivARB :
+    STUB_glWeightuivARB(tr,jt,uct);
+    break;
+case APICall_glWeightusvARB :
+    STUB_glWeightusvARB(tr,jt,uct);
+    break;
+case APICall_glWindowPos2d :
+    STUB_glWindowPos2d(tr,jt,uct);
+    break;
+case APICall_glWindowPos2dARB :
+    STUB_glWindowPos2dARB(tr,jt,uct);
+    break;
+case APICall_glWindowPos2dv :
+    STUB_glWindowPos2dv(tr,jt,uct);
+    break;
+case APICall_glWindowPos2dvARB :
+    STUB_glWindowPos2dvARB(tr,jt,uct);
+    break;
+case APICall_glWindowPos2f :
+    STUB_glWindowPos2f(tr,jt,uct);
+    break;
+case APICall_glWindowPos2fARB :
+    STUB_glWindowPos2fARB(tr,jt,uct);
+    break;
+case APICall_glWindowPos2fv :
+    STUB_glWindowPos2fv(tr,jt,uct);
+    break;
+case APICall_glWindowPos2fvARB :
+    STUB_glWindowPos2fvARB(tr,jt,uct);
+    break;
+case APICall_glWindowPos2i :
+    STUB_glWindowPos2i(tr,jt,uct);
+    break;
+case APICall_glWindowPos2iARB :
+    STUB_glWindowPos2iARB(tr,jt,uct);
+    break;
+case APICall_glWindowPos2iv :
+    STUB_glWindowPos2iv(tr,jt,uct);
+    break;
+case APICall_glWindowPos2ivARB :
+    STUB_glWindowPos2ivARB(tr,jt,uct);
+    break;
+case APICall_glWindowPos2s :
+    STUB_glWindowPos2s(tr,jt,uct);
+    break;
+case APICall_glWindowPos2sARB :
+    STUB_glWindowPos2sARB(tr,jt,uct);
+    break;
+case APICall_glWindowPos2sv :
+    STUB_glWindowPos2sv(tr,jt,uct);
+    break;
+case APICall_glWindowPos2svARB :
+    STUB_glWindowPos2svARB(tr,jt,uct);
+    break;
+case APICall_glWindowPos3d :
+    STUB_glWindowPos3d(tr,jt,uct);
+    break;
+case APICall_glWindowPos3dARB :
+    STUB_glWindowPos3dARB(tr,jt,uct);
+    break;
+case APICall_glWindowPos3dv :
+    STUB_glWindowPos3dv(tr,jt,uct);
+    break;
+case APICall_glWindowPos3dvARB :
+    STUB_glWindowPos3dvARB(tr,jt,uct);
+    break;
+case APICall_glWindowPos3f :
+    STUB_glWindowPos3f(tr,jt,uct);
+    break;
+case APICall_glWindowPos3fARB :
+    STUB_glWindowPos3fARB(tr,jt,uct);
+    break;
+case APICall_glWindowPos3fv :
+    STUB_glWindowPos3fv(tr,jt,uct);
+    break;
+case APICall_glWindowPos3fvARB :
+    STUB_glWindowPos3fvARB(tr,jt,uct);
+    break;
+case APICall_glWindowPos3i :
+    STUB_glWindowPos3i(tr,jt,uct);
+    break;
+case APICall_glWindowPos3iARB :
+    STUB_glWindowPos3iARB(tr,jt,uct);
+    break;
+case APICall_glWindowPos3iv :
+    STUB_glWindowPos3iv(tr,jt,uct);
+    break;
+case APICall_glWindowPos3ivARB :
+    STUB_glWindowPos3ivARB(tr,jt,uct);
+    break;
+case APICall_glWindowPos3s :
+    STUB_glWindowPos3s(tr,jt,uct);
+    break;
+case APICall_glWindowPos3sARB :
+    STUB_glWindowPos3sARB(tr,jt,uct);
+    break;
+case APICall_glWindowPos3sv :
+    STUB_glWindowPos3sv(tr,jt,uct);
+    break;
+case APICall_glWindowPos3svARB :
+    STUB_glWindowPos3svARB(tr,jt,uct);
+    break;
+case APICall_glWriteMaskEXT :
+    STUB_glWriteMaskEXT(tr,jt,uct);
+    break;
+case APICall_wglAllocateMemoryNV :
+    STUB_wglAllocateMemoryNV(tr,jt,uct);
+    break;
+case APICall_wglAssociateImageBufferEventsI3D :
+    STUB_wglAssociateImageBufferEventsI3D(tr,jt,uct);
+    break;
+case APICall_wglBeginFrameTrackingI3D :
+    STUB_wglBeginFrameTrackingI3D(tr,jt,uct);
+    break;
+case APICall_wglBindDisplayColorTableEXT :
+    STUB_wglBindDisplayColorTableEXT(tr,jt,uct);
+    break;
+case APICall_wglBindTexImageARB :
+    STUB_wglBindTexImageARB(tr,jt,uct);
+    break;
+case APICall_wglChoosePixelFormat :
+    STUB_wglChoosePixelFormat(tr,jt,uct);
+    break;
+case APICall_wglChoosePixelFormatARB :
+    STUB_wglChoosePixelFormatARB(tr,jt,uct);
+    break;
+case APICall_wglChoosePixelFormatEXT :
+    STUB_wglChoosePixelFormatEXT(tr,jt,uct);
+    break;
+case APICall_wglCopyContext :
+    STUB_wglCopyContext(tr,jt,uct);
+    break;
+case APICall_wglCreateBufferRegionARB :
+    STUB_wglCreateBufferRegionARB(tr,jt,uct);
+    break;
+case APICall_wglCreateContext :
+    STUB_wglCreateContext(tr,jt,uct);
+    break;
+case APICall_wglCreateDisplayColorTableEXT :
+    STUB_wglCreateDisplayColorTableEXT(tr,jt,uct);
+    break;
+case APICall_wglCreateImageBufferI3D :
+    STUB_wglCreateImageBufferI3D(tr,jt,uct);
+    break;
+case APICall_wglCreateLayerContext :
+    STUB_wglCreateLayerContext(tr,jt,uct);
+    break;
+case APICall_wglCreatePbufferARB :
+    STUB_wglCreatePbufferARB(tr,jt,uct);
+    break;
+case APICall_wglCreatePbufferEXT :
+    STUB_wglCreatePbufferEXT(tr,jt,uct);
+    break;
+case APICall_wglDeleteBufferRegionARB :
+    STUB_wglDeleteBufferRegionARB(tr,jt,uct);
+    break;
+case APICall_wglDeleteContext :
+    STUB_wglDeleteContext(tr,jt,uct);
+    break;
+case APICall_wglDescribeLayerPlane :
+    STUB_wglDescribeLayerPlane(tr,jt,uct);
+    break;
+case APICall_wglDescribePixelFormat :
+    STUB_wglDescribePixelFormat(tr,jt,uct);
+    break;
+case APICall_wglDestroyDisplayColorTableEXT :
+    STUB_wglDestroyDisplayColorTableEXT(tr,jt,uct);
+    break;
+case APICall_wglDestroyImageBufferI3D :
+    STUB_wglDestroyImageBufferI3D(tr,jt,uct);
+    break;
+case APICall_wglDestroyPbufferARB :
+    STUB_wglDestroyPbufferARB(tr,jt,uct);
+    break;
+case APICall_wglDestroyPbufferEXT :
+    STUB_wglDestroyPbufferEXT(tr,jt,uct);
+    break;
+case APICall_wglDisableFrameLockI3D :
+    STUB_wglDisableFrameLockI3D(tr,jt,uct);
+    break;
+case APICall_wglDisableGenlockI3D :
+    STUB_wglDisableGenlockI3D(tr,jt,uct);
+    break;
+case APICall_wglEnableFrameLockI3D :
+    STUB_wglEnableFrameLockI3D(tr,jt,uct);
+    break;
+case APICall_wglEnableGenlockI3D :
+    STUB_wglEnableGenlockI3D(tr,jt,uct);
+    break;
+case APICall_wglEndFrameTrackingI3D :
+    STUB_wglEndFrameTrackingI3D(tr,jt,uct);
+    break;
+case APICall_wglFreeMemoryNV :
+    STUB_wglFreeMemoryNV(tr,jt,uct);
+    break;
+case APICall_wglGenlockSampleRateI3D :
+    STUB_wglGenlockSampleRateI3D(tr,jt,uct);
+    break;
+case APICall_wglGenlockSourceDelayI3D :
+    STUB_wglGenlockSourceDelayI3D(tr,jt,uct);
+    break;
+case APICall_wglGenlockSourceEdgeI3D :
+    STUB_wglGenlockSourceEdgeI3D(tr,jt,uct);
+    break;
+case APICall_wglGenlockSourceI3D :
+    STUB_wglGenlockSourceI3D(tr,jt,uct);
+    break;
+case APICall_wglGetCurrentContext :
+    STUB_wglGetCurrentContext(tr,jt,uct);
+    break;
+case APICall_wglGetCurrentDC :
+    STUB_wglGetCurrentDC(tr,jt,uct);
+    break;
+case APICall_wglGetCurrentReadDCARB :
+    STUB_wglGetCurrentReadDCARB(tr,jt,uct);
+    break;
+case APICall_wglGetCurrentReadDCEXT :
+    STUB_wglGetCurrentReadDCEXT(tr,jt,uct);
+    break;
+case APICall_wglGetDigitalVideoParametersI3D :
+    STUB_wglGetDigitalVideoParametersI3D(tr,jt,uct);
+    break;
+case APICall_wglGetExtensionsStringARB :
+    STUB_wglGetExtensionsStringARB(tr,jt,uct);
+    break;
+case APICall_wglGetExtensionsStringEXT :
+    STUB_wglGetExtensionsStringEXT(tr,jt,uct);
+    break;
+case APICall_wglGetFrameUsageI3D :
+    STUB_wglGetFrameUsageI3D(tr,jt,uct);
+    break;
+case APICall_wglGetGammaTableI3D :
+    STUB_wglGetGammaTableI3D(tr,jt,uct);
+    break;
+case APICall_wglGetGammaTableParametersI3D :
+    STUB_wglGetGammaTableParametersI3D(tr,jt,uct);
+    break;
+case APICall_wglGetGenlockSampleRateI3D :
+    STUB_wglGetGenlockSampleRateI3D(tr,jt,uct);
+    break;
+case APICall_wglGetGenlockSourceDelayI3D :
+    STUB_wglGetGenlockSourceDelayI3D(tr,jt,uct);
+    break;
+case APICall_wglGetGenlockSourceEdgeI3D :
+    STUB_wglGetGenlockSourceEdgeI3D(tr,jt,uct);
+    break;
+case APICall_wglGetGenlockSourceI3D :
+    STUB_wglGetGenlockSourceI3D(tr,jt,uct);
+    break;
+case APICall_wglGetLayerPaletteEntries :
+    STUB_wglGetLayerPaletteEntries(tr,jt,uct);
+    break;
+case APICall_wglGetMscRateOML :
+    STUB_wglGetMscRateOML(tr,jt,uct);
+    break;
+case APICall_wglGetPbufferDCARB :
+    STUB_wglGetPbufferDCARB(tr,jt,uct);
+    break;
+case APICall_wglGetPbufferDCEXT :
+    STUB_wglGetPbufferDCEXT(tr,jt,uct);
+    break;
+case APICall_wglGetPixelFormat :
+    STUB_wglGetPixelFormat(tr,jt,uct);
+    break;
+case APICall_wglGetPixelFormatAttribfvARB :
+    STUB_wglGetPixelFormatAttribfvARB(tr,jt,uct);
+    break;
+case APICall_wglGetPixelFormatAttribfvEXT :
+    STUB_wglGetPixelFormatAttribfvEXT(tr,jt,uct);
+    break;
+case APICall_wglGetPixelFormatAttribivARB :
+    STUB_wglGetPixelFormatAttribivARB(tr,jt,uct);
+    break;
+case APICall_wglGetPixelFormatAttribivEXT :
+    STUB_wglGetPixelFormatAttribivEXT(tr,jt,uct);
+    break;
+case APICall_wglGetProcAddress :
+    STUB_wglGetProcAddress(tr,jt,uct);
+    break;
+case APICall_wglGetSwapIntervalEXT :
+    STUB_wglGetSwapIntervalEXT(tr,jt,uct);
+    break;
+case APICall_wglGetSyncValuesOML :
+    STUB_wglGetSyncValuesOML(tr,jt,uct);
+    break;
+case APICall_wglIsEnabledFrameLockI3D :
+    STUB_wglIsEnabledFrameLockI3D(tr,jt,uct);
+    break;
+case APICall_wglIsEnabledGenlockI3D :
+    STUB_wglIsEnabledGenlockI3D(tr,jt,uct);
+    break;
+case APICall_wglLoadDisplayColorTableEXT :
+    STUB_wglLoadDisplayColorTableEXT(tr,jt,uct);
+    break;
+case APICall_wglMakeContextCurrentARB :
+    STUB_wglMakeContextCurrentARB(tr,jt,uct);
+    break;
+case APICall_wglMakeContextCurrentEXT :
+    STUB_wglMakeContextCurrentEXT(tr,jt,uct);
+    break;
+case APICall_wglMakeCurrent :
+    STUB_wglMakeCurrent(tr,jt,uct);
+    break;
+case APICall_wglQueryFrameLockMasterI3D :
+    STUB_wglQueryFrameLockMasterI3D(tr,jt,uct);
+    break;
+case APICall_wglQueryFrameTrackingI3D :
+    STUB_wglQueryFrameTrackingI3D(tr,jt,uct);
+    break;
+case APICall_wglQueryGenlockMaxSourceDelayI3D :
+    STUB_wglQueryGenlockMaxSourceDelayI3D(tr,jt,uct);
+    break;
+case APICall_wglQueryPbufferARB :
+    STUB_wglQueryPbufferARB(tr,jt,uct);
+    break;
+case APICall_wglQueryPbufferEXT :
+    STUB_wglQueryPbufferEXT(tr,jt,uct);
+    break;
+case APICall_wglRealizeLayerPalette :
+    STUB_wglRealizeLayerPalette(tr,jt,uct);
+    break;
+case APICall_wglReleaseImageBufferEventsI3D :
+    STUB_wglReleaseImageBufferEventsI3D(tr,jt,uct);
+    break;
+case APICall_wglReleasePbufferDCARB :
+    STUB_wglReleasePbufferDCARB(tr,jt,uct);
+    break;
+case APICall_wglReleasePbufferDCEXT :
+    STUB_wglReleasePbufferDCEXT(tr,jt,uct);
+    break;
+case APICall_wglReleaseTexImageARB :
+    STUB_wglReleaseTexImageARB(tr,jt,uct);
+    break;
+case APICall_wglRestoreBufferRegionARB :
+    STUB_wglRestoreBufferRegionARB(tr,jt,uct);
+    break;
+case APICall_wglSaveBufferRegionARB :
+    STUB_wglSaveBufferRegionARB(tr,jt,uct);
+    break;
+case APICall_wglSetDigitalVideoParametersI3D :
+    STUB_wglSetDigitalVideoParametersI3D(tr,jt,uct);
+    break;
+case APICall_wglSetGammaTableI3D :
+    STUB_wglSetGammaTableI3D(tr,jt,uct);
+    break;
+case APICall_wglSetGammaTableParametersI3D :
+    STUB_wglSetGammaTableParametersI3D(tr,jt,uct);
+    break;
+case APICall_wglSetLayerPaletteEntries :
+    STUB_wglSetLayerPaletteEntries(tr,jt,uct);
+    break;
+case APICall_wglSetPbufferAttribARB :
+    STUB_wglSetPbufferAttribARB(tr,jt,uct);
+    break;
+case APICall_wglSetPixelFormat :
+    STUB_wglSetPixelFormat(tr,jt,uct);
+    break;
+case APICall_wglShareLists :
+    STUB_wglShareLists(tr,jt,uct);
+    break;
+case APICall_wglSwapBuffers :
+    STUB_wglSwapBuffers(tr,jt,uct);
+    break;
+case APICall_wglSwapBuffersMscOML :
+    STUB_wglSwapBuffersMscOML(tr,jt,uct);
+    break;
+case APICall_wglSwapIntervalEXT :
+    STUB_wglSwapIntervalEXT(tr,jt,uct);
+    break;
+case APICall_wglSwapLayerBuffers :
+    STUB_wglSwapLayerBuffers(tr,jt,uct);
+    break;
+case APICall_wglSwapLayerBuffersMscOML :
+    STUB_wglSwapLayerBuffersMscOML(tr,jt,uct);
+    break;
+case APICall_wglUseFontBitmapsA :
+    STUB_wglUseFontBitmapsA(tr,jt,uct);
+    break;
+case APICall_wglUseFontBitmapsW :
+    STUB_wglUseFontBitmapsW(tr,jt,uct);
+    break;
+case APICall_wglUseFontOutlinesA :
+    STUB_wglUseFontOutlinesA(tr,jt,uct);
+    break;
+case APICall_wglUseFontOutlinesW :
+    STUB_wglUseFontOutlinesW(tr,jt,uct);
+    break;
+case APICall_wglWaitForMscOML :
+    STUB_wglWaitForMscOML(tr,jt,uct);
+    break;
+case APICall_wglWaitForSbcOML :
+    STUB_wglWaitForSbcOML(tr,jt,uct);
+    break;
+
+#endif // SWITCHBRANCHES_GEN

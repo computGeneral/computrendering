@@ -1,0 +1,22 @@
+////////////////////////////////////////////////////////////////////////////////
+
+#include "Utilities/System.hpp"
+
+using namespace std;
+using namespace D3dApiCodeGen::Utilities;
+
+////////////////////////////////////////////////////////////////////////////////
+
+bool System::ReadEnvironmentVariable(string varName, string& varValue)
+{
+  varValue = "";
+  char* pTable = getenv(varName.c_str());
+  if (pTable != NULL)
+  {
+    varValue = pTable;
+    return true;
+  }
+  return false;
+}
+
+////////////////////////////////////////////////////////////////////////////////

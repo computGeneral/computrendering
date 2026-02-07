@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>17.0</VCProjectVersion>
+    <ProjectGuid>{4A406935-D7C1-407D-9342-03390E139A31}</ProjectGuid>
+    <RootNamespace>dxinterceptor</RootNamespace>
+    <Keyword>Win32Proj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>17.0.32203.90</_ProjectFileVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>../win32/debug\</OutDir>
+    <IntDir>../win32/debug/dxinterceptor/obj\</IntDir>
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>../win32/release\</OutDir>
+    <IntDir>../win32/release/dxinterceptor/obj\</IntDir>
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Include;./;./dxinterceptorwrapper/;../../../common/thirdparty/detours/;../../../common/thirdparty/greta/;../../../common/thirdparty/tinyxml/;../dxautogen/;../dxcommon/;../dxtraceman/;../dxplugin/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;TIXML_USE_STL;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <PrecompiledHeader />
+      <PrecompiledHeaderFile>stdafx.h</PrecompiledHeaderFile>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>shlwapi.lib;winmm.lib;d3d9.lib;d3dx9.lib;dxguid.lib;detoursd.lib;tinyxmld.lib;lzo2d.lib;gretad.lib;dxcommond.lib;dxtracemand.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <ShowProgress>NotSet</ShowProgress>
+      <OutputFile>../win32/debug/dxinterceptor.dll</OutputFile>
+      <AdditionalLibraryDirectories>../../../extern-libs/DXInterceptorLibs/lib;../win32/debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <ModuleDefinitionFile>./main.def</ModuleDefinitionFile>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ProgramDatabaseFile>../win32/debug/dxinterceptor.pdb</ProgramDatabaseFile>
+      <SubSystem>Windows</SubSystem>
+      <ImportLibrary>../win32/debug/dxinterceptor.lib</ImportLibrary>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <Optimization>Full</Optimization>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <OmitFramePointers>true</OmitFramePointers>
+      <AdditionalIncludeDirectories>./;./dxinterceptorwrapper/;../../../extern-libs/DXInterceptorLibs/detours/;../../../extern-libs/DXInterceptorLibs/greta/;../../../extern-libs/DXInterceptorLibs/tinyxml/;../dxautogen/;../dxcommon/;../dxtraceman/;../dxplugin/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;TIXML_USE_STL;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <PrecompiledHeader />
+      <PrecompiledHeaderFile>stdafx.h</PrecompiledHeaderFile>
+      <WarningLevel>Level3</WarningLevel>
+      <TreatWarningAsError>false</TreatWarningAsError>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>shlwapi.lib;winmm.lib;d3d9.lib;d3dx9.lib;dxguid.lib;detours.lib;tinyxml.lib;lzo2.lib;greta.lib;dxcommon.lib;dxtraceman.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>../win32/release/dxinterceptor.dll</OutputFile>
+      <AdditionalLibraryDirectories>../../../extern-libs/DXInterceptorLibs/lib;../win32/release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <ModuleDefinitionFile>./main.def</ModuleDefinitionFile>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <ProgramDatabaseFile>../win32/release/dxinterceptor.pdb</ProgramDatabaseFile>
+      <SubSystem>Windows</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <ImportLibrary>../win32/release/dxinterceptor.lib</ImportLibrary>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\dxautogen\IDirect3D9InterceptorWrapper.cpp" />
+    <ClCompile Include="..\dxautogen\IDirect3DCubeTexture9InterceptorWrapper.cpp" />
+    <ClCompile Include="..\dxautogen\IDirect3DDevice9InterceptorWrapper.cpp" />
+    <ClCompile Include="..\dxautogen\IDirect3DIndexBuffer9InterceptorWrapper.cpp" />
+    <ClCompile Include="..\dxautogen\IDirect3DPixelShader9InterceptorWrapper.cpp" />
+    <ClCompile Include="..\dxautogen\IDirect3DQuery9InterceptorWrapper.cpp" />
+    <ClCompile Include="..\dxautogen\IDirect3DStateBlock9InterceptorWrapper.cpp" />
+    <ClCompile Include="..\dxautogen\IDirect3DSurface9InterceptorWrapper.cpp" />
+    <ClCompile Include="..\dxautogen\IDirect3DSwapChain9InterceptorWrapper.cpp" />
+    <ClCompile Include="..\dxautogen\IDirect3DTexture9InterceptorWrapper.cpp" />
+    <ClCompile Include="..\dxautogen\IDirect3DVertexBuffer9InterceptorWrapper.cpp" />
+    <ClCompile Include="..\dxautogen\IDirect3DVertexDeclaration9InterceptorWrapper.cpp" />
+    <ClCompile Include="..\dxautogen\IDirect3DVertexShader9InterceptorWrapper.cpp" />
+    <ClCompile Include="..\dxautogen\IDirect3DVolume9InterceptorWrapper.cpp" />
+    <ClCompile Include="..\dxautogen\IDirect3DVolumeTexture9InterceptorWrapper.cpp" />
+    <ClCompile Include="DXInterceptorOptions.cpp" />
+    <ClCompile Include="DXInterceptorWrapper\DXInterceptorBanner.cpp" />
+    <ClCompile Include="DXInterceptorWrapper\DXInterceptorWrapper.cpp" />
+    <ClCompile Include="DXInterceptorWrapper\IDirect3D9WrapperSpecificCode.cpp" />
+    <ClCompile Include="DXInterceptorWrapper\IDirect3DCubeTexture9WrapperSpecificCode.cpp" />
+    <ClCompile Include="DXInterceptorWrapper\IDirect3DDevice9WrapperSpecificCode.cpp" />
+    <ClCompile Include="DXInterceptorWrapper\IDirect3DIndexBuffer9WrapperSpecificCode.cpp" />
+    <ClCompile Include="DXInterceptorWrapper\IDirect3DPixelShader9WrapperSpecificCode.cpp" />
+    <ClCompile Include="DXInterceptorWrapper\IDirect3DQuery9WrapperSpecificCode.cpp" />
+    <ClCompile Include="DXInterceptorWrapper\IDirect3DStateBlock9WrapperSpecificCode.cpp" />
+    <ClCompile Include="DXInterceptorWrapper\IDirect3DSurface9WrapperSpecificCode.cpp" />
+    <ClCompile Include="DXInterceptorWrapper\IDirect3DSwapChain9WrapperSpecificCode.cpp" />
+    <ClCompile Include="DXInterceptorWrapper\IDirect3DTexture9WrapperSpecificCode.cpp" />
+    <ClCompile Include="DXInterceptorWrapper\IDirect3DVertexBuffer9WrapperSpecificCode.cpp" />
+    <ClCompile Include="DXInterceptorWrapper\IDirect3DVertexDeclaration9WrapperSpecificCode.cpp" />
+    <ClCompile Include="DXInterceptorWrapper\IDirect3DVertexShader9WrapperSpecificCode.cpp" />
+    <ClCompile Include="DXInterceptorWrapper\IDirect3DVolume9WrapperSpecificCode.cpp" />
+    <ClCompile Include="DXInterceptorWrapper\IDirect3DVolumeTexture9WrapperSpecificCode.cpp" />
+    <ClCompile Include="DXInterceptorWrapper\IReferenceCounter.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="stdafx.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\dxautogen\IDirect3D9InterceptorWrapper.h" />
+    <ClInclude Include="..\dxautogen\IDirect3DCubeTexture9InterceptorWrapper.h" />
+    <ClInclude Include="..\dxautogen\IDirect3DDevice9InterceptorWrapper.h" />
+    <ClInclude Include="..\dxautogen\IDirect3DIndexBuffer9InterceptorWrapper.h" />
+    <ClInclude Include="..\dxautogen\IDirect3DPixelShader9InterceptorWrapper.h" />
+    <ClInclude Include="..\dxautogen\IDirect3DQuery9InterceptorWrapper.h" />
+    <ClInclude Include="..\dxautogen\IDirect3DStateBlock9InterceptorWrapper.h" />
+    <ClInclude Include="..\dxautogen\IDirect3DSurface9InterceptorWrapper.h" />
+    <ClInclude Include="..\dxautogen\IDirect3DSwapChain9InterceptorWrapper.h" />
+    <ClInclude Include="..\dxautogen\IDirect3DTexture9InterceptorWrapper.h" />
+    <ClInclude Include="..\dxautogen\IDirect3DVertexBuffer9InterceptorWrapper.h" />
+    <ClInclude Include="..\dxautogen\IDirect3DVertexDeclaration9InterceptorWrapper.h" />
+    <ClInclude Include="..\dxautogen\IDirect3DVertexShader9InterceptorWrapper.h" />
+    <ClInclude Include="..\dxautogen\IDirect3DVolume9InterceptorWrapper.h" />
+    <ClInclude Include="..\dxautogen\IDirect3DVolumeTexture9InterceptorWrapper.h" />
+    <ClInclude Include="DXInterceptorOptions.h" />
+    <ClInclude Include="DXInterceptorWrapper\DXInterceptorBanner.h" />
+    <ClInclude Include="DXInterceptorWrapper\DXInterceptorWrapper.h" />
+    <ClInclude Include="DXInterceptorWrapper\GeometryTypes.h" />
+    <ClInclude Include="DXInterceptorWrapper\IReferenceCounter.h" />
+    <ClInclude Include="main.h" />
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="stdafx.h" />
+    <CustomBuild Include="version.h">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Realizando paso de generación personalizada</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </Command>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="main.def" />
+    <CustomBuild Include="version.ver">
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Update %27version.ver%27 file incrementing the build number</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"../tools/makeversion/makeversion.exe" /inc version.ver
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">t;%(Outputs)</Outputs>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="res\direxct_logo1.bmp" />
+    <Image Include="res\direxct_logo2.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="main.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\dxplugin\dxplugin.vcxproj">
+      <Project>{99ecc812-3a12-437c-a3e4-fed62e617e86}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+    <ProjectReference Include="..\dxtraceman\dxtraceman.vcxproj">
+      <Project>{d76483c0-92cb-432e-bb6a-9c8e0fb4ec8c}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

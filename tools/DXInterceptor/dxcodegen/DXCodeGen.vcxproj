@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>17.0</VCProjectVersion>
+    <ProjectName>dxcodegen</ProjectName>
+    <ProjectGuid>{CF71A00E-6F7D-4898-8ECB-46E6B7510542}</ProjectGuid>
+    <RootNamespace>dxcodegen</RootNamespace>
+    <Keyword>Win32Proj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>17.0.32203.90</_ProjectFileVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>../win32/debug\</OutDir>
+    <IntDir>../win32/debug/dxcodegen/obj\</IntDir>
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>../win32/release\</OutDir>
+    <IntDir>../win32/release/dxcodegen/obj\</IntDir>
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>./;../../../common/thirdParty/greta;../../../common/thirdParty/tinyxml;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;TIXML_USE_STL;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <PrecompiledHeader />
+      <PrecompiledHeaderFile>stdafx.h</PrecompiledHeaderFile>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x0c0a</Culture>
+      <AdditionalIncludeDirectories>$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Link>
+      <AdditionalDependencies>gretad.lib;tinyxmld.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <ShowProgress>NotSet</ShowProgress>
+      <OutputFile>../win32/debug/dxcodegen.exe</OutputFile>
+      <AdditionalLibraryDirectories>../../../common/thirdParty/lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ProgramDatabaseFile>../win32/debug/dxcodegen.pdb</ProgramDatabaseFile>
+      <SubSystem>Console</SubSystem>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <Optimization>Full</Optimization>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <OmitFramePointers>true</OmitFramePointers>
+      <AdditionalIncludeDirectories>./;../../../common/thirdParty/greta;../../../common/thirdParty/tinyxml;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;TIXML_USE_STL;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <PrecompiledHeader />
+      <PrecompiledHeaderFile>stdafx.h</PrecompiledHeaderFile>
+      <WarningLevel>Level3</WarningLevel>
+      <TreatWarningAsError>false</TreatWarningAsError>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x0c0a</Culture>
+      <AdditionalIncludeDirectories>$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Link>
+      <AdditionalDependencies>greta.lib;tinyxml.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>../win32/release/dxcodegen.exe</OutputFile>
+      <AdditionalLibraryDirectories>../../common/thirdParty/lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <ProgramDatabaseFile>../win32/release/dxcodegen.pdb</ProgramDatabaseFile>
+      <SubSystem>Console</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="Config\ConfigManager.cpp" />
+    <ClCompile Include="Config\GeneratorConfiguration.cpp" />
+    <ClCompile Include="Config\ParserConfiguration.cpp" />
+    <ClCompile Include="Generator\ClassStubGenerator.cpp" />
+    <ClCompile Include="Generator\ClassWrapperGenerator.cpp" />
+    <ClCompile Include="Generator\DXHGenerator.cpp" />
+    <ClCompile Include="Generator\EnumHelperGenerator.cpp" />
+    <ClCompile Include="Generator\IGenerator.cpp" />
+    <ClCompile Include="Generator\MethodCallHelperGenerator.cpp" />
+    <ClCompile Include="Generator\StructHelperGenerator.cpp" />
+    <ClCompile Include="Items\AttributeSpecificCode.cpp" />
+    <ClCompile Include="Items\ClassDescription.cpp" />
+    <ClCompile Include="Items\ClassSpecificCode.cpp" />
+    <ClCompile Include="Items\CppMacro.cpp">
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)%(Filename)1.obj</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)%(Filename)1.obj</ObjectFileName>
+    </ClCompile>
+    <ClCompile Include="Items\EnumDescription.cpp" />
+    <ClCompile Include="Items\EnumDescriptionMember.cpp" />
+    <ClCompile Include="Items\MethodDescription.cpp" />
+    <ClCompile Include="Items\MethodDescriptionParam.cpp" />
+    <ClCompile Include="Items\MethodSpecificCode.cpp" />
+    <ClCompile Include="Items\NewMethodSpecificCode.cpp" />
+    <ClCompile Include="Items\ParamSpecificCode.cpp" />
+    <ClCompile Include="Items\StructDescription.cpp" />
+    <ClCompile Include="Items\StructDescriptionField.cpp" />
+    <ClCompile Include="Items\StructFieldSpecificCode.cpp" />
+    <ClCompile Include="Items\StructSpecificCode.cpp" />
+    <ClCompile Include="Items\TypeSpecificCode.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="Parser\ClassExtractor.cpp" />
+    <ClCompile Include="Parser\CommentExtractor.cpp" />
+    <ClCompile Include="Parser\DXHParser.cpp" />
+    <ClCompile Include="Parser\EnumExtractor.cpp" />
+    <ClCompile Include="Parser\IExtractor.cpp" />
+    <ClCompile Include="Parser\MacroExpander.cpp" />
+    <ClCompile Include="Parser\PreprocessorExtractor.cpp" />
+    <ClCompile Include="Parser\StructExtractor.cpp" />
+    <ClCompile Include="stdafx.cpp" />
+    <ClCompile Include="Utilities\Debug.cpp" />
+    <ClCompile Include="Utilities\FileSystem.cpp" />
+    <ClCompile Include="Utilities\String.cpp" />
+    <ClCompile Include="Utilities\System.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Config\ConfigManager.h" />
+    <ClInclude Include="Config\GeneratorConfiguration.h" />
+    <ClInclude Include="Config\ParserConfiguration.h" />
+    <ClInclude Include="DXCodeGenException.h" />
+    <ClInclude Include="Generator\ClassStubGenerator.h" />
+    <ClInclude Include="Generator\ClassWrapperGenerator.h" />
+    <ClInclude Include="Generator\DXHGenerator.h" />
+    <ClInclude Include="Generator\EnumHelperGenerator.h" />
+    <ClInclude Include="Generator\IGenerator.h" />
+    <ClInclude Include="Generator\MethodCallHelperGenerator.h" />
+    <ClInclude Include="Generator\StructHelperGenerator.h" />
+    <ClInclude Include="Items\AttributeSpecificCode.h" />
+    <ClInclude Include="Items\ClassDescription.h" />
+    <ClInclude Include="Items\ClassSpecificCode.h" />
+    <ClInclude Include="Items\CppMacro.h" />
+    <ClInclude Include="Items\EnumDescription.h" />
+    <ClInclude Include="Items\EnumDescriptionMember.h" />
+    <ClInclude Include="Items\MethodDescription.h" />
+    <ClInclude Include="Items\MethodDescriptionParam.h" />
+    <ClInclude Include="Items\MethodSpecificCode.h" />
+    <ClInclude Include="Items\NewMethodSpecificCode.h" />
+    <ClInclude Include="Items\ParamSpecificCode.h" />
+    <ClInclude Include="Items\SmartPointer.h" />
+    <ClInclude Include="Items\StructDescription.h" />
+    <ClInclude Include="Items\StructDescriptionField.h" />
+    <ClInclude Include="Items\StructFieldSpecificCode.h" />
+    <ClInclude Include="Items\StructSpecificCode.h" />
+    <ClInclude Include="Items\TypeSpecificCode.h" />
+    <ClInclude Include="main.h" />
+    <ClInclude Include="Parser\ClassExtractor.h" />
+    <ClInclude Include="Parser\CommentExtractor.h" />
+    <ClInclude Include="Parser\DXHParser.h" />
+    <ClInclude Include="Parser\EnumExtractor.h" />
+    <ClInclude Include="Parser\IExtractor.h" />
+    <ClInclude Include="Parser\MacroExpander.h" />
+    <ClInclude Include="Parser\PreprocessorExtractor.h" />
+    <ClInclude Include="Parser\StructExtractor.h" />
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="stdafx.h" />
+    <ClInclude Include="Utilities\Debug.h" />
+    <ClInclude Include="Utilities\FileSystem.h" />
+    <ClInclude Include="Utilities\String.h" />
+    <ClInclude Include="Utilities\System.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="res\dxcodegen.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="dxcodegen.rc" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

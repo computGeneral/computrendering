@@ -1,0 +1,239 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{5031bfa4-68d8-459c-961e-61d08717a25b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{16864fef-68b9-4052-8125-6a91475b3a77}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DXCodeGen Files">
+      <UniqueIdentifier>{f96fe222-a763-4449-9dfd-0ea90a7f0f9c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DXCodeGen Files\Source Files">
+      <UniqueIdentifier>{8fad3a88-00f6-4037-829b-4f16d03bb6ac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DXCodeGen Files\Header Files">
+      <UniqueIdentifier>{968f8750-00ba-4631-aa08-11ab897ddcff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources">
+      <UniqueIdentifier>{cf078e38-6269-4ce1-8589-6c3a77330935}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Wrapper Files">
+      <UniqueIdentifier>{205c02ad-3488-4a47-98d2-965163401880}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Wrapper Files\Source Files">
+      <UniqueIdentifier>{1df03fba-8de2-49e2-94ce-807ee1a8c99f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Wrapper Files\Header Files">
+      <UniqueIdentifier>{43e6f1dc-c31b-4ac2-8aba-9a740f9be103}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="DXInterceptorOptions.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\dxautogen\IDirect3D9InterceptorWrapper.cpp">
+      <Filter>DXCodeGen Files\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\dxautogen\IDirect3DCubeTexture9InterceptorWrapper.cpp">
+      <Filter>DXCodeGen Files\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\dxautogen\IDirect3DDevice9InterceptorWrapper.cpp">
+      <Filter>DXCodeGen Files\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\dxautogen\IDirect3DIndexBuffer9InterceptorWrapper.cpp">
+      <Filter>DXCodeGen Files\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\dxautogen\IDirect3DPixelShader9InterceptorWrapper.cpp">
+      <Filter>DXCodeGen Files\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\dxautogen\IDirect3DQuery9InterceptorWrapper.cpp">
+      <Filter>DXCodeGen Files\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\dxautogen\IDirect3DStateBlock9InterceptorWrapper.cpp">
+      <Filter>DXCodeGen Files\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\dxautogen\IDirect3DSurface9InterceptorWrapper.cpp">
+      <Filter>DXCodeGen Files\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\dxautogen\IDirect3DSwapChain9InterceptorWrapper.cpp">
+      <Filter>DXCodeGen Files\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\dxautogen\IDirect3DTexture9InterceptorWrapper.cpp">
+      <Filter>DXCodeGen Files\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\dxautogen\IDirect3DVertexBuffer9InterceptorWrapper.cpp">
+      <Filter>DXCodeGen Files\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\dxautogen\IDirect3DVertexDeclaration9InterceptorWrapper.cpp">
+      <Filter>DXCodeGen Files\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\dxautogen\IDirect3DVertexShader9InterceptorWrapper.cpp">
+      <Filter>DXCodeGen Files\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\dxautogen\IDirect3DVolume9InterceptorWrapper.cpp">
+      <Filter>DXCodeGen Files\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\dxautogen\IDirect3DVolumeTexture9InterceptorWrapper.cpp">
+      <Filter>DXCodeGen Files\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DXInterceptorWrapper\DXInterceptorBanner.cpp">
+      <Filter>Wrapper Files\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DXInterceptorWrapper\DXInterceptorWrapper.cpp">
+      <Filter>Wrapper Files\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DXInterceptorWrapper\IDirect3D9WrapperSpecificCode.cpp">
+      <Filter>Wrapper Files\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DXInterceptorWrapper\IDirect3DCubeTexture9WrapperSpecificCode.cpp">
+      <Filter>Wrapper Files\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DXInterceptorWrapper\IDirect3DDevice9WrapperSpecificCode.cpp">
+      <Filter>Wrapper Files\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DXInterceptorWrapper\IDirect3DIndexBuffer9WrapperSpecificCode.cpp">
+      <Filter>Wrapper Files\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DXInterceptorWrapper\IDirect3DPixelShader9WrapperSpecificCode.cpp">
+      <Filter>Wrapper Files\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DXInterceptorWrapper\IDirect3DQuery9WrapperSpecificCode.cpp">
+      <Filter>Wrapper Files\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DXInterceptorWrapper\IDirect3DStateBlock9WrapperSpecificCode.cpp">
+      <Filter>Wrapper Files\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DXInterceptorWrapper\IDirect3DSurface9WrapperSpecificCode.cpp">
+      <Filter>Wrapper Files\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DXInterceptorWrapper\IDirect3DSwapChain9WrapperSpecificCode.cpp">
+      <Filter>Wrapper Files\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DXInterceptorWrapper\IDirect3DTexture9WrapperSpecificCode.cpp">
+      <Filter>Wrapper Files\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DXInterceptorWrapper\IDirect3DVertexBuffer9WrapperSpecificCode.cpp">
+      <Filter>Wrapper Files\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DXInterceptorWrapper\IDirect3DVertexDeclaration9WrapperSpecificCode.cpp">
+      <Filter>Wrapper Files\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DXInterceptorWrapper\IDirect3DVertexShader9WrapperSpecificCode.cpp">
+      <Filter>Wrapper Files\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DXInterceptorWrapper\IDirect3DVolume9WrapperSpecificCode.cpp">
+      <Filter>Wrapper Files\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DXInterceptorWrapper\IDirect3DVolumeTexture9WrapperSpecificCode.cpp">
+      <Filter>Wrapper Files\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DXInterceptorWrapper\IReferenceCounter.cpp">
+      <Filter>Wrapper Files\Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="DXInterceptorOptions.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="main.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="stdafx.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\dxautogen\IDirect3D9InterceptorWrapper.h">
+      <Filter>DXCodeGen Files\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\dxautogen\IDirect3DCubeTexture9InterceptorWrapper.h">
+      <Filter>DXCodeGen Files\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\dxautogen\IDirect3DDevice9InterceptorWrapper.h">
+      <Filter>DXCodeGen Files\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\dxautogen\IDirect3DIndexBuffer9InterceptorWrapper.h">
+      <Filter>DXCodeGen Files\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\dxautogen\IDirect3DPixelShader9InterceptorWrapper.h">
+      <Filter>DXCodeGen Files\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\dxautogen\IDirect3DQuery9InterceptorWrapper.h">
+      <Filter>DXCodeGen Files\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\dxautogen\IDirect3DStateBlock9InterceptorWrapper.h">
+      <Filter>DXCodeGen Files\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\dxautogen\IDirect3DSurface9InterceptorWrapper.h">
+      <Filter>DXCodeGen Files\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\dxautogen\IDirect3DSwapChain9InterceptorWrapper.h">
+      <Filter>DXCodeGen Files\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\dxautogen\IDirect3DTexture9InterceptorWrapper.h">
+      <Filter>DXCodeGen Files\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\dxautogen\IDirect3DVertexBuffer9InterceptorWrapper.h">
+      <Filter>DXCodeGen Files\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\dxautogen\IDirect3DVertexDeclaration9InterceptorWrapper.h">
+      <Filter>DXCodeGen Files\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\dxautogen\IDirect3DVertexShader9InterceptorWrapper.h">
+      <Filter>DXCodeGen Files\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\dxautogen\IDirect3DVolume9InterceptorWrapper.h">
+      <Filter>DXCodeGen Files\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\dxautogen\IDirect3DVolumeTexture9InterceptorWrapper.h">
+      <Filter>DXCodeGen Files\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DXInterceptorWrapper\DXInterceptorBanner.h">
+      <Filter>Wrapper Files\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DXInterceptorWrapper\DXInterceptorWrapper.h">
+      <Filter>Wrapper Files\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DXInterceptorWrapper\GeometryTypes.h">
+      <Filter>Wrapper Files\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DXInterceptorWrapper\IReferenceCounter.h">
+      <Filter>Wrapper Files\Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="main.def">
+      <Filter>Resources</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="res\direxct_logo1.bmp">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="res\direxct_logo2.bmp">
+      <Filter>Resources</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="main.rc">
+      <Filter>Resources</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="version.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="version.ver">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+  </ItemGroup>
+</Project>

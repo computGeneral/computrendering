@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="GLInstrument">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="utils">
+      <UniqueIdentifier>{af488bb3-6c3d-4c1e-99d0-41de4788822a}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="$(CG1TOP)\arch\common\support.cpp">
+      <Filter>GLInstrument</Filter>
+    </ClCompile>
+    <ClCompile Include="$(CG1TOP)\driver\utils\GLJumpTable.cpp">
+      <Filter>utils</Filter>
+    </ClCompile>
+    <ClCompile Include="$(CG1TOP)\driver\utils\GLResolver.cpp">
+      <Filter>utils</Filter>
+    </ClCompile>
+    <ClCompile Include="$(CG1TOP)\driver\ogl\GLInstrument\ConfigManager.cpp">
+      <Filter>GLInstrument</Filter>
+    </ClCompile>
+    <ClCompile Include="$(CG1TOP)\driver\ogl\GLInstrument\DLLLoader.cpp">
+      <Filter>GLInstrument</Filter>
+    </ClCompile>
+    <ClCompile Include="$(CG1TOP)\driver\ogl\GLInstrument\GLIEntryPoints.cpp">
+      <Filter>GLInstrument</Filter>
+    </ClCompile>
+    <ClCompile Include="$(CG1TOP)\driver\ogl\GLInstrument\GLInstrumentImp.cpp">
+      <Filter>GLInstrument</Filter>
+    </ClCompile>
+    <ClCompile Include="$(CG1TOP)\driver\ogl\GLInstrument\MainGLInstrument.cpp">
+      <Filter>GLInstrument</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="$(CG1TOP)\driver\utils\GLJumpTable.h">
+      <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="$(CG1TOP)\driver\utils\GLResolver.h">
+      <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="$(CG1TOP)\arch\common\support.h" />
+    <ClInclude Include="$(CG1TOP)\driver\ogl\GLInstrument\ConfigManager.h" />
+    <ClInclude Include="$(CG1TOP)\driver\ogl\GLInstrument\DemoTool.h" />
+    <ClInclude Include="$(CG1TOP)\driver\ogl\GLInstrument\DLLLoader.h" />
+    <ClInclude Include="$(CG1TOP)\driver\ogl\GLInstrument\GLIEntryPoints.h" />
+    <ClInclude Include="$(CG1TOP)\driver\ogl\GLInstrument\GLInstrument.h" />
+    <ClInclude Include="$(CG1TOP)\driver\ogl\GLInstrument\GLInstrumentImp.h" />
+    <ClInclude Include="$(CG1TOP)\driver\ogl\GLInstrument\GLITool.h" />
+    <ClInclude Include="$(CG1TOP)\driver\ogl\GLInstrument\MainGLInstrument.h" />
+    <ClInclude Include="$(CG1TOP)\driver\ogl\GLInstrument\resource.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="$(CG1TOP)\driver\ogl\GLInstrument\opengl32.def">
+      <Filter>GLInstrument</Filter>
+    </None>
+  </ItemGroup>
+</Project>

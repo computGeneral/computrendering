@@ -1,0 +1,69 @@
+# ============================================================
+# CG1 GPU Simulator — .gitignore
+# ============================================================
+
+# ------ Build artifacts ------
+_BUILD_/
+build/
+BUILD/
+*.o
+*.a
+*.so
+*.so.*
+*.dll
+*.lib
+*.exe
+*.out
+
+# ------ CMake generated ------
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+Makefile
+CTestTestfile.cmake
+_deps/
+
+# ------ IDE / Editor ------
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+*.user
+*.suo
+*.ncb
+*.opensdf
+*.sdf
+*.cachefile
+*.VC.db
+*.VC.opendb
+
+# ------ Third-party downloads (auto-fetched by CMake) ------
+common/thirdparty/*.tar.gz
+common/thirdparty/SDL2-2.0.8/
+common/thirdparty/systemc-2.3.3/
+common/thirdparty/rapidjson-1.1.0/
+common/thirdparty/tinyxml2-8.0.0/
+common/thirdparty/zlib-1.2.13/
+
+# ------ Simulator output ------
+*.ppm
+*.png
+stats.*.csv
+stats.*.csv.gz
+signaltrace.txt
+signaltrace.txt.gz
+CG1.MetaStream.tracefile.gz
+
+# ------ OS ------
+.DS_Store
+Thumbs.db
+*.core
+core.*
+
+# ------ Misc ------
+*.log
+*.bak
+*.orig
+*.pyc
+__pycache__/

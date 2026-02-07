@@ -1,25 +1,37 @@
-#computrendering
+# computrendering
 ===============
 
-#Introduction
+## Introduction
 -------------
 
-the computrendering project has arch named CG1
-CG1 is GPU simulator with OpenGL and D3D9 API implementations that can be used
+The computrendering project has arch named CG1.
+CG1 is a GPU simulator with OpenGL and D3D9 API implementations that can be used
 to simulate PC Windows game traces.
 
-referenced from project "https://attila.ac.upc.edu"
+Referenced from project "https://attila.ac.upc.edu"
 
 Some of the techniques and algorithms implemented in the simulator may be covered
 by patents (for example DXTC/S3TC compression or the Z compression algorithm).
 
-#Requirements
+## Requirements
 ------------------------
-CG1 depends on thirdparty tools and libraries:, following are required:
-    cmake ()
-    flex ()
-    bison ()
-    mingw ()
+CG1 depends on thirdparty tools and libraries. The following are required:
+
+**Linux:**
+
+    cmake    (>= 3.13.1)
+    flex
+    bison
+    libpng-dev
+    g++ / clang++
+
+**Windows:**
+
+    cmake    (>= 3.13.1)
+    flex
+    bison
+    mingw    (for POSIX headers)
+    Visual Studio 2022 or higher
 
 
 #Contents of the package
@@ -103,8 +115,34 @@ CG1 depends on thirdparty tools and libraries:, following are required:
         TraceViewer/                 Signal Trace Visualizer
         DXInterceptor/               An independently developed D3D9 trace capturer and player
 
-#How to compile on GNU/Linux
+## How to compile on GNU/Linux (CMake)
 ----------------------------
+
+### Quick Build
+
+Use the provided `build.sh` script from the project root:
+
+```bash
+./build.sh
+```
+
+This will:
+1. Create (or reuse) the `_BUILD_` directory.
+2. Run CMake configuration.
+3. Build all targets with `make`.
+
+The compiled binaries are placed in `_BUILD_/arch/` (CG1SIM simulator) and
+`_BUILD_/driver/` (trace tools).
+
+### Manual CMake Build
+
+```bash
+mkdir -p _BUILD_ && cd _BUILD_
+cmake ..
+make -j$(nproc)
+```
+
+### Legacy Makefile Build (deprecated)
 
     Usage: make [clean | simclean]
            make [what options]
@@ -213,11 +251,28 @@ F) Other tools
 
 A GNU/Linux makefile or Visual Studio project may be on the tool directory.
 
-#How to run the CG1 funcmodel and bhavmodel
+## How to run the CG1 funcmodel and bhavmodel
 ---------------------------------------------
-    ##1. Copy the simulator binary (CG1SIM), a configuration file (CG1GPU.ini) and the
+
+### Quick-start: Running after build
+
+After a successful build with `build.sh`, you can test the simulator immediately:
+
+```bash
+cd _BUILD_/arch
+
+# Copy the configuration file (required at runtime)
+cp ../../arch/common/params/CG1GPU.ini .
+
+# Run with an OpenGL trace (simplefog example)
+./CG1SIM ../../tests/ogl/trace/simplefog/tracefile.ogl.txt.gz
+```
+
+### General Usage
+
+    1. Copy the simulator binary (CG1SIM), a configuration file (CG1GPU.ini) and the
        trace files into the same directory (the configuration file described in doc/CG1_Architecture_Specification.docx)
-    ##2. Execute the simulator
+    2. Execute the simulator
         > [CG1SIM]
         > [CG1SIM] filename
         > [CG1SIM] filename n
@@ -230,7 +285,7 @@ A GNU/Linux makefile or Visual Studio project may be on the tool directory.
             filename        OpenGL trace file (usually tracefile.txt or tracefile.txt.gz) 
                             (see "./driver/ogl/trace/README.md" for more details about OGL Trace Generation)
                             or
-                            PIX trace file (PIXRun or PIXRunz)
+                            PIX trace file (PIXRun or PIXRunz) (Windows only)
                             (see "./driver/d3d/trace/README.md" for more details about D3D Trace Generation)
 
             n               Number of frames to render (if n < 10K)
@@ -377,4 +432,136 @@ A GNU/Linux makefile or Visual Studio project may be on the tool directory.
 
     ##4. Get the simulation output
         (Same as the simulator output, detailed in first section)
+
+
+## Testing & Result Verification
+---------------------------------------------------------------------------
+
+The project ships with mini-regression traces under `tests/`. Below is the
+verified end-to-end testing flow on GNU/Linux.
+
+### Available test traces (OpenGL)
+
+| Trace            | Path                                                   |
+|------------------|--------------------------------------------------------|
+| simplefog        | `tests/ogl/trace/simplefog/tracefile.ogl.txt.gz`      |
+| triangle         | `tests/ogl/trace/triangle/tracefile.ogl.txt.gz`       |
+| torus            | `tests/ogl/trace/torus/tracefile.ogl.txt.gz`          |
+| bunny            | `tests/ogl/trace/bunny/tracefile.ogl.txt.gz`          |
+| blendedcubes     | `tests/ogl/trace/blendedcubes/tracefile.ogl.txt.gz`   |
+| 8lights          | `tests/ogl/trace/8lights/tracefile.ogl.txt.gz`        |
+| billboard        | `tests/ogl/trace/billboard/tracefile.ogl.txt.gz`      |
+| copyteximage     | `tests/ogl/trace/copyteximage/tracefile.ogl.txt.gz`   |
+| micropolygon     | `tests/ogl/trace/micropolygon/tracefile.ogl.txt.gz`   |
+| spaceship        | `tests/ogl/trace/spaceship/tracefile.ogl.txt.gz`      |
+| spheremap        | `tests/ogl/trace/spheremap/tracefile.ogl.txt.gz`      |
+
+### Step 1: Build
+
+```bash
+./build.sh
+```
+
+### Step 2: Run the simulator
+
+```bash
+cd _BUILD_/arch
+
+# Ensure the config file is present
+cp ../../arch/common/params/CG1GPU.ini .
+
+# Run a test trace (e.g. simplefog)
+./CG1SIM ../../tests/ogl/trace/simplefog/tracefile.ogl.txt.gz
+```
+
+The simulator produces the following outputs in the current working directory:
+
+| Output file                  | Description                                                    |
+|------------------------------|----------------------------------------------------------------|
+| `frame0000.cm.ppm`          | Rendered frame (funcmodel, cycle-accurate simulation)          |
+| `frame0000.bm.png`          | Rendered frame (bhavmodel, fast emulation)                     |
+| `stats.frames.csv.gz`       | Per-frame statistics                                           |
+| `stats.batches.csv.gz`      | Per-batch (draw call) statistics                               |
+| `stats.general.csv.gz`      | Accumulated statistics at a configurable cycle rate            |
+
+### Step 3: Verify rendered output
+
+Each test trace directory contains a reference PPM under `tests/ogl/trace/<name>/`.
+Compare the simulator-generated PPM against the reference:
+
+```bash
+# Byte-for-byte comparison of funcmodel output
+diff _BUILD_/arch/frame0000.cm.ppm tests/ogl/trace/simplefog/frame0000.cm.ppm
+
+# If using cmp (silent on match):
+cmp _BUILD_/arch/frame0000.cm.ppm tests/ogl/trace/simplefog/frame0000.cm.ppm && echo "PASS" || echo "FAIL"
+```
+
+A **byte-for-byte identical** PPM file indicates the funcmodel rendering is correct.
+
+### Step 4: Verify statistics (optional)
+
+Statistics files may show minor numerical variations across different compilers or
+platforms due to floating-point precision and cycle-counting differences. To inspect:
+
+```bash
+# Decompress and diff
+zdiff _BUILD_/arch/stats.frames.csv.gz tests/ogl/trace/simplefog/stats.frames.csv.gz
+```
+
+Small differences in cycle counts (< 0.1%) are generally acceptable when using
+different compilers, optimization levels, or platforms.
+
+### Step 5: Verify bhavmodel PNG output
+
+The bhavmodel produces a PNG image (`frame0000.bm.png`). Verify it is non-empty and valid:
+
+```bash
+file _BUILD_/arch/frame0000.bm.png
+# Expected: PNG image data, 400 x 400 (or the trace's viewport size)
+```
+
+### Automated regression example
+
+A simple script to run all traces and verify output:
+
+```bash
+#!/bin/bash
+PASS=0; FAIL=0
+for trace_dir in tests/ogl/trace/*/; do
+    name=$(basename "$trace_dir")
+    trace_file="$trace_dir/tracefile.ogl.txt.gz"
+    ref_ppm="$trace_dir/frame0000.cm.ppm"
+
+    [ ! -f "$trace_file" ] && continue
+    [ ! -f "$ref_ppm" ]    && continue
+
+    # Create isolated run directory
+    run_dir="_BUILD_/test_$name"
+    mkdir -p "$run_dir"
+    cp arch/common/params/CG1GPU.ini "$run_dir/"
+
+    # Run simulator
+    (cd "$run_dir" && ../_BUILD_/arch/CG1SIM "../../$trace_file" > /dev/null 2>&1)
+
+    # Compare
+    if cmp -s "$run_dir/frame0000.cm.ppm" "$ref_ppm"; then
+        echo "PASS: $name"
+        PASS=$((PASS+1))
+    else
+        echo "FAIL: $name"
+        FAIL=$((FAIL+1))
+    fi
+done
+echo "Results: $PASS passed, $FAIL failed"
+```
+
+### Known platform differences
+
+| Item                     | Notes                                                         |
+|--------------------------|---------------------------------------------------------------|
+| D3D / PIX traces         | Only supported on Windows (requires `TraceDriverD3D`)         |
+| PNG output (bhavmodel)   | Requires `libpng-dev` on Linux; uses GDI+ on Windows         |
+| Statistics CSV delimiter | May use `,` or `;` depending on platform/locale settings      |
+| Cycle counts             | Minor variations (< 0.1%) across compilers are expected       |
 

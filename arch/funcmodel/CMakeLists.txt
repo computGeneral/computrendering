@@ -318,11 +318,11 @@ target_sources(CG1CMDL PUBLIC ${BASE}
                               ${TOP})
 
 target_include_directories(CG1CMDL PUBLIC ${CMAKE_SOURCE_DIR}/arch/common
-                                          ${CMAKE_SOURCE_DIR}/arch/behvmodel/common/base
-                                          ${CMAKE_SOURCE_DIR}/arch/behvmodel/common/math
-                                          ${CMAKE_SOURCE_DIR}/arch/behvmodel/Rasterizer
-                                          ${CMAKE_SOURCE_DIR}/arch/behvmodel/Clipper
-                                          ${CMAKE_SOURCE_DIR}/arch/behvmodel/FragmentOperator
+                                          ${CMAKE_SOURCE_DIR}/arch/bhavmodel/common/base
+                                          ${CMAKE_SOURCE_DIR}/arch/bhavmodel/common/math
+                                          ${CMAKE_SOURCE_DIR}/arch/bhavmodel/Rasterizer
+                                          ${CMAKE_SOURCE_DIR}/arch/bhavmodel/Clipper
+                                          ${CMAKE_SOURCE_DIR}/arch/bhavmodel/FragmentOperator
                                           ${CMAKE_SOURCE_DIR}/arch/funcmodel/common/base
                                           ${CMAKE_SOURCE_DIR}/arch/funcmodel/common/compress
                                           ${CMAKE_SOURCE_DIR}/arch/funcmodel/CacheSystem

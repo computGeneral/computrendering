@@ -40,9 +40,9 @@ target_sources(OGL2 PUBLIC ${OGL2SRC}
 )
 
 target_include_directories(OGL2 PUBLIC ${CMAKE_SOURCE_DIR}/arch/common
-                                       ${CMAKE_SOURCE_DIR}/arch/behvmodel/common/math
-                                       ${CMAKE_SOURCE_DIR}/arch/behvmodel/Rasterizer
-                                       ${CMAKE_SOURCE_DIR}/arch/behvmodel/UnifiedShader
+                                       ${CMAKE_SOURCE_DIR}/arch/bhavmodel/common/math
+                                       ${CMAKE_SOURCE_DIR}/arch/bhavmodel/Rasterizer
+                                       ${CMAKE_SOURCE_DIR}/arch/bhavmodel/UnifiedShader
                                        ${CMAKE_SOURCE_DIR}/arch/funcmodel/MemoryController
                                        ${CMAKE_SOURCE_DIR}/arch/funcmodel/CommandProcessor
                                        ${CMAKE_SOURCE_DIR}/arch/funcmodel/UnifiedShader

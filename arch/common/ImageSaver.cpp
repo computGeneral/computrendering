@@ -132,7 +132,7 @@ void ImageSaver::savePNG(char *filename, U32 xRes, U32 yRes, U08 *data)
 
     //  Check if the file was correctly created.
     CG_ASSERT_COND(!(fout == NULL), "Error creating frame color output file.");    
-    /*    
+
     png_init_io(png_ptr, fout);
     png_set_compression_level(png_ptr, 9);
     
@@ -146,13 +146,12 @@ void ImageSaver::savePNG(char *filename, U32 xRes, U32 yRes, U08 *data)
     
     row_pointers = (png_byte **)malloc(yRes * sizeof(png_byte*));
 
-    for (int i = 0; i < yRes; i++)
+    for (U32 i = 0; i < yRes; i++)
 	    row_pointers[i] = data + (xRes * 4) * i;
 
     png_write_image(png_ptr, row_pointers);
     png_write_end(png_ptr, info_ptr);
     png_destroy_write_struct(&png_ptr, &info_ptr);
-    */
     
     free(row_pointers);
 

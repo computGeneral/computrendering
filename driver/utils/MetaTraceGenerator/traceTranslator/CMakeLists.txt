@@ -23,7 +23,7 @@ target_link_libraries(MetaTranslator PUBLIC d3d9
 target_include_directories(MetaTranslator PUBLIC
         ${CMAKE_SOURCE_DIR}
         ${CMAKE_SOURCE_DIR}/../../../arch/common
-        ${CMAKE_SOURCE_DIR}/../../../arch/behvmodel
+        ${CMAKE_SOURCE_DIR}/../../../arch/bhavmodel
         ${CMAKE_SOURCE_DIR}/../../../arch/funcmodel
         ${CMAKE_SOURCE_DIR}/../../../arch/funcmodel/common/base
         ${CMAKE_SOURCE_DIR}/../../../arch/funcmodel/CommandProcessor

@@ -341,7 +341,7 @@ public:
      *  Saves GPU registers to a file.  Saves the Hierarchical Z buffer to a file.  Saves the z/stencil and
      *  color cache block state buffer to files.  Saves GPU and system memory to files.
      */
-    static void createSnapshot();
+    void createSnapshot() override;
     
     /**
      *  Get current frame and draw call counters from the simulator.

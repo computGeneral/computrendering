@@ -11,7 +11,11 @@
 #include <list>
 #include <bitset>
 #include <string>
+#ifdef _WIN32
 #include <io.h>
+#else
+#include <unistd.h>
+#endif
 
 namespace libGAL
 {

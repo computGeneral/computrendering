@@ -31,7 +31,7 @@ target_link_libraries(MetaExtractor PUBLIC zlibstaticd)
 target_include_directories(MetaExtractor PUBLIC
         ${CMAKE_SOURCE_DIR}
         ${CMAKE_SOURCE_DIR}/../../../arch/common
-        ${CMAKE_SOURCE_DIR}/../../../arch/behvmodel
+        ${CMAKE_SOURCE_DIR}/../../../arch/bhavmodel
         ${CMAKE_SOURCE_DIR}/../../../arch/funcmodel
         ${CMAKE_SOURCE_DIR}/../../../arch/funcmodel/common/base
         ${CMAKE_SOURCE_DIR}/../../../arch/funcmodel/CommandProcessor

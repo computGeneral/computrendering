@@ -32,7 +32,7 @@ target_include_directories(GALx PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/Interface
                                        ${CMAKE_SOURCE_DIR}/driver/gal/GAL/Implementation
                                        ${CMAKE_SOURCE_DIR}/driver/ogl/inc
                                        ${CMAKE_SOURCE_DIR}/arch/common
-                                       ${CMAKE_SOURCE_DIR}/arch/behvmodel/UnifiedShader
+                                       ${CMAKE_SOURCE_DIR}/arch/bhavmodel/UnifiedShader
                           )
 
 execute_process(

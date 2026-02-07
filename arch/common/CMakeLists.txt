@@ -36,3 +36,11 @@ PUBLIC
 )
 
 target_include_directories(CG1Common PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+
+if(NOT WIN32)
+    find_package(PNG)
+    if(PNG_FOUND)
+        target_include_directories(CG1Common PRIVATE ${PNG_INCLUDE_DIRS})
+        target_link_libraries(CG1Common PUBLIC ${PNG_LIBRARIES})
+    endif()
+endif()

@@ -19,7 +19,9 @@
 
 #include "TraceDriverMeta.h"
 #include "TraceDriverOGL.h"
+#ifdef _WIN32
 #include "TraceDriverD3D.h"
+#endif
 
 #include <ctime>
 #include <new>
@@ -47,7 +49,12 @@ U32  gpuClockPeriod;      //  Period of the GPU clock in picoseconds (ps).
 U32  shaderClockPeriod;   //  Period of the shader clock in picoseconds (ps):
 U32  memoryClockPeriod;   //  Period of the memory clock in picoseconds (ps):
 
-CG1MDLBASE* CG1GPUSIM;
+CG1MDLBASE* CG1GPUSIM = nullptr;
+
+//  Static wrapper for panicCallback to invoke createSnapshot through virtual dispatch.
+static void panicSnapshotWrapper() {
+    if (CG1GPUSIM) CG1GPUSIM->createSnapshot();
+}
 
 // from emulation
 // #ifdef WIN32
@@ -391,6 +398,7 @@ int main(int argc, char *argv[])
                                  ArchConf.sim.bucketSize2);
 
     gzifstream ProfilingFile;    //  Create and initialize the Trace Driver.
+#ifdef _WIN32
     if (fileExtensionTester(ArchConf.sim.inputFile, "pixrun" ) ||
         fileExtensionTester(ArchConf.sim.inputFile, "pixrunz") ||
         fileExtensionTester(ArchConf.sim.inputFile, "wpix"   ))
@@ -399,7 +407,9 @@ int main(int argc, char *argv[])
         cout << "Using Direct3D Trace File as simulation input." << endl;
         cout << "Using CG1 Graphics Abstraction Layer (GAL) Library." << endl;
     }
-    else if (fileExtensionTester(ArchConf.sim.inputFile, "ogl.txt.gz")) // TODO  .oglrun?
+    else
+#endif
+    if (fileExtensionTester(ArchConf.sim.inputFile, "ogl.txt.gz")) // TODO  .oglrun?
     {
         cout << "Using OpenGL Trace File as simulation input." << endl;
         cout << "Using CG1 Graphics Abstraction Layer (GAL) Library." << endl;
@@ -431,7 +441,7 @@ int main(int argc, char *argv[])
             break;
         case CG_FUNC_MODEL: 
             CG1GPUSIM = new CG1CMDL(ArchConf, TraceDriver); 
-            panicCallback = &CG1CMDL::createSnapshot;    //  Define the call back for the panic function to save a snapshot on simulator errors.
+            panicCallback = &panicSnapshotWrapper;    //  Define the call back for the panic function to save a snapshot on simulator errors.
             CG_INFO("CG1 MAL3 CMDL Enabled for Simulation");
             break;
 #if CG_ARCH_MODEL_DEVEL
@@ -442,7 +452,7 @@ int main(int argc, char *argv[])
             //sc_report_handler::set_actions(SC_ID_INSTANCE_EXISTS_, SC_DO_NOTHING);
             sc_core::sc_report_handler::set_actions(SC_ID_INSTANCE_EXISTS_, SC_WARNING, SC_DO_NOTHING);
             CG1GPUSIM = new CG1AMDL(ArchConf, TraceDriver);
-            panicCallback = &CG1AMDL::createSnapshot;    //  Define the call back for the panic function to save a snapshot on simulator errors.
+            panicCallback = &panicSnapshotWrapper;    //  Define the call back for the panic function to save a snapshot on simulator errors.
             CG_INFO("CG1 MAL1 AMDL Enabled for Simulation");
             break;
 #endif

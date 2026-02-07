@@ -8,6 +8,9 @@ set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
 set(CG1_ROOT ${CMAKE_SOURCE_DIR})
 
+# Ensure all targets use position-independent code, required for linking static libs into shared libs.
+set(CMAKE_POSITION_INDEPENDENT_CODE ON)
+
 set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -Wl,-as-needed" CACHE STRING "" FORCE)
 if(${CMAKE_SOURCE_DIR} STREQUAL ${CMAKE_BINARY_DIR})
     message(FATAL_ERROR "[FATAL] Cmake binary must be different to the source dir")
@@ -52,7 +55,7 @@ set(SYSTEMC_PROFILER_ENABLED     No      CACHE BOOL   "If set, Generates and bui
 # module path for arch modules
 list(APPEND CMAKE_MODULE_PATH
     ${CMAKE_SOURCE_DIR}/arch/common
-    ${CMAKE_SOURCE_DIR}/arch/behvmodel
+    ${CMAKE_SOURCE_DIR}/arch/bhavmodel
     ${CMAKE_SOURCE_DIR}/arch/funcmodel
     ${CMAKE_SOURCE_DIR}/arch/archmodel
     )
@@ -61,7 +64,7 @@ list(APPEND CMAKE_MODULE_PATH
 #include_directories(
 #    ${CMAKE_SOURCE_DIR}/arch/common
 #    ${CMAKE_SOURCE_DIR}/arch/funcmodel
-#    ${CMAKE_SOURCE_DIR}/arch/behvmodel
+#    ${CMAKE_SOURCE_DIR}/arch/bhavmodel
 #    )
 
 #### Definitions

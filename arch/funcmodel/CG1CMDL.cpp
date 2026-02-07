@@ -15,6 +15,10 @@
 
 using namespace std;
 
+//  Static pointer to the active CG1CMDL instance, used by the panic snapshot callback.
+static cg1gpu::CG1MDLBASE* s_panicSnapshotInstance = nullptr;
+static void panicSnapshotCallback() { if (s_panicSnapshotInstance) s_panicSnapshotInstance->createSnapshot(); }
+
 namespace cg1gpu
 {
 
@@ -304,6 +308,7 @@ void CG1CMDL::debugLoop(bool validate)
     lr->initialize();
 
     current = this;
+    s_panicSnapshotInstance = this;
 
     //  Initialize clock state.
     if (GpuCMdl.multiClock)
@@ -1722,7 +1727,7 @@ void CG1CMDL::saveSnapshotCommand()
     }
 
     //  Renable create snapshot on panic.
-    panicCallback = &createSnapshot;
+    panicCallback = &panicSnapshotCallback;
 
     pendingSaveSnapshot = false;    
 }
@@ -1914,7 +1919,7 @@ void CG1CMDL::loadSnapshotCommand(stringstream &comStream)
             }
 
             //  Re-enable save snapshot on panic.
-            panicCallback = &createSnapshot;
+            panicCallback = &panicSnapshotCallback;
         }
     }
 }

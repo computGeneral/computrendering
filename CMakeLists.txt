@@ -8,6 +8,8 @@ set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
 set(CG1_ROOT ${CMAKE_SOURCE_DIR})
 
+# C++17 is set after thirdparty subdirectories to override SystemC's CMAKE_CXX_STANDARD=98 cache entry.
+
 # Ensure all targets use position-independent code, required for linking static libs into shared libs.
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
@@ -85,6 +87,10 @@ add_definitions(
 add_subdirectory(common/thirdparty)
 add_subdirectory(common/thirdparty/zlib-1.2.13)
 add_subdirectory(common/thirdparty/systemc-2.3.3)
+
+# Override SystemC's CMAKE_CXX_STANDARD=98 cache entry with C++17.
+set(CMAKE_CXX_STANDARD 17 CACHE STRING "C++ standard" FORCE)
+set(CMAKE_CXX_STANDARD_REQUIRED ON CACHE BOOL "Require C++ standard" FORCE)
 
 # driver
 add_subdirectory(driver/hal)

@@ -1192,9 +1192,9 @@ void cmoShaderDecExe::startExecution(U64 cycle, ShaderExecInstruction *shExecIns
     {
         //  Reserve SIMD or Scalar ALU.  
         if (shInstr->isScalar())
-            reserveScalarALU++;
+            reserveScalarALU = true;
         else
-            reserveSIMDALU++;
+            reserveSIMDALU = true;
     }
 
     /*

@@ -100,7 +100,7 @@ void DArray::dumpState()
     }
 }
 
-void* DArray::operator new(size_t size_) throw(std::bad_alloc)
+void* DArray::operator new(size_t size_)
 {
     #ifdef USE_DEFAULT_NEW_DELETE
         return ::new char[size_];

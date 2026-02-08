@@ -28,9 +28,9 @@ endif()
 add_subdirectory(common)
 #target_link_libraries(CG1Common PUBLIC ${3RDPARTYLIB})
 add_subdirectory(bhavmodel)
-target_link_libraries(CG1BMDL PUBLIC zlibstatic )
+target_link_libraries(CG1BMDL PUBLIC zlibstatic CG1Common)
 add_subdirectory(funcmodel)
-target_link_libraries(CG1CMDL PUBLIC zlibstatic HAL)
+target_link_libraries(CG1CMDL PUBLIC zlibstatic HAL CG1Common)
 
 
 set(OGLSRC 

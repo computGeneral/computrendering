@@ -318,6 +318,7 @@ target_sources(CG1CMDL PUBLIC ${BASE}
                               ${TOP})
 
 target_include_directories(CG1CMDL PUBLIC ${CMAKE_SOURCE_DIR}/arch/common
+                                          ${CMAKE_SOURCE_DIR}/arch/common/params
                                           ${CMAKE_SOURCE_DIR}/arch/bhavmodel/common/base
                                           ${CMAKE_SOURCE_DIR}/arch/bhavmodel/common/math
                                           ${CMAKE_SOURCE_DIR}/arch/bhavmodel/Rasterizer

@@ -1,0 +1,50 @@
+name: Regression Check
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  regression:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install build dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            cmake \
+            g++ \
+            flex \
+            bison \
+            libpng-dev \
+            python3 \
+            zlib1g-dev
+
+      - name: Clean stale thirdparty archives
+        run: |
+          # Remove 0-byte placeholder archives so CMake re-downloads them
+          find common/thirdparty -name '*.tar.gz' -empty -delete 2>/dev/null || true
+
+      - name: Build project
+        run: |
+          bash ./build.sh
+          # Verify the simulator binary was built
+          test -x _BUILD_/arch/CG1SIM || { echo "ERROR: CG1SIM not built"; exit 1; }
+
+      - name: Run Regression Tests
+        run: bash ./tools/script/regression.sh
+
+      - name: Upload regression results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: regression-results
+          path: tests/regression/regression.out
+          retention-days: 30

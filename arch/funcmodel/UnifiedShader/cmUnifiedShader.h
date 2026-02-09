@@ -84,6 +84,12 @@ public:
      */
     ~cmoUnifiedShader();
 
+    // Override SetTP to propagate the texture processor pointer to the internal bmShader.
+    void SetTP(bmoTextureProcessor* TP) override {
+        bmoMduBase::SetTP(TP);      // set our own member
+        if (bmShader) bmShader->SetTP(TP);   // propagate to the behavior model shader
+    }
+
     // dummy functions from cmoMduBase, due to the unified shader is a wrapper for now.
     void clock(U64 cycle) override {};
     

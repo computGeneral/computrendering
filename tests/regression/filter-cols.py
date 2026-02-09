@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: UTF-8 -*-
 
 import sys
@@ -18,7 +18,8 @@ function = "accept"
 if len(sys.argv) > 4:
     function = sys.argv[4]
    
-separator = r';'
+# Auto-detect separator: try ';' first (legacy), fall back to ','
+separator = None  # will be set after reading the first line
 
 # Open input and output tables
 
@@ -49,6 +50,15 @@ else:
 # Retrieve the valid column indices from input table
 
 line = input.readline()[:-1]
+
+# Auto-detect separator from the header line
+if ';' in line:
+    separator = r';'
+elif ',' in line:
+    separator = r','
+else:
+    separator = r';'  # default
+
 inputColNames = re.split(separator, line)
 
 validCols = []

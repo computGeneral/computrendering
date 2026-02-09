@@ -22,6 +22,9 @@ CG1BMDL::CG1BMDL(cgsArchConfig ArchConf, cgoTraceDriverBase *TraceDriver) :
     TraceDriver(TraceDriver),
     AbortSim(false)
 {
+    // Note: ArchParams singleton is already initialized in CG1SIM.cpp main().
+    // Sub-modules (bmoGpuTop etc.) still receive cgsArchConfig for backward compat.
+    // New code should prefer ArchParams::get<T>("MODULE_Param") over ArchConf.xxx.yyy.
 }
 
 void CG1BMDL::simulationLoop(cgeModelAbstractLevel MAL)
@@ -30,7 +33,7 @@ void CG1BMDL::simulationLoop(cgeModelAbstractLevel MAL)
     traceEnd = false;
     TraceDriver->startTrace(); //  Start the trace driver.
     GpuBMdl.resetState();
-    while(!traceEnd && (GpuBMdl.getFrameCounter() < (ArchConf.sim.startFrame + ArchConf.sim.simFrames)) && !AbortSim)
+    while(!traceEnd && (GpuBMdl.getFrameCounter() < (ArchParams::get<uint32_t>("SIMULATOR_StartFrame") + ArchParams::get<uint32_t>("SIMULATOR_SimFrames"))) && !AbortSim)
     {
         cgoMetaStream *CurMetaStream;
         GLOBAL_PROFILER_ENTER_REGION("driver", "", "")
@@ -74,7 +77,7 @@ void CG1BMDL::saveSnapshot()
     if (!out.is_open())
         CG_ASSERT("Error creating gpu memory snapshot file.");
     
-    out.write((char *) GpuBMdl.GetGpuMemBaseAddr(), ArchConf.mem.memSize * 1024 * 1024);
+    out.write((char *) GpuBMdl.GetGpuMemBaseAddr(), ArchParams::get<uint32_t>("MEMORYCONTROLLER_MemorySize") * 1024 * 1024);
     out.close();
     
     out.open("bm.sysmem.snapshot", ios::binary);
@@ -82,7 +85,7 @@ void CG1BMDL::saveSnapshot()
     if (!out.is_open())
         CG_ASSERT("Error creating system memory snapshot file.");
         
-    out.write((char *) GpuBMdl.GetSysMemBaseAddr(), ArchConf.mem.mappedMemSize * 1024 * 1024);
+    out.write((char *) GpuBMdl.GetSysMemBaseAddr(), ArchParams::get<uint32_t>("MEMORYCONTROLLER_MappedMemorySize") * 1024 * 1024);
     
     out.close();
 }
@@ -106,7 +109,7 @@ void CG1BMDL::loadSnapshot()
     if (!input.is_open())
         CG_ASSERT("Error opening gpu memory snapshot file.");
     
-    input.read((char *) GpuBMdl.GetGpuMemBaseAddr(), ArchConf.mem.memSize * 1024 * 1024);
+    input.read((char *) GpuBMdl.GetGpuMemBaseAddr(), ArchParams::get<uint32_t>("MEMORYCONTROLLER_MemorySize") * 1024 * 1024);
     input.close();
     
     input.open("bm.sysmem.snapshot", ios::binary);
@@ -114,7 +117,7 @@ void CG1BMDL::loadSnapshot()
     if (!input.is_open())
         CG_ASSERT("Error opening system memory snapshot file.");
         
-    input.read((char *) GpuBMdl.GetSysMemBaseAddr(), ArchConf.mem.mappedMemSize * 1024 * 1024);
+    input.read((char *) GpuBMdl.GetSysMemBaseAddr(), ArchParams::get<uint32_t>("MEMORYCONTROLLER_MappedMemorySize") * 1024 * 1024);
     
     input.close();
 }

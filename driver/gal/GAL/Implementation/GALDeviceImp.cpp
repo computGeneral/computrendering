@@ -1663,6 +1663,14 @@ void GALDeviceImp::clearZStencilBuffer( gal_bool clearZ, gal_bool clearStencil,
 
     GALRenderTargetImp *zstencil = _currentZStencilBuffer;
 
+    //  Guard: if no z-stencil buffer has been set, skip the clear operation.
+    if (zstencil == NULL)
+    {
+        CG_WARN("clearZStencilBuffer: No Z/Stencil render target is currently bound. Skipping clear.");
+        GLOBAL_PROFILER_EXIT_REGION()
+        return;
+    }
+
     if (clearZ && clearStencil)
     {
         //  Check if scissor test is enabled.

@@ -118,6 +118,7 @@ set_target_properties(CG1SIM PROPERTIES VS_DEBUGGER_COMMAND_ARGUMENTS
                     )
 
 target_include_directories(CG1SIM PUBLIC
+                          ${CMAKE_SOURCE_DIR}/arch/common/params
                           ${CMAKE_SOURCE_DIR}/arch/funcmodel
                           ${CMAKE_SOURCE_DIR}/arch/utils
                           ${CMAKE_SOURCE_DIR}/driver/utils/TraceReader

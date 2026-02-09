@@ -11,4 +11,4 @@ ogl/8lights, CG1GPU.ini, tracefile.txt.gz, 1, 0, 90
 ogl/micropolygon/0_5_size_1lightVS_200x200, CG1GPU.ini, tracefile.txt.gz, 1, 1, 50
 ogl/blendedcubes, CG1GPU.ini, tracefile.txt.gz, 1, 70, 90 
 ogl/copyteximage, CG1GPU.ini, tracefile.txt.gz, 1, 0, 10
-ogl/simplefog, CG1GPU.ini, tracefile.txt.gz, 1, 0, 90
+ogl/simplefog, CG1GPU.ini, tracefile.ogl.txt.gz, 1, 0, 90

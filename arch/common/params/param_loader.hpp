@@ -8,8 +8,8 @@
 // permitted to do so under the terms of a subsisting license agreement    
 // from computGeneral Limited.                                                     
 // 
-// Filename        : ./bhavsim/simulator/common/read_params.h
-// Last Revision   : 0.0.1
+// Filename        : param_loader.hpp
+// Last Revision   : 0.2.0
 // Author          : gene@computGeneral.com
 
 #pragma once
@@ -27,25 +27,12 @@
 #include <string>
 #include <fstream>
 #include <iostream>
-#include <assert.h>
-#include <sstream>
+#include <cassert>
+#include <algorithm>
 
-template<typename T>
-struct str2value;
-
-#define __DEFINE_TRANSFORM(type_name, operation)        \
-    template<>                                          \
-    struct str2value<type_name> {                       \
-        static type_name map(const char* value) {       \
-            return (operation);                         \
-        }                                               \
-    };
-
-__DEFINE_TRANSFORM(std::string, std::string(value))
-__DEFINE_TRANSFORM(bool, bool(std::stoi(value)))
-__DEFINE_TRANSFORM(std::int32_t, std::stoi(value, nullptr, 0))
-__DEFINE_TRANSFORM(std::uint32_t, (std::uint32_t)std::stoull(value, nullptr, 0))
-__DEFINE_TRANSFORM(std::int64_t, std::stoll(value, nullptr, 0))
+// Forward declaration so param_loader can populate the legacy config struct.
+namespace cg1gpu { struct cgsArchConfig; }
+using cg1gpu::cgsArchConfig;
 
 static inline std::vector<std::string> split(const std::string& s, char delimiter) {
     std::vector<std::string> tokens;
@@ -57,101 +44,104 @@ static inline std::vector<std::string> split(const std::string& s, char delimite
     return tokens;
 }
 
-/*!
- * \brief C++11 style thread-safe lazy initialization singleton class (**NOT** safe in C++98)
- *        refer to: ISO/IEC 14882:2011 6.7 footnote #4
- * \tparam T class type
- */
-template<typename T, int NumInstance = 1>
-class Singleton {
-public:
-    template<typename... Args>
-    static T& instance(Args&&... args) {
-        static T obj(std::forward<Args>(args)...);
-        return obj;
-    }
-
-    static T& instance(int index = 0) {
-        static T obj[NumInstance];
-        if (index >= NumInstance) {
-            std::cerr << "index out of range:" << index;
-            std::abort();
-        }
-        return obj[index];
-    }
-
-    virtual ~Singleton() = default;
-
-    inline explicit Singleton() = default;
-
-public:
-    Singleton(const Singleton&) = delete;
-    Singleton& operator=(const Singleton&) = delete;
-};
-
 /**
- * @brief Read the CSV file and store the data in a map. 
- * 
- * You can directly use ArchParams::get<type>("para_name") to get typed value of the param without declaring object. 
-*/
-class ArchParams : public Singleton<ArchParams> {
-    
-    public:
-        friend class Singleton<ArchParams>;
+ * @brief Singleton ArchParams — reads CG1GPU.csv and provides typed parameter access.
+ *
+ * Usage:
+ *   // Initialize once (e.g. in main / CG1SIM.cpp):
+ *   ArchParams::init("path/to/CG1GPU.csv", "CG1GPU.ini");
+ *
+ *   // Then anywhere in the code:
+ *   uint32_t frames = ArchParams::get<uint32_t>("SIMULATOR_SimFrames");
+ *   bool     msaa   = ArchParams::get<bool>("SIMULATOR_ForceMSAA");
+ *   std::string file = ArchParams::get<std::string>("SIMULATOR_InputFile");
+ */
+class ArchParams {
+public:
+    // ---- Singleton access ----
+    static ArchParams& instance();
 
-        void read_csv_file(std::string file_path);
+    // ---- Explicit initializer (call once before any get()) ----
+    static void init(const std::string& csv_path, const std::string& arch_name = "CG1GPU.ini");
 
-        inline const char* operator[](const std::string& param_name) const {
-            auto it = param_map.find(param_name);
-            if (it != param_map.end()) {
-                return it->second.c_str();  
-            } else {
-                return nullptr;  
-            }
+    // ---- Typed parameter accessor ----
+    template<typename T>
+    static T get(const std::string& param_name) {
+        ArchParams& inst = instance();
+        auto it = inst.param_map_.find(param_name);
+        if (it == inst.param_map_.end() || it->second.empty()) {
+            throw std::invalid_argument("[ArchParams] Parameter not found or empty: " + param_name);
         }
+        const std::string& val = it->second;
 
-        std::string get_current_arch() const;
-        void set_current_arch(const std::string& arch);
-
-        std::string get_file_path() const;
-
-        inline const std::map<std::string, std::string>& get_param_map() const {
-            return param_map;
+        if constexpr (std::is_same_v<T, bool>) {
+            // Handle TRUE/FALSE strings (from INI convention)
+            std::string upper = val;
+            std::transform(upper.begin(), upper.end(), upper.begin(), ::toupper);
+            if (upper == "TRUE")  return true;
+            if (upper == "FALSE") return false;
+            return static_cast<bool>(std::stoi(val));
+        } else if constexpr (std::is_same_v<T, uint32_t>) {
+            return static_cast<uint32_t>(std::stoul(val, nullptr, 0));
+        } else if constexpr (std::is_same_v<T, int32_t>) {
+            return static_cast<int32_t>(std::stoi(val, nullptr, 0));
+        } else if constexpr (std::is_same_v<T, uint64_t>) {
+            return static_cast<uint64_t>(std::stoull(val, nullptr, 0));
+        } else if constexpr (std::is_same_v<T, int64_t>) {
+            return static_cast<int64_t>(std::stoll(val, nullptr, 0));
+        } else if constexpr (std::is_same_v<T, float>) {
+            return std::stof(val);
+        } else if constexpr (std::is_same_v<T, double>) {
+            return std::stod(val);
+        } else if constexpr (std::is_same_v<T, std::string>) {
+            return val;
+        } else {
+            static_assert(!sizeof(T), "ArchParams::get<T>: unsupported type");
         }
+    }
 
-        template<typename T>
-        inline static const T get(const std::string& param_name) {
-            ArchParams& instance = ArchParams::instance();
-            std::string val_str = instance.param_map[param_name];
-            std::istringstream iss(val_str);
-
-            if constexpr (std::is_same_v<T, double>) {
-                double val_double;
-                if (iss >> val_double && iss.eof()) {
-                    return val_double;
-                }
-            } else if constexpr (std::is_same_v<T, uint32_t>) {
-                uint32_t val_uint;
-                if (iss >> val_uint && iss.eof()) {
-                    return val_uint;
-                }
-            } else if constexpr (std::is_same_v<T, int64_t>) {
-                int64_t val_int;
-                if (iss >> val_int && iss.eof()) {
-                    return val_int;
-                }
-            } else if constexpr (std::is_same_v<T, std::string>) {
-                return val_str; 
-            }
-            // you can add more types here if needed
-
-            throw std::invalid_argument("Conversion failed or type not supported.");
+    // ---- Convenience: get with default (returns default if key missing) ----
+    template<typename T>
+    static T get(const std::string& param_name, const T& default_val) {
+        ArchParams& inst = instance();
+        auto it = inst.param_map_.find(param_name);
+        if (it == inst.param_map_.end() || it->second.empty()) {
+            return default_val;
         }
+        try { return get<T>(param_name); }
+        catch (...) { return default_val; }
+    }
 
-    private:
-        ArchParams();
-        std::map<std::string, std::string> param_map;   // key: param name, value: param value
-        int col_num;    // the column number of the current arch
-        std::string current_arch;
-        std::string arch_file_path;
+    // ---- Raw string lookup ----
+    const char* operator[](const std::string& param_name) const;
+
+    // ---- Accessors ----
+    const std::string& get_current_arch() const { return current_arch_; }
+    const std::string& get_file_path()    const { return file_path_; }
+    const std::map<std::string, std::string>& get_param_map() const { return param_map_; }
+    bool is_initialized() const { return initialized_; }
+
+    // ---- Populate legacy cgsArchConfig from CSV params ----
+    void populateArchConfig(cgsArchConfig* arch) const;
+
+    // ---- Override a param value at runtime (e.g. command-line) ----
+    void set(const std::string& param_name, const std::string& value);
+
+    // ---- Reverse-populate: build ArchParams singleton from a legacy cgsArchConfig struct ----
+    // Call this after ConfigLoader fills ArchConf so the singleton is always available.
+    static void initFromArchConfig(const cgsArchConfig& arch);
+
+    // ---- Build a cgsArchConfig struct from the current singleton state ----
+    // Useful for passing to sub-module constructors that still expect the struct.
+    cgsArchConfig toArchConfig() const;
+
+private:
+    ArchParams();  // private: use init() / instance()
+    void read_csv_file(const std::string& file_path, const std::string& arch_name);
+
+    std::map<std::string, std::string> param_map_;
+    int col_num_;
+    std::string current_arch_;
+    std::string file_path_;
+    bool initialized_;
 };

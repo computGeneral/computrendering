@@ -81,6 +81,7 @@ target_include_directories(CG1BMDL PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}
                                           ${CMAKE_CURRENT_SOURCE_DIR}/TextureProcessor
                                           ${CMAKE_CURRENT_SOURCE_DIR}/UnifiedShader
                                           ${CMAKE_SOURCE_DIR}/arch/common
+                                          ${CMAKE_SOURCE_DIR}/arch/common/params
                                           ${CMAKE_SOURCE_DIR}/arch/funcmodel/CommandProcessor
                                           ${CMAKE_SOURCE_DIR}/arch/funcmodel/MemoryController
                                           ${CMAKE_SOURCE_DIR}/arch/utils

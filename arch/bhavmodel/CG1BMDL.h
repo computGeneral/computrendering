@@ -9,6 +9,7 @@
 
 //  Configuration file definitions.
 #include "ConfigLoader.h"
+#include "param_loader.hpp"
 
 //  cgoTraceDriverBase definition.
 #include "TraceDriverBase.h"

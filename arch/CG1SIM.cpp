@@ -15,6 +15,7 @@
 #endif
 
 #include "ConfigLoader.h"
+#include "param_loader.hpp"
 #include "CommandLineReader.h"
 
 #include "TraceDriverMeta.h"
@@ -237,9 +238,11 @@ int main(int argc, char *argv[])
     int    argPos = 0;
     int    argCount = 0;
     char **argList = new char*[argc];
-    char  *configFile = "../../../arch/common/params/CG1GPU.ini";
+    char  *configFile = nullptr;
+    const char *csvFile = nullptr;
+    const char *archName = "CG1GPU.ini";  // default arch column in CSV
 
-    // First pass: search for config file and generate argument list for the 2nd pass.
+    // First pass: search for config/csv file and generate argument list for the 2nd pass.
     while (argIndex < argc) {
         if (strcmp(argv[argIndex], "--config") == 0) {
             if (++argIndex < argc) {
@@ -247,14 +250,37 @@ int main(int argc, char *argv[])
                 strcpy(configFile, argv[argIndex]);
             }
         }
+        else if (strcmp(argv[argIndex], "--csv") == 0) {
+            if (++argIndex < argc)
+                csvFile = argv[argIndex];
+        }
+        else if (strcmp(argv[argIndex], "--arch") == 0) {
+            if (++argIndex < argc)
+                archName = argv[argIndex];
+        }
         else
             argList[argCount++] = argv[argIndex++];
     }
 
-    ConfigLoader *confLoad;
-    confLoad = new ConfigLoader(configFile); //  Open the configuration file.
-    confLoad->getParameters(&ArchConf); //  Get all the simulator parameters from the configuration file.
-    delete confLoad; //  Delete the configuration loader.
+    // Load parameters: prefer CSV (new path) over INI (legacy path).
+    // In BOTH cases, the ArchParams singleton is initialized so that
+    // ArchParams::get<T>() is available everywhere in the codebase.
+    if (csvFile) {
+        // New CSV-based param loading via ArchParams singleton.
+        ArchParams::init(csvFile, archName);
+        ArchParams::instance().populateArchConfig(&ArchConf);
+    } else {
+        // Legacy INI-based loading via ConfigLoader.
+        if (!configFile)
+            configFile = strdup("../../../arch/common/params/CG1GPU.ini");
+        ConfigLoader *confLoad;
+        confLoad = new ConfigLoader(configFile);
+        confLoad->getParameters(&ArchConf);
+        delete confLoad;
+        // Reverse-populate the ArchParams singleton from the loaded struct,
+        // so ArchParams::get<T>() works regardless of the loading path.
+        ArchParams::initFromArchConfig(ArchConf);
+    }
 
     // Second pass: parse the rest of arguments and override configuration.
     argIndex = 0;
@@ -409,7 +435,9 @@ int main(int argc, char *argv[])
     }
     else
 #endif
-    if (fileExtensionTester(ArchConf.sim.inputFile, "ogl.txt.gz")) // TODO  .oglrun?
+    if (fileExtensionTester(ArchConf.sim.inputFile, "ogl.txt.gz") ||
+        fileExtensionTester(ArchConf.sim.inputFile, "txt.gz") ||
+        fileExtensionTester(ArchConf.sim.inputFile, "txt"))
     {
         cout << "Using OpenGL Trace File as simulation input." << endl;
         cout << "Using CG1 Graphics Abstraction Layer (GAL) Library." << endl;

@@ -564,6 +564,14 @@ bool ConfigLoader::parseSimSectionParameter(cgsArchConfig *arch)
     if (!parseDecimalParameter("BucketSize2", id, arch->sim.bucketSize2))
         return FALSE;
 
+    // Legacy parameter: UseGAL — silently accept and ignore (no registerParam)
+    if (!strcmp("UseGAL", id)) {
+        bool dummy = false;
+        if (!parseBoolean(dummy))
+            return FALSE;
+        paramsTracker.setParamDefined(id);
+    }
+
     if ( !paramsTracker.wasAnyParamSectionDefined() ) {
         stringstream ss;
         ss << "Parameter '" << id << "' in section [SIMULATOR] is not supported";

@@ -23,5 +23,6 @@ else
     cmake -S ./ -DCMAKE_BUILD_TYPE=Debug -DCG_ARCH_MODEL_DEVEL=$ArchModelDevel -B _BUILD_ 
     cd _BUILD_
     make -j 4
+    cd ..
 fi
 

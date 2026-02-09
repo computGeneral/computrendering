@@ -33,9 +33,13 @@ PUBLIC
     RegGpu.hpp
     RegGpu.cpp
     SupportMacro.h
+    params/param_loader.cpp
+    params/param_loader.hpp
 )
 
-target_include_directories(CG1Common PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+target_include_directories(CG1Common PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}
+                                            ${CMAKE_CURRENT_SOURCE_DIR}/params
+                                            ${CMAKE_SOURCE_DIR}/arch/utils)
 
 if(NOT WIN32)
     find_package(PNG)

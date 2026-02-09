@@ -38,15 +38,19 @@ CG1CMDL::CG1CMDL(cgsArchConfig ArchConf, cgoTraceDriverBase *TraceDriver) :
     sigBinder(cmoSignalBinder::getBinder()),
     simulationStarted(false)
 {
+    // Note: ArchParams singleton is already initialized in CG1SIM.cpp main().
+    // Sub-modules (cmoGpuTop etc.) still receive cgsArchConfig for backward compat.
+    // New code should prefer ArchParams::get<T>("MODULE_Param") over ArchConf.xxx.yyy.
+
     //  Initializations.
     cyclesCounter = &gpuStatistics::StatisticsManager::instance().getNumericStatistic("CycleCounter", U32(0), "GPU", 0); // Create statistic to count cycles.
 
     //  Compute clock period for multiple clock domain mode.
     if (GpuCMdl.multiClock)
     {
-        gpuClockPeriod    = (U32) (1E6 / (F32) ArchConf.gpu.gpuClock);
-        shaderClockPeriod = (U32) (1E6 / (F32) ArchConf.gpu.shaderClock);
-        memoryClockPeriod = (U32) (1E6 / (F32) ArchConf.gpu.memoryClock);
+        gpuClockPeriod    = (U32) (1E6 / (F32) ArchParams::get<uint32_t>("GPU_GPUClock"));
+        shaderClockPeriod = (U32) (1E6 / (F32) ArchParams::get<uint32_t>("GPU_ShaderClock"));
+        memoryClockPeriod = (U32) (1E6 / (F32) ArchParams::get<uint32_t>("GPU_MemoryClock"));
     }
 
     //  Check that all the signals are well defined.
@@ -57,53 +61,54 @@ CG1CMDL::CG1CMDL(cgsArchConfig ArchConf, cgoTraceDriverBase *TraceDriver) :
     }
 
     //  Check if signal trace dump is enabled.
-    if (ArchConf.sim.dumpSignalTrace)
+    if (ArchParams::get<bool>("SIMULATOR_DumpSignalTrace"))
     {
         CG_ASSERT_COND((!GpuCMdl.multiClock), "Signal Trace Dump not supported with multiple clock domains."); //  Signal tracing not supported with multiple clock domains.
-        sigTraceFile.open(ArchConf.sim.signalDumpFile, ios::out | ios::binary); //  Try to open the signal trace file.
+        sigTraceFile.open(ArchParams::get<std::string>("SIMULATOR_SignalDumpFile").c_str(), ios::out | ios::binary); //  Try to open the signal trace file.
         CG_ASSERT_COND(sigTraceFile.is_open(), "Error opening signal trace file.");
         sigBinder.initSignalTrace(&sigTraceFile); //  Initialize the signal tracer.  
         CG_INFO("!!! GENERATING SIGNAL TRACE !!!\n");
     }
 
     //  Check if statistics generation is enabled.
-    if (ArchConf.sim.statistics)
+    if (ArchParams::get<bool>("SIMULATOR_Statistics"))
     {
-        gpuStatistics::StatisticsManager::instance().setDumpScheduling(0, ArchConf.sim.statsRate); //  Set statistics rate 
+        gpuStatistics::StatisticsManager::instance().setDumpScheduling(0, ArchParams::get<uint32_t>("SIMULATOR_StatisticsRate")); //  Set statistics rate 
         //  Check if per cycle statistics are enabled
-        if (ArchConf.sim.perCycleStatistics)
+        if (ArchParams::get<bool>("SIMULATOR_PerCycleStatistics"))
         {
-            outCycle.open(ArchConf.sim.statsFile, ios::out | ios::binary); //  Initialize the statistics manager.
+            outCycle.open(ArchParams::get<std::string>("SIMULATOR_StatsFile").c_str(), ios::out | ios::binary); //  Initialize the statistics manager.
             CG_ASSERT_COND(outCycle.is_open(), "Error opening per cycle statistics file");
             gpuStatistics::StatisticsManager::instance().setOutputStream(outCycle);
         }
 
         //  Check if per frame statistics are enabled.
-        if (ArchConf.sim.perFrameStatistics)
+        if (ArchParams::get<bool>("SIMULATOR_PerFrameStatistics"))
         {
-            outFrame.open(ArchConf.sim.statsFilePerFrame, ios::out | ios::binary);
+            outFrame.open(ArchParams::get<std::string>("SIMULATOR_StatsFilePerFrame").c_str(), ios::out | ios::binary);
             CG_ASSERT_COND(outFrame.is_open(), "Error opening per frame statistics file");
             gpuStatistics::StatisticsManager::instance().setPerFrameStream(outFrame);
         }
 
         //  Check if per batch statistics are enabled.
-        if (ArchConf.sim.perBatchStatistics)
+        if (ArchParams::get<bool>("SIMULATOR_PerBatchStatistics"))
         {
-            outBatch.open(ArchConf.sim.statsFilePerBatch, ios::out | ios::binary);
+            outBatch.open(ArchParams::get<std::string>("SIMULATOR_StatsFilePerBatch").c_str(), ios::out | ios::binary);
             CG_ASSERT_COND(outBatch.is_open(), "Error opening per batch statistics file");
             gpuStatistics::StatisticsManager::instance().setPerBatchStream(outBatch);
         }
     }
 
     //  Allocate the pointers for the fragment latency maps.
-    latencyMap = new U32*[ArchConf.gpu.numStampUnits];
+    U32 numStampPipes = ArchParams::get<uint32_t>("GPU_NumStampPipes");
+    latencyMap = new U32*[numStampPipes];
     CG_ASSERT_COND((latencyMap != NULL), "Error allocating latency map array."); //  Check allocation.
     //  Initialize the latency map pointers.
 
-    for(U32 i = 0; i < ArchConf.gpu.numStampUnits; i++)
+    for(U32 i = 0; i < numStampPipes; i++)
         latencyMap[i] = NULL;
 
-    frameCounter = ArchConf.sim.startFrame; //  Set frame counter as start frame.
+    frameCounter = ArchParams::get<uint32_t>("SIMULATOR_StartFrame"); //  Set frame counter as start frame.
     //  Reset batch counters.
     batchCounter = 0;
     frameBatch = 0;

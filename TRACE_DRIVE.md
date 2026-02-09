@@ -270,13 +270,13 @@ Pre-compiled by `traceTranslator` tool from GLInterceptor traces.
 
 ---
 
-## 4. Apitrace Path (Experimental)
+## 4. Apitrace Path
 
 **Extensions**: `.trace`
 **Platform**: Cross-platform
-**Status**: 🚧 Framework ready, parameter conversion in progress
+**Status**: ✅ Functional (111 GL calls, verified byte-identical output)
 
-### Call Flow (Current)
+### Call Flow
 
 ```
 CG1SIM::main()
@@ -288,56 +288,37 @@ TraceDriverApitrace(inputFile, HAL, startFrame)
   │
   │  Constructor:
   │  ├─ ApitraceParser::open(traceFile)
-  │  │   ├─ SnappyStream::open()  // verify 'at' header
-  │  │   ├─ readVarUInt(version)
-  │  │   ├─ readProperties()      // if version >= 6
-  │  │   └─ Ready to read events
+  │  │   ├─ SnappyStream::open()           // verify 'at' header, init chunk reader
+  │  │   ├─ readVarUInt(version)            // trace format version (typically 4-6)
+  │  │   ├─ readProperties()               // if version >= 6: OS, driver info
+  │  │   └─ Signature cache initialized     // for efficient repeated call lookup
   │  │
+  │  ├─ ogl::initOGL(driver, startFrame)   // init OGL/GAL subsystem
   │  └─ Skip to startFrame (count SwapBuffers events)
   │
   │  nxtMetaStream():
-  │  ├─ ApitraceParser::readEvent(evt)
-  │  │   ├─ Read event type (CALL_ENTER / CALL_LEAVE)
-  │  │   ├─ Read call signature (function name + arg names)
-  │  │   │   └─ Signature caching (first occurrence → full read, then ID lookup)
-  │  │   ├─ Read call details:
-  │  │   │   ├─ DETAIL_ARG: argNo + Value (typed: uint/float/string/blob/enum/array)
-  │  │   │   ├─ DETAIL_RETURN: return Value
-  │  │   │   └─ DETAIL_THREAD: thread number
-  │  │   └─ Return CallEvent{callNo, threadNo, signature, arguments, returnValue}
+  │  ├─ HAL::nextMetaStream() → if MetaStream available, return it
   │  │
-  │  ├─ mapFunctionName(evt.signature.functionName)
-  │  │   └─ GLResolver::getFunctionID(name)  // 1874+ GL calls supported
+  │  ├─ (no MetaStream pending) → read and dispatch next call:
+  │  │   ├─ ApitraceParser::readEvent(evt)
+  │  │   │   ├─ Read event type (CALL_ENTER / CALL_LEAVE)
+  │  │   │   ├─ Read/cache call signature (function name + arg names)
+  │  │   │   └─ Read call details: typed arguments (uint/float/blob/enum/array)
+  │  │   │
+  │  │   ├─ ApitraceCallDispatcher::dispatchCall(evt)
+  │  │   │   ├─ Extract typed args: asUInt(A(0)), asFloat(A(1)), asVoidPtr(A(2))...
+  │  │   │   └─ Call OGL entry point: OGL_glClear(mask), OGL_glVertex3f(x,y,z), etc.
+  │  │   │       │
+  │  │   │       ▼  (same path as OGL TraceDriver from here)
+  │  │   │   OGLEntryPoints → GALDeviceImp → HAL::writeGPURegister()
+  │  │   │       └─ RegisterWriteBuffer::flush() → MetaStream enqueued
+  │  │   │
+  │  │   └─ SwapBuffers → ogl::swapBuffers() → end-of-frame event
   │  │
-  │  ├─ 🚧 TODO: Convert arguments → call OGL entry points → MetaStream
-  │  │   (Currently returns nullptr)
-  │  │
-  │  └─ return nullptr (no MetaStream generated yet)
+  │  └─ return MetaStream to simulation
   │
   ▼
-Simulation receives no MetaStreams (trace ends immediately)
-```
-
-### Call Flow (Planned — Approach 2: GLExec Reuse)
-
-```
-TraceDriverApitrace::nxtMetaStream()
-  │
-  ├─ ApitraceParser::readEvent(evt)
-  │
-  ├─ ApitraceToGLI::convertCall(evt)
-  │   ├─ "glClear" + args[0]=16640 → "glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT)"
-  │   ├─ "glTexImage2D" + blob → "glTexImage2D(...,*bufID)" + store blob in BufferManager
-  │   └─ Returns GLI-format string
-  │
-  ├─ Feed to GLExec (reuse existing TraceDriverOGL infrastructure):
-  │   ├─ GLExec::executeCall(gliString)
-  │   │   └─ Same path as OGL: StubApiCalls → OGL2 → GAL → HAL → MetaStream
-  │   │
-  │   └─ HAL::nextMetaStream() → return generated MetaStream
-  │
-  ▼
-Simulation consumes MetaStream (identical to OGL path)
+CG1BMDL / CG1CMDL simulation (identical to OGL path)
 ```
 
 ### Apitrace Binary Format
@@ -375,10 +356,11 @@ value = 0x00         // null
 
 | File | Role |
 |------|------|
-| `driver/utils/ApitraceParser/ApitraceParser.h/cpp` | Binary format parser |
-| `driver/utils/ApitraceParser/ApitraceToGLI.h` | apitrace→GLI converter (placeholder) |
-| `driver/utils/TraceDriver/TraceDriverApitrace.h/cpp` | Trace driver adapter |
+| `driver/utils/ApitraceParser/ApitraceParser.h/cpp` | Binary format parser (Snappy, varuint, Values) |
+| `driver/utils/ApitraceParser/ApitraceCallDispatcher.h/cpp` | 111 GL calls → OGL_gl* entry point dispatch |
+| `driver/utils/TraceDriver/TraceDriverApitrace.h/cpp` | Trace driver (HAL drain → dispatch → repeat) |
 | `common/thirdparty/snappy-1.1.10/` | Snappy decompression library |
+| `tests/ogl/trace/apitrace_triangle/triangle.trace` | Test trace (verified byte-identical output) |
 
 ---
 

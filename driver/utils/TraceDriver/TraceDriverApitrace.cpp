@@ -6,6 +6,9 @@
 
 #include "TraceDriverApitrace.h"
 #include "GLResolver.h"
+#include "ApitraceCallDispatcher.h"
+#include "OGL.h"
+#include "OGLEntryPoints.h"
 
 using namespace cg1gpu;
 #include "support.h"
@@ -37,6 +40,9 @@ TraceDriverApitrace::TraceDriverApitrace(const char* traceFile, HAL* driver, uns
             }
         }
     }
+    
+    // Initialize the OGL/GAL subsystem (required for OGL_gl* entry points)
+    ogl::initOGL(driver, startFrame);
     
     initialized_ = true;
 }
@@ -77,40 +83,34 @@ cg1gpu::cgoMetaStream* TraceDriverApitrace::nxtMetaStream() {
     if (!initialized_ || parser_.eof()) 
         return nullptr;
     
-    apitrace::CallEvent evt;
-    if (!parser_.readEvent(evt)) 
-        return nullptr;
-    
-    // Map to CG1 APICall
-    APICall apiCall = this->mapFunctionName(evt.signature.functionName);
-    
-    // Track frames (SwapBuffers variants)
-    if (evt.signature.functionName.find("SwapBuffers") != std::string::npos ||
-        evt.signature.functionName == "glXSwapBuffers" ||
-        evt.signature.functionName == "eglSwapBuffers") {
-        currentFrame_++;
+    cg1gpu::cgoMetaStream* agpt = nullptr;
+
+    // Try to drain a MetaStream from HAL buffer first
+    while (!(agpt = driver_->nextMetaStream())) {
+        apitrace::CallEvent evt;
+        if (!parser_.readEvent(evt)) 
+            return nullptr;  // End of trace
+        
+        const std::string& fn = evt.signature.functionName;
+        
+        // Skip CALL_LEAVE events (we only process CALL_ENTER)
+        if (fn.empty()) continue;
+
+        // Dispatch the GL call through OGL entry points → GAL → HAL → MetaStream
+        apitrace::dispatchCall(evt);
+        
+        // Handle SwapBuffers (frame boundary)
+        if (fn.find("SwapBuffers") != std::string::npos) {
+            if (currentFrame_ >= startFrame_) {
+                std::cout << "Dumping frame " << currentFrame_ << std::endl;
+                ogl::swapBuffers();
+                driver_->signalEvent(cg1gpu::GPU_END_OF_FRAME_EVENT, "");
+            }
+            currentFrame_++;
+            driver_->printMemoryUsage();
+        }
     }
-    
-    // TODO: Full MetaStream generation from apitrace arguments
-    // Current implementation: framework is ready, parameter conversion needs completion.
-    // For simple calls, we would:
-    //   1. Extract arguments from evt.arguments map
-    //   2. Convert apitrace::Value types to GL types  
-    //   3. Generate MetaStream with driver_->writeGPURegister() etc.
-    //
-    // Example for glClear(GLbitfield mask):
-    //   if (apiCall == APICall_glClear) {
-    //       GLbitfield mask = evt.arguments[0].uintVal;
-    //       // Call OGL library: OGL_glClear(mask);
-    //       // OGL lib generates MetaStream internally
-    //   }
-    //
-    // For now, skip all calls (returns nullptr, ends trace immediately)
-    // Proper implementation requires calling the OGL/GAL library functions
-    // with converted parameters to generate MetaStreams.
-    
-    std::cerr << "[TraceDriverApitrace] WARNING: Parameter conversion not implemented. "
-              << "Trace will not produce simulation output." << std::endl;
-    return nullptr;
+
+    return agpt;
 }
 

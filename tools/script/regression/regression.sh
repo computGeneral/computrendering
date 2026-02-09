@@ -159,8 +159,8 @@ while IFS= read -r line || [ -n "$line" ]; do
     cp "$CONFIG_DIR/CG1GPU.csv" ./CG1GPU.csv
 
     # ---- Build simulator command ----
-    # --config selects the ARCH_VERSION column (matches the INI filename in the CSV header)
-    sim_cmd="$SIMULATOR --fm --csv CG1GPU.csv --config $config_ini --trace $trace_file --frames $frames"
+    # --param points to the CSV param file, --config selects the ARCH_VERSION column
+    sim_cmd="$SIMULATOR --fm --param CG1GPU.csv --config $config_ini --trace $trace_file --frames $frames"
     if [ "$start_frame" -gt 0 ] 2>/dev/null; then
         sim_cmd="$sim_cmd --start $start_frame"
     fi

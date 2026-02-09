@@ -238,34 +238,42 @@ int main(int argc, char *argv[])
     int    argPos = 0;
     int    argCount = 0;
     char **argList = new char*[argc];
-    const char *csvFile = nullptr;             // path to CG1GPU.csv
-    const char *archName = "CG1GPU.ini";       // ARCH_VERSION column to use
+    const char *paramFile = nullptr;             // path to CG1GPU.csv (optional)
+    const char *archName = "CG1GPU.ini";         // ARCH_VERSION column to use
 
-    // First pass: extract --config (ARCH_VERSION column) and --csv options.
+    // First pass: extract --config (ARCH_VERSION column) and --param (CSV path) options.
     while (argIndex < argc) {
         if (strcmp(argv[argIndex], "--config") == 0) {
             // --config selects which ARCH_VERSION column of CG1GPU.csv to use.
             if (++argIndex < argc)
                 archName = argv[argIndex];
         }
-        else if (strcmp(argv[argIndex], "--csv") == 0) {
-            // --csv overrides the default CSV file path.
+        else if (strcmp(argv[argIndex], "--param") == 0) {
+            // --param overrides the default CSV parameter file path.
             if (++argIndex < argc)
-                csvFile = argv[argIndex];
+                paramFile = argv[argIndex];
         }
         else
             argList[argCount++] = argv[argIndex++];
     }
 
     // Load parameters from CSV via ArchParams singleton.
-    // Default CSV path: CG1GPU.csv in the current directory, or the params directory.
-    if (!csvFile) {
+    // Default: search CG1GPU.csv in cwd, then fall back to relative path from build dir.
+    if (!paramFile) {
         if (access("CG1GPU.csv", F_OK) == 0)
-            csvFile = "CG1GPU.csv";
-        else
-            csvFile = "../../../arch/common/params/CG1GPU.csv";
+            paramFile = "CG1GPU.csv";
+        else if (access("../../../arch/common/params/CG1GPU.csv", F_OK) == 0)
+            paramFile = "../../../arch/common/params/CG1GPU.csv";
+        else if (access("../../arch/common/params/CG1GPU.csv", F_OK) == 0)
+            paramFile = "../../arch/common/params/CG1GPU.csv";
+        else if (access("arch/common/params/CG1GPU.csv", F_OK) == 0)
+            paramFile = "arch/common/params/CG1GPU.csv";
+        else {
+            cerr << "ERROR: CG1GPU.csv not found. Use --param <path> to specify." << endl;
+            exit(1);
+        }
     }
-    ArchParams::init(csvFile, archName);
+    ArchParams::init(paramFile, archName);
     ArchParams::instance().populateArchConfig(&ArchConf);
 
     // Second pass: parse the rest of arguments and override configuration.

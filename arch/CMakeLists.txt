@@ -110,7 +110,7 @@ add_executable(CG1SIM  ${MAINSRC}
 
 # following is a demo argument line for the debugger
 set_target_properties(CG1SIM PROPERTIES VS_DEBUGGER_COMMAND_ARGUMENTS 
-                                        "--csv ../../../arch/common/params/CG1GPU.csv --config CG1GPU.ini
+                                        "--param ../../../arch/common/params/CG1GPU.csv --config CG1GPU.ini
                                          --trace ${CMAKE_SOURCE_DIR}/tests/ogl/trace/simplefog/tracefile.ogl.txt.gz"
                                         VS_DEBUGGER_WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/_BUILD_/arch/Debug
                     )

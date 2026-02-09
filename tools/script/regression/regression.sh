@@ -2,25 +2,24 @@
 #
 # CG1 GPU Simulator — Regression Test Script
 #
-# Adapts the legacy tests/regression/regression.pl workflow to the CMake build:
-#   - Parses tests/regression/regression_list
-#   - Runs CG1SIM (funcmodel) for each OGL test
-#   - Compares output PPMs against reference/ using icmp_diff (PSNR tolerance)
-#   - Compares execution cycles using extract-exec-time.py / compare-exec-time.py
-#   - Writes summary to tests/regression/regression.out
+# Parses tools/script/regression/regression_list and runs CG1SIM (funcmodel)
+# for each OGL test trace. Compares output PPMs against reference/ using
+# icmp_diff (PSNR tolerance) and execution cycles via helper scripts.
+# Results are written to tools/script/regression/regression.out.
 #
-# Usage (from project root):
-#   bash tools/script/regression.sh
+# Usage (from anywhere):
+#   bash tools/script/regression/regression.sh
 #
 
 # ---- Resolve project root from script location ----
-PROJECT_ROOT="$(cd "$(dirname "$0")/../.." && pwd)"
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+PROJECT_ROOT="$(cd "$SCRIPT_DIR/../../.." && pwd)"
 cd "$PROJECT_ROOT"
 
 SIMULATOR="$PROJECT_ROOT/_BUILD_/arch/CG1SIM"
 CONFIG_DIR="$PROJECT_ROOT/arch/common/params"
 TRACE_BASE="$PROJECT_ROOT/tests"
-REG_DIR="$PROJECT_ROOT/tests/regression"
+REG_DIR="$SCRIPT_DIR"
 REG_LIST="$REG_DIR/regression_list"
 REG_OUT="$REG_DIR/regression.out"
 

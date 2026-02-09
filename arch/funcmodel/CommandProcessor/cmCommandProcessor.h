@@ -18,7 +18,7 @@
 #include "cmStreamer.h"
 #include "TraceDriverBase.h"
 #include "cmRasterizerStateInfo.h"
-#include "ConfigLoader.h"
+#include "ArchConfig.h"
 
 namespace cg1gpu
 {

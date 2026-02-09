@@ -9,7 +9,7 @@
 #define __CG1_CMDL_H__
 #include "CG1MDLBASE.h"
 
-#include "ConfigLoader.h"
+#include "ArchConfig.h"
 #include "param_loader.hpp"
 #include "TraceDriverBase.h"
 #include "GPUReg.h"

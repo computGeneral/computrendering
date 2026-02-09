@@ -8,7 +8,7 @@
 #include "ComputeGeneralLanguage.h"
 
 #include "HAL.h"
-#include "ConfigLoader.h"
+#include "ArchConfig.h"
 #include "MetaStreamTrace.h"
 #include "ShaderInstruction.h"
 

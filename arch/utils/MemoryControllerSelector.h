@@ -6,7 +6,7 @@
     #define MEMORYCONTROLLERSELECTOR_H
 
 #include "cmMduBase.h"
-#include "ConfigLoader.h"
+#include "ArchConfig.h"
 
 namespace cg1gpu
 {

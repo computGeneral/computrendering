@@ -14,7 +14,6 @@
 #include "CG1AMDL.h"
 #endif
 
-#include "ConfigLoader.h"
 #include "param_loader.hpp"
 #include "CommandLineReader.h"
 
@@ -27,6 +26,7 @@
 #include <ctime>
 #include <new>
 #include <signal.h>
+#include <unistd.h>
 
 #ifdef WIN32
 #define PARSE_CYCLES(a) _atoi64(a)
@@ -238,49 +238,35 @@ int main(int argc, char *argv[])
     int    argPos = 0;
     int    argCount = 0;
     char **argList = new char*[argc];
-    char  *configFile = nullptr;
-    const char *csvFile = nullptr;
-    const char *archName = "CG1GPU.ini";  // default arch column in CSV
+    const char *csvFile = nullptr;             // path to CG1GPU.csv
+    const char *archName = "CG1GPU.ini";       // ARCH_VERSION column to use
 
-    // First pass: search for config/csv file and generate argument list for the 2nd pass.
+    // First pass: extract --config (ARCH_VERSION column) and --csv options.
     while (argIndex < argc) {
         if (strcmp(argv[argIndex], "--config") == 0) {
-            if (++argIndex < argc) {
-                configFile = new char[strlen(argv[argIndex]) + 1];
-                strcpy(configFile, argv[argIndex]);
-            }
-        }
-        else if (strcmp(argv[argIndex], "--csv") == 0) {
-            if (++argIndex < argc)
-                csvFile = argv[argIndex];
-        }
-        else if (strcmp(argv[argIndex], "--arch") == 0) {
+            // --config selects which ARCH_VERSION column of CG1GPU.csv to use.
             if (++argIndex < argc)
                 archName = argv[argIndex];
+        }
+        else if (strcmp(argv[argIndex], "--csv") == 0) {
+            // --csv overrides the default CSV file path.
+            if (++argIndex < argc)
+                csvFile = argv[argIndex];
         }
         else
             argList[argCount++] = argv[argIndex++];
     }
 
-    // Load parameters: prefer CSV (new path) over INI (legacy path).
-    // In BOTH cases, the ArchParams singleton is initialized so that
-    // ArchParams::get<T>() is available everywhere in the codebase.
-    if (csvFile) {
-        // New CSV-based param loading via ArchParams singleton.
-        ArchParams::init(csvFile, archName);
-        ArchParams::instance().populateArchConfig(&ArchConf);
-    } else {
-        // Legacy INI-based loading via ConfigLoader.
-        if (!configFile)
-            configFile = strdup("../../../arch/common/params/CG1GPU.ini");
-        ConfigLoader *confLoad;
-        confLoad = new ConfigLoader(configFile);
-        confLoad->getParameters(&ArchConf);
-        delete confLoad;
-        // Reverse-populate the ArchParams singleton from the loaded struct,
-        // so ArchParams::get<T>() works regardless of the loading path.
-        ArchParams::initFromArchConfig(ArchConf);
+    // Load parameters from CSV via ArchParams singleton.
+    // Default CSV path: CG1GPU.csv in the current directory, or the params directory.
+    if (!csvFile) {
+        if (access("CG1GPU.csv", F_OK) == 0)
+            csvFile = "CG1GPU.csv";
+        else
+            csvFile = "../../../arch/common/params/CG1GPU.csv";
     }
+    ArchParams::init(csvFile, archName);
+    ArchParams::instance().populateArchConfig(&ArchConf);
 
     // Second pass: parse the rest of arguments and override configuration.
     argIndex = 0;

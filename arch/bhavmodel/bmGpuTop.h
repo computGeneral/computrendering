@@ -12,7 +12,7 @@
 #include "GPUType.h"
 
 //  Configuration file definitions.
-#include "ConfigLoader.h"
+#include "ArchConfig.h"
 
 //  cgoTraceDriverBase definition.
 #include "TraceDriverBase.h"

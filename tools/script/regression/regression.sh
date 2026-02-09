@@ -155,11 +155,12 @@ while IFS= read -r line || [ -n "$line" ]; do
     cd "$full_test_path"
     rm -f *.ppm *.sim.ppm output.txt stats*.*.* 2>/dev/null
 
-    # ---- Copy config ----
-    cp "$CONFIG_DIR/$config_ini" ./CG1GPU.ini
+    # ---- Copy CSV params file ----
+    cp "$CONFIG_DIR/CG1GPU.csv" ./CG1GPU.csv
 
     # ---- Build simulator command ----
-    sim_cmd="$SIMULATOR --fm --config CG1GPU.ini --trace $trace_file --frames $frames"
+    # --config selects the ARCH_VERSION column (matches the INI filename in the CSV header)
+    sim_cmd="$SIMULATOR --fm --csv CG1GPU.csv --config $config_ini --trace $trace_file --frames $frames"
     if [ "$start_frame" -gt 0 ] 2>/dev/null; then
         sim_cmd="$sim_cmd --start $start_frame"
     fi
@@ -168,7 +169,7 @@ while IFS= read -r line || [ -n "$line" ]; do
     eval "$sim_cmd" > output.txt 2>&1
     sim_exit=$?
 
-    rm -f CG1GPU.ini
+    rm -f CG1GPU.csv
 
     # ---- Rename output PPMs: frameNNNN.cm.ppm → frameNNNN.sim.ppm ----
     # This aligns with the reference naming convention used by regression.pl

@@ -1,5 +1,5 @@
 #include "param_loader.hpp"
-#include "ConfigLoader.h"   // for cgsArchConfig and nested structs
+#include "ArchConfig.h"   // for cgsArchConfig and nested structs
 #include <filesystem>
 #include <cstring>
 #include <iostream>
@@ -297,8 +297,8 @@ void ArchParams::initFromArchConfig(const cgsArchConfig& a) {
     B("RASTERIZER_TiledShaderDistribution", a.ras.tiledShDistro);
     U("RASTERIZER_VertexInputQueueSize", a.ras.vInputQSize);
     U("RASTERIZER_ShadedVertexQueueSize",a.ras.vShadedQSize);
-    U("RASTERIZER_TriangleInputQueueSize",  a.ras.triangleShQSz);
-    U("RASTERIZER_TriangleOutputQueueSize", a.ras.triangleShQSz);
+    U("RASTERIZER_TriangleInputQueueSize",  a.ras.trInputQSize);
+    U("RASTERIZER_TriangleOutputQueueSize", a.ras.trOutputQSize);
     U("RASTERIZER_GeneratedStampQueueSize",   a.ras.genStampQSize);
     U("RASTERIZER_EarlyZTestedStampQueueSize",a.ras.testStampQSize);
     U("RASTERIZER_InterpolatedStampQueueSize",a.ras.intStampQSize);
@@ -400,7 +400,7 @@ void ArchParams::initFromArchConfig(const cgsArchConfig& a) {
     U("ZSTENCILTEST_OpQueueSize",     a.zst.opQueueSize);
     U("ZSTENCILTEST_WriteQueueSize",  a.zst.writeQueueSize);
     U("ZSTENCILTEST_ZALUTestRate",    a.zst.zTestRate);
-    U("ZSTENCILTEST_ZALULatency",     a.zst.zTestRate);
+    U("ZSTENCILTEST_ZALULatency",     a.zst.zOpLatency);
     U("ZSTENCILTEST_CompressionAlgorithm", a.zst.comprAlgo);
 
     // [COLORWRITE]
@@ -673,8 +673,8 @@ void ArchParams::populateArchConfig(cgsArchConfig* arch) const {
     arch->ras.tiledShDistro      = b("RASTERIZER_TiledShaderDistribution", true);
     arch->ras.vInputQSize        = u32("RASTERIZER_VertexInputQueueSize", 32);
     arch->ras.vShadedQSize       = u32("RASTERIZER_ShadedVertexQueueSize", 512);
-    arch->ras.triangleShQSz    = u32("RASTERIZER_TriangleInputQueueSize", 32);
-    arch->ras.triangleShQSz   = u32("RASTERIZER_TriangleOutputQueueSize", 32);
+    arch->ras.trInputQSize    = u32("RASTERIZER_TriangleInputQueueSize", 32);
+    arch->ras.trOutputQSize   = u32("RASTERIZER_TriangleOutputQueueSize", 32);
     arch->ras.genStampQSize      = u32("RASTERIZER_GeneratedStampQueueSize", 256);
     arch->ras.testStampQSize    = u32("RASTERIZER_EarlyZTestedStampQueueSize", 32);
     arch->ras.intStampQSize        = u32("RASTERIZER_InterpolatedStampQueueSize", 16);
@@ -780,7 +780,7 @@ void ArchParams::populateArchConfig(cgsArchConfig* arch) const {
     arch->zst.opQueueSize        = u32("ZSTENCILTEST_OpQueueSize", 4);
     arch->zst.writeQueueSize     = u32("ZSTENCILTEST_WriteQueueSize", 8);
     arch->zst.zTestRate      = u32("ZSTENCILTEST_ZALUTestRate", 1);
-    arch->zst.zTestRate   = u32("ZSTENCILTEST_ZALULatency", 2);
+    arch->zst.zOpLatency   = u32("ZSTENCILTEST_ZALULatency", 2);
     arch->zst.comprAlgo = u32("ZSTENCILTEST_CompressionAlgorithm");
 
     // ===== [COLORWRITE] =====

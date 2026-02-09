@@ -21,7 +21,7 @@
 #include "cmTextureCacheL2.h"
 #include "cmTextureRequest.h"
 #include "cmTextureResult.h"
-#include "ConfigLoader.h"
+#include "ArchConfig.h"
 
 //#include <fstream>
 #include "zfstream.h"

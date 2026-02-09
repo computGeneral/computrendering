@@ -6,7 +6,7 @@
  *
  */
 
-#include "ConfigLoader.h"
+#include "ArchConfig.h"
 #include "support.h"
 #include <cstring>
 #include <cstdio>

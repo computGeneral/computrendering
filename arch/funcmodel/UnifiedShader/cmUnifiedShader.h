@@ -9,7 +9,7 @@
 #define __CM_UNIFIEDSHADER_H__
 #include "CG1MDLBASE.h"
 
-#include "ConfigLoader.h"
+#include "ArchConfig.h"
 #include "TraceDriverBase.h"
 #include "GPUReg.h"
 

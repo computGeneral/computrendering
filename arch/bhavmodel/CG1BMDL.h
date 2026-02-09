@@ -8,7 +8,7 @@
 #define __CG1_BMDL_H__
 
 //  Configuration file definitions.
-#include "ConfigLoader.h"
+#include "ArchConfig.h"
 #include "param_loader.hpp"
 
 //  cgoTraceDriverBase definition.

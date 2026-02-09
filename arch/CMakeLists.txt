@@ -34,8 +34,7 @@ target_link_libraries(CG1CMDL PUBLIC zlibstatic HAL CG1Common)
 
 
 set(OGLSRC 
-              ${CMAKE_SOURCE_DIR}/arch/utils/ConfigLoader.cpp
-              ${CMAKE_SOURCE_DIR}/arch/utils/ConfigLoader.h
+              ${CMAKE_SOURCE_DIR}/arch/utils/ArchConfig.h
               ${CMAKE_SOURCE_DIR}/arch/utils/CommandLineReader.cpp
               ${CMAKE_SOURCE_DIR}/arch/utils/CommandLineReader.h
 
@@ -111,8 +110,7 @@ add_executable(CG1SIM  ${MAINSRC}
 
 # following is a demo argument line for the debugger
 set_target_properties(CG1SIM PROPERTIES VS_DEBUGGER_COMMAND_ARGUMENTS 
-                                        #"--config ${CMAKE_SOURCE_DIR}/arch/common/params/CG1GPU.ini
-                                        "--config ../../../arch/common/params/CG1GPU.ini
+                                        "--csv ../../../arch/common/params/CG1GPU.csv --config CG1GPU.ini
                                          --trace ${CMAKE_SOURCE_DIR}/tests/ogl/trace/simplefog/tracefile.ogl.txt.gz"
                                         VS_DEBUGGER_WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/_BUILD_/arch/Debug
                     )

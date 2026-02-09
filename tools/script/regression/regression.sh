@@ -17,7 +17,7 @@ PROJECT_ROOT="$(cd "$SCRIPT_DIR/../../.." && pwd)"
 cd "$PROJECT_ROOT"
 
 SIMULATOR="$PROJECT_ROOT/_BUILD_/arch/CG1SIM"
-CONFIG_DIR="$PROJECT_ROOT/arch/common/params"
+PARAM_CSV="$PROJECT_ROOT/arch/common/params/CG1GPU.csv"
 TRACE_BASE="$PROJECT_ROOT/tests"
 REG_DIR="$SCRIPT_DIR"
 REG_LIST="$REG_DIR/regression_list"
@@ -38,6 +38,13 @@ if [ ! -f "$REG_LIST" ]; then
     echo "ERROR: Regression list not found at $REG_LIST"
     exit 1
 fi
+if [ ! -f "$PARAM_CSV" ]; then
+    echo "ERROR: Parameter CSV not found at $PARAM_CSV"
+    exit 1
+fi
+
+# ---- Read available ARCH_VERSION columns from CSV header ----
+ARCH_COLUMNS="$(head -1 "$PARAM_CSV")"
 
 # ---- Compile icmp_diff comparison tool if needed ----
 if [ -f "$ICMP_SRC" ]; then
@@ -142,11 +149,14 @@ while IFS= read -r line || [ -n "$line" ]; do
         continue
     fi
 
-    # ---- Check config ----
-    if [ ! -f "$CONFIG_DIR/$config_ini" ]; then
-        echo "SKIP: $raw_dir (config $config_ini not found)"
-        SKIP=$((SKIP + 1))
-        continue
+    # ---- Check arch column exists in CSV header ----
+    if ! echo "$ARCH_COLUMNS" | grep -q "\\b${config_ini}\\b" 2>/dev/null; then
+        # Fallback: simple comma-separated field match
+        if ! echo ",$ARCH_COLUMNS," | grep -q ",${config_ini}," 2>/dev/null; then
+            echo "SKIP: $raw_dir (arch '$config_ini' not found in $PARAM_CSV)"
+            SKIP=$((SKIP + 1))
+            continue
+        fi
     fi
 
     echo -n "Executing $raw_dir ... "
@@ -155,12 +165,9 @@ while IFS= read -r line || [ -n "$line" ]; do
     cd "$full_test_path"
     rm -f *.ppm *.sim.ppm output.txt stats*.*.* 2>/dev/null
 
-    # ---- Copy CSV params file ----
-    cp "$CONFIG_DIR/CG1GPU.csv" ./CG1GPU.csv
-
     # ---- Build simulator command ----
-    # --param points to the CSV param file, --config selects the ARCH_VERSION column
-    sim_cmd="$SIMULATOR --fm --param CG1GPU.csv --config $config_ini --trace $trace_file --frames $frames"
+    # --param points to the CSV param file, --arch selects the ARCH_VERSION column
+    sim_cmd="$SIMULATOR --fm --param $PARAM_CSV --arch $config_ini --trace $trace_file --frames $frames"
     if [ "$start_frame" -gt 0 ] 2>/dev/null; then
         sim_cmd="$sim_cmd --start $start_frame"
     fi
@@ -168,8 +175,6 @@ while IFS= read -r line || [ -n "$line" ]; do
     # ---- Run simulator ----
     eval "$sim_cmd" > output.txt 2>&1
     sim_exit=$?
-
-    rm -f CG1GPU.csv
 
     # ---- Rename output PPMs: frameNNNN.cm.ppm → frameNNNN.sim.ppm ----
     # This aligns with the reference naming convention used by regression.pl

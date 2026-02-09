@@ -19,6 +19,7 @@
 
 #include "TraceDriverMeta.h"
 #include "TraceDriverOGL.h"
+#include "TraceDriverApitrace.h"
 #ifdef _WIN32
 #include "TraceDriverD3D.h"
 #endif
@@ -241,10 +242,10 @@ int main(int argc, char *argv[])
     const char *paramFile = nullptr;             // path to CG1GPU.csv (optional)
     const char *archName = "CG1GPU.ini";         // ARCH_VERSION column to use
 
-    // First pass: extract --config (ARCH_VERSION column) and --param (CSV path) options.
+    // First pass: extract --arch (ARCH_VERSION column) and --param (CSV path) options.
     while (argIndex < argc) {
-        if (strcmp(argv[argIndex], "--config") == 0) {
-            // --config selects which ARCH_VERSION column of CG1GPU.csv to use.
+        if (strcmp(argv[argIndex], "--arch") == 0) {
+            // --arch selects which ARCH_VERSION column of CG1GPU.csv to use.
             if (++argIndex < argc)
                 archName = argv[argIndex];
         }
@@ -440,6 +441,14 @@ int main(int argc, char *argv[])
                                       HAL::getHAL(),
                                       ArchConf.ras.shadedSetup,
                                       ArchConf.sim.startFrame);//  The simulator input is an GLInterceptor OpenGL trace.  
+    }
+    else if (fileExtensionTester(ArchConf.sim.inputFile, "trace"))
+    {
+        cout << "Using Apitrace Binary Trace File as simulation input." << endl;
+        cout << "Using CG1 Graphics Abstraction Layer (GAL) Library." << endl;
+        TraceDriver = new TraceDriverApitrace(ArchConf.sim.inputFile,
+                                              HAL::getHAL(),
+                                              ArchConf.sim.startFrame);
     }
     else // MetaStream trace file extension: (.metaStream.txt.gz)
     {

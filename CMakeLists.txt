@@ -98,6 +98,7 @@ add_subdirectory(driver/gal/GAL)
 add_subdirectory(driver/gal/GALx)
 # OGL
 add_subdirectory(driver/utils/OGLApiCodeGen)
+add_subdirectory(driver/utils/ApitraceParser)
 add_subdirectory(driver/ogl/OGL2)
 # FIXME
 #add_dependencies(driver/gal/GALx driver/utils/OGLApiCodeGen)

@@ -434,6 +434,40 @@ cp ../../arch/common/params/CG1GPU.ini .
         (Same as the simulator output, detailed in first section)
 
 
+
+## Supported Trace Formats
+---------------------------------------------------------------------------
+
+CG1 supports multiple trace formats for different use cases:
+
+| Format | Extension | Capture Tool | Status | Use Case |
+|--------|-----------|--------------|--------|----------|
+| **GLInterceptor** | `.txt`, `.txt.gz`, `.ogl.txt.gz` | GLInterceptor (Windows DLL) | ✅ Full support | Debugging, regression tests |
+| **Apitrace** | `.trace` | apitrace (cross-platform) | 🚧 Experimental | Standard format, community traces |
+| **D3D9 PIX** | `.PIXRun`, `.PIXRunz` | PIX / DXInterceptor | ✅ Windows only | D3D9 applications |
+| **MetaStream** | `.tracefile.gz` | traceTranslator tool | ✅ Optimized | Pre-translated GPU commands |
+
+### GLInterceptor Format (CG1 Native)
+
+- **Capture**: Windows only (opengl32.dll interceptor)
+- **Format**: Text-based, human-readable function calls
+- **Auxiliary files**: `BufferDescriptors.dat`, `MemoryRegions.dat`
+- **See**: `driver/ogl/trace/README.md`
+
+### Apitrace Format (Experimental)
+
+- **Capture**: Cross-platform (`apitrace trace --api gl <app>`)
+- **Format**: Binary with Snappy compression
+- **Integration status**: Parser and driver implemented, parameter conversion in progress
+- **See**: `driver/ogl/trace/README_APITRACE.md`
+- **Limitation**: Currently returns empty MetaStream (no simulation output yet)
+
+### MetaStream Format (Optimized)
+
+- **Generation**: `traceTranslator` converts GLInterceptor traces to binary MetaStream
+- **Format**: Pre-compiled GPU command stream (bypasses API emulation)
+- **Performance**: Fastest simulation (no API overhead)
+
 ## Testing & Result Verification
 ---------------------------------------------------------------------------
 

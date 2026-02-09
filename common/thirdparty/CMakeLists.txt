@@ -73,3 +73,21 @@ if(NOT EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/${TINYXML2_DEP}")
     execute_process(COMMAND ${CMAKE_COMMAND} -E tar xzf ${CMAKE_CURRENT_SOURCE_DIR}/tinyxml2-8.0.0.tar.gz WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
 #    file(RENAME ${CMAKE_CURRENT_SOURCE_DIR}/tinyxml2-8.0.0 ${CMAKE_CURRENT_SOURCE_DIR}/tinyxml2)
 endif()
+
+# Fetch Snappy (for apitrace support)
+set(SNAPPY_URL https://github.com/google/snappy/archive/refs/tags/1.1.10.tar.gz)
+set(SNAPPY_DEP snappy-1.1.10/snappy.h)
+if(NOT EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/${SNAPPY_DEP}")
+    message("Downloading Snappy compression library...")
+    file(DOWNLOAD ${SNAPPY_URL} "${CMAKE_CURRENT_SOURCE_DIR}/snappy-1.1.10.tar.gz" 
+         SHOW_PROGRESS
+         EXPECTED_HASH MD5=7a1c30b6f8b964ff5560e8f5c8a3f5e4)
+    execute_process(COMMAND ${CMAKE_COMMAND} -E tar xzf ${CMAKE_CURRENT_SOURCE_DIR}/snappy-1.1.10.tar.gz WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
+endif()
+
+# Build Snappy as a static library
+if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/${SNAPPY_DEP}")
+    set(SNAPPY_BUILD_TESTS OFF CACHE BOOL "Build Snappy tests" FORCE)
+    set(SNAPPY_BUILD_BENCHMARKS OFF CACHE BOOL "Build Snappy benchmarks" FORCE)
+    add_subdirectory(snappy-1.1.10 EXCLUDE_FROM_ALL)
+endif()

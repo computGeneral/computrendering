@@ -31,7 +31,7 @@ COMPARE_TOOL="$REG_DIR/compare-exec-time.py"
 # ---- Verify prerequisites ----
 if [ ! -x "$SIMULATOR" ]; then
     echo "ERROR: Simulator binary not found at $SIMULATOR"
-    echo "       Run ./build.sh first."
+    echo "       Run tools/script/build.sh from the project root first."
     exit 1
 fi
 if [ ! -f "$REG_LIST" ]; then

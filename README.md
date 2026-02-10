@@ -120,10 +120,10 @@ CG1 depends on thirdparty tools and libraries. The following are required:
 
 ### Quick Build
 
-Use the provided `build.sh` script from the project root:
+Use the provided `build.sh` script under `tools/script` from the project root:
 
 ```bash
-./build.sh
+bash tools/script/build.sh
 ```
 
 This will:
@@ -256,7 +256,7 @@ A GNU/Linux makefile or Visual Studio project may be on the tool directory.
 
 ### Quick-start: Running after build
 
-After a successful build with `build.sh`, you can test the simulator immediately:
+After a successful build with `tools/script/build.sh`, you can test the simulator immediately:
 
 ```bash
 cd _BUILD_/arch
@@ -493,7 +493,7 @@ verified end-to-end testing flow on GNU/Linux.
 ### Step 1: Build
 
 ```bash
-./build.sh
+bash tools/script/build.sh
 ```
 
 ### Step 2: Run the simulator

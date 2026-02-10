@@ -81,7 +81,7 @@ if(NOT EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/${SNAPPY_DEP}")
     message("Downloading Snappy compression library...")
     file(DOWNLOAD ${SNAPPY_URL} "${CMAKE_CURRENT_SOURCE_DIR}/snappy-1.1.10.tar.gz" 
          SHOW_PROGRESS
-         EXPECTED_HASH MD5=7a1c30b6f8b964ff5560e8f5c8a3f5e4)
+         EXPECTED_HASH MD5=70153395ebe6d72febe2cf2e40026a44)
     execute_process(COMMAND ${CMAKE_COMMAND} -E tar xzf ${CMAKE_CURRENT_SOURCE_DIR}/snappy-1.1.10.tar.gz WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
 endif()
 

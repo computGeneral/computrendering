@@ -1,4 +1,4 @@
-ARCH_VERSION,CG1GPU.ini,CG1GPUx1.ini,CG1GPUx2.ini,CG1GPU.bak.ini,CG1GPU_mcv2.ini,CG1GPU_common.08.03.02.ini,CG1GPU_common.08.11.28.ini,CG1GPU_MSAA4x.ini,Architecture version identifier
+ARCH_VERSION,1.0,1.1,1.2,1.01,1.02,1.03,1.04,1.05,Architecture version identifier
 SIMULATOR_InputFile,tracefile.txt.gz,gltrace-sphere,gltrace-sphere,gltrace-sphere,gltrace-sphere,tracefile.txt,tracefile.txt,tracefile.txt.gz,gltrace-sphere
 SIMULATOR_SimCycles,0,10000,10000,10000,10000,1000,1000,0,10000
 SIMULATOR_SimFrames,1000,1,1,1,1,1,1,1000,1

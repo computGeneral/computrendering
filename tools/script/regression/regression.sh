@@ -105,9 +105,9 @@ while IFS= read -r line || [ -n "$line" ]; do
     [ -z "$trimmed" ] && continue
 
     # Parse CSV fields: test_dir, config, trace, frames, start_frame, tolerance
-    IFS=',' read -r raw_dir config_ini trace_file frames start_frame tolerance <<< "$line"
+    IFS=',' read -r raw_dir arch_version trace_file frames start_frame tolerance <<< "$line"
     raw_dir="$(echo "$raw_dir" | xargs)"
-    config_ini="$(echo "$config_ini" | xargs)"
+    arch_version="$(echo "$arch_version" | xargs)"
     trace_file="$(echo "$trace_file" | xargs)"
     frames="$(echo "$frames" | xargs)"
     start_frame="$(echo "$start_frame" | xargs)"
@@ -150,10 +150,10 @@ while IFS= read -r line || [ -n "$line" ]; do
     fi
 
     # ---- Check arch column exists in CSV header ----
-    if ! echo "$ARCH_COLUMNS" | grep -q "\\b${config_ini}\\b" 2>/dev/null; then
+    if ! echo "$ARCH_COLUMNS" | grep -q "\\b${arch_version}\\b" 2>/dev/null; then
         # Fallback: simple comma-separated field match
-        if ! echo ",$ARCH_COLUMNS," | grep -q ",${config_ini}," 2>/dev/null; then
-            echo "SKIP: $raw_dir (arch '$config_ini' not found in $PARAM_CSV)"
+        if ! echo ",$ARCH_COLUMNS," | grep -q ",${arch_version}," 2>/dev/null; then
+            echo "SKIP: $raw_dir (arch '$arch_version' not found in $PARAM_CSV)"
             SKIP=$((SKIP + 1))
             continue
         fi
@@ -167,7 +167,7 @@ while IFS= read -r line || [ -n "$line" ]; do
 
     # ---- Build simulator command ----
     # --param points to the CSV param file, --arch selects the ARCH_VERSION column
-    sim_cmd="$SIMULATOR --fm --param $PARAM_CSV --arch $config_ini --trace $trace_file --frames $frames"
+    sim_cmd="$SIMULATOR --fm --param $PARAM_CSV --arch $arch_version --trace $trace_file --frames $frames"
     if [ "$start_frame" -gt 0 ] 2>/dev/null; then
         sim_cmd="$sim_cmd --start $start_frame"
     fi

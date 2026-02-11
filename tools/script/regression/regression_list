@@ -11,3 +11,4 @@ ogl/micropolygon/0_5_size_1lightVS_200x200, 1.0, tracefile.txt.gz, 1, 1, 50
 ogl/blendedcubes, 1.0, tracefile.txt.gz, 1, 70, 90 
 ogl/copyteximage, 1.0, tracefile.txt.gz, 1, 0, 10
 ogl/simplefog, 1.0, tracefile.ogl.txt.gz, 1, 0, 90
+ogl/glxgears, 1.0, glxgears.trace, 10, 0, 40

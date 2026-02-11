@@ -531,7 +531,9 @@ int main(int argc, char *argv[])
     GLOBAL_PROFILER_EXIT_REGION()
     GLOBAL_PROFILER_GENERATE_REPORT("profile.txt")
 
+#ifdef _WIN32
     system("pause");
+#endif
     return 0;
 }
  

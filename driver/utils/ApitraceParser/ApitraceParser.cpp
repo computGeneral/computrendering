@@ -189,7 +189,12 @@ bool ApitraceParser::readString(std::string& str) {
     if (len > 1024*1024) return false; // sanity check
     
     str.resize(len);
-    return readBytes(&str[0], len);
+    if (!readBytes(&str[0], len)) return false;
+    // Strip trailing null if present (some formats might include it)
+    if (!str.empty() && str.back() == '\0') {
+        str.pop_back();
+    }
+    return true;
 }
 
 bool ApitraceParser::readValue(Value& val) {
@@ -236,8 +241,40 @@ bool ApitraceParser::readValue(Value& val) {
         case VALUE_ENUM: {
             uint64_t sigId;
             if (!readVarUInt(sigId)) return false;
-            // For now, just read the value part (skip enum signature caching)
-            return readValue(val);  // recursive read of the actual enum value
+            EnumSignature sig;
+            if (!readEnumSignature(sigId, sig)) return false;
+            // Enum signature parsing handles caching.
+            // Now read the enum value (SINT)
+            return readValue(val);
+        }
+
+        case VALUE_BITMASK: {
+            uint64_t sigId;
+            if (!readVarUInt(sigId)) return false;
+            BitmaskSignature sig;
+            if (!readBitmaskSignature(sigId, sig)) return false;
+            // Bitmask value is UINT
+            return readVarUInt(val.uintVal);
+        }
+
+        case VALUE_STRUCT: {
+             uint64_t sigId;
+             if (!readVarUInt(sigId)) return false;
+             StructSignature sig;
+             if (!readStructSignature(sigId, sig)) return false;
+             
+             val.arrayVal.resize(sig.memberNames.size());
+             for(size_t i=0; i<sig.memberNames.size(); ++i) {
+                  if (!readValue(val.arrayVal[i])) return false;
+             }
+             return true;
+        }
+
+        case VALUE_REPR: {
+            if (!readValue(val)) return false; // Original value
+            Value repr;
+            if (!readValue(repr)) return false; // Representation
+            return true;
         }
         
         case VALUE_ARRAY: {
@@ -255,7 +292,8 @@ bool ApitraceParser::readValue(Value& val) {
         
         default:
             // Unsupported type — skip for now
-            std::cerr << "Unsupported value type: 0x" << std::hex << (int)typeTag << std::endl;
+            std::cerr << "Unsupported value type: 0x" << std::hex << (int)typeTag 
+                      << " at callNo=" << std::dec << nextCallNo_ << std::endl;
             return false;
     }
 }
@@ -280,6 +318,83 @@ bool ApitraceParser::readCallSignature(uint32_t sigId, CallSignature& sig) {
     }
     
     signatureCache_[sigId] = sig;
+    return true;
+}
+
+
+bool ApitraceParser::readEnumSignature(uint32_t sigId, EnumSignature& sig) {
+    if (enumSignatureCache_.count(sigId)) {
+        sig = enumSignatureCache_[sigId];
+        return true;
+    }
+    
+    sig.id = sigId;
+    // In V6, Enums don't have a name in the signature
+    // if (!readString(sig.name)) return false; 
+    
+    uint64_t num_values;
+    if (!readVarUInt(num_values)) return false;
+    
+    if (num_values > 10000) {
+        // std::cerr << "  Warning: suspiciously large enum value count: " << num_values << std::endl;
+        return false;
+    }
+
+    sig.values.resize(num_values);
+    for (uint64_t i = 0; i < num_values; ++i) {
+        if (!readString(sig.values[i].first)) return false;
+        // Enum value is read as SINT (TypeTag + VarUInt)
+        Value v;
+        if (!readValue(v)) return false;
+        sig.values[i].second = v.intVal;
+    }
+    
+    enumSignatureCache_[sigId] = sig;
+    return true;
+}
+
+bool ApitraceParser::readBitmaskSignature(uint32_t sigId, BitmaskSignature& sig) {
+    if (bitmaskSignatureCache_.count(sigId)) {
+        sig = bitmaskSignatureCache_[sigId];
+        return true;
+    }
+    
+    sig.id = sigId;
+    uint64_t count;
+    if (!readVarUInt(count)) return false;
+    
+    if (count > 10000) {
+         // std::cerr << "  Warning: suspiciously large bitmask flag count: " << count << std::endl;
+         return false;
+    }
+
+    sig.flags.resize(count);
+    for (uint64_t i = 0; i < count; ++i) {
+        if (!readString(sig.flags[i].first)) return false;
+        if (!readVarUInt(sig.flags[i].second)) return false;
+    }
+    
+    bitmaskSignatureCache_[sigId] = sig;
+    return true;
+}
+
+bool ApitraceParser::readStructSignature(uint32_t sigId, StructSignature& sig) {
+    if (structSignatureCache_.count(sigId)) {
+        sig = structSignatureCache_[sigId];
+        return true;
+    }
+    
+    sig.id = sigId;
+    if (!readString(sig.name)) return false;
+    uint64_t count;
+    if (!readVarUInt(count)) return false;
+    
+    sig.memberNames.resize(count);
+    for (uint64_t i = 0; i < count; ++i) {
+        if (!readString(sig.memberNames[i])) return false;
+    }
+    
+    structSignatureCache_[sigId] = sig;
     return true;
 }
 
@@ -309,10 +424,23 @@ bool ApitraceParser::readCallDetails(CallEvent& event) {
                 event.threadNo = threadNo;
                 break;
             }
+
+            case DETAIL_BACKTRACE: {
+                 Value v;
+                 if (!readValue(v)) return false;
+                 break;
+            }
+
+            case DETAIL_FLAG: {
+                 uint64_t flags;
+                 if (!readVarUInt(flags)) return false;
+                 break;
+            }
             
             default:
                 // Skip unsupported details
-                break;
+                std::cerr << "Unsupported detail type: 0x" << std::hex << (int)detailType << " at callNo=" << std::dec << nextCallNo_ << std::endl;
+                return false; // Can't recover
         }
     }
     return true;
@@ -350,4 +478,3 @@ bool ApitraceParser::readEvent(CallEvent& event) {
     
     return false;
 }
-

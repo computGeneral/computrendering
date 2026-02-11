@@ -101,6 +101,7 @@ cg1gpu::cgoMetaStream* TraceDriverApitrace::nxtMetaStream() {
         
         // Handle SwapBuffers (frame boundary)
         if (fn.find("SwapBuffers") != std::string::npos) {
+            std::cout << "TraceDriverApitrace: Found SwapBuffers: " << fn << std::endl;
             if (currentFrame_ >= startFrame_) {
                 std::cout << "Dumping frame " << currentFrame_ << std::endl;
                 ogl::swapBuffers();

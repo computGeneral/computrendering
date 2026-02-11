@@ -59,6 +59,23 @@ struct CallSignature {
     std::vector<std::string> argNames;
 };
 
+struct EnumSignature {
+    uint32_t id;
+    std::string name; // Name of the enum type (e.g. "GLenum")
+    std::vector<std::pair<std::string, int64_t>> values; // Name/Value pairs
+};
+
+struct BitmaskSignature {
+    uint32_t id;
+    std::vector<std::pair<std::string, uint64_t>> flags;
+};
+
+struct StructSignature {
+    uint32_t id;
+    std::string name;
+    std::vector<std::string> memberNames;
+};
+
 struct CallEvent {
     uint32_t callNo, threadNo;
     CallSignature signature;
@@ -87,6 +104,9 @@ private:
     bool readDouble(double& value);
     bool readValue(Value& value);
     bool readCallSignature(uint32_t sigId, CallSignature& sig);
+    bool readEnumSignature(uint32_t sigId, EnumSignature& sig);
+    bool readBitmaskSignature(uint32_t sigId, BitmaskSignature& sig);
+    bool readStructSignature(uint32_t sigId, StructSignature& sig);
     bool readCallDetails(CallEvent& event);
     
     SnappyStream* stream_;
@@ -94,6 +114,9 @@ private:
     uint32_t semanticVersion_;
     std::map<std::string, std::string> properties_;
     std::map<uint32_t, CallSignature> signatureCache_;
+    std::map<uint32_t, EnumSignature> enumSignatureCache_;
+    std::map<uint32_t, BitmaskSignature> bitmaskSignatureCache_;
+    std::map<uint32_t, StructSignature> structSignatureCache_;
     uint32_t nextCallNo_;
 };
 

@@ -9,12 +9,79 @@
 #include "OGL.h"
 #include <iostream>
 #include <set>
+#include <vector>
+#include <map>
 
 using namespace apitrace;
 
+// Display List State
+static bool isRecording = false;
+static GLuint currentListId = 0;
+// Note: We copy CallEvent. Be aware that Value objects with pointers (BLOB/OPAQUE) need care.
+// In ApitraceParser, BLOB values own their std::vector<uint8_t>, so copying Value is deep-copy for blobs.
+static std::map<GLuint, std::vector<CallEvent>> displayLists;
+
 #define A(n) arg(evt, n)
 
+// Forward declaration
+bool executeCall(const CallEvent& evt);
+
 bool apitrace::dispatchCall(const CallEvent& evt) {
+    const std::string& fn = evt.signature.functionName;
+
+    // ---- Display List Management ----
+    if (fn == "glNewList") {
+        currentListId = asUInt(A(0));
+        // GLenum mode = asEnum(A(1)); // GL_COMPILE or GL_COMPILE_AND_EXECUTE
+        // glxgears uses GL_COMPILE (0x1300). We treat both as compile-only for now (or TODO: execute if needed)
+        
+        isRecording = true;
+        displayLists[currentListId].clear();
+        return true; 
+    }
+    
+    if (fn == "glEndList") {
+        isRecording = false;
+        currentListId = 0;
+        return true;
+    }
+
+    if (fn == "glCallList") {
+        GLuint listId = asUInt(A(0));
+        auto it = displayLists.find(listId);
+        if (it != displayLists.end()) {
+            // Replay recorded events
+            for (const auto& recordedEvt : it->second) {
+                executeCall(recordedEvt);
+            }
+        } else {
+            std::cerr << "[ApitraceDispatch] Warning: glCallList called for unknown list " << listId << std::endl;
+        }
+        return true;
+    }
+    
+    if (fn == "glGenLists") return true; // Ignore, assume trace IDs are valid
+    
+    if (fn == "glDeleteLists") {
+        GLuint list = asUInt(A(0));
+        GLsizei range = asInt(A(1));
+        for(GLuint i=0; i<(GLuint)range; ++i) {
+            displayLists.erase(list+i);
+        }
+        return true;
+    }
+
+    // ---- Recording ----
+    if (isRecording) {
+        displayLists[currentListId].push_back(evt);
+        return true;
+    }
+
+    // ---- Execution ----
+    return executeCall(evt);
+}
+
+bool executeCall(const CallEvent& evt) {
     const std::string& fn = evt.signature.functionName;
 
     // ---- State management ----
@@ -33,7 +100,20 @@ bool apitrace::dispatchCall(const CallEvent& evt) {
     if (fn == "glClearStencil")     { OGL_glClearStencil(asInt(A(0))); return true; }
 
     // ---- Viewport / Scissor ----
-    if (fn == "glViewport")         { OGL_glViewport(asInt(A(0)), asInt(A(1)), asInt(A(2)), asInt(A(3))); return true; }
+    if (fn == "glViewport")         { 
+        GLint x = asInt(A(0));
+        GLint y = asInt(A(1));
+        GLsizei w = asInt(A(2));
+        GLsizei h = asInt(A(3));
+        
+        // Prevent crash due to 0-size viewport (e.g. if args are missing/default in trace)
+        if (w == 0) w = 300; 
+        if (h == 0) h = 300;
+
+        OGL_glViewport(x, y, w, h); 
+        return true; 
+    }
+    // Added specific check for "lScissor" corruption seen in logs, just in case
     if (fn == "glScissor")          { OGL_glScissor(asInt(A(0)), asInt(A(1)), asInt(A(2)), asInt(A(3))); return true; }
     if (fn == "glDepthRange")       { OGL_glDepthRange(asClampd(A(0)), asClampd(A(1))); return true; }
 
@@ -167,7 +247,8 @@ bool apitrace::dispatchCall(const CallEvent& evt) {
     if (fn.substr(0, 3) == "wgl" || fn.substr(0, 3) == "glX" || fn.substr(0, 3) == "egl" ||
         fn == "glFinish" || fn == "glGetError" || fn == "glGetIntegerv" || fn == "glGetFloatv" ||
         fn == "glIsEnabled" || fn == "glHint" || fn == "glReadPixels" || fn == "glGenTextures" ||
-        fn == "glGenBuffers" || fn == "glGenBuffersARB" || fn == "glLineWidth" || fn == "glPointSize") {
+        fn == "glGenBuffers" || fn == "glGenBuffersARB" || fn == "glLineWidth" || fn == "glPointSize" ||
+        fn == "glXQueryExtensionsString") {
         // Silently skip — these don't affect simulation
         return true;
     }
@@ -182,4 +263,3 @@ bool apitrace::dispatchCall(const CallEvent& evt) {
 }
 
 #undef A
-

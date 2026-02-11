@@ -43,9 +43,9 @@ target_include_directories(OGLApiCodeGen PUBLIC
 file(WRITE  ${CMAKE_CURRENT_SOURCE_DIR}/OGLApiCodeGen.cfg 
             "inGL=${CMAKE_CURRENT_SOURCE_DIR}/../../../driver/utils/GL\n"
             "inLibFuncsFile=${CMAKE_CURRENT_SOURCE_DIR}/../../../driver/utils/GL/OGL_functions_supported_by_CG1GPU.h\n"
-            "inSpecificFile=${CMAKE_CURRENT_SOURCE_DIR}/../../../driver/ogl/trace/GLInterceptor/Specific.h\n"
-            "inSpecificStatsFile=${CMAKE_CURRENT_SOURCE_DIR}/../../../driver/ogl/trace/GLInterceptor/SpecificStats.h\n"
-            "outGLInterceptor=${CMAKE_CURRENT_SOURCE_DIR}/../../../driver/ogl/trace/GLInterceptor\n"
+            "inSpecificFile=${CMAKE_CURRENT_SOURCE_DIR}/Specific.h\n"
+            "inSpecificStatsFile=${CMAKE_CURRENT_SOURCE_DIR}/SpecificStats.h\n"
+            "outGLInterceptor=NULL\n"
             "outGLInstrument=${CMAKE_CURRENT_SOURCE_DIR}/../../../driver/ogl/trace/GLInstrument\n"
             "outTraceReader=${CMAKE_CURRENT_SOURCE_DIR}/../../../driver/utils/TraceReader\n"
             "outGen=${CMAKE_CURRENT_SOURCE_DIR}/../../../driver/utils/OGLApiCodeGen\n")

@@ -8,7 +8,7 @@
 
 #include "GALStoredStateImp.h"
 
-#include "GlobalProfiler.h"
+#include "Profiler.h"
 
 using namespace libGAL;
 using namespace std;
@@ -45,9 +45,9 @@ GALZStencilStageImp::GALZStencilStageImp(GALDeviceImp* device, HAL* driver) :
 
 void GALZStencilStageImp::setZEnabled(gal_bool enable)
 {
-    GLOBAL_PROFILER_ENTER_REGION("GAL", "", "")
+    TRACING_ENTER_REGION("GAL", "", "")
     _zEnabled = enable;
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 gal_bool GALZStencilStageImp::isZEnabled() const
@@ -57,9 +57,9 @@ gal_bool GALZStencilStageImp::isZEnabled() const
 
 void GALZStencilStageImp::setZFunc(GAL_COMPARE_FUNCTION zFunc)
 {
-    GLOBAL_PROFILER_ENTER_REGION("GAL", "", "")
+    TRACING_ENTER_REGION("GAL", "", "")
     _zFunc = zFunc;
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 GAL_COMPARE_FUNCTION GALZStencilStageImp::getZFunc() const
@@ -69,9 +69,9 @@ GAL_COMPARE_FUNCTION GALZStencilStageImp::getZFunc() const
 
 void GALZStencilStageImp::setZMask(gal_bool mask)
 {
-    GLOBAL_PROFILER_ENTER_REGION("GAL", "", "")
+    TRACING_ENTER_REGION("GAL", "", "")
     _zMask = mask;
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 gal_bool GALZStencilStageImp::getZMask() const
@@ -81,9 +81,9 @@ gal_bool GALZStencilStageImp::getZMask() const
 
 void GALZStencilStageImp::setStencilEnabled(gal_bool enable)
 {
-    GLOBAL_PROFILER_ENTER_REGION("GAL", "", "")
+    TRACING_ENTER_REGION("GAL", "", "")
     _stencilEnabled = enable;
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 gal_bool GALZStencilStageImp::isStencilEnabled() const
@@ -96,7 +96,7 @@ void GALZStencilStageImp::setStencilOp( GAL_FACE face,
                                         GAL_STENCIL_OP onStencilPassZFails,
                                         GAL_STENCIL_OP onStencilPassZPass)
 {
-    GLOBAL_PROFILER_ENTER_REGION("GAL", "", "")
+    TRACING_ENTER_REGION("GAL", "", "")
     GAL_ASSERT
     (
         if ( face != GAL_FACE_FRONT && face != GAL_FACE_BACK && face != GAL_FACE_FRONT_AND_BACK )
@@ -113,7 +113,7 @@ void GALZStencilStageImp::setStencilOp( GAL_FACE face,
         _back.onStencilPassZFails = onStencilPassZFails;
         _back.onStencilPassZPass = onStencilPassZPass;
     }
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 void GALZStencilStageImp::getStencilOp( GAL_FACE face,
@@ -121,7 +121,7 @@ void GALZStencilStageImp::getStencilOp( GAL_FACE face,
                                         GAL_STENCIL_OP& onStencilPassZFail,
                                         GAL_STENCIL_OP& onStencilPassZPass) const
 {
-    GLOBAL_PROFILER_ENTER_REGION("GAL", "", "")
+    TRACING_ENTER_REGION("GAL", "", "")
     GAL_ASSERT
     (
         if ( face != GAL_FACE_FRONT && face != GAL_FACE_BACK )
@@ -133,12 +133,12 @@ void GALZStencilStageImp::getStencilOp( GAL_FACE face,
     onStencilFail = faceInfo.onStencilFail;
     onStencilPassZFail = faceInfo.onStencilPassZFails;
     onStencilPassZPass = faceInfo.onStencilPassZPass;
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 void GALZStencilStageImp::setStencilFunc( GAL_FACE face, GAL_COMPARE_FUNCTION func, gal_uint stencilRef, gal_uint stencilMask ) 
 {
-    GLOBAL_PROFILER_ENTER_REGION("GAL", "", "")
+    TRACING_ENTER_REGION("GAL", "", "")
     GAL_ASSERT
     (
         if ( face != GAL_FACE_FRONT && face != GAL_FACE_BACK && face != GAL_FACE_FRONT_AND_BACK ) 
@@ -157,44 +157,44 @@ void GALZStencilStageImp::setStencilFunc( GAL_FACE face, GAL_COMPARE_FUNCTION fu
     }
     else
         CG_ASSERT("Stencil Function not defined neither front nor back");
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 void GALZStencilStageImp::setDepthRange (gal_float near, gal_float far)
 {
-    GLOBAL_PROFILER_ENTER_REGION("GAL", "", "")
+    TRACING_ENTER_REGION("GAL", "", "")
     _depthRangeNear = near;
     _depthRangeFar = far;
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 void GALZStencilStageImp::setD3D9DepthRangeMode(gal_bool mode)
 {
-    GLOBAL_PROFILER_ENTER_REGION("GAL", "", "")
+    TRACING_ENTER_REGION("GAL", "", "")
     _d3d9DepthRange = mode;
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 void GALZStencilStageImp::setPolygonOffset (gal_float factor, gal_float units)
 {
-    GLOBAL_PROFILER_ENTER_REGION("GAL", "", "")
+    TRACING_ENTER_REGION("GAL", "", "")
     _depthSlopeFactor = factor;
     _depthUnitOffset = units;
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 void GALZStencilStageImp::setStencilUpdateMask (gal_uint mask)
 {
-    GLOBAL_PROFILER_ENTER_REGION("GAL", "", "")
+    TRACING_ENTER_REGION("GAL", "", "")
     _stencilUpdateMask = mask;
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 void GALZStencilStageImp::setZStencilBufferDefined(gal_bool present)
 {
-    GLOBAL_PROFILER_ENTER_REGION("GAL", "", "")
+    TRACING_ENTER_REGION("GAL", "", "")
     _zStencilBufferDefined = present;
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 void GALZStencilStageImp::sync()
@@ -474,7 +474,7 @@ const char* GALZStencilStageImp::StencilOperationPrint::print(const GAL_STENCIL_
 
 const StoredStateItem* GALZStencilStageImp::createStoredStateItem(GAL_STORED_ITEM_ID stateId) const
 {
-    GLOBAL_PROFILER_ENTER_REGION("GAL", "", "")
+    TRACING_ENTER_REGION("GAL", "", "")
     GALStoredStateItem* ret;
 
     switch(stateId)
@@ -525,7 +525,7 @@ const StoredStateItem* GALZStencilStageImp::createStoredStateItem(GAL_STORED_ITE
 
     ret->setItemId(stateId);
 
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 
     return ret;
 }
@@ -538,7 +538,7 @@ const StoredStateItem* GALZStencilStageImp::createStoredStateItem(GAL_STORED_ITE
 
 void GALZStencilStageImp::restoreStoredStateItem(const StoredStateItem* ssi)
 {
-    GLOBAL_PROFILER_ENTER_REGION("GAL", "", "")
+    TRACING_ENTER_REGION("GAL", "", "")
     const GALStoredStateItem* galssi = static_cast<const GALStoredStateItem*>(ssi);
 
     GAL_STORED_ITEM_ID stateId = galssi->getItemId();
@@ -581,7 +581,7 @@ void GALZStencilStageImp::restoreStoredStateItem(const StoredStateItem* ssi)
             CG_ASSERT("Unknown z stencil state");
     }
     
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 #undef CAST_TO_BOOL
@@ -592,20 +592,20 @@ void GALZStencilStageImp::restoreStoredStateItem(const StoredStateItem* ssi)
 
 GALStoredState* GALZStencilStageImp::saveAllState() const
 {
-    GLOBAL_PROFILER_ENTER_REGION("GAL", "", "")    
+    TRACING_ENTER_REGION("GAL", "", "")    
     GALStoredStateImp* ret = new GALStoredStateImp();
 
     for (gal_uint i = 0; i < GAL_ZST_LAST; i++)
         ret->addStoredStateItem(createStoredStateItem(GAL_STORED_ITEM_ID(i)));
 
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
     
     return ret;
 }
 
 void GALZStencilStageImp::restoreAllState(const GALStoredState* state)
 {
-    GLOBAL_PROFILER_ENTER_REGION("GAL", "", "")    
+    TRACING_ENTER_REGION("GAL", "", "")    
 
     const GALStoredStateImp* ssi = static_cast<const GALStoredStateImp*>(state);
 
@@ -620,5 +620,5 @@ void GALZStencilStageImp::restoreAllState(const GALStoredState* state)
         iter++;
     }
 
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }

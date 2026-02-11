@@ -9,7 +9,7 @@
 #include "GALxCodeGenTraverser.h"
 #include "GALxShaderInstructionTranslator.h"
 
-#include "GlobalProfiler.h"
+#include "Profiler.h"
 
 void GALxFP1ExecEnvironment::dependantCompilation(const U08* code, U32 size, GALxSemanticTraverser *& ssc, GALxShaderCodeGeneration*& scg)
 {
@@ -19,9 +19,9 @@ void GALxFP1ExecEnvironment::dependantCompilation(const U08* code, U32 size, GAL
     
     IRProgram *irtree = new IRProgram();
 
-    GLOBAL_PROFILER_ENTER_REGION("FP compilation parser", "", "")
+    TRACING_ENTER_REGION("FP compilation parser", "", "")
     GALxFp1StartParse((void *)irtree);
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 
     // Deleting Input Buffer used by Flex to scan bytes.
     
@@ -36,11 +36,11 @@ void GALxFP1ExecEnvironment::dependantCompilation(const U08* code, U32 size, GAL
 
     GALxSemanticTraverser * semtrav = new GALxSemanticTraverser ;
 
-    GLOBAL_PROFILER_ENTER_REGION("FP compilation semantic analysis", "", "")
+    TRACING_ENTER_REGION("FP compilation semantic analysis", "", "")
     // Semantic Analysis
 
     irtree->traverse(semtrav);
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 
     if (semtrav->foundErrors())
     {
@@ -50,10 +50,10 @@ void GALxFP1ExecEnvironment::dependantCompilation(const U08* code, U32 size, GAL
 
     GALxCodeGenTraverser cgtrav;
 
-    GLOBAL_PROFILER_ENTER_REGION("FP compilation code generation", "", "")
+    TRACING_ENTER_REGION("FP compilation code generation", "", "")
     // Generic code generation
     irtree->traverse(&cgtrav);
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 
     delete irtree;
     
@@ -70,9 +70,9 @@ void GALxFP1ExecEnvironment::dependantCompilation(const U08* code, U32 size, GAL
         new GALxShaderInstructionTranslator(cgtrav.getParametersBank(),
                                         cgtrav.getTemporariesBank());
 
-    GLOBAL_PROFILER_ENTER_REGION("FP compilation semantic code translation", "", "")
+    TRACING_ENTER_REGION("FP compilation semantic code translation", "", "")
     shTranslator->translateCode(cgtrav.getGenericCode(), true, true);
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
     
     ssc = semtrav;
     scg = shTranslator;

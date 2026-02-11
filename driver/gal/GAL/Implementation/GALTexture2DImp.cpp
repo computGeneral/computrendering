@@ -11,7 +11,7 @@
 #include "GALMacros.h"
 #include "GALMath.h"
 
-#include "GlobalProfiler.h"
+#include "Profiler.h"
 
 using namespace libGAL;
 
@@ -74,7 +74,7 @@ gal_uint GALTexture2DImp::getSubresources() const
 
 gal_bool GALTexture2DImp::wellDefined() const
 {
-    GLOBAL_PROFILER_ENTER_REGION("GALTexture2DImp", "", "")
+    TRACING_ENTER_REGION("GALTexture2DImp", "", "")
     
     /// Check texture completeness ///
     
@@ -176,7 +176,7 @@ gal_bool GALTexture2DImp::wellDefined() const
         wNext = libGAL::max(static_cast<gal_uint>(1), wNext/2);
     }
 
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 
     return true;
 }
@@ -213,7 +213,7 @@ gal_uint GALTexture2DImp::getSamples(gal_uint mipLevel) const
 
 const TextureMipmap* GALTexture2DImp::_getMipmap(gal_uint mipLevel, const gal_char* methodStr) const
 {
-    GLOBAL_PROFILER_ENTER_REGION("GALTexture2DImp", "", "")
+    TRACING_ENTER_REGION("GALTexture2DImp", "", "")
     const TextureMipmap* mip = _mips.find(mipLevel);
     if ( mip == 0 ) {
         stringstream ss;
@@ -221,7 +221,7 @@ const TextureMipmap* GALTexture2DImp::_getMipmap(gal_uint mipLevel, const gal_ch
         panic("GALTexture2DImp", methodStr, ss.str().c_str());
     }
 
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
     return mip;
 }
 
@@ -271,7 +271,7 @@ void GALTexture2DImp::setData( gal_uint mipLevel,
                                gal_uint texSize,
                                gal_bool preloadData)
 {
-    GLOBAL_PROFILER_ENTER_REGION("GALTexture2DImp", "", "")
+    TRACING_ENTER_REGION("GALTexture2DImp", "", "")
     
     if ( _mappedMips.count(mipLevel) != 0 )
         CG_ASSERT("Cannot call setData on a mapped mipmap");
@@ -298,12 +298,12 @@ void GALTexture2DImp::setData( gal_uint mipLevel,
 
     preload(mipLevel, preloadData);
 
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 void GALTexture2DImp::setData(gal_uint mipLevel, gal_uint width, gal_uint height, gal_bool multisampling, gal_uint samples, GAL_FORMAT format)
 {
-    GLOBAL_PROFILER_ENTER_REGION("GALTexture2DImp", "", "")
+    TRACING_ENTER_REGION("GALTexture2DImp", "", "")
     if ( _mappedMips.count(mipLevel) != 0 )
         CG_ASSERT("Cannot call setData on a mapped mipmap");
 
@@ -326,12 +326,12 @@ void GALTexture2DImp::setData(gal_uint mipLevel, gal_uint width, gal_uint height
 
     // New contents defined, texture must be reallocated before being used by the GPU
     //postReallocate(mipLevel);
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 void GALTexture2DImp::updateData( gal_uint mipLevel, const gal_ubyte* srcTexelData, gal_bool preloadData)
 {
-    GLOBAL_PROFILER_ENTER_REGION("GALTexture2DImp", "", "")
+    TRACING_ENTER_REGION("GALTexture2DImp", "", "")
 
     // Create or redefine the mipmap level
     TextureMipmap* mip = _mips.find(mipLevel);
@@ -350,7 +350,7 @@ void GALTexture2DImp::updateData( gal_uint mipLevel,
                                           const gal_ubyte* srcTexelData,
                                           gal_bool preloadData)
 {
-    GLOBAL_PROFILER_ENTER_REGION("GALTexture2DImp", "", "")
+    TRACING_ENTER_REGION("GALTexture2DImp", "", "")
     if ( _mappedMips.count(mipLevel) != 0 )
         CG_ASSERT("Cannot call updateData on a mapped mipmap");
     
@@ -370,7 +370,7 @@ void GALTexture2DImp::updateData( gal_uint mipLevel,
 
     preload(mipLevel, preloadData);
 
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 gal_bool GALTexture2DImp::map( gal_uint mipLevel,
@@ -378,7 +378,7 @@ gal_bool GALTexture2DImp::map( gal_uint mipLevel,
                                gal_ubyte*& pData,
                                gal_uint& dataRowPitch )
 {
-    GLOBAL_PROFILER_ENTER_REGION("GALTexture2DImp", "", "")
+    TRACING_ENTER_REGION("GALTexture2DImp", "", "")
     if ( _mappedMips.count(mipLevel) != 0 )
         CG_ASSERT("Cannot map an already mapped mipmap");
 
@@ -396,7 +396,7 @@ gal_bool GALTexture2DImp::map( gal_uint mipLevel,
     // Mark this mipmap as mapped
     _mappedMips.insert(mipLevel);
 
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
     gal_uint dataPlanePitch;
 
     return mip->getData(pData, dataRowPitch, dataPlanePitch);
@@ -404,7 +404,7 @@ gal_bool GALTexture2DImp::map( gal_uint mipLevel,
 
 gal_bool GALTexture2DImp::unmap(gal_uint mipLevel, gal_bool preloadData)
 {
-    GLOBAL_PROFILER_ENTER_REGION("GALTexture2DImp", "", "")
+    TRACING_ENTER_REGION("GALTexture2DImp", "", "")
     GAL_ASSERT(
         if ( _mappedMips.count(mipLevel) == 0 )
         {
@@ -420,7 +420,7 @@ gal_bool GALTexture2DImp::unmap(gal_uint mipLevel, gal_bool preloadData)
 
     preload(mipLevel, preloadData);
 
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
     
     return true;
 }

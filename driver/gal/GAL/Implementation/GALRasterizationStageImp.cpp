@@ -6,7 +6,7 @@
 #include <iostream>
 #include <sstream>
 
-#include "GlobalProfiler.h"
+#include "Profiler.h"
 
 #include "GALStoredStateImp.h"
 
@@ -36,95 +36,95 @@ GALRasterizationStageImp::GALRasterizationStageImp(GALDeviceImp* device, HAL* dr
 
 void GALRasterizationStageImp::setInterpolationMode(gal_uint fshInputAttribute, GAL_INTERPOLATION_MODE mode)
 {
-    GLOBAL_PROFILER_ENTER_REGION("GAL", "", "")
+    TRACING_ENTER_REGION("GAL", "", "")
     if ( fshInputAttribute >= _interpolation.size() )
         CG_ASSERT("Fragment shader input attribute out of range");
 
     _interpolation[fshInputAttribute] = mode;
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 void GALRasterizationStageImp::enableScissor(gal_bool enable)
 {
-    GLOBAL_PROFILER_ENTER_REGION("GAL", "", "")
+    TRACING_ENTER_REGION("GAL", "", "")
     _scissorEnabled = enable;
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 void GALRasterizationStageImp::setFillMode(GAL_FILL_MODE fillMode)
 {
-    GLOBAL_PROFILER_ENTER_REGION("GAL", "", "")
+    TRACING_ENTER_REGION("GAL", "", "")
     _fillMode = fillMode;
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 void GALRasterizationStageImp::setCullMode(GAL_CULL_MODE cullMode)
 {
-    GLOBAL_PROFILER_ENTER_REGION("GAL", "", "")
+    TRACING_ENTER_REGION("GAL", "", "")
     _cullMode = cullMode;
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 void GALRasterizationStageImp::setFaceMode(GAL_FACE_MODE faceMode)
 {
-    GLOBAL_PROFILER_ENTER_REGION("GAL", "", "")
+    TRACING_ENTER_REGION("GAL", "", "")
     _faceMode = faceMode;
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 void GALRasterizationStageImp::useD3D9RasterizationRules(gal_bool use)
 {
-    GLOBAL_PROFILER_ENTER_REGION("GAL", "", "")
+    TRACING_ENTER_REGION("GAL", "", "")
     _useD3D9RasterizationRules = use;
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 void GALRasterizationStageImp::useD3D9PixelCoordConvention(gal_bool use)
 {
-    GLOBAL_PROFILER_ENTER_REGION("GAL", "", "")
+    TRACING_ENTER_REGION("GAL", "", "")
     _useD3D9PixelCoordConvention = use;
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 void GALRasterizationStageImp::setViewport(gal_int x, gal_int y, gal_uint width, gal_uint height)
 {
-    GLOBAL_PROFILER_ENTER_REGION("GAL", "", "")
+    TRACING_ENTER_REGION("GAL", "", "")
     _xViewport = x;
     _yViewport = y;
     _widthViewport = width;
     _heightViewport = height;
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 void GALRasterizationStageImp::setScissor(gal_int x, gal_int y, gal_uint width, gal_uint height)
 {
-    GLOBAL_PROFILER_ENTER_REGION("GAL", "", "")
+    TRACING_ENTER_REGION("GAL", "", "")
     _xScissor = x;
     _yScissor= y;
     _widthScissor = width;
     _heightScissor = height;
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 void GALRasterizationStageImp::getViewport(gal_int &x, gal_int &y, gal_uint &width, gal_uint &height)
 {
-    GLOBAL_PROFILER_ENTER_REGION("GAL", "", "")
+    TRACING_ENTER_REGION("GAL", "", "")
     x = _xViewport;
     y = _yViewport;
     width = _widthViewport;
     height = _heightViewport;
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 void GALRasterizationStageImp::getScissor(gal_bool &enabled, gal_int &x, gal_int &y, gal_uint &width, gal_uint &height)
 {
-    GLOBAL_PROFILER_ENTER_REGION("GAL", "", "")
+    TRACING_ENTER_REGION("GAL", "", "")
     enabled = _scissorEnabled;
     x = _xScissor;
     y = _yScissor;
     width = _widthScissor;
     height = _heightScissor;
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 void GALRasterizationStageImp::sync()
@@ -344,7 +344,7 @@ string GALRasterizationStageImp::getInternalState() const
 
 const StoredStateItem* GALRasterizationStageImp::createStoredStateItem(GAL_STORED_ITEM_ID stateId) const
 {
-    GLOBAL_PROFILER_ENTER_REGION("GAL", "", "")
+    TRACING_ENTER_REGION("GAL", "", "")
     GALStoredStateItem* ret;
     gal_uint interpolation;
 
@@ -382,7 +382,7 @@ const StoredStateItem* GALRasterizationStageImp::createStoredStateItem(GAL_STORE
 
     ret->setItemId(stateId);
 
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
     return ret;
 }
 
@@ -392,7 +392,7 @@ const StoredStateItem* GALRasterizationStageImp::createStoredStateItem(GAL_STORE
 
 void GALRasterizationStageImp::restoreStoredStateItem(const StoredStateItem* ssi)
 {
-    GLOBAL_PROFILER_ENTER_REGION("GAL", "", "")
+    TRACING_ENTER_REGION("GAL", "", "")
     const GALStoredStateItem* galssi = static_cast<const GALStoredStateItem*>(ssi);
     gal_uint interpolation;
 
@@ -451,7 +451,7 @@ void GALRasterizationStageImp::restoreStoredStateItem(const StoredStateItem* ssi
     else
         CG_ASSERT("Unexpected raster state id");
 
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 #undef CAST_TO_UINT
@@ -459,21 +459,21 @@ void GALRasterizationStageImp::restoreStoredStateItem(const StoredStateItem* ssi
 
 GALStoredState* GALRasterizationStageImp::saveAllState() const
 {
-    GLOBAL_PROFILER_ENTER_REGION("GAL", "", "")    
+    TRACING_ENTER_REGION("GAL", "", "")    
 
     GALStoredStateImp* ret = new GALStoredStateImp();
 
     for (gal_uint i = 0; i < GAL_RASTER_LAST; i++)
         ret->addStoredStateItem(createStoredStateItem(GAL_STORED_ITEM_ID(i)));
 
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
     
     return ret;
 }
 
 void GALRasterizationStageImp::restoreAllState(const GALStoredState* state)
 {
-    GLOBAL_PROFILER_ENTER_REGION("GAL", "", "")    
+    TRACING_ENTER_REGION("GAL", "", "")    
 
     const GALStoredStateImp* ssi = static_cast<const GALStoredStateImp*>(state);
 
@@ -488,6 +488,6 @@ void GALRasterizationStageImp::restoreAllState(const GALStoredState* state)
         iter++;
     }
 
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 
 }

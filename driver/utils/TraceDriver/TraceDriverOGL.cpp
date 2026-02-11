@@ -15,7 +15,7 @@
 #include "GLResolver.h"
 #include "BufferDescriptor.h"
 
-#include "GlobalProfiler.h"
+#include "Profiler.h"
 
 using namespace cg1gpu;
 using namespace std;
@@ -28,16 +28,16 @@ TraceDriverOGL::TraceDriverOGL(char *ProfilingFile, HAL* driver, bool triangleSe
     this->driver = driver;
     traceTyp = TraceTypOgl;
 
-    GLOBAL_PROFILER_ENTER_REGION("GLExec", "", "")
+    TRACING_ENTER_REGION("GLExec", "", "")
     BufferManager& bm = gle.getBufferManager();
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
         
     // Must be selected before opening Buffer Descriptors file
     bm.acceptDeferredBuffers(true);
 
-    GLOBAL_PROFILER_ENTER_REGION("GLExec", "", "")
+    TRACING_ENTER_REGION("GLExec", "", "")
     initValue = gle.init(ProfilingFile, "BufferDescriptors.dat", "MemoryRegions.dat");
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 
     _setOGLFunctions(); // overwrite jump table with OGL versions
     ogl::initOGL(driver, startFrame);
@@ -49,14 +49,14 @@ TraceDriverOGL::TraceDriverOGL( const char* ProfilingFile, const char* bufferFil
 {
     this->driver = driver;
 
-    GLOBAL_PROFILER_ENTER_REGION("GLExec", "", "")
+    TRACING_ENTER_REGION("GLExec", "", "")
     BufferManager& bm = gle.getBufferManager();
     
     // Must be selected before opening Buffer Descriptors file
     bm.acceptDeferredBuffers(true);
 
     initValue = gle.init(ProfilingFile, bufferFile, memFile);
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
     
     _setOGLFunctions(); // overwrite jump table with OGL versions
     ogl::initOGL(driver, startFrame);
@@ -80,7 +80,7 @@ cgoMetaStream* TraceDriverOGL::nxtMetaStream()
     static bool resInit = false;
     if ( !resInit )
     {
-        GLOBAL_PROFILER_ENTER_REGION("GLExec", "", "")
+        TRACING_ENTER_REGION("GLExec", "", "")
         if ( startFrame != 0 )
             gle.setDirectivesEnabled(false); // Disable directives
         else
@@ -88,7 +88,7 @@ cgoMetaStream* TraceDriverOGL::nxtMetaStream()
         resInit = true;
         U32 width, height;
         gle.getTraceResolution(width, height);
-        GLOBAL_PROFILER_EXIT_REGION()
+        TRACING_EXIT_REGION()
         if ( width != 0 && height != 0)
         {
             cout << "TraceDriver: Setting resolution to " << width << "x" << height << endl;
@@ -104,9 +104,9 @@ cgoMetaStream* TraceDriverOGL::nxtMetaStream()
     {
         bool interpretBatchAsFrame = false; // Interpret this batch as a frame
 
-        GLOBAL_PROFILER_ENTER_REGION("GLExec", "", "")
+        TRACING_ENTER_REGION("GLExec", "", "")
         oglCommand = gle.getCurrentCall();
-        GLOBAL_PROFILER_EXIT_REGION()
+        TRACING_EXIT_REGION()
         
         // Enable this code to dump GL calls ignored by GLExec
         //if ( !gle.isCallAvailable(oglCommand) && oglCommand != APICall_UNDECLARED )
@@ -126,15 +126,15 @@ cgoMetaStream* TraceDriverOGL::nxtMetaStream()
             case APICall_glDrawArrays:
             case APICall_glDrawElements:
             case APICall_glDrawRangeElements:
-                GLOBAL_PROFILER_ENTER_REGION("GLExec", "", "")
+                TRACING_ENTER_REGION("GLExec", "", "")
                 interpretBatchAsFrame = gle.checkBatchesAsFrames();
-                GLOBAL_PROFILER_EXIT_REGION()
+                TRACING_EXIT_REGION()
                 break;
             case APICall_SPECIAL:
             {
-                GLOBAL_PROFILER_ENTER_REGION("GLExec", "", "")
+                TRACING_ENTER_REGION("GLExec", "", "")
                 string str = gle.getSpecialString();
-                GLOBAL_PROFILER_EXIT_REGION()
+                TRACING_EXIT_REGION()
                 if ( str == "DUMP_CTX" )
                 {
                     // process DUMP_CTX
@@ -160,9 +160,9 @@ cgoMetaStream* TraceDriverOGL::nxtMetaStream()
                 return 0; // End of trace
         }
         
-        GLOBAL_PROFILER_ENTER_REGION("GLExec", "", "")
+        TRACING_ENTER_REGION("GLExec", "", "")
         gle.executeCurrentCall(); // Perform call execution
-        GLOBAL_PROFILER_EXIT_REGION()
+        TRACING_EXIT_REGION()
 
         if ( oglCommand == APICall_wglSwapBuffers || interpretBatchAsFrame )
         {

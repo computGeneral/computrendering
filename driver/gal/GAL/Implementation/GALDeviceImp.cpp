@@ -28,7 +28,7 @@
 #include "GALTextureCubeMapImp.h"
 #include "TextureAdapter.h"
 
-#include "GlobalProfiler.h"
+#include "Profiler.h"
 
 using namespace std;
 
@@ -411,7 +411,7 @@ GALStream& GALDeviceImp::stream(gal_uint streamID)
 
 void GALDeviceImp::enableVertexAttribute(gal_uint vaIndex, gal_uint streamID)
 {
-    GLOBAL_PROFILER_ENTER_REGION("GAL", "", "")
+    TRACING_ENTER_REGION("GAL", "", "")
     GAL_ASSERT(
         if ( vaIndex >= cg1gpu::MAX_VERTEX_ATTRIBUTES )
             CG_ASSERT("Vertex attribute index too high");
@@ -425,12 +425,12 @@ void GALDeviceImp::enableVertexAttribute(gal_uint vaIndex, gal_uint streamID)
 
     _vaMap[vaIndex] = streamID;
     _usedStreams.insert(streamID);
-    GLOBAL_PROFILER_EXIT_REGION()    
+    TRACING_EXIT_REGION()    
 }
 
 void GALDeviceImp::disableVertexAttribute(gal_uint vaIndex)
 {
-    GLOBAL_PROFILER_ENTER_REGION("GAL", "", "")
+    TRACING_ENTER_REGION("GAL", "", "")
     GAL_ASSERT(
         if ( vaIndex >= cg1gpu::MAX_VERTEX_ATTRIBUTES )
             CG_ASSERT("Vertex attribute index too high");
@@ -442,17 +442,17 @@ void GALDeviceImp::disableVertexAttribute(gal_uint vaIndex)
         _usedStreams.erase(stream);
         _vaMap[vaIndex] = cg1gpu::ST_INACTIVE_ATTRIBUTE;
     }
-    GLOBAL_PROFILER_EXIT_REGION()    
+    TRACING_EXIT_REGION()    
 }
 
 void GALDeviceImp::disableVertexAttributes()
 {
-    GLOBAL_PROFILER_ENTER_REGION("GAL", "", "")
+    TRACING_ENTER_REGION("GAL", "", "")
     _usedStreams.clear();
     //_vaMap.assign(cg1gpu::MAX_VERTEX_ATTRIBUTES, cg1gpu::ST_INACTIVE_ATTRIBUTE);
     for(U32 a = 0; a < _vaMap.size(); a++)
         _vaMap[a] = cg1gpu::ST_INACTIVE_ATTRIBUTE;
-    GLOBAL_PROFILER_EXIT_REGION()    
+    TRACING_EXIT_REGION()    
 }
 
 void GALDeviceImp::_syncStreamerState()
@@ -533,7 +533,7 @@ GALSampler& GALDeviceImp::sampler(gal_uint samplerID)
 
 void GALDeviceImp::setIndexBuffer(GALBuffer* ib, gal_uint offset, GAL_STREAM_DATA indicesType)
 {
-    GLOBAL_PROFILER_ENTER_REGION("GAL", "", "")    
+    TRACING_ENTER_REGION("GAL", "", "")    
 
     // Configure stream of indices
     GAL_STREAM_DESC desc;
@@ -546,7 +546,7 @@ void GALDeviceImp::setIndexBuffer(GALBuffer* ib, gal_uint offset, GAL_STREAM_DAT
 
     _indexStream->set(ib, desc);
 
-    GLOBAL_PROFILER_EXIT_REGION()    
+    TRACING_EXIT_REGION()    
 }
 
 void GALDeviceImp::_syncStreamingMode(gal_uint start, gal_uint count, gal_uint instances, gal_uint, gal_uint)
@@ -1045,17 +1045,17 @@ void GALDeviceImp::draw(gal_uint start, gal_uint count, gal_uint instances)
 void GALDeviceImp::drawIndexed(gal_uint startIndex, gal_uint indexCount, gal_uint minIndex, gal_uint maxIndex,
                                gal_int baseVertexIndex, gal_uint instances)
 {
-    GLOBAL_PROFILER_ENTER_REGION("GAL", "", "")    
+    TRACING_ENTER_REGION("GAL", "", "")    
 
     if ((_primitive == GAL_TRIANGLES) || (_primitive == GAL_TRIANGLE_FAN) || (_primitive == GAL_TRIANGLE_STRIP) ||
         (_primitive == GAL_QUADS) || (_primitive == GAL_QUAD_STRIP))
     {
-        GLOBAL_PROFILER_ENTER_REGION("GAL", "", "")
+        TRACING_ENTER_REGION("GAL", "", "")
         
         _indexedMode = true;
         _draw(startIndex, indexCount, minIndex, maxIndex, baseVertexIndex, instances);
 
-        GLOBAL_PROFILER_EXIT_REGION()
+        TRACING_EXIT_REGION()
     }
     else
     {
@@ -1552,7 +1552,7 @@ void GALDeviceImp::updateResource( const GALResource* destResource,
 
 gal_bool GALDeviceImp::swapBuffers()
 {
-    GLOBAL_PROFILER_ENTER_REGION("GAL", "", "")    
+    TRACING_ENTER_REGION("GAL", "", "")    
     
     cout << "GALDeviceImp::swapBuffers() - OK" << endl;
     _driver->sendCommand(cg1gpu::GPU_SWAPBUFFERS);
@@ -1567,7 +1567,7 @@ gal_bool GALDeviceImp::swapBuffers()
     _currentFrame++;
     _currentBatch = 0;
     
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
     
     return true;
 }
@@ -1582,7 +1582,7 @@ gal_uint GALDeviceImp::_packRGBA8888(gal_ubyte red, gal_ubyte green, gal_uint bl
 
 void GALDeviceImp::clearColorBuffer(gal_ubyte red, gal_ubyte green, gal_ubyte blue, gal_ubyte alpha)
 {
-    GLOBAL_PROFILER_ENTER_REGION("GAL", "", "")
+    TRACING_ENTER_REGION("GAL", "", "")
 
     ///////////////////////////////////////////////////////////////
     /// Synchronize render buffers                              ///
@@ -1632,13 +1632,13 @@ void GALDeviceImp::clearColorBuffer(gal_ubyte red, gal_ubyte green, gal_ubyte bl
         _partialClear(true, false, false, red, green, blue, alpha, 0x0000, 0x00);
     }
     
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 void GALDeviceImp::clearZStencilBuffer( gal_bool clearZ, gal_bool clearStencil,
                                         gal_float zValue, gal_int stencilValue )
 {
-    GLOBAL_PROFILER_ENTER_REGION("GAL", "", "")    
+    TRACING_ENTER_REGION("GAL", "", "")    
 
     ///////////////////////////////////////////////////////////////
     /// Synchronize render buffers                              ///
@@ -1667,7 +1667,7 @@ void GALDeviceImp::clearZStencilBuffer( gal_bool clearZ, gal_bool clearStencil,
     if (zstencil == NULL)
     {
         CG_WARN("clearZStencilBuffer: No Z/Stencil render target is currently bound. Skipping clear.");
-        GLOBAL_PROFILER_EXIT_REGION()
+        TRACING_EXIT_REGION()
         return;
     }
 
@@ -1764,7 +1764,7 @@ void GALDeviceImp::clearZStencilBuffer( gal_bool clearZ, gal_bool clearStencil,
         _partialClear(false, false, true, 0, 0, 0, 0, zValue, stencilValue);
     }
     
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 void GALDeviceImp::_partialClear(gal_bool clearColor, gal_bool clearZ, gal_bool clearStencil,
@@ -2382,7 +2382,7 @@ void GALDeviceImp::_optimizeShader(GALShaderProgramImp* shProgramImp, GAL_SHADER
 
 GALStoredState* GALDeviceImp::saveState(GALStoredItemIDList siIds) const
 {
-    GLOBAL_PROFILER_ENTER_REGION("GAL", "", "")    
+    TRACING_ENTER_REGION("GAL", "", "")    
     GALStoredStateImp* ret = new GALStoredStateImp();
     GALStoredItemIDList::const_iterator it = siIds.begin();
 
@@ -2407,14 +2407,14 @@ GALStoredState* GALDeviceImp::saveState(GALStoredItemIDList siIds) const
             CG_ASSERT("Unexpected Stored Item Id");
     }
 
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
     
     return ret;
 }
 
 GALStoredState* GALDeviceImp::saveState(GAL_STORED_ITEM_ID stateId) const
 {
-    GLOBAL_PROFILER_ENTER_REGION("GAL", "", "")    
+    TRACING_ENTER_REGION("GAL", "", "")    
 
     GALStoredStateImp* ret = new GALStoredStateImp();
 
@@ -2436,14 +2436,14 @@ GALStoredState* GALDeviceImp::saveState(GAL_STORED_ITEM_ID stateId) const
     else
         CG_ASSERT("Unexpected Stored Item Id");
 
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
     
     return ret;
 }
 
 GALStoredState* GALDeviceImp::saveAllState() const
 {
-    GLOBAL_PROFILER_ENTER_REGION("GAL", "", "")    
+    TRACING_ENTER_REGION("GAL", "", "")    
 
     GALStoredStateImp* ret = new GALStoredStateImp();
 
@@ -2468,14 +2468,14 @@ GALStoredState* GALDeviceImp::saveAllState() const
             CG_ASSERT("Unexpected Stored Item Id");
     }
 
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
     
     return ret;
 }
 
 void GALDeviceImp::restoreState(const GALStoredState* state)
 {
-    GLOBAL_PROFILER_ENTER_REGION("GAL", "", "")    
+    TRACING_ENTER_REGION("GAL", "", "")    
     const GALStoredStateImp* ssi = static_cast<const GALStoredStateImp*>(state);
 
     std::list<const StoredStateItem*> ssiList = ssi->getSSIList();
@@ -2508,7 +2508,7 @@ void GALDeviceImp::restoreState(const GALStoredState* state)
         iter++;
     }
 
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 void GALDeviceImp::setStartFrame(gal_uint startFrame)
@@ -2686,7 +2686,7 @@ void GALDeviceImp::alphaTestEnabled(gal_bool enabled)
 
 const StoredStateItem* GALDeviceImp::createStoredStateItem(GAL_STORED_ITEM_ID stateId) const
 {
-    GLOBAL_PROFILER_ENTER_REGION("GAL", "", "")
+    TRACING_ENTER_REGION("GAL", "", "")
 
     GALStoredStateItem* ret;
     gal_uint aux;
@@ -2741,7 +2741,7 @@ const StoredStateItem* GALDeviceImp::createStoredStateItem(GAL_STORED_ITEM_ID st
 
     ret->setItemId(stateId);
 
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
     return ret;
 }
 
@@ -2752,7 +2752,7 @@ const StoredStateItem* GALDeviceImp::createStoredStateItem(GAL_STORED_ITEM_ID st
 
 void GALDeviceImp::restoreStoredStateItem(const StoredStateItem* ssi)
 {
-    GLOBAL_PROFILER_ENTER_REGION("GAL", "", "")
+    TRACING_ENTER_REGION("GAL", "", "")
 
     const GALStoredStateItem* galssi = static_cast<const GALStoredStateItem*>(ssi);
     gal_uint aux;
@@ -2831,7 +2831,7 @@ void GALDeviceImp::restoreStoredStateItem(const StoredStateItem* ssi)
     else
         CG_ASSERT("Unexpected raster state id");
 
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 #undef CAST_TO_UINT
@@ -2840,21 +2840,21 @@ void GALDeviceImp::restoreStoredStateItem(const StoredStateItem* ssi)
 
 GALStoredState* GALDeviceImp::saveAllDeviceState() const
 {
-    GLOBAL_PROFILER_ENTER_REGION("GAL", "", "")    
+    TRACING_ENTER_REGION("GAL", "", "")    
 
     GALStoredStateImp* ret = new GALStoredStateImp();
 
     for (gal_uint i = 0; i < GAL_DEV_LAST; i++)
         ret->addStoredStateItem(createStoredStateItem(GAL_STORED_ITEM_ID(i)));
 
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
     
     return ret;
 }
 
 void GALDeviceImp::restoreAllDeviceState(const GALStoredState* state)
 {
-    GLOBAL_PROFILER_ENTER_REGION("GAL", "", "")    
+    TRACING_ENTER_REGION("GAL", "", "")    
 
     const GALStoredStateImp* ssi = static_cast<const GALStoredStateImp*>(state);
 
@@ -2869,7 +2869,7 @@ void GALDeviceImp::restoreAllDeviceState(const GALStoredState* state)
         iter++;
     }
 
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 void GALDeviceImp::copyMipmap (GALTexture* inTexture, libGAL::GAL_CUBEMAP_FACE inFace, gal_uint inMipmap, gal_uint inX, gal_uint inY, gal_uint inWidth, gal_uint inHeight, 
@@ -2877,7 +2877,7 @@ void GALDeviceImp::copyMipmap (GALTexture* inTexture, libGAL::GAL_CUBEMAP_FACE i
 							   GAL_TEXTURE_FILTER minFilter, GAL_TEXTURE_FILTER magFilter)
 {
 
-    GLOBAL_PROFILER_ENTER_REGION("GAL", "", "")    
+    TRACING_ENTER_REGION("GAL", "", "")    
 
 	TextureAdapter adaptedIn(inTexture);
 	TextureAdapter adaptedOut(outTexture);

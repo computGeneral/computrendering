@@ -8,8 +8,8 @@
 
 #include "support.h"
 
-//#define ENABLE_GLOBAL_PROFILER
-#include "GlobalProfiler.h"
+//#define ENABLE_TRACING
+#include "Profiler.h"
 
 #include <cstring>
 #include "glext.h"
@@ -50,9 +50,9 @@ GALShaderProgram* ARBProgramObject::compileAndResolve(libGAL::GALxFixedPipelineS
     if ( !_sourceCompiled )
     {
         GALxDestroyCompiledProgram(_arbCompiledProgram); // Discard previous compilation
-        GLOBAL_PROFILER_ENTER_REGION("compile ARB", "", "")
+        TRACING_ENTER_REGION("compile ARB", "", "")
         _arbCompiledProgram = GALxCompileProgram(_source); // Generate the new compilation
-        GLOBAL_PROFILER_EXIT_REGION()
+        TRACING_EXIT_REGION()
         _sourceCompiled = true; // Source and binary are synchronized
     }
 

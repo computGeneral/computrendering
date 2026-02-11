@@ -26,9 +26,9 @@
 namespace cg1gpu
 {
 
-Profiler::Profiler()
+Tracer::Tracer()
 {
-    profileRegions.clear();
+    traceRegions.clear();
     regionStack.clear();
     regionStackSize = 0;
     allTicks = 0;
@@ -42,27 +42,27 @@ Profiler::Profiler()
 
 #ifdef CHECK_PROCESSOR    
     lastProcessor = GetCurrentProcessorNumber();
-    printf("Profiler => Initialized at processor %d\n", lastProcessor);
+    printf("Tracer => Initialized at processor %d\n", lastProcessor);
 #endif
     
 #endif    
 }
 
-Profiler::~Profiler()
+Tracer::~Tracer()
 {
-    map<string, ProfileRegion*>::iterator it;
-    it = profileRegions.begin();
-    while (it != profileRegions.end())
+    map<string, TraceRegion*>::iterator it;
+    it = traceRegions.begin();
+    while (it != traceRegions.end())
     {
         delete it->second;
         it++;
     }
 
-    profileRegions.clear();
+    traceRegions.clear();
     regionStack.clear();
 }
 
-U64 Profiler::sampleTickCounter()
+U64 Tracer::sampleTickCounter()
 {
 #ifdef WIN32
 
@@ -83,7 +83,7 @@ U64 Profiler::sampleTickCounter()
 #endif
 }
 
-void Profiler::enterRegion(char *regionName, char *className, char *functionName)
+void Tracer::enterRegion(char *regionName, char *className, char *functionName)
 {
     //  Update the tick count for the current region.
     U64 ticks = sampleTickCounter() - lastTickSample;
@@ -108,9 +108,9 @@ void Profiler::enterRegion(char *regionName, char *className, char *functionName
     }
     
     //  Search the region in the map of profile regions.
-    map<string, ProfileRegion*>::iterator it;
-    it = profileRegions.find(string(regionName));
-    if (it != profileRegions.end())
+    map<string, TraceRegion*>::iterator it;
+    it = traceRegions.find(string(regionName));
+    if (it != traceRegions.end())
     {
         //  Found.  Set as current profile region.
         it->second->visits++;
@@ -120,7 +120,7 @@ void Profiler::enterRegion(char *regionName, char *className, char *functionName
     else
     {
         //  Not found.  Create new region.
-        ProfileRegion *region = new ProfileRegion;
+        TraceRegion *region = new TraceRegion;
         region->ticks = 0;
         region->ticksTotal = 0;
         region->visits = 1;
@@ -130,7 +130,7 @@ void Profiler::enterRegion(char *regionName, char *className, char *functionName
         region->functionName = string(functionName);
         
         //  Add region to the map.
-        profileRegions[string(regionName)] = region;
+        traceRegions[string(regionName)] = region;
         
         //  Set as current profile region.
         regionStack.push_back(region);
@@ -141,7 +141,7 @@ void Profiler::enterRegion(char *regionName, char *className, char *functionName
     lastTickSample = sampleTickCounter();;
 }
 
-void Profiler::exitRegion()
+void Tracer::exitRegion()
 {
     //  Update the tick count for the region.
     U64 ticks = sampleTickCounter() - lastTickSample;
@@ -173,11 +173,11 @@ void Profiler::exitRegion()
     lastTickSample = sampleTickCounter();
 }
 
-void Profiler::reset()
+void Tracer::reset()
 {
-    map<string, ProfileRegion*>::iterator it;
-    it = profileRegions.begin();
-    while (it != profileRegions.end())
+    map<string, TraceRegion*>::iterator it;
+    it = traceRegions.begin();
+    while (it != traceRegions.end())
     {
         it->second->ticksTotal += it->second->ticks;
         it->second->ticks = 0;
@@ -190,7 +190,7 @@ void Profiler::reset()
     allTicks = 0;
 }
 
-void Profiler::generateReport(char *filename)
+void Tracer::generateReport(char *filename)
 {
 
     FILE *outFile = fopen(filename, "w");
@@ -204,13 +204,13 @@ void Profiler::generateReport(char *filename)
     maxLength[2] = 15;
     
     //  Order by the number of ticks spend in the region.
-    multimap<U64, ProfileRegion *> orderedRegions;
+    multimap<U64, TraceRegion *> orderedRegions;
     
-    map<string, ProfileRegion*>::iterator it;
-    it = profileRegions.begin();
-    while (it != profileRegions.end())
+    map<string, TraceRegion*>::iterator it;
+    it = traceRegions.begin();
+    while (it != traceRegions.end())
     {
-        orderedRegions.insert(pair<U64, ProfileRegion*>(it->second->ticks, it->second));
+        orderedRegions.insert(pair<U64, TraceRegion*>(it->second->ticks, it->second));
         maxLength[0] = (maxLength[0] < it->second->regionName.size()) ? (U32) it->second->regionName.size() : maxLength[0];
         maxLength[1] = (maxLength[1] < it->second->className.size()) ? (U32) it->second->className.size() : maxLength[1];
         maxLength[2] = (maxLength[2] < it->second->functionName.size()) ? (U32) it->second->functionName.size() : maxLength[2];
@@ -247,7 +247,7 @@ void Profiler::generateReport(char *filename)
     fprintf(outFile, "\n");
     
     //  Print info for all the regions ordered from most ticks to less ticks.
-    multimap<U64, ProfileRegion*>::reverse_iterator it2;
+    multimap<U64, TraceRegion*>::reverse_iterator it2;
     it2 = orderedRegions.rbegin();
     while (it2 != orderedRegions.rend())
     {
@@ -275,6 +275,24 @@ void Profiler::generateReport(char *filename)
     }
     
     fclose(outFile);
+}
+
+}   // namespace cg1gpu
+
+//=============================================================================
+// Global profiler instance and accessor
+//=============================================================================
+namespace cg1gpu
+{
+
+static Tracer *globalTracer = NULL;
+
+Tracer& getTracer()
+{
+    if (globalTracer == NULL)
+        globalTracer = new Tracer();
+    
+    return *globalTracer;
 }
 
 }   // namespace cg1gpu

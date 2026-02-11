@@ -8,7 +8,7 @@
 #include "GALSupport.h"
 #include <sstream>
 
-#include "GlobalProfiler.h"
+#include "Profiler.h"
 
 using namespace std;
 using namespace libGAL;
@@ -36,20 +36,20 @@ GALBlendingStageImp::GALBlendingStageImp(GALDeviceImp*, HAL* driver) :
 
 void GALBlendingStageImp::setEnable(gal_uint renderTargetID, gal_bool enable)
 {
-    GLOBAL_PROFILER_ENTER_REGION("GAL", "", "")
+    TRACING_ENTER_REGION("GAL", "", "")
     GAL_ASSERT(
         if ( renderTargetID >= MAX_RENDER_TARGETS )
             CG_ASSERT("Render target value greater than the maximum allowed id");
     )
 
     _enabled[renderTargetID] = enable;
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
     
 }
 
 void GALBlendingStageImp::setSrcBlend(gal_uint renderTargetID, GAL_BLEND_OPTION srcBlend)
 {
-    GLOBAL_PROFILER_ENTER_REGION("GAL", "", "")
+    TRACING_ENTER_REGION("GAL", "", "")
     GAL_ASSERT(
         if ( renderTargetID >= MAX_RENDER_TARGETS )
             CG_ASSERT("Render target value greater than the maximum allowed id");
@@ -57,12 +57,12 @@ void GALBlendingStageImp::setSrcBlend(gal_uint renderTargetID, GAL_BLEND_OPTION 
 
     // Update object state
     _srcBlend[renderTargetID] = srcBlend;
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 void GALBlendingStageImp::setDestBlend(gal_uint renderTargetID, GAL_BLEND_OPTION destBlend)
 {
-    GLOBAL_PROFILER_ENTER_REGION("GAL", "", "")
+    TRACING_ENTER_REGION("GAL", "", "")
     GAL_ASSERT(
         if ( renderTargetID >= MAX_RENDER_TARGETS )
             CG_ASSERT("Render target value greater than the maximum allowed id");
@@ -70,12 +70,12 @@ void GALBlendingStageImp::setDestBlend(gal_uint renderTargetID, GAL_BLEND_OPTION
 
     // Update object state
     _destBlend[renderTargetID] = destBlend;
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 void GALBlendingStageImp::setSrcBlendAlpha(gal_uint renderTargetID, GAL_BLEND_OPTION srcBlendAlpha)
 {
-    GLOBAL_PROFILER_ENTER_REGION("GAL", "", "")
+    TRACING_ENTER_REGION("GAL", "", "")
     GAL_ASSERT(
         if ( renderTargetID >= MAX_RENDER_TARGETS )
             CG_ASSERT("Render target value greater than the maximum allowed id");
@@ -83,12 +83,12 @@ void GALBlendingStageImp::setSrcBlendAlpha(gal_uint renderTargetID, GAL_BLEND_OP
 
     // update object state
     _srcBlendAlpha[renderTargetID] = srcBlendAlpha;
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 void GALBlendingStageImp::setDestBlendAlpha(gal_uint renderTargetID, GAL_BLEND_OPTION destBlendAlpha)
 {
-    GLOBAL_PROFILER_ENTER_REGION("GAL", "", "")
+    TRACING_ENTER_REGION("GAL", "", "")
     GAL_ASSERT(
         if ( renderTargetID >= MAX_RENDER_TARGETS )
             CG_ASSERT("Render target value greater than the maximum allowed id");
@@ -96,19 +96,19 @@ void GALBlendingStageImp::setDestBlendAlpha(gal_uint renderTargetID, GAL_BLEND_O
 
     // update object state
     _destBlendAlpha[renderTargetID] = destBlendAlpha;
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 void GALBlendingStageImp::setBlendFunc(gal_uint renderTargetID, GAL_BLEND_FUNCTION blendFunc)
 {
-    GLOBAL_PROFILER_ENTER_REGION("GAL", "", "")
+    TRACING_ENTER_REGION("GAL", "", "")
     GAL_ASSERT(
         if ( renderTargetID >= MAX_RENDER_TARGETS )
             CG_ASSERT("Render target value greater than the maximum allowed id");
     )
 
     _blendFunc[renderTargetID] = blendFunc;
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 void GALBlendingStageImp::setBlendFuncAlpha(gal_uint renderTargetID, GAL_BLEND_FUNCTION blendFuncAlpha)
@@ -126,7 +126,7 @@ void GALBlendingStageImp::setBlendFuncAlpha(gal_uint renderTargetID, GAL_BLEND_F
 
 void GALBlendingStageImp::setBlendColor(gal_uint renderTargetID, gal_float red, gal_float green, gal_float blue, gal_float alpha)
 {
-    GLOBAL_PROFILER_ENTER_REGION("GAL", "", "")
+    TRACING_ENTER_REGION("GAL", "", "")
 
     GAL_ASSERT(
         if ( renderTargetID >= MAX_RENDER_TARGETS )
@@ -140,19 +140,19 @@ void GALBlendingStageImp::setBlendColor(gal_uint renderTargetID, gal_float red, 
     color[3] = galsupport::clamp(alpha);
 
     _blendColor[renderTargetID] = color;
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 void GALBlendingStageImp::setBlendColor(gal_uint renderTargetID, const gal_float* rgba)
 {
-    GLOBAL_PROFILER_ENTER_REGION("GAL", "", "")
+    TRACING_ENTER_REGION("GAL", "", "")
     setBlendColor(renderTargetID, rgba[0], rgba[1], rgba[2], rgba[3]);
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 void GALBlendingStageImp::setColorMask(gal_uint renderTargetID, gal_bool red, gal_bool green, gal_bool blue, gal_bool alpha)
 {
-    GLOBAL_PROFILER_ENTER_REGION("GAL", "", "")
+    TRACING_ENTER_REGION("GAL", "", "")
 
     GAL_ASSERT(
         if ( renderTargetID >= MAX_RENDER_TARGETS )
@@ -163,7 +163,7 @@ void GALBlendingStageImp::setColorMask(gal_uint renderTargetID, gal_bool red, ga
     _greenMask[renderTargetID] = green;
     _blueMask[renderTargetID] = blue;
     _alphaMask[renderTargetID] = alpha;
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 gal_bool GALBlendingStageImp::getColorEnable(gal_uint renderTargetID)
@@ -488,7 +488,7 @@ string GALBlendingStageImp::getInternalState() const
 
 const StoredStateItem* GALBlendingStageImp::createStoredStateItem(GAL_STORED_ITEM_ID stateId) const
 {
-    GLOBAL_PROFILER_ENTER_REGION("GAL", "", "")
+    TRACING_ENTER_REGION("GAL", "", "")
     GALStoredStateItem* ret;
     gal_uint rTarget;
 
@@ -531,7 +531,7 @@ const StoredStateItem* GALBlendingStageImp::createStoredStateItem(GAL_STORED_ITE
 
     ret->setItemId(stateId);
 
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 
     return ret;
 }
@@ -543,7 +543,7 @@ const StoredStateItem* GALBlendingStageImp::createStoredStateItem(GAL_STORED_ITE
 
 void GALBlendingStageImp::restoreStoredStateItem(const StoredStateItem* ssi)
 {
-    GLOBAL_PROFILER_ENTER_REGION("GAL", "", "")
+    TRACING_ENTER_REGION("GAL", "", "")
     gal_uint rTarget;
 
     const GALStoredStateItem* galssi = static_cast<const GALStoredStateItem*>(ssi);
@@ -588,7 +588,7 @@ void GALBlendingStageImp::restoreStoredStateItem(const StoredStateItem* ssi)
     else
         CG_ASSERT("Unexpected blending state id");
 
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 #undef CAST_TO_BOOL             
@@ -598,20 +598,20 @@ void GALBlendingStageImp::restoreStoredStateItem(const StoredStateItem* ssi)
 
 GALStoredState* GALBlendingStageImp::saveAllState() const
 {
-    GLOBAL_PROFILER_ENTER_REGION("GAL", "", "")    
+    TRACING_ENTER_REGION("GAL", "", "")    
     GALStoredStateImp* ret = new GALStoredStateImp();
 
     for (gal_uint i = 0; i < GAL_BLENDING_LAST; i++)
          ret->addStoredStateItem(createStoredStateItem(GAL_STORED_ITEM_ID(i)));
 
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
     
     return ret;
 }
 
 void GALBlendingStageImp::restoreAllState(const GALStoredState* state)
 {
-    GLOBAL_PROFILER_ENTER_REGION("GAL", "", "")    
+    TRACING_ENTER_REGION("GAL", "", "")    
 
     const GALStoredStateImp* ssi = static_cast<const GALStoredStateImp*>(state);
 
@@ -628,5 +628,5 @@ void GALBlendingStageImp::restoreAllState(const GALStoredState* state)
 
     delete(state);
 
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }

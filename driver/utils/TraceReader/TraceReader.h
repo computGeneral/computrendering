@@ -10,9 +10,9 @@
 #include "BufferDescriptor.h"
 #include <map>
 
-//#define ENABLE_GLOBAL_PROFILER
+//#define ENABLE_TRACING
 
-#include "GlobalProfiler.h"
+#include "Profiler.h"
 
 //#define USE_FSTREAM_H // NOT USED ANYMORE: increase speed 
 //#ifdef USE_FSTREAM_H
@@ -160,11 +160,11 @@ public:
     template<typename T>
     bool read(T value)
     {
-        GLOBAL_PROFILER_ENTER_REGION("read", "", "")
+        TRACING_ENTER_REGION("read", "", "")
         if ( mode == binary )
         {
             trRead(&value,sizeof(value));
-            GLOBAL_PROFILER_EXIT_REGION()
+            TRACING_EXIT_REGION()
             return true;
         }
 
@@ -183,7 +183,7 @@ public:
                 trGet(c);
                 if ( c == ',' || c == '}' || c == ')')
                 {
-                    GLOBAL_PROFILER_EXIT_REGION()
+                    TRACING_EXIT_REGION()
                     return true;
                 }
                 sprintf(myBuf,"Error reading value in line %d. Expected mark not found. Last GL Call: %s",
@@ -200,7 +200,7 @@ public:
             trGet(c);
             if ( c == ',' || c == '}' || c == ')')
             {
-                GLOBAL_PROFILER_EXIT_REGION()            
+                TRACING_EXIT_REGION()            
                 return true;
             }
             sprintf(myBuf,"Error reading value in line %d. Expected mark not found", line);
@@ -295,9 +295,9 @@ protected:
     template<typename T>
     bool trReadFormated(T value)
     {
-        GLOBAL_PROFILER_ENTER_REGION("trReadFormated", "TraceReader", "trReadFormated")
+        TRACING_ENTER_REGION("trReadFormated", "TraceReader", "trReadFormated")
         f >> (*value);
-        GLOBAL_PROFILER_EXIT_REGION()
+        TRACING_EXIT_REGION()
         return true;
     }
 

@@ -9,7 +9,7 @@
 #include "ShaderOptimization.h"
 #include "PixelMapper.h"
 
-#include "GlobalProfiler.h"
+#include "Profiler.h"
 
 #include <cstdio>
 #include <cmath>
@@ -273,30 +273,30 @@ void HAL::getGPUParameters(U32& gpuMemSz, U32 &sysMemSz, U32& blocksz_, U32& sbl
 //  Get the texture tiling parameters.  
 void HAL::getTextureTilingParameters(U32 &blockSz, U32 &sBlockSz) const
 {
-    GLOBAL_PROFILER_ENTER_REGION("HAL", "", "")
+    TRACING_ENTER_REGION("HAL", "", "")
 
     blockSz = blocksz;
     sBlockSz = sblocksz;
 
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 
 }
 
 
 void HAL::getFrameBufferParameters(bool &multisampling, U32 &samples, bool &fp16color)
 {
-    GLOBAL_PROFILER_ENTER_REGION("HAL", "", "")
+    TRACING_ENTER_REGION("HAL", "", "")
 
     multisampling = forceMSAA;
     samples = forcedMSAASamples;
     fp16color = forceFP16ColorBuffer;
 
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 void HAL::initBuffers(U32* mdCWFront_, U32* mdCWBack_, U32* mdZS_)
 {
-    GLOBAL_PROFILER_ENTER_REGION("HAL", "", "")
+    TRACING_ENTER_REGION("HAL", "", "")
 
     if ( !isResolutionDefined() )
         CG_ASSERT("Resolution have not been set");
@@ -417,14 +417,14 @@ void HAL::initBuffers(U32* mdCWFront_, U32* mdCWBack_, U32* mdZS_)
     if(mdCWBack_ != 0) *mdCWBack_ = mdCWBack;
     if(mdZS_ != 0) *mdZS_ = mdZS;
 
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 
 }
 
 //  Allocates space in GPU memory for a render buffer with the defined characteristics and returns a memory descriptor.
 U32 HAL::createRenderBuffer(U32 width, U32 height, bool multisampling, U32 samples, TextureFormat format)
 {
-    GLOBAL_PROFILER_ENTER_REGION("HAL", "", "")
+    TRACING_ENTER_REGION("HAL", "", "")
 
     //  Determine the bytes per pixel based on the requested format.
     U32 bytesPerPixel;
@@ -475,7 +475,7 @@ U32 HAL::createRenderBuffer(U32 width, U32 height, bool multisampling, U32 sampl
     //  Allocate memory and obtain a memory descriptor for the requested render buffer.
     U32 mdRenderBuffer = obtainMemory(renderBufferSize);
 
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 
     //  Return the memory descriptor of the requested render buffer.
     return mdRenderBuffer;
@@ -484,7 +484,7 @@ U32 HAL::createRenderBuffer(U32 width, U32 height, bool multisampling, U32 sampl
 void HAL::tileRenderBufferData(U08 *sourceData, U32 width, U32 height, bool multisampling, U32 samples,
                                      cg1gpu::TextureFormat format, bool invertColors, U08* &destData, U32 &renderBufferSize)
 {
-    GLOBAL_PROFILER_ENTER_REGION("HAL", "", "")
+    TRACING_ENTER_REGION("HAL", "", "")
 
     //  Determine the bytes per pixel based on the requested format.
     U32 bytesPerPixel;
@@ -588,7 +588,7 @@ void HAL::tileRenderBufferData(U08 *sourceData, U32 width, U32 height, bool mult
         }
     }
 
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 
@@ -606,25 +606,25 @@ void HAL::writeGPURegister( GPURegister regId, U32 index, GPURegData data, U32 m
 
 void HAL::readGPURegister(cg1gpu::GPURegister regID, U32 index, cg1gpu::GPURegData &data)
 {
-    GLOBAL_PROFILER_ENTER_REGION("HAL", "", "")
+    TRACING_ENTER_REGION("HAL", "", "")
 
     registerWriteBuffer.readRegister(regID, index, data);
 
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 void HAL::readGPURegister(cg1gpu::GPURegister regID, cg1gpu::GPURegData &data)
 {
-    GLOBAL_PROFILER_ENTER_REGION("HAL", "", "")
+    TRACING_ENTER_REGION("HAL", "", "")
 
     registerWriteBuffer.readRegister(regID, 0, data);
 
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 void HAL::writeGPUAddrRegister( GPURegister regId, U32 index, U32 md, U32 offset )
 {
-    GLOBAL_PROFILER_ENTER_REGION("HAL", "", "")
+    TRACING_ENTER_REGION("HAL", "", "")
     _MemoryDescriptor* mdesc = _findMD(md);
     if ( mdesc == NULL )
     {
@@ -639,24 +639,24 @@ void HAL::writeGPUAddrRegister( GPURegister regId, U32 index, U32 md, U32 offset
 
     registerWriteBuffer.writeRegister(regId, index, data, md);
 
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 
     //_sendcgoMetaStream(new cgoMetaStream(regId, index, data));
 }
 
 HAL* HAL::getHAL()
 {
-    GLOBAL_PROFILER_ENTER_REGION("HAL", "", "")
+    TRACING_ENTER_REGION("HAL", "", "")
     if ( driver == NULL )
         driver = new HAL;
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
     return driver;
 }
 
 
 void HAL::sendCommand( GPUCommand com )
 {
-    GLOBAL_PROFILER_ENTER_REGION("HAL", "", "")
+    TRACING_ENTER_REGION("HAL", "", "")
 
     // This code moved before "if (preloadMemory)" to release pendentReleases
     if ( com == cg1gpu::GPU_DRAW )
@@ -686,7 +686,7 @@ void HAL::sendCommand( GPUCommand com )
 
     if ( preloadMemory )
     {
-        GLOBAL_PROFILER_EXIT_REGION()
+        TRACING_EXIT_REGION()
         return ;
     }
 
@@ -703,33 +703,33 @@ void HAL::sendCommand( GPUCommand com )
 
     _sendcgoMetaStream( new cgoMetaStream( com ) );
 
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 
 void HAL::sendCommand( GPUCommand* listOfCommands, int numberOfCommands )
 {
-    GLOBAL_PROFILER_ENTER_REGION("HAL", "", "")
+    TRACING_ENTER_REGION("HAL", "", "")
 
     int i;
     for ( i = 0; i < numberOfCommands; i++ )
         sendCommand(listOfCommands[i]);
 
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 void HAL::signalEvent(GPUEvent gpuEvent, string eventMsg)
 {
-    GLOBAL_PROFILER_ENTER_REGION("HAL", "", "")
+    TRACING_ENTER_REGION("HAL", "", "")
 
     _sendcgoMetaStream(new cgoMetaStream(gpuEvent, eventMsg));
 
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 cgoMetaStream* HAL::nextMetaStream()
 {
-    GLOBAL_PROFILER_ENTER_REGION("HAL", "", "")
+    TRACING_ENTER_REGION("HAL", "", "")
     if ( metaStreamCount != 0 ) {
         int oldOut = out;
         INC_MOD(out);
@@ -747,19 +747,19 @@ cgoMetaStream* HAL::nextMetaStream()
             f << endl;
         )
 
-        GLOBAL_PROFILER_EXIT_REGION()
+        TRACING_EXIT_REGION()
 
         return metaStreamBuffer[oldOut];
     }
 
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 
     return NULL;
 }
 
 bool HAL::setSequentialStreamingMode( U32 count, U32 start )
 {
-    GLOBAL_PROFILER_ENTER_REGION("HAL", "", "")
+    TRACING_ENTER_REGION("HAL", "", "")
     GPURegData data;
 
     data.uintVal = count; // elements in streams 
@@ -772,7 +772,7 @@ bool HAL::setSequentialStreamingMode( U32 count, U32 start )
     data.uintVal = start;
     registerWriteBuffer.writeRegister(GPU_STREAM_START,0, data);
 
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 
     return true;
 }
@@ -782,7 +782,7 @@ bool HAL::setSequentialStreamingMode( U32 count, U32 start )
 bool HAL::setIndexedStreamingMode( U32 stream, U32 count, U32 start,
                                          U32 mdIndices, U32 offsetBytes, StreamData indicesType )
 {
-    GLOBAL_PROFILER_ENTER_REGION("HAL", "", "")
+    TRACING_ENTER_REGION("HAL", "", "")
     if ( stream >= MAX_STREAM_BUFFERS )
     {
         CG_ASSERT("invalid vertex attribute identifier");
@@ -823,14 +823,14 @@ bool HAL::setIndexedStreamingMode( U32 stream, U32 count, U32 start,
     data.uintVal = start;
     registerWriteBuffer.writeRegister(GPU_STREAM_START, 0, data);
 
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 
     return false;
 }
 
 bool HAL::setVShaderOutputWritten( ShAttrib attrib , bool isWritten )
 {
-    GLOBAL_PROFILER_ENTER_REGION("HAL", "", "")
+    TRACING_ENTER_REGION("HAL", "", "")
     CG_ASSERT("Method deprecated, cannot be used");
 
     GPURegData data;
@@ -846,14 +846,14 @@ bool HAL::setVShaderOutputWritten( ShAttrib attrib , bool isWritten )
     if ( isWritten )
         registerWriteBuffer.writeRegister( GPU_VERTEX_OUTPUT_ATTRIBUTE, outputAttrib[attrib], data );
 
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 
     return true;
 }
 
 bool HAL::configureVertexAttribute( const VertexAttribute& va )
 {
-    GLOBAL_PROFILER_ENTER_REGION("HAL", "", "")
+    TRACING_ENTER_REGION("HAL", "", "")
     U32 stream = va.stream;
     U32 attrib = va.attrib;
 
@@ -931,7 +931,7 @@ bool HAL::configureVertexAttribute( const VertexAttribute& va )
         registerWriteBuffer.writeRegister( GPU_VERTEX_ATTRIBUTE_MAP, attrib, data );
     }
 
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 
     return true;
 }
@@ -940,7 +940,7 @@ bool HAL::configureVertexAttribute( const VertexAttribute& va )
 
 bool HAL::commitVertexProgram( U32 memDesc, U32 programSize, U32 startPC )
 {
-    GLOBAL_PROFILER_ENTER_REGION("HAL", "", "")
+    TRACING_ENTER_REGION("HAL", "", "")
 
     /*
 
@@ -991,7 +991,7 @@ bool HAL::commitVertexProgram( U32 memDesc, U32 programSize, U32 startPC )
 
     shSched.select(memDesc, programSize / ShaderProgramSched::InstructionSize, VERTEX_TARGET);
 
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 
     return true;
 }
@@ -999,7 +999,7 @@ bool HAL::commitVertexProgram( U32 memDesc, U32 programSize, U32 startPC )
 
 bool HAL::commitFragmentProgram( U32 memDesc, U32 programSize, U32 startPC )
 {
-    GLOBAL_PROFILER_ENTER_REGION("HAL", "", "")
+    TRACING_ENTER_REGION("HAL", "", "")
 
     /*
 
@@ -1043,7 +1043,7 @@ bool HAL::commitFragmentProgram( U32 memDesc, U32 programSize, U32 startPC )
 
     shSched.select(memDesc, programSize / ShaderProgramSched::InstructionSize, FRAGMENT_TARGET);
 
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 
     return true;
 }
@@ -1107,7 +1107,7 @@ HAL::_MemoryDescriptor* HAL::_createMD( U32 firstAddress, U32 lastAddress, U32 s
 
 HAL::_MemoryDescriptor* HAL::_findMD( U32 memId )
 {
-    GLOBAL_PROFILER_ENTER_REGION("_findMD", "HAL", "_findMD");
+    TRACING_ENTER_REGION("_findMD", "HAL", "_findMD");
     mdSearches++;
 
     map<U32, _MemoryDescriptor*>::iterator it;
@@ -1116,7 +1116,7 @@ HAL::_MemoryDescriptor* HAL::_findMD( U32 memId )
 
     if (it != memoryDescriptors.end())
     {
-        GLOBAL_PROFILER_EXIT_REGION()
+        TRACING_EXIT_REGION()
         return it->second;
     }
 
@@ -1125,7 +1125,7 @@ HAL::_MemoryDescriptor* HAL::_findMD( U32 memId )
     //    if ( md->memId == memId )
     //        return md;
     //}
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
     return NULL;
 }
 
@@ -1251,10 +1251,10 @@ void HAL::_releaseMD( U32 memId )
 
 void HAL::releaseMemory( U32 md )
 {
-    GLOBAL_PROFILER_ENTER_REGION("HAL", "", "")
+    TRACING_ENTER_REGION("HAL", "", "")
     if ( md == 0 )
     {
-        GLOBAL_PROFILER_EXIT_REGION()
+        TRACING_EXIT_REGION()
         return ; // releasing NULL (ignored)
     }
 
@@ -1270,14 +1270,14 @@ void HAL::releaseMemory( U32 md )
 
     pendentReleases.push_back(md); // deferred releasing (to support batch pipelining)
     //_releaseMD( md );
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 
 //  Search a memory map for consecutive blocks for the required memory.  
 U32 HAL::searchBlocks(U32 &first, U08 *map, U32 memSize, U32 memRequired)
 {
-    GLOBAL_PROFILER_ENTER_REGION("searchBlock", "HAL", "searchBlocks");
+    TRACING_ENTER_REGION("searchBlock", "HAL", "searchBlocks");
 
     U32 i;
     //U32 first = lastBlock;
@@ -1308,13 +1308,13 @@ U32 HAL::searchBlocks(U32 &first, U08 *map, U32 memSize, U32 memRequired)
     //  Check if search was successful.  
     if (accum >= memRequired)
     {
-        GLOBAL_PROFILER_EXIT_REGION()
+        TRACING_EXIT_REGION()
         //  Return the address of the first of the consecutive blocks.  
         return blocks;
     }
     else
     {
-        GLOBAL_PROFILER_EXIT_REGION()
+        TRACING_EXIT_REGION()
         //  Return no consecutive blocks available.  
         return 0;
     }
@@ -1322,7 +1322,7 @@ U32 HAL::searchBlocks(U32 &first, U08 *map, U32 memSize, U32 memRequired)
 
 U32 HAL::obtainMemory( U32 memRequired, MemoryRequestPolicy memRequestPolicy )
 {
-    GLOBAL_PROFILER_ENTER_REGION("HAL", "", "")
+    TRACING_ENTER_REGION("HAL", "", "")
     bool useGPUMem;
     U32 first;
     U32 blocks;
@@ -1412,7 +1412,7 @@ U32 HAL::obtainMemory( U32 memRequired, MemoryRequestPolicy memRequestPolicy )
         //  Check if the memory descriptor was correctly allocated.  
         if ( md == NULL )
         {
-            GLOBAL_PROFILER_EXIT_REGION()
+            TRACING_EXIT_REGION()
             CG_ASSERT("No memory descriptors available");
             return 0;
         }
@@ -1420,12 +1420,12 @@ U32 HAL::obtainMemory( U32 memRequired, MemoryRequestPolicy memRequestPolicy )
         //  Set next empty block search point.  
         lastBlock = first + blocks;
 
-        GLOBAL_PROFILER_EXIT_REGION()
+        TRACING_EXIT_REGION()
         return md->memId;
     }
     else
     {
-        GLOBAL_PROFILER_EXIT_REGION()
+        TRACING_EXIT_REGION()
         CG_ASSERT("No memory available");
         return 0;
     }
@@ -1461,7 +1461,7 @@ bool HAL::writeMemoryDebug(U32 md, U32 offset, const U08* data, U32 dataSize, co
 
 bool HAL::writeMemory( U32 md, U32 offset, const U08* data, U32 dataSize, bool isLocked )
 {
-    GLOBAL_PROFILER_ENTER_REGION("HAL", "", "")
+    TRACING_ENTER_REGION("HAL", "", "")
 
     _MemoryDescriptor* memDesc = _findMD( md );
     if ( memDesc == NULL )
@@ -1487,14 +1487,14 @@ bool HAL::writeMemory( U32 md, U32 offset, const U08* data, U32 dataSize, bool i
         memWriteBytes += dataSize;
     }
 
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 
     return true;
 }
 
 bool HAL::writeMemoryPreload(U32 md, U32 offset, const U08* data, U32 dataSize)
 {
-    GLOBAL_PROFILER_ENTER_REGION("HAL", "", "")
+    TRACING_ENTER_REGION("HAL", "", "")
 
     _MemoryDescriptor* memDesc = _findMD(md);
     
@@ -1512,7 +1512,7 @@ bool HAL::writeMemoryPreload(U32 md, U32 offset, const U08* data, U32 dataSize)
     memPreloads++;
     memPreloadBytes += dataSize;
     
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 
     return true;
 }
@@ -1664,7 +1664,7 @@ U32 HAL::getMaxMipmaps() const
 
 void HAL::setResolution(U32 width, U32 height)
 {
-    GLOBAL_PROFILER_ENTER_REGION("HAL", "", "")
+    TRACING_ENTER_REGION("HAL", "", "")
     hRes = width;
     vRes = height;
     setResolutionCalled = true;
@@ -1673,15 +1673,15 @@ void HAL::setResolution(U32 width, U32 height)
     driver->writeGPURegister( GPU_DISPLAY_X_RES, data );
     data.uintVal = height;
     driver->writeGPURegister( GPU_DISPLAY_Y_RES, data );
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 void HAL::getResolution(U32& width, U32& height) const
 {
-    GLOBAL_PROFILER_ENTER_REGION("HAL", "", "")
+    TRACING_ENTER_REGION("HAL", "", "")
     width = hRes;
     height = vRes;
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 bool HAL::isResolutionDefined() const
@@ -1715,7 +1715,7 @@ U32 HAL::getMaxAddrRegisters() const
 
 void HAL::setPreloadMemory(bool enable)
 {
-    GLOBAL_PROFILER_ENTER_REGION("HAL", "", "")
+    TRACING_ENTER_REGION("HAL", "", "")
     preloadMemory = enable;
     if ( !preloadMemory )
     {
@@ -1725,7 +1725,7 @@ void HAL::setPreloadMemory(bool enable)
         //fshSched.clear();
         shSched.clear();
     }
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 bool HAL::getPreloadMemory() const
@@ -1736,14 +1736,14 @@ bool HAL::getPreloadMemory() const
 void HAL::translateShaderProgram(U08 *inCode, U32 inSize, U08 *outCode, U32 &outSize,
                                  bool isVertexProgram, U32 &maxLiveTempRegs, MicroTriangleRasterSettings settings)
 {
-    GLOBAL_PROFILER_ENTER_REGION("HAL", "", "")
+    TRACING_ENTER_REGION("HAL", "", "")
     if (!enableShaderProgramTransformations) //  Check if shader translation is disabled.
     {
         //  If disabled just copy the original program.
         CG_ASSERT_COND((inSize <= outSize), "Output shader program buffer size is too small.");
         memcpy(outCode, inCode, inSize);
         outSize = inSize;
-        GLOBAL_PROFILER_EXIT_REGION()
+        TRACING_EXIT_REGION()
         return;
     }
 
@@ -1863,7 +1863,7 @@ void HAL::translateShaderProgram(U08 *inCode, U32 inSize, U08 *outCode, U32 &out
 
     ShaderOptimization::deleteProgram(programFinal);
 
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 U32 HAL::assembleShaderProgram(U08 *program, U08 *code, U32 size)

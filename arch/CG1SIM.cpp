@@ -226,7 +226,7 @@ bool cg1gpu::MetaTraceParamChecker(MetaStreamHeader *metaTraceHeader)
 //  Main Function.
 int main(int argc, char *argv[])
 {
-    GLOBAL_PROFILER_ENTER_REGION("other", "", "")
+    TRACING_ENTER_REGION("other", "", "")
     set_new_handler(out_of_memory);
 
     // Arguments parsing and configuration loading.
@@ -528,8 +528,8 @@ int main(int argc, char *argv[])
         delete CG1GPUSIM;
     }
     
-    GLOBAL_PROFILER_EXIT_REGION()
-    GLOBAL_PROFILER_GENERATE_REPORT("profile.txt")
+    TRACING_EXIT_REGION()
+    TRACING_GENERATE_REPORT("profile.txt")
 
 #ifdef _WIN32
     system("pause");

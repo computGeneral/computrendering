@@ -11,7 +11,7 @@
 #include "GALMacros.h"
 #include "GALMath.h"
 
-#include "GlobalProfiler.h"
+#include "Profiler.h"
 
 using namespace libGAL;
 
@@ -74,7 +74,7 @@ gal_uint GALTexture3DImp::getSubresources() const
 
 gal_bool GALTexture3DImp::wellDefined() const
 {
-    GLOBAL_PROFILER_ENTER_REGION("GALTexture3DImp", "", "")
+    TRACING_ENTER_REGION("GALTexture3DImp", "", "")
     
     /// Check texture completeness ///
     
@@ -189,7 +189,7 @@ gal_bool GALTexture3DImp::wellDefined() const
         dNext = libGAL::max(static_cast<gal_uint>(1), dNext/2);
     }
 
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
     return true;
 }
 
@@ -230,7 +230,7 @@ gal_uint GALTexture3DImp::getSamples(gal_uint mipLevel) const
 
 const TextureMipmap* GALTexture3DImp::_getMipmap(gal_uint mipLevel, const gal_char* methodStr) const
 {
-    GLOBAL_PROFILER_ENTER_REGION("GALTexture3DImp", "", "")
+    TRACING_ENTER_REGION("GALTexture3DImp", "", "")
 
     const TextureMipmap* mip = _mips.find(mipLevel);
 
@@ -241,7 +241,7 @@ const TextureMipmap* GALTexture3DImp::_getMipmap(gal_uint mipLevel, const gal_ch
         panic("GALTexture3DImp", methodStr, ss.str().c_str());
     }
 
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
     return mip;
 }
 
@@ -288,7 +288,7 @@ void GALTexture3DImp::setData( gal_uint mipLevel,
                                gal_uint texSize,
                                gal_bool preloadData)
 {
-    GLOBAL_PROFILER_ENTER_REGION("GALTexture3DImp", "", "")
+    TRACING_ENTER_REGION("GALTexture3DImp", "", "")
     
     if ( _mappedMips.count(mipLevel) != 0 )
         CG_ASSERT("Cannot call setData on a mapped mipmap");
@@ -313,7 +313,7 @@ void GALTexture3DImp::setData( gal_uint mipLevel,
     // New contents defined, texture must be reallocated before being used by the GPU
     postReallocate(mipLevel);
 
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 void GALTexture3DImp::setData ( gal_uint mipLevel, 
@@ -324,7 +324,7 @@ void GALTexture3DImp::setData ( gal_uint mipLevel,
                                 gal_uint samples, 
                                 GAL_FORMAT format)
 {
-    GLOBAL_PROFILER_ENTER_REGION("GALTexture3DImp", "", "")
+    TRACING_ENTER_REGION("GALTexture3DImp", "", "")
 
     if ( _mappedMips.count(mipLevel) != 0 )
         CG_ASSERT("Cannot call setData on a mapped mipmap");
@@ -346,7 +346,7 @@ void GALTexture3DImp::setData ( gal_uint mipLevel,
     // Add the mipmap to the tracking mechanism supported by all GAL Resources
     defineRegion(mipLevel);
 
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 void GALTexture3DImp::updateData(   gal_uint mipLevel,
@@ -361,7 +361,7 @@ void GALTexture3DImp::updateData(   gal_uint mipLevel,
                                     const gal_ubyte* srcTexelData,
                                     gal_bool preloadData)
 {
-    GLOBAL_PROFILER_ENTER_REGION("GALTexture3DImp", "", "")
+    TRACING_ENTER_REGION("GALTexture3DImp", "", "")
 
     if ( _mappedMips.count(mipLevel) != 0 )
         CG_ASSERT("Cannot call updateData on a mapped mipmap");
@@ -382,7 +382,7 @@ void GALTexture3DImp::updateData(   gal_uint mipLevel,
 
     preload(mipLevel, preloadData);
 
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 gal_bool GALTexture3DImp::map( gal_uint mipLevel,
@@ -391,7 +391,7 @@ gal_bool GALTexture3DImp::map( gal_uint mipLevel,
                                gal_uint& dataRowPitch,
                                gal_uint& dataPlanePitch)
 {
-    GLOBAL_PROFILER_ENTER_REGION("GALTexture3DImp", "", "")
+    TRACING_ENTER_REGION("GALTexture3DImp", "", "")
 
     if ( _mappedMips.count(mipLevel) != 0 )
         CG_ASSERT("Cannot map an already mapped mipmap");
@@ -410,14 +410,14 @@ gal_bool GALTexture3DImp::map( gal_uint mipLevel,
     // Mark this mipmap as mapped
     _mappedMips.insert(mipLevel);
 
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 
     return mip->getData(pData, dataRowPitch, dataPlanePitch);
 }
 
 gal_bool GALTexture3DImp::unmap(gal_uint mipLevel, gal_bool preloadData)
 {
-    GLOBAL_PROFILER_ENTER_REGION("GALTexture3DImp", "", "")
+    TRACING_ENTER_REGION("GALTexture3DImp", "", "")
 
     GAL_ASSERT
     (
@@ -425,7 +425,7 @@ gal_bool GALTexture3DImp::unmap(gal_uint mipLevel, gal_bool preloadData)
         {
             CG_ASSERT("Unmapping a not mapped texture mipmap");
         }
-        GLOBAL_PROFILER_EXIT_REGION()
+        TRACING_EXIT_REGION()
         return false;
     )
     
@@ -437,7 +437,7 @@ gal_bool GALTexture3DImp::unmap(gal_uint mipLevel, gal_bool preloadData)
 
     preload(mipLevel, preloadData);
 
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
     
     return true;
 }

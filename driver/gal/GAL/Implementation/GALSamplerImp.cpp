@@ -12,7 +12,7 @@
 #include "GALTexture2DImp.h"
 #include "GALTextureCubeMapImp.h"
 #include "TextureAdapter.h"
-#include "GlobalProfiler.h"
+#include "Profiler.h"
 
 using namespace libGAL;
 using namespace std;
@@ -56,7 +56,7 @@ gal_bool GALSamplerImp::isEnabled() const { return _enabled; }
 
 void GALSamplerImp::setTexture(GALTexture* texture)
 {
-    GLOBAL_PROFILER_ENTER_REGION("GAL", "", "")
+    TRACING_ENTER_REGION("GAL", "", "")
     GAL_ASSERT(
         if ( texture->getType() == GAL_RESOURCE_TEXTURE1D )
             CG_ASSERT("1D textures are not supported yet");
@@ -64,12 +64,12 @@ void GALSamplerImp::setTexture(GALTexture* texture)
             CG_ASSERT("3D textures are not supported yet");*/
     )
     _texture = texture;
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 void GALSamplerImp::setTextureAddressMode(GAL_TEXTURE_COORD coord, GAL_TEXTURE_ADDR_MODE mode)
 {
-    GLOBAL_PROFILER_ENTER_REGION("GAL", "", "")
+    TRACING_ENTER_REGION("GAL", "", "")
     switch ( coord )
     {
         case GAL_TEXTURE_S_COORD:
@@ -81,91 +81,91 @@ void GALSamplerImp::setTextureAddressMode(GAL_TEXTURE_COORD coord, GAL_TEXTURE_A
         default:
             CG_ASSERT("Unknown texture address coordinate");
     }
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 void GALSamplerImp::setNonNormalizedCoordinates(gal_bool enable)
 {
-    GLOBAL_PROFILER_ENTER_REGION("GAL", "", "")
+    TRACING_ENTER_REGION("GAL", "", "")
     _nonNormalizedCoords = enable;
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 void GALSamplerImp::setMinFilter(GAL_TEXTURE_FILTER minFilter)
 {
-    GLOBAL_PROFILER_ENTER_REGION("GAL", "", "")
+    TRACING_ENTER_REGION("GAL", "", "")
     _minFilter = minFilter;
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 void GALSamplerImp::setMagFilter(GAL_TEXTURE_FILTER magFilter)
 {
-    GLOBAL_PROFILER_ENTER_REGION("GAL", "", "")
+    TRACING_ENTER_REGION("GAL", "", "")
     _magFilter = magFilter;
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 void GALSamplerImp::setMinLOD(gal_float minLOD)
 {
-    GLOBAL_PROFILER_ENTER_REGION("GAL", "", "")
+    TRACING_ENTER_REGION("GAL", "", "")
     _minLOD = minLOD;
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 void GALSamplerImp::setEnableComparison(gal_bool enable)
 {
-    GLOBAL_PROFILER_ENTER_REGION("GAL", "", "")
+    TRACING_ENTER_REGION("GAL", "", "")
     _enableComparison = enable;
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 void GALSamplerImp::setComparisonFunction(GAL_TEXTURE_COMPARISON function)
 {
-    GLOBAL_PROFILER_ENTER_REGION("GAL", "", "")
+    TRACING_ENTER_REGION("GAL", "", "")
     _comparisonFunction = function;
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 void GALSamplerImp::setSRGBConversion(gal_bool enable)
 {
-    GLOBAL_PROFILER_ENTER_REGION("GAL", "", "")
+    TRACING_ENTER_REGION("GAL", "", "")
     _sRGBConversion = enable;
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 void GALSamplerImp::setMaxLOD(gal_float maxLOD)
 {
-    GLOBAL_PROFILER_ENTER_REGION("GAL", "", "")
+    TRACING_ENTER_REGION("GAL", "", "")
     _maxLOD = maxLOD;
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 void GALSamplerImp::setMaxAnisotropy(gal_uint maxAnisotropy)
 {
-    GLOBAL_PROFILER_ENTER_REGION("GAL", "", "")
+    TRACING_ENTER_REGION("GAL", "", "")
     _maxAniso = maxAnisotropy;
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 void GALSamplerImp::setLODBias(gal_float lodBias)
 {
-    GLOBAL_PROFILER_ENTER_REGION("GAL", "", "")
+    TRACING_ENTER_REGION("GAL", "", "")
     _lodBias = lodBias;
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 void GALSamplerImp::setUnitLODBias(gal_float unitLodBias)
 {
-    GLOBAL_PROFILER_ENTER_REGION("GAL", "", "")
+    TRACING_ENTER_REGION("GAL", "", "")
     _unitLodBias = unitLodBias;
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 void GALSamplerImp::setMinLevel(gal_uint minLevel)
 {
-    GLOBAL_PROFILER_ENTER_REGION("GAL", "", "")
+    TRACING_ENTER_REGION("GAL", "", "")
     _minLevel = minLevel;
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 GAL_TEXTURE_FILTER GALSamplerImp::getMagFilter() const
@@ -723,7 +723,7 @@ void GALSamplerImp::_syncTexture()
 
 void GALSamplerImp::performBlitOperation2D(gal_uint xoffset, gal_uint yoffset, gal_uint x, gal_uint y, gal_uint width, gal_uint height, gal_uint textureWidth, GAL_FORMAT internalFormat, GALTexture2D* texture, gal_uint level)
 {
-    GLOBAL_PROFILER_ENTER_REGION("GAL", "", "")
+    TRACING_ENTER_REGION("GAL", "", "")
 
     using namespace cg1gpu;
     GPURegData data;
@@ -836,7 +836,7 @@ void GALSamplerImp::performBlitOperation2D(gal_uint xoffset, gal_uint yoffset, g
         tex2D->postBlit(level);
     }
     
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 void GALSamplerImp::sync()
@@ -1118,7 +1118,7 @@ const char* GALSamplerImp::CompFuncPrint::print(const libGAL::GAL_TEXTURE_COMPAR
 
 const StoredStateItem* GALSamplerImp::createStoredStateItem(GAL_STORED_ITEM_ID stateId) const
 {
-    GLOBAL_PROFILER_ENTER_REGION("GAL", "", "")
+    TRACING_ENTER_REGION("GAL", "", "")
     GALStoredStateItem* ret;
     gal_uint rTarget;
 
@@ -1156,7 +1156,7 @@ const StoredStateItem* GALSamplerImp::createStoredStateItem(GAL_STORED_ITEM_ID s
 
     ret->setItemId(stateId);
 
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 
     return ret;
 }
@@ -1169,7 +1169,7 @@ const StoredStateItem* GALSamplerImp::createStoredStateItem(GAL_STORED_ITEM_ID s
 
 void GALSamplerImp::restoreStoredStateItem(const StoredStateItem* ssi)
 {
-    GLOBAL_PROFILER_ENTER_REGION("GAL", "", "")
+    TRACING_ENTER_REGION("GAL", "", "")
     gal_uint rTarget;
 
     const GALStoredStateItem* galssi = static_cast<const GALStoredStateItem*>(ssi);
@@ -1208,7 +1208,7 @@ void GALSamplerImp::restoreStoredStateItem(const StoredStateItem* ssi)
     else
         CG_ASSERT("Unexpected blending state id");
 
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 #undef CAST_TO_UINT

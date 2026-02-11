@@ -5,7 +5,7 @@
  *
  */
 #include "bmGpuTop.h"
-#include "GlobalProfiler.h"
+#include "Profiler.h"
 #include "ImageSaver.h"
 #include "bmClipper.h"
 #include <functional>
@@ -366,7 +366,7 @@ void bmoGpuTop::emulateCommandProcessor(cgoMetaStream *CurMetaStream)
                     )
                     
                     //sprintf(filename, "profile.frame%04d-batch%05d", frameCounter, batchCounter);
-                    //GLOBAL_PROFILER_GENERATE_REPORT(filename)
+                    //TRACING_GENERATE_REPORT(filename)
                     batchCounter++;
                     delete CurMetaStream;
                     break;
@@ -3797,7 +3797,7 @@ void bmoGpuTop::processRegisterWrite(GPURegister gpuReg, U32 gpuSubReg, GPURegDa
 
 void bmoGpuTop::clearColorBuffer()
 {
-    GLOBAL_PROFILER_ENTER_REGION("clearColorBuffer", "", "clearColorBuffer")
+    TRACING_ENTER_REGION("clearColorBuffer", "", "clearColorBuffer")
 
     if (!skipBatchMode)
     {
@@ -3937,7 +3937,7 @@ void bmoGpuTop::clearColorBuffer()
         }
     }
     
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 
@@ -5060,7 +5060,7 @@ void bmoGpuTop::loadShaderProgram()
 
 void bmoGpuTop::clearZStencilBuffer()
 {
-    GLOBAL_PROFILER_ENTER_REGION("clearZStencilBuffer", "", "clearZStencilBuffer")
+    TRACING_ENTER_REGION("clearZStencilBuffer", "", "clearZStencilBuffer")
 
     if (!skipBatchMode)
     {
@@ -5113,7 +5113,7 @@ void bmoGpuTop::clearZStencilBuffer()
     
     }
     
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 void bmoGpuTop::resetState()
@@ -5343,12 +5343,12 @@ void bmoGpuTop::draw()
         setupDraw();
         for(U32 instance = 0; instance < state.streamInstances; instance++)
         {
-            GLOBAL_PROFILER_ENTER_REGION("emulateStreamer", "", "emulateStreamer")
+            TRACING_ENTER_REGION("emulateStreamer", "", "emulateStreamer")
             emulateStreamer(instance);
-            GLOBAL_PROFILER_EXIT_REGION()
-            GLOBAL_PROFILER_ENTER_REGION("emulatePrimitiveAssembly", "", "emulatePrimitiveAssembly")
+            TRACING_EXIT_REGION()
+            TRACING_ENTER_REGION("emulatePrimitiveAssembly", "", "emulatePrimitiveAssembly")
             emulatePrimitiveAssembly();
-            GLOBAL_PROFILER_EXIT_REGION()
+            TRACING_EXIT_REGION()
             cleanup();
         }
         printf("B");
@@ -5806,7 +5806,7 @@ U08 *bmoGpuTop::selectMemorySpace(U32 address)
 
 void bmoGpuTop::emulateVertexShader(ShadedVertex *vertex)
 {
-    GLOBAL_PROFILER_ENTER_REGION("emulateVertexShader", "", "emulateVertexShader")
+    TRACING_ENTER_REGION("emulateVertexShader", "", "emulateVertexShader")
     //  Initialize thread for the current vertex.
     bmShader->resetShaderState(0);
     //  Load the new shader input into the shader input register bank of the thread element in the shader behaviorModel.
@@ -5899,7 +5899,7 @@ void bmoGpuTop::emulateVertexShader(ShadedVertex *vertex)
         }
     )
 
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 void bmoGpuTop::emulatePrimitiveAssembly()
@@ -6131,7 +6131,7 @@ bmoGpuTop::ShadedVertex *bmoGpuTop::getVertex(U32 index)
 
 void bmoGpuTop::emulateRasterization(ShadedVertex *vertex1, ShadedVertex *vertex2, ShadedVertex *vertex3)
 {
-    GLOBAL_PROFILER_ENTER_REGION("emulateRasterization", "", "emulateRasterization")
+    TRACING_ENTER_REGION("emulateRasterization", "", "emulateRasterization")
 
     Vec4FP32 *attribV1 = vertex1->getAttributes();
     Vec4FP32 *attribV2 = vertex2->getAttributes();
@@ -6256,7 +6256,7 @@ void bmoGpuTop::emulateRasterization(ShadedVertex *vertex1, ShadedVertex *vertex
                     //  Check if all the fragments in the quad are culled.
                     if (notAllFragmentsCulled)
                     {
-                        GLOBAL_PROFILER_ENTER_REGION("emulateRasterization(attribute interpolation)", "", "emulateRasterization")
+                        TRACING_ENTER_REGION("emulateRasterization(attribute interpolation)", "", "emulateRasterization")
                         //  Interpolate attributes for all the fragments.
                         for(U32 p = 0; p < STAMP_FRAGMENTS; p++)
                         {
@@ -6308,7 +6308,7 @@ void bmoGpuTop::emulateRasterization(ShadedVertex *vertex1, ShadedVertex *vertex
                             attributes[FACE_ATTRIBUTE][3] = F32(stamp[p]->getTriangle()->getArea());
                         }
 
-                        GLOBAL_PROFILER_EXIT_REGION()
+                        TRACING_EXIT_REGION()
 
                         bool watchPixelFound = false;
                         U32 watchPixelPosInQuad = 0;
@@ -6425,7 +6425,7 @@ void bmoGpuTop::emulateRasterization(ShadedVertex *vertex1, ShadedVertex *vertex
     //sprintf(filename, "frame%04d-batch%05d-triangle%09d", frameCounter, batchCounter, triangleCounter);
     //dumpFrame(filename);
     triangleCounter++;
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 
@@ -6615,8 +6615,8 @@ bool bmoGpuTop::cullTriangle(U32 triangleID)
 
 void bmoGpuTop::emulateFragmentShading(ShadedFragment **quad)
 {
-    GLOBAL_PROFILER_ENTER_REGION("emulateFragmentShading", "", "emulateFragmentShading");
-    GLOBAL_PROFILER_ENTER_REGION("emulateFragmentShading (load attributes)", "", "emulateFragmentShading")
+    TRACING_ENTER_REGION("emulateFragmentShading", "", "emulateFragmentShading");
+    TRACING_ENTER_REGION("emulateFragmentShading (load attributes)", "", "emulateFragmentShading")
     //  Initialize four threads for the fragment quad.
     for(U32 p = 0; p < STAMP_FRAGMENTS; p++)
     {
@@ -6627,7 +6627,7 @@ void bmoGpuTop::emulateFragmentShading(ShadedFragment **quad)
         //  Set PC for the thread element in the shader behaviorModel to the start PC of the vector thread.
         bmShader->setThreadPC(p, state.fragProgramStartPC);
     }
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
     bool programEnd = false;
     bool fragmentEnd[4];
     fragmentEnd[0] = fragmentEnd[1] = fragmentEnd[2] = fragmentEnd[3] = false;
@@ -6658,12 +6658,12 @@ void bmoGpuTop::emulateFragmentShading(ShadedFragment **quad)
             //  Check if the program already finished for this fragment.
             //if (!fragmentEnd[p])
             //{
-                GLOBAL_PROFILER_ENTER_REGION("emulateFragmentShading (fetch)", "", "emulateFragmentShading")
+                TRACING_ENTER_REGION("emulateFragmentShading (fetch)", "", "emulateFragmentShading")
 
                 //  Fetch the instruction.
                 shDecInstr = bmShader->FetchInstr(p, pc);
 
-                GLOBAL_PROFILER_EXIT_REGION()
+                TRACING_EXIT_REGION()
 
                 GPU_ASSERT(
                     if (shDecInstr == NULL)
@@ -6690,9 +6690,9 @@ void bmoGpuTop::emulateFragmentShading(ShadedFragment **quad)
                     shDecInstr->getShaderInstruction()->disassemble(shInstrDisasm, 256);
                     CG_INFO("FSh => Executing instruction @ %04x : %s", pc, shInstrDisasm);
                 )
-                GLOBAL_PROFILER_ENTER_REGION("emulateFragmentShading (exec)", "", "emulateFragmentShading")
+                TRACING_ENTER_REGION("emulateFragmentShading (exec)", "", "emulateFragmentShading")
                 bmShader->execShaderInstruction(shDecInstr); //  Execute instruction.
-                GLOBAL_PROFILER_EXIT_REGION();
+                TRACING_EXIT_REGION();
                 //  Check for jump instructions (only the first thread in the 4-way vector).
                 if ((p == 0) && shDecInstr->getShaderInstruction()->isAJump())
                 {
@@ -6738,7 +6738,7 @@ void bmoGpuTop::emulateFragmentShading(ShadedFragment **quad)
             pc++;
     }
    
-    GLOBAL_PROFILER_ENTER_REGION("emulateFragmentShading (retrieve attributes)", "", "emulateFragmentShading")
+    TRACING_ENTER_REGION("emulateFragmentShading (retrieve attributes)", "", "emulateFragmentShading")
     //  Get the result attributes for the four fragments in the quad.
     for(U32 p = 0; p < STAMP_FRAGMENTS; p++)
     {
@@ -6759,15 +6759,15 @@ void bmoGpuTop::emulateFragmentShading(ShadedFragment **quad)
             }
         )
     }
-    GLOBAL_PROFILER_EXIT_REGION()
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 
 //  Emulate the texture unit.
 void bmoGpuTop::emulateTextureUnit(TextureAccess *texAccess)
 {
-    GLOBAL_PROFILER_ENTER_REGION("emulateTextureUnit", "", "emulateTextureUnit")
+    TRACING_ENTER_REGION("emulateTextureUnit", "", "emulateTextureUnit")
 
     //  Calculate addresses for all the aniso samples required for the texture request.
     for(texAccess->currentAnisoSample = 1; texAccess->currentAnisoSample <= texAccess->anisoSamples; texAccess->currentAnisoSample++)
@@ -6817,7 +6817,7 @@ void bmoGpuTop::emulateTextureUnit(TextureAccess *texAccess)
 
     delete texAccess;
 
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 void bmoGpuTop::readTextureData(U64 texelAddress, U32 size, U08 *data)
@@ -6908,7 +6908,7 @@ void bmoGpuTop::readTextureData(U64 texelAddress, U32 size, U08 *data)
 
 void bmoGpuTop::emulateColorWrite(ShadedFragment **quad)
 {
-    GLOBAL_PROFILER_ENTER_REGION("emulateColorWrite", "", "emulateColorWrite")
+    TRACING_ENTER_REGION("emulateColorWrite", "", "emulateColorWrite")
 
     U32 bytesPixel;
     
@@ -7497,7 +7497,7 @@ GPU_CLAMP(attributes[COLOR_ATTRIBUTE + rt][3], 0.0f, 1.0f));
         }
     }
     
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 void bmoGpuTop::emulateZStencilTest(ShadedFragment **quad)
@@ -7506,7 +7506,7 @@ void bmoGpuTop::emulateZStencilTest(ShadedFragment **quad)
     if (!state.depthTest && !state.stencilTest)
         return;
 
-    GLOBAL_PROFILER_ENTER_REGION("emulateZStencilTest", "", "emulateZStencilTest")
+    TRACING_ENTER_REGION("emulateZStencilTest", "", "emulateZStencilTest")
 
     U32 inputDepth[STAMP_FRAGMENTS * MAX_MSAA_SAMPLES];
     bool sampleCullMask[STAMP_FRAGMENTS * MAX_MSAA_SAMPLES];
@@ -7799,7 +7799,7 @@ void bmoGpuTop::emulateZStencilTest(ShadedFragment **quad)
         CG_INFO("--------");
     )
 
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 void bmoGpuTop::cleanup()
@@ -8283,16 +8283,16 @@ void bmoGpuTop::printShaderInstructionResult(cgoShaderInstr::cgoShaderInstrEncod
 
 //void bmoGpuTop::simulationLoop()
 //{
-//    GLOBAL_PROFILER_ENTER_REGION("simulationLoop", "", "")
+//    TRACING_ENTER_REGION("simulationLoop", "", "")
 //    traceEnd = false;
 //    TraceDriver->startTrace(); //  Start the trace driver.
 //    resetState();
 //    while(!traceEnd && (frameCounter < (ArchConf.sim.startFrame + ArchConf.sim.simFrames)) && !AbortSim)
 //    {
 //        cgoMetaStream *CurMetaStream;
-//        GLOBAL_PROFILER_ENTER_REGION("driver", "", "")
+//        TRACING_ENTER_REGION("driver", "", "")
 //        CurMetaStream = TraceDriver->nxtMetaStream(); //  Get next transaction from the driver
-//        GLOBAL_PROFILER_EXIT_REGION()
+//        TRACING_EXIT_REGION()
 //        if (CurMetaStream != NULL)
 //        {
 //            emulateCommandProcessor(CurMetaStream);
@@ -8304,7 +8304,7 @@ void bmoGpuTop::printShaderInstructionResult(cgoShaderInstr::cgoShaderInstrEncod
 //        }
 //    }
 //    CG_INFO_COND(AbortSim, "Simulation aborted");
-//    GLOBAL_PROFILER_EXIT_REGION()
+//    TRACING_EXIT_REGION()
 //}
 
 //void bmoGpuTop::abortSimulation()

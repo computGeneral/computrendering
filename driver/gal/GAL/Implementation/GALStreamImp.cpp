@@ -9,7 +9,7 @@
 #include <sstream>
 #include "StateItemUtils.h"
 
-#include "GlobalProfiler.h"
+#include "Profiler.h"
 
 using namespace std;
 using namespace libGAL;
@@ -30,7 +30,7 @@ GALStreamImp::GALStreamImp(GALDeviceImp* device, HAL* driver, gal_uint streamID)
 
 void GALStreamImp::set( GALBuffer* buffer, const GAL_STREAM_DESC& desc )
 {
-    GLOBAL_PROFILER_ENTER_REGION("GAL", "", "")
+    TRACING_ENTER_REGION("GAL", "", "")
     
     GALBufferImp* buf = static_cast<GALBufferImp*>(buffer);
     _buffer = buf;
@@ -81,7 +81,7 @@ void GALStreamImp::set( GALBuffer* buffer, const GAL_STREAM_DESC& desc )
         
     }
         
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 void GALStreamImp::get( GALBuffer*& buffer,
@@ -91,23 +91,23 @@ void GALStreamImp::get( GALBuffer*& buffer,
                         gal_uint& stride,
                         gal_uint &frequency) const
 {
-    GLOBAL_PROFILER_ENTER_REGION("GAL", "", "")
+    TRACING_ENTER_REGION("GAL", "", "")
     buffer = _buffer;
     offset = _offset;
     components = _components;
     componentsType = _componentsType;
     stride = _stride;
     frequency = _frequency;
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 void GALStreamImp::setBuffer(GALBuffer* buffer) 
 {
-    GLOBAL_PROFILER_ENTER_REGION("GAL", "", "")
+    TRACING_ENTER_REGION("GAL", "", "")
     GALBufferImp* buf = static_cast<GALBufferImp*>(buffer);
     _buffer = buf;
     _gpuMemTrack = 0; // Init buffer track
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 void GALStreamImp::setOffset(gal_uint offset)
@@ -228,7 +228,7 @@ void GALStreamImp::sync()
 
 const StoredStateItem* GALStreamImp::createStoredStateItem(GAL_STORED_ITEM_ID stateId) const
 {
-    GLOBAL_PROFILER_ENTER_REGION("GAL", "", "")
+    TRACING_ENTER_REGION("GAL", "", "")
     GALStoredStateItem* ret;
     gal_uint rTarget;
 
@@ -255,7 +255,7 @@ const StoredStateItem* GALStreamImp::createStoredStateItem(GAL_STORED_ITEM_ID st
 
     ret->setItemId(stateId);
 
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 
     return ret;
 }
@@ -267,7 +267,7 @@ const StoredStateItem* GALStreamImp::createStoredStateItem(GAL_STORED_ITEM_ID st
 
 void GALStreamImp::restoreStoredStateItem(const StoredStateItem* ssi)
 {
-    GLOBAL_PROFILER_ENTER_REGION("GAL", "", "")
+    TRACING_ENTER_REGION("GAL", "", "")
     gal_uint rTarget;
 
     const GALStoredStateItem* galssi = static_cast<const GALStoredStateItem*>(ssi);
@@ -295,7 +295,7 @@ void GALStreamImp::restoreStoredStateItem(const StoredStateItem* ssi)
     else
         CG_ASSERT("Unexpected blending state id");
 
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 #undef CAST_TO_UINT
@@ -305,7 +305,7 @@ void GALStreamImp::restoreStoredStateItem(const StoredStateItem* ssi)
 
 GALStoredState* GALStreamImp::saveAllState() const
 {
-    GLOBAL_PROFILER_ENTER_REGION("GAL", "", "")    
+    TRACING_ENTER_REGION("GAL", "", "")    
     GALStoredStateImp* ret = new GALStoredStateImp();
 
     for (gal_uint i = 0; i < GAL_LAST_STATE; i++)
@@ -319,14 +319,14 @@ GALStoredState* GALStreamImp::saveAllState() const
             CG_ASSERT("Unexpected Stored Item Id");
     }
 
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
     
     return ret;
 }
 
 void GALStreamImp::restoreAllState(const GALStoredState* state)
 {
-    GLOBAL_PROFILER_ENTER_REGION("GAL", "", "")    
+    TRACING_ENTER_REGION("GAL", "", "")    
 
     const GALStoredStateImp* ssi = static_cast<const GALStoredStateImp*>(state);
 
@@ -349,7 +349,7 @@ void GALStreamImp::restoreAllState(const GALStoredState* state)
         iter++;
     }
 
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 void GALStreamImp::GALDumpStream()

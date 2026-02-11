@@ -33,7 +33,7 @@ TraceReader::TR_MODE TraceReader::getMode() const
 
 void TraceReader::skipWhites()
 {
-    GLOBAL_PROFILER_ENTER_REGION("skipWhites", "TraceReader", "skipWhites")
+    TRACING_ENTER_REGION("skipWhites", "TraceReader", "skipWhites")
     
     if ( mode == binary )
         return ;
@@ -49,7 +49,7 @@ void TraceReader::skipWhites()
         c = (char)trPeek();
     }
 
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 bool TraceReader::open( const char* ProfilingFile )
@@ -75,7 +75,7 @@ bool TraceReader::open( const char* ProfilingFile,
 
 bool TraceReader::parseEnum( unsigned int& value )
 {
-    GLOBAL_PROFILER_ENTER_REGION("parseEnum", "TraceReader", "parseEnum")
+    TRACING_ENTER_REGION("parseEnum", "TraceReader", "parseEnum")
     value = 0; // reset
     char c = trPeek();
     if ( '0' <= c && c <= '9'  )
@@ -83,7 +83,7 @@ bool TraceReader::parseEnum( unsigned int& value )
         // HEX or DEC value 
         bool success = parseNumber(value);
         
-        GLOBAL_PROFILER_EXIT_REGION()
+        TRACING_EXIT_REGION()
         
         return success;
     }
@@ -109,14 +109,14 @@ bool TraceReader::parseEnum( unsigned int& value )
             CG_ASSERT(buffer);
         }
         value = (unsigned int)i;
-        GLOBAL_PROFILER_EXIT_REGION()
+        TRACING_EXIT_REGION()
         return true;
     }
 }
 
 bool TraceReader::parseNumber( unsigned int& value )
 {
-    GLOBAL_PROFILER_ENTER_REGION("parseNumber", "TraceReader", "parseNumber")
+    TRACING_ENTER_REGION("parseNumber", "TraceReader", "parseNumber")
     // New and faster but not safer implementation...
     char c;
     value = 0;
@@ -135,13 +135,13 @@ bool TraceReader::parseNumber( unsigned int& value )
             f >> std::dec;
         }
         // else (assume 0)
-        GLOBAL_PROFILER_EXIT_REGION()
+        TRACING_EXIT_REGION()
         return true;
     }
     else if ( '1' <= c && c <= '9' )
     {
         trReadFormated(&value);
-        GLOBAL_PROFILER_EXIT_REGION()
+        TRACING_EXIT_REGION()
         return true;
     }
     else if ( c == '-' )
@@ -149,7 +149,7 @@ bool TraceReader::parseNumber( unsigned int& value )
         trIgnore(); // ignore '-'
         trReadFormated(&value);
         value = -value;
-        GLOBAL_PROFILER_EXIT_REGION()
+        TRACING_EXIT_REGION()
         return true;
     }
     else
@@ -234,12 +234,12 @@ bool TraceReader::parseNumber( unsigned int& value )
 
 APICall TraceReader::parseApiCall()
 {
-    GLOBAL_PROFILER_ENTER_REGION("parseApiCall", "TraceReader", "parseApiCall")
+    TRACING_ENTER_REGION("parseApiCall", "TraceReader", "parseApiCall")
     using namespace std;
 
     if ( trEOS() )
     {
-        GLOBAL_PROFILER_EXIT_REGION()
+        TRACING_EXIT_REGION()
         return APICall_UNDECLARED;
     }
     
@@ -247,7 +247,7 @@ APICall TraceReader::parseApiCall()
     {
         unsigned short apiID;
         trRead(&apiID,2);
-        GLOBAL_PROFILER_EXIT_REGION()
+        TRACING_EXIT_REGION()
         return (APICall)apiID;
     }
 
@@ -304,14 +304,14 @@ APICall TraceReader::parseApiCall()
             {
                 cout << "output:> Finishing trace (END command found)" << endl;
                 skipLine();
-                GLOBAL_PROFILER_EXIT_REGION()
+                TRACING_EXIT_REGION()
                 return APICall_UNDECLARED; // Force finishing trace
             }
             else if ( strcmp(command, "SWAPBUFFERS") == 0 && directivesOn )
             {
                 cout << "output:> sending SWAPBUFFERS command" << endl;
                 skipLine();
-                GLOBAL_PROFILER_EXIT_REGION()
+                TRACING_EXIT_REGION()
                 return APICall_wglSwapBuffers;
             }
             else if ( strcmp(command, "BATCHES_AS_FRAMES") == 0 )
@@ -344,7 +344,7 @@ APICall TraceReader::parseApiCall()
                 cout << "output:> sending DUMP_CTX command..." << endl;
                 specialStr  = "DUMP_CTX";
                 skipLine();
-                GLOBAL_PROFILER_EXIT_REGION()
+                TRACING_EXIT_REGION()
                 return APICall_SPECIAL; // send a SPECIAL message
             }
             else if ( strcmp(command, "DUMP_STENCIL") == 0 )
@@ -352,7 +352,7 @@ APICall TraceReader::parseApiCall()
                 cout << "output:> sending DUMP_STENCIL command..." << endl;
                 specialStr  = "DUMP_STENCIL";
                 skipLine();
-                GLOBAL_PROFILER_EXIT_REGION()
+                TRACING_EXIT_REGION()
                 return APICall_SPECIAL; // send a SPECIAL message
             }
             else
@@ -363,7 +363,7 @@ APICall TraceReader::parseApiCall()
 
     if ( trEOS() )
     {
-        GLOBAL_PROFILER_EXIT_REGION()
+        TRACING_EXIT_REGION()
         return APICall_UNDECLARED;
     }
 
@@ -381,20 +381,20 @@ APICall TraceReader::parseApiCall()
         logfile().popInfo();
     )
 
-    GLOBAL_PROFILER_ENTER_REGION("APICallMap", "TraceReader", "parseAPICall")
+    TRACING_ENTER_REGION("APICallMap", "TraceReader", "parseAPICall")
     map<string,APICall>::iterator it = translatedCalls.find(buffer);
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
     if ( it != translatedCalls.end() )
     {
         //popup("Processing call", buffer);
-        GLOBAL_PROFILER_EXIT_REGION()
+        TRACING_EXIT_REGION()
         return (lastCall = it->second);
     }
 
-    GLOBAL_PROFILER_ENTER_REGION("resolveAPICall", "TraceReader", "parseAPICall")
+    TRACING_ENTER_REGION("resolveAPICall", "TraceReader", "parseAPICall")
     lastCall = GLResolver::getFunctionID(buffer);
     translatedCalls.insert(make_pair(string(buffer), lastCall));;
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
     if ( lastCall == APICall_UNDECLARED )
     {
         char temp[512];
@@ -402,7 +402,7 @@ APICall TraceReader::parseApiCall()
         CG_ASSERT(temp);
     }
     //popup("Processing call", buffer);
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
     return lastCall;
 
     // Old version...
@@ -449,11 +449,11 @@ APICall TraceReader::parseApiCall()
 
 bool TraceReader::readOring( unsigned int* value)
 {
-    GLOBAL_PROFILER_ENTER_REGION("readOring", "TraceReader", "readerOring")
+    TRACING_ENTER_REGION("readOring", "TraceReader", "readerOring")
     if ( mode == binary )//|| mode == hex )
     {
         bool success = readEnum(value);
-        GLOBAL_PROFILER_EXIT_REGION()
+        TRACING_EXIT_REGION()
         return success;
     }
     
@@ -473,7 +473,7 @@ bool TraceReader::readOring( unsigned int* value)
             // end of list of bitfields 
             *value |= temp;
             trIgnore(); // skip mark 
-            GLOBAL_PROFILER_EXIT_REGION()
+            TRACING_EXIT_REGION()
             return true;
         }
         else if ( c == '|' )
@@ -489,17 +489,17 @@ bool TraceReader::readOring( unsigned int* value)
             CG_ASSERT(aux);
         }
     }
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 bool TraceReader::readEnum( unsigned int* value)
 {
-    GLOBAL_PROFILER_ENTER_REGION("readEnum", "TraceReader", "readEnum")
+    TRACING_ENTER_REGION("readEnum", "TraceReader", "readEnum")
 
     if ( mode == binary )
     {
         trRead(value,4);
-        GLOBAL_PROFILER_EXIT_REGION()
+        TRACING_EXIT_REGION()
         return true;
     }
 
@@ -513,7 +513,7 @@ bool TraceReader::readEnum( unsigned int* value)
         trGet(c);
         if ( c == ',' || c == '}' || c == ')')
         {
-            GLOBAL_PROFILER_EXIT_REGION()
+            TRACING_EXIT_REGION()
             return true;
         }
         char myBuf[256];
@@ -521,7 +521,7 @@ bool TraceReader::readEnum( unsigned int* value)
         CG_ASSERT(myBuf);
     }
 
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
     return false;
 
     // hex
@@ -541,7 +541,7 @@ bool TraceReader::readPFD(void **ptr, char* data, int dataSize, ArrayTextType at
 // Remember: u must use ptr for extract data
 bool TraceReader::readArray( void** ptr, char* data, int dataSize, ArrayTextType att )
 {
-    GLOBAL_PROFILER_ENTER_REGION("readArray", "TraceReader", "readArray")
+    TRACING_ENTER_REGION("readArray", "TraceReader", "readArray")
     BufferDescriptor* buf = NULL;
     unsigned int bufId = 1;
 
@@ -681,7 +681,7 @@ bool TraceReader::readArray( void** ptr, char* data, int dataSize, ArrayTextType
                 }
             }
             *ptr = (void *)data; // return pointer 
-            GLOBAL_PROFILER_EXIT_REGION()
+            TRACING_EXIT_REGION()
             return true;
         case '*': // buffer index
             trIgnore();
@@ -716,7 +716,7 @@ bool TraceReader::readArray( void** ptr, char* data, int dataSize, ArrayTextType
             }
             */
 
-            GLOBAL_PROFILER_EXIT_REGION()
+            TRACING_EXIT_REGION()
             return true;
         case '"': // text array
             trIgnore();
@@ -743,7 +743,7 @@ bool TraceReader::readArray( void** ptr, char* data, int dataSize, ArrayTextType
                 CG_ASSERT( temp);
             }
             *ptr = (void *)data;
-            GLOBAL_PROFILER_EXIT_REGION()
+            TRACING_EXIT_REGION()
             return true;
         default:
             if ( '0' <= c && c <= '9' )
@@ -754,7 +754,7 @@ bool TraceReader::readArray( void** ptr, char* data, int dataSize, ArrayTextType
                 trGet(c);
                 if ( c != ',' && c != ')' )
                     CG_ASSERT("Expected mark not found after reading an offset (or null pointer)");
-                GLOBAL_PROFILER_EXIT_REGION()
+                TRACING_EXIT_REGION()
                 return true;
 
             }
@@ -766,24 +766,24 @@ bool TraceReader::readArray( void** ptr, char* data, int dataSize, ArrayTextType
                 CG_ASSERT(ss.str().c_str()); // should not happen ever 
             }
     }
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
     return false;
 }
 
 bool TraceReader::skipLine()
 {
-    GLOBAL_PROFILER_ENTER_REGION("skipLine", "TraceReader", "skipLine")
+    TRACING_ENTER_REGION("skipLine", "TraceReader", "skipLine")
     
     if ( mode == binary )
     {
-        GLOBAL_PROFILER_EXIT_REGION()
+        TRACING_EXIT_REGION()
         return true;
     }
     
     char c;
     if ( trEOS() )
     {
-        GLOBAL_PROFILER_EXIT_REGION()
+        TRACING_EXIT_REGION()
         return true;
     }
     
@@ -793,13 +793,13 @@ bool TraceReader::skipLine()
 
     line++;
 
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
     return true;
 }
 
 bool TraceReader::readBoolean( unsigned char* value)
 {
-    GLOBAL_PROFILER_ENTER_REGION("readBoolean", "TraceReader", "readBoolean")
+    TRACING_ENTER_REGION("readBoolean", "TraceReader", "readBoolean")
     
     if ( mode == binary )
         CG_ASSERT("Binary reads not implemented yet");
@@ -820,7 +820,7 @@ bool TraceReader::readBoolean( unsigned char* value)
         char buffer[256];
         sprintf(buffer,"Error reading value, current char is: '%c'",c);
         CG_ASSERT(buffer);
-        GLOBAL_PROFILER_EXIT_REGION()
+        TRACING_EXIT_REGION()
         return false;
     }
 
@@ -831,7 +831,7 @@ bool TraceReader::readBoolean( unsigned char* value)
         *value = 1;
     else
         *value = b;
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
     return true;
 }
 
@@ -839,7 +839,7 @@ bool TraceReader::readBoolean( unsigned char* value)
 // double representation in a tracefile 0xAAAAAAAA.0xBBBBBBBBB
 bool TraceReader::readDouble( double *value )
 {
-    GLOBAL_PROFILER_ENTER_REGION("readDouble", "TraceReader", "readDouble")
+    TRACING_ENTER_REGION("readDouble", "TraceReader", "readDouble")
     char buffer[256];
 
     unsigned int a;
@@ -851,7 +851,7 @@ bool TraceReader::readDouble( double *value )
     {
         // 8 raw bytes
         trRead(value,sizeof(double));
-        GLOBAL_PROFILER_EXIT_REGION()
+        TRACING_EXIT_REGION()
         return true;
     }
 
@@ -862,7 +862,7 @@ bool TraceReader::readDouble( double *value )
         trGet(c);
         if ( c == ',' || c == '}' || c == ')' )
         {
-            GLOBAL_PROFILER_EXIT_REGION()
+            TRACING_EXIT_REGION()
             return true;
         }            
         sprintf(buffer,"Error reading value in line %d, current char is: '%c'",line,c);
@@ -902,7 +902,7 @@ bool TraceReader::readDouble( double *value )
 
         if ( c == ',' || c == '}' || c == ')' )
         {
-            GLOBAL_PROFILER_EXIT_REGION()
+            TRACING_EXIT_REGION()
             return true;
         }
         sprintf(buffer,"Error reading value, current char is: '%c'",c);
@@ -986,64 +986,64 @@ bool TraceReader::trOpen( const char* file )
 
 int TraceReader::trPeek()
 {
-    GLOBAL_PROFILER_ENTER_REGION("trPeek", "TraceReader", "trPeek")
+    TRACING_ENTER_REGION("trPeek", "TraceReader", "trPeek")
     int p = f.peek();
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
     return p;
 }
 
 void TraceReader::trIgnore( int count )
 {
-    GLOBAL_PROFILER_ENTER_REGION("trIgnore", "TraceReader", "trIgnore")
+    TRACING_ENTER_REGION("trIgnore", "TraceReader", "trIgnore")
     f.ignore(count);
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 
 void TraceReader::trGet( char& c )
 {
-    GLOBAL_PROFILER_ENTER_REGION("trGet", "TraceReader", "trGet")
+    TRACING_ENTER_REGION("trGet", "TraceReader", "trGet")
     f.get(c);
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 void TraceReader::trGetline( char* buffer, int bufSize, char eol )
 {
-    GLOBAL_PROFILER_ENTER_REGION("trGetLine", "TraceReader", "trGetLine")
+    TRACING_ENTER_REGION("trGetLine", "TraceReader", "trGetLine")
     f.getline(buffer,bufSize,eol);
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 int TraceReader::trEOS()
 {
-    GLOBAL_PROFILER_ENTER_REGION("trEOS", "TraceReader", "trEOS")
+    TRACING_ENTER_REGION("trEOS", "TraceReader", "trEOS")
     bool endOfFile = f.eof();
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
     return endOfFile;
 }
 
 void TraceReader::trRead(void* data, int size)
 {
-    GLOBAL_PROFILER_ENTER_REGION("trRead", "TraceReader", "trRead")
+    TRACING_ENTER_REGION("trRead", "TraceReader", "trRead")
     f.read((char *)data,size);
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 
 long TraceReader::trGetPos()
 {
-    GLOBAL_PROFILER_ENTER_REGION("trGetPos", "TraceReader", "trGetPos")
+    TRACING_ENTER_REGION("trGetPos", "TraceReader", "trGetPos")
     long pos = f.tellg();
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
     return pos;
 }
 
 
 void TraceReader::trSetPos(long pos)
 {
-    GLOBAL_PROFILER_ENTER_REGION("trSetPos", "TraceReader", "trSetPos")
+    TRACING_ENTER_REGION("trSetPos", "TraceReader", "trSetPos")
     f.seekg(pos, ios::beg); // Absolute positioning
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 
@@ -1123,11 +1123,11 @@ TraceReader::TR_MODE TraceReader::readTraceFormat()
 
 bool TraceReader::skipUnknown()
 {
-    GLOBAL_PROFILER_ENTER_REGION("skipUnknown", "TraceReader", "skipUnknown")
+    TRACING_ENTER_REGION("skipUnknown", "TraceReader", "skipUnknown")
     
     if ( binary ) // in binary unknown type occupies 0 bytes
     {
-        GLOBAL_PROFILER_EXIT_REGION()
+        TRACING_EXIT_REGION()
         return true;
     }
     else
@@ -1151,17 +1151,17 @@ bool TraceReader::skipUnknown()
             CG_ASSERT("Incorrect format for unknown value");
         }
 
-        GLOBAL_PROFILER_EXIT_REGION()
+        TRACING_EXIT_REGION()
         return true;
     }
 }
 
 bool TraceReader::skipResult()
 {
-    GLOBAL_PROFILER_ENTER_REGION("skipResult", "TraceReader", "skipResult")
+    TRACING_ENTER_REGION("skipResult", "TraceReader", "skipResult")
     if ( mode == binary )
     {
-        GLOBAL_PROFILER_EXIT_REGION()
+        TRACING_EXIT_REGION()
         return true;
     }
     
@@ -1169,13 +1169,13 @@ bool TraceReader::skipResult()
     while ( trPeek() != '\n' ) // find return (eol)
         trIgnore();
 
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
     return true;
 }
 
 bool TraceReader::skipCall()
 {
-    GLOBAL_PROFILER_ENTER_REGION("skipCall", "TraceReader", "skipCall")
+    TRACING_ENTER_REGION("skipCall", "TraceReader", "skipCall")
     if ( mode == text || mode == hex )
     {
         char c;
@@ -1195,7 +1195,7 @@ bool TraceReader::skipCall()
 
         if ( trEOS() )
         {
-            GLOBAL_PROFILER_EXIT_REGION()
+            TRACING_EXIT_REGION()
             return true;
         }
         
@@ -1203,7 +1203,7 @@ bool TraceReader::skipCall()
         {
             line++;
             trIgnore(); // call skipping finished 
-            GLOBAL_PROFILER_EXIT_REGION()
+            TRACING_EXIT_REGION()
             return true;
         }
         else if ( (char)trPeek() == '=' )
@@ -1213,7 +1213,7 @@ bool TraceReader::skipCall()
             while ( !trEOS() && c != '\n' )
                 trGet(c);
             line++;
-            GLOBAL_PROFILER_EXIT_REGION()
+            TRACING_EXIT_REGION()
             return true;
         }
         else
@@ -1221,14 +1221,14 @@ bool TraceReader::skipCall()
             if ( trPeek() == 13 ) // Skip 13 (NL)
             {
                 trIgnore();
-                GLOBAL_PROFILER_EXIT_REGION()
+                TRACING_EXIT_REGION()
                 return true;
             }
             char msg[256];
             sprintf(msg ,"Unexpected char: '%c' in tracefile line %d", (char)trPeek(), line);
             CG_ASSERT(msg);
         }
-        GLOBAL_PROFILER_EXIT_REGION()
+        TRACING_EXIT_REGION()
         return true;
     }
     CG_ASSERT("Binary mode still not supported");

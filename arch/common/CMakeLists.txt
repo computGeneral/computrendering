@@ -12,8 +12,6 @@ PUBLIC
     BitStreamWriter.h
     DynamicObject.cpp
     DynamicObject.h
-    GlobalProfiler.cpp
-    GlobalProfiler.h
     ImageSaver.cpp
     ImageSaver.h
     DynamicMemoryOpt.cpp

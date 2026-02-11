@@ -20,7 +20,7 @@
 
 #include "GALMatrix.h"
 
-#include "GlobalProfiler.h"
+#include "Profiler.h"
 
 using std::cout;
 using std::hex;
@@ -163,18 +163,18 @@ GLTextureObject& getTextureObject (GLenum target)
 
 GLAPI void GLAPIENTRY OGL_glBegin( GLenum primitive )
 {
-    GLOBAL_PROFILER_ENTER_REGION("OGL2", "", "")
+    TRACING_ENTER_REGION("OGL2", "", "")
     OGL_PRINTCALL_1(primitive);
 
     _ctx->gal().setPrimitive( ogl::trPrimitive(primitive) );
 
     _ctx->initInternalBuffers(true); // previous buffer contents can be discarded
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 GLAPI void GLAPIENTRY OGL_glBindProgramARB (GLenum target, GLuint pid)
 {
-    GLOBAL_PROFILER_ENTER_REGION("OGL2", "", "")
+    TRACING_ENTER_REGION("OGL2", "", "")
     OGL_PRINTCALL_2(target, pid);
 
     ARBProgramManager& arbPM = _ctx->arbProgramManager();
@@ -186,12 +186,12 @@ GLAPI void GLAPIENTRY OGL_glBindProgramARB (GLenum target, GLuint pid)
         ARBProgramObject& arbp = static_cast<ARBProgramObject&>(arbPM.bindObject(target, pid));
         arbp.attachDevice(&_ctx->gal());
     }
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 GLAPI void GLAPIENTRY OGL_glClear( GLbitfield mask )
 {
-    GLOBAL_PROFILER_ENTER_REGION("OGL2", "", "")
+    TRACING_ENTER_REGION("OGL2", "", "")
     OGL_PRINTCALL_1(mask);
 
     gal_bool clearColorBuffer = ((mask & GL_COLOR_BUFFER_BIT) == GL_COLOR_BUFFER_BIT);
@@ -213,69 +213,69 @@ GLAPI void GLAPIENTRY OGL_glClear( GLbitfield mask )
         gal_int stencilValue = _ctx->getStencilClearValue();
         galDev.clearZStencilBuffer(clearZ, clearStencil, zValue, stencilValue);
     }
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 GLAPI void GLAPIENTRY OGL_glClearColor( GLclampf red, GLclampf green,
                                         GLclampf blue, GLclampf alpha )
 {
-    GLOBAL_PROFILER_ENTER_REGION("OGL2", "", "")
+    TRACING_ENTER_REGION("OGL2", "", "")
     OGL_PRINTCALL_4(red,green,blue,alpha);
 
     _ctx->setClearColor(red, green, blue, alpha);
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 GLAPI void GLAPIENTRY OGL_glClearDepth( GLclampd depthValue )
 {
-    GLOBAL_PROFILER_ENTER_REGION("OGL2", "", "")
+    TRACING_ENTER_REGION("OGL2", "", "")
     OGL_PRINTCALL_1(depthValue);
 
     _ctx->setDepthClearValue(depthValue);
 
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 GLAPI void GLAPIENTRY OGL_glColor3f( GLfloat red, GLfloat green, GLfloat blue )
 {
-    GLOBAL_PROFILER_ENTER_REGION("OGL2", "", "")
+    TRACING_ENTER_REGION("OGL2", "", "")
     OGL_PRINTCALL_3(red, green, blue);
 
     _ctx->setColor(red, green, blue);
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 GLAPI void GLAPIENTRY OGL_glColor4f( GLfloat red, GLfloat green, GLfloat blue, GLfloat alpha)
 {
-    GLOBAL_PROFILER_ENTER_REGION("OGL2", "", "")
+    TRACING_ENTER_REGION("OGL2", "", "")
     OGL_PRINTCALL_4(red, green, blue, alpha);
 
     _ctx->setColor(red, green, blue, alpha);
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 GLAPI void GLAPIENTRY OGL_glCullFace( GLenum mode )
 {
-    GLOBAL_PROFILER_ENTER_REGION("OGL2", "", "")
+    TRACING_ENTER_REGION("OGL2", "", "")
     OGL_PRINTCALL_1(mode);
 
     GAL_CULL_MODE GALmode = ogl::getGALCullMode(mode);
     _ctx->gal().rast().setCullMode (GALmode);
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 GLAPI void GLAPIENTRY OGL_glDepthFunc (GLenum func)
 {
-    GLOBAL_PROFILER_ENTER_REGION("OGL2", "", "")
+    TRACING_ENTER_REGION("OGL2", "", "")
     OGL_PRINTCALL_1(func);
 
     _ctx->gal().zStencil().setZFunc(ogl::getGALDepthFunc(func));
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 GLAPI void GLAPIENTRY OGL_glDisable( GLenum cap )
 {
-    GLOBAL_PROFILER_ENTER_REGION("OGL2", "", "")
+    TRACING_ENTER_REGION("OGL2", "", "")
     OGL_PRINTCALL_1(cap);
 
     switch ( cap ) {
@@ -373,12 +373,12 @@ GLAPI void GLAPIENTRY OGL_glDisable( GLenum cap )
             break;
             //CG_ASSERT("Unknown glDisable parameter");
     }
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 GLAPI void GLAPIENTRY OGL_glEnable( GLenum cap )
 {
-    GLOBAL_PROFILER_ENTER_REGION("OGL2", "", "")
+    TRACING_ENTER_REGION("OGL2", "", "")
     OGL_PRINTCALL_1(cap);
 
     switch ( cap ) {
@@ -474,12 +474,12 @@ GLAPI void GLAPIENTRY OGL_glEnable( GLenum cap )
             break;
             //CG_ASSERT("Unknown glEnable parameter");
     }
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 GLAPI void GLAPIENTRY OGL_glEnableClientState (GLenum cap)
 {
-    GLOBAL_PROFILER_ENTER_REGION("OGL2", "", "")
+    TRACING_ENTER_REGION("OGL2", "", "")
 
     OGL_PRINTCALL_1(cap);
 
@@ -496,12 +496,12 @@ GLAPI void GLAPIENTRY OGL_glEnableClientState (GLenum cap)
         default:
             CG_ASSERT("Unexpected client state");
     }
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 GLAPI void GLAPIENTRY OGL_glDisableClientState (GLenum cap)
 {
-    GLOBAL_PROFILER_ENTER_REGION("OGL2", "", "")
+    TRACING_ENTER_REGION("OGL2", "", "")
 
     OGL_PRINTCALL_1(cap);
 
@@ -518,12 +518,12 @@ GLAPI void GLAPIENTRY OGL_glDisableClientState (GLenum cap)
         default:
             CG_ASSERT("Unexpected client state");
     }
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 GLAPI void GLAPIENTRY OGL_glEnd( void )
 {
-    GLOBAL_PROFILER_ENTER_REGION("OGL2", "", "")
+    TRACING_ENTER_REGION("OGL2", "", "")
     OGL_PRINTCALL;
 
     // Sets the proper shader (user/auto-generated) and update GPU shader constants
@@ -545,68 +545,68 @@ GLAPI void GLAPIENTRY OGL_glEnd( void )
     _ctx->deattachInternalSamplers();
 
     _ctx->deattachInternalBuffers();
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 GLAPI void GLAPIENTRY OGL_glFlush( void )
 {
-    GLOBAL_PROFILER_ENTER_REGION("OGL2", "", "")
+    TRACING_ENTER_REGION("OGL2", "", "")
     OGL_PRINTCALL;
 
     // nothing to be done
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 
 GLAPI void GLAPIENTRY OGL_glLightfv( GLenum light, GLenum pname, const GLfloat *params )
 {
-    GLOBAL_PROFILER_ENTER_REGION("OGL2", "", "")
+    TRACING_ENTER_REGION("OGL2", "", "")
     OGL_PRINTCALL_3(light,pname,params);
 
     _ctx->setLightParam(light, pname, params);
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 GLAPI void GLAPIENTRY OGL_glLightf( GLenum light, GLenum pname, const GLfloat params )
 {
-    GLOBAL_PROFILER_ENTER_REGION("OGL2", "", "")
+    TRACING_ENTER_REGION("OGL2", "", "")
     OGL_PRINTCALL_3(light,pname,params);
 
     _ctx->setLightParam(light, pname, &params);
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 GLAPI void GLAPIENTRY OGL_glLightModelfv( GLenum pname, const GLfloat *params )
 {
-    GLOBAL_PROFILER_ENTER_REGION("OGL2", "", "")
+    TRACING_ENTER_REGION("OGL2", "", "")
     OGL_PRINTCALL_2(pname,params);
 
     _ctx->setLightModel(pname, params);
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 GLAPI void GLAPIENTRY OGL_glLightModelf( GLenum pname, const GLfloat param )
 {
-    GLOBAL_PROFILER_ENTER_REGION("OGL2", "", "")
+    TRACING_ENTER_REGION("OGL2", "", "")
     OGL_PRINTCALL_2(pname,param);
 
     _ctx->setLightModel(pname, &param);
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 GLAPI void GLAPIENTRY OGL_glLightModeli( GLenum pname, const GLint param )
 {
-    GLOBAL_PROFILER_ENTER_REGION("OGL2", "", "")
+    TRACING_ENTER_REGION("OGL2", "", "")
     OGL_PRINTCALL_2(pname,param);
 
     GLfloat _param = static_cast<GLfloat>(param);
     _ctx->setLightModel(pname, &_param);
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 GLAPI void GLAPIENTRY OGL_glLoadIdentity( void )
 {
-    GLOBAL_PROFILER_ENTER_REGION("OGL2", "", "")
+    TRACING_ENTER_REGION("OGL2", "", "")
     OGL_PRINTCALL;
 
     // Create identity matrix
@@ -615,30 +615,30 @@ GLAPI void GLAPIENTRY OGL_glLoadIdentity( void )
 
     // Load the identity matrix in the current active stack/unit
     _ctx->matrixStack().set(identity);
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 GLAPI void GLAPIENTRY OGL_glMaterialfv( GLenum face, GLenum pname, const GLfloat *params )
 {
-    GLOBAL_PROFILER_ENTER_REGION("OGL2", "", "")
+    TRACING_ENTER_REGION("OGL2", "", "")
     OGL_PRINTCALL_3(face,pname,params);
 
     _ctx->setMaterialParam(face, pname, params);
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 GLAPI void GLAPIENTRY OGL_glMaterialf( GLenum face, GLenum pname, const GLfloat params )
 {
-    GLOBAL_PROFILER_ENTER_REGION("OGL2", "", "")
+    TRACING_ENTER_REGION("OGL2", "", "")
     OGL_PRINTCALL_3(face,pname,params);
 
     _ctx->setMaterialParam(face, pname, &params);
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 GLAPI void GLAPIENTRY OGL_glMatrixMode( GLenum mode )
 {
-    GLOBAL_PROFILER_ENTER_REGION("OGL2", "", "")
+    TRACING_ENTER_REGION("OGL2", "", "")
     OGL_PRINTCALL_1(mode);
 
     // Set active modelview decoding the GLenum token if required
@@ -650,12 +650,12 @@ GLAPI void GLAPIENTRY OGL_glMatrixMode( GLenum mode )
     }
 
     _ctx->setMatrixMode(mode);
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 GLAPI void GLAPIENTRY OGL_glMultMatrixd( const GLdouble *m )
 {
-    GLOBAL_PROFILER_ENTER_REGION("OGL2", "", "")
+    TRACING_ENTER_REGION("OGL2", "", "")
     OGL_PRINTCALL_1(arrayParam(m,16));
 
     // Convert doubles to floats
@@ -666,32 +666,32 @@ GLAPI void GLAPIENTRY OGL_glMultMatrixd( const GLdouble *m )
     GALxFloatMatrix4x4 mat(floatData, false); // Set row-major to false, matrix is expressed in major-column
 
     _ctx->matrixStack().multiply(mat);
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 GLAPI void GLAPIENTRY OGL_glNormal3f( GLfloat nx, GLfloat ny, GLfloat nz )
 {
-    GLOBAL_PROFILER_ENTER_REGION("OGL2", "", "")
+    TRACING_ENTER_REGION("OGL2", "", "")
     OGL_PRINTCALL_3(nx, ny, nz);
 
     _ctx->setNormal(nx, ny, nz);
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 GLAPI void GLAPIENTRY OGL_glNormal3fv( const GLfloat *v )
 {
-    GLOBAL_PROFILER_ENTER_REGION("OGL2", "", "")
+    TRACING_ENTER_REGION("OGL2", "", "")
     OGL_PRINTCALL_1(arrayParam(v,3));
 
     _ctx->setNormal(v[0], v[1], v[2]);
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 GLAPI void GLAPIENTRY OGL_glOrtho( GLdouble left, GLdouble right,
                                  GLdouble bottom, GLdouble top,
                                  GLdouble near_, GLdouble far_ )
 {
-    GLOBAL_PROFILER_ENTER_REGION("OGL2", "", "")
+    TRACING_ENTER_REGION("OGL2", "", "")
     OGL_PRINTCALL_6(left, right, bottom, top, near_, far_);
 
     GALxFloatMatrix4x4 mat;
@@ -718,14 +718,14 @@ GLAPI void GLAPIENTRY OGL_glOrtho( GLdouble left, GLdouble right,
 
     // Multiply the current matrix by 'mat'
     _ctx->matrixStack().multiply(mat);
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 GLAPI void GLAPIENTRY OGL_glFrustum( GLdouble left, GLdouble right,
                                     GLdouble bottom, GLdouble top,
                                     GLdouble near_, GLdouble far_ )
 {
-    GLOBAL_PROFILER_ENTER_REGION("OGL2", "", "")
+    TRACING_ENTER_REGION("OGL2", "", "")
     OGL_PRINTCALL_6(left, right, bottom, top, near_, far_);
 
     GALxFloatMatrix4x4 mat;
@@ -752,22 +752,22 @@ GLAPI void GLAPIENTRY OGL_glFrustum( GLdouble left, GLdouble right,
 
     // Multiply the current matrix by 'mat'
     _ctx->matrixStack().multiply(mat);
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 GLAPI void GLAPIENTRY OGL_glPopMatrix( void )
 {
-    GLOBAL_PROFILER_ENTER_REGION("OGL2", "", "")
+    TRACING_ENTER_REGION("OGL2", "", "")
     OGL_PRINTCALL;
 
     _ctx->matrixStack().pop();
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 GLAPI void GLAPIENTRY OGL_glProgramLocalParameter4fARB (GLenum target, GLuint index,
                                                   GLfloat x, GLfloat y, GLfloat z, GLfloat w)
 {
-    GLOBAL_PROFILER_ENTER_REGION("OGL2", "", "")
+    TRACING_ENTER_REGION("OGL2", "", "")
     OGL_PRINTCALL_6(target,index,x,y,z,w);
 
     // Get the local parameter bank of the current
@@ -775,12 +775,12 @@ GLAPI void GLAPIENTRY OGL_glProgramLocalParameter4fARB (GLenum target, GLuint in
 
     // Update local parameter bank
     locals.set(index, x, y, z, w);
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 GLAPI void GLAPIENTRY OGL_glProgramLocalParameters4fvEXT (GLenum target, GLuint index, GLsizei count, const GLfloat* d)
 {
-    GLOBAL_PROFILER_ENTER_REGION("OGL2", "", "")
+    TRACING_ENTER_REGION("OGL2", "", "")
     //OGL_PRINTCALL_6(target,index,x,y,z,w);
 
     // Get the local parameter bank of the current
@@ -790,12 +790,12 @@ GLAPI void GLAPIENTRY OGL_glProgramLocalParameters4fvEXT (GLenum target, GLuint 
     for (gal_uint i = 0; i < count ; i++)
         locals.set(index + i, d[i*4], d[i*4+1], d[i*4+2], d[i*4+3]);
 
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 GLAPI void GLAPIENTRY OGL_glProgramLocalParameter4fvARB (GLenum target, GLuint index, const GLfloat *v)
 {
-    GLOBAL_PROFILER_ENTER_REGION("OGL2", "", "")
+    TRACING_ENTER_REGION("OGL2", "", "")
     OGL_PRINTCALL_3(target, index, v);
 
     // Get the local parameter bank of the current
@@ -803,30 +803,30 @@ GLAPI void GLAPIENTRY OGL_glProgramLocalParameter4fvARB (GLenum target, GLuint i
 
     // Update local parameter bank
     locals.set(index,v[0], v[1], v[2], v[3]);
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 GLAPI void GLAPIENTRY OGL_glProgramStringARB (GLenum target, GLenum format, GLsizei len, const GLvoid * str)
 {
-    GLOBAL_PROFILER_ENTER_REGION("OGL2", "", "")
+    TRACING_ENTER_REGION("OGL2", "", "")
     OGL_PRINTCALL_4(target, format, len, str);
 
     _ctx->arbProgramManager().programString(target, format, len, str);
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 GLAPI void GLAPIENTRY OGL_glPushMatrix( void )
 {
-    GLOBAL_PROFILER_ENTER_REGION("OGL2", "", "")
+    TRACING_ENTER_REGION("OGL2", "", "")
     OGL_PRINTCALL;
 
     _ctx->matrixStack().push();
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 GLAPI void GLAPIENTRY OGL_glRotatef( GLfloat angle, GLfloat x, GLfloat y, GLfloat z )
 {
-    GLOBAL_PROFILER_ENTER_REGION("OGL2", "", "")
+    TRACING_ENTER_REGION("OGL2", "", "")
     OGL_PRINTCALL_4(angle, x, y, z);
 
     GALFloatMatrix4x4 m = _ctx->matrixStack().get();
@@ -835,12 +835,12 @@ GLAPI void GLAPIENTRY OGL_glRotatef( GLfloat angle, GLfloat x, GLfloat y, GLfloa
 
     _ctx->matrixStack().set(m);
 
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 GLAPI void GLAPIENTRY OGL_glRotated( GLdouble angle, GLdouble x, GLdouble y, GLdouble z )
 {
-    GLOBAL_PROFILER_ENTER_REGION("OGL2", "", "")
+    TRACING_ENTER_REGION("OGL2", "", "")
     OGL_PRINTCALL_4(angle, x, y, z);
 
     GALFloatMatrix4x4 m = _ctx->matrixStack().get();
@@ -849,7 +849,7 @@ GLAPI void GLAPIENTRY OGL_glRotated( GLdouble angle, GLdouble x, GLdouble y, GLd
 
     _ctx->matrixStack().set(m);
 
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 GLAPI void GLAPIENTRY OGL_glScalef( GLfloat x, GLfloat y, GLfloat z)
@@ -865,17 +865,17 @@ GLAPI void GLAPIENTRY OGL_glScalef( GLfloat x, GLfloat y, GLfloat z)
 
 GLAPI void GLAPIENTRY OGL_glShadeModel( GLenum mode )
 {
-    GLOBAL_PROFILER_ENTER_REGION("OGL2", "", "")
+    TRACING_ENTER_REGION("OGL2", "", "")
     OGL_PRINTCALL_1(mode);
 
     // CG1 Rasterizer uses fshInputAttribute[1] to store the fragment color
     _ctx->gal().rast().setInterpolationMode(1, ogl::trInterpolationMode(mode));
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 GLAPI void GLAPIENTRY OGL_glTranslatef( GLfloat x, GLfloat y, GLfloat z )
 {
-    GLOBAL_PROFILER_ENTER_REGION("OGL2", "", "")
+    TRACING_ENTER_REGION("OGL2", "", "")
     OGL_PRINTCALL_3(x,y,z);
 
     GALFloatMatrix4x4 m = _ctx->matrixStack().get();
@@ -883,12 +883,12 @@ GLAPI void GLAPIENTRY OGL_glTranslatef( GLfloat x, GLfloat y, GLfloat z )
     libGAL::_translate(m, x, y, z);
 
     _ctx->matrixStack().set(m);
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 GLAPI void GLAPIENTRY OGL_glTranslated( GLdouble x, GLdouble y, GLdouble z )
 {
-    GLOBAL_PROFILER_ENTER_REGION("OGL2", "", "")
+    TRACING_ENTER_REGION("OGL2", "", "")
     OGL_PRINTCALL_3(x,y,z);
 
     GALFloatMatrix4x4 m = _ctx->matrixStack().get();
@@ -896,48 +896,48 @@ GLAPI void GLAPIENTRY OGL_glTranslated( GLdouble x, GLdouble y, GLdouble z )
     libGAL::_translate(m,  static_cast<gal_float> (x),  static_cast<gal_float> (y),  static_cast<gal_float> (z));
 
     _ctx->matrixStack().set(m);
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 GLAPI void GLAPIENTRY OGL_glVertex3f( GLfloat x, GLfloat y, GLfloat z )
 {
-    GLOBAL_PROFILER_ENTER_REGION("OGL2", "", "")
+    TRACING_ENTER_REGION("OGL2", "", "")
     OGL_PRINTCALL_3(x, y, z);
 
     _ctx->addVertex(x, y, z);
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 GLAPI void GLAPIENTRY OGL_glVertex2f( GLfloat x, GLfloat y)
 {
-    GLOBAL_PROFILER_ENTER_REGION("OGL2", "", "")
+    TRACING_ENTER_REGION("OGL2", "", "")
     OGL_PRINTCALL_2(x, y);
 
     _ctx->addVertex(x, y, 0);
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 GLAPI void GLAPIENTRY OGL_glVertex2i ( GLint x, GLint y)
 {
-    GLOBAL_PROFILER_ENTER_REGION("OGL2", "", "")
+    TRACING_ENTER_REGION("OGL2", "", "")
     OGL_PRINTCALL_2(x, y);
 
     _ctx->addVertex(static_cast<GLfloat>(x), static_cast<GLfloat>(y), 0);
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 GLAPI void GLAPIENTRY OGL_glVertex3fv( const GLfloat *v )
 {
-    GLOBAL_PROFILER_ENTER_REGION("OGL2", "", "")
+    TRACING_ENTER_REGION("OGL2", "", "")
     OGL_PRINTCALL_1(arrayParam(v,3));
 
     _ctx->addVertex(v[0], v[1], v[2]);
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 GLAPI void GLAPIENTRY OGL_glViewport( GLint x, GLint y, GLsizei width, GLsizei height )
 {
-    GLOBAL_PROFILER_ENTER_REGION("OGL2", "", "")
+    TRACING_ENTER_REGION("OGL2", "", "")
     OGL_PRINTCALL_4(x,y,width,height);
 
     GALDevice& galDev = _ctx->gal();
@@ -949,12 +949,12 @@ GLAPI void GLAPIENTRY OGL_glViewport( GLint x, GLint y, GLsizei width, GLsizei h
     gal_uint w, h;
     if ( !galDev.getResolution(w,h) ) // Resolution not defined yet (backwards compatibility)
         galDev.setResolution(static_cast<gal_uint>(width), static_cast<gal_uint>(height));
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 GLAPI void GLAPIENTRY OGL_glVertexPointer( GLint size, GLenum type, GLsizei stride, const GLvoid *ptr )
 {
-    GLOBAL_PROFILER_ENTER_REGION("OGL2", "", "")
+    TRACING_ENTER_REGION("OGL2", "", "")
     OGL_PRINTCALL_4(size,type,stride,ptr);
 
     BufferManager& bufBM = _ctx->bufferManager();
@@ -963,12 +963,12 @@ GLAPI void GLAPIENTRY OGL_glVertexPointer( GLint size, GLenum type, GLsizei stri
 
     if (bufBM.getTarget(GL_ARRAY_BUFFER).hasCurrent())
         _ctx->getPosVArray().bufferID = bufBM.getTarget(GL_ARRAY_BUFFER).getCurrent().getName();
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 GLAPI void GLAPIENTRY OGL_glColorPointer( GLint size, GLenum type, GLsizei stride, const GLvoid *ptr )
 {
-    GLOBAL_PROFILER_ENTER_REGION("OGL2", "", "")
+    TRACING_ENTER_REGION("OGL2", "", "")
     OGL_PRINTCALL_4(size,type,stride,ptr);
 
     BufferManager& bufBM = _ctx->bufferManager();
@@ -977,12 +977,12 @@ GLAPI void GLAPIENTRY OGL_glColorPointer( GLint size, GLenum type, GLsizei strid
 
     if (bufBM.getTarget(GL_ARRAY_BUFFER).hasCurrent())
         _ctx->getColorVArray().bufferID = bufBM.getTarget(GL_ARRAY_BUFFER).getCurrent().getName();
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 GLAPI void GLAPIENTRY OGL_glNormalPointer( GLenum type, GLsizei stride, const GLvoid *ptr )
 {
-    GLOBAL_PROFILER_ENTER_REGION("OGL2", "", "")
+    TRACING_ENTER_REGION("OGL2", "", "")
     OGL_PRINTCALL_3(type,stride,ptr);
 
     BufferManager& bufBM = _ctx->bufferManager();
@@ -991,12 +991,12 @@ GLAPI void GLAPIENTRY OGL_glNormalPointer( GLenum type, GLsizei stride, const GL
 
       if (bufBM.getTarget(GL_ARRAY_BUFFER).hasCurrent())
         _ctx->getNormalVArray().bufferID = bufBM.getTarget(GL_ARRAY_BUFFER).getCurrent().getName();
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 GLAPI void GLAPIENTRY OGL_glDrawElements( GLenum mode, GLsizei count, GLenum type, const GLvoid *indices )
 {
-    GLOBAL_PROFILER_ENTER_REGION("glDraw", "", "")
+    TRACING_ENTER_REGION("glDraw", "", "")
     OGL_PRINTCALL_4(mode,count,type,indices);
 
     BufferManager& bufBM = _ctx->bufferManager();
@@ -1064,12 +1064,12 @@ GLAPI void GLAPIENTRY OGL_glDrawElements( GLenum mode, GLsizei count, GLenum typ
 
     if (!bufBM.getTarget(GL_ELEMENT_ARRAY_BUFFER).hasCurrent())
         _ctx->gal().destroy(indicesBuffer);
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 GLAPI void GLAPIENTRY OGL_glDrawArrays( GLenum mode, GLint first, GLsizei count )
 {
-    GLOBAL_PROFILER_ENTER_REGION("glDraw", "", "")
+    TRACING_ENTER_REGION("glDraw", "", "")
 
     OGL_PRINTCALL_3(mode,first,count);
 
@@ -1104,7 +1104,7 @@ GLAPI void GLAPIENTRY OGL_glDrawRangeElements( GLenum mode, GLuint start, GLuint
                                            GLenum type, const GLvoid *indices )
 
 {
-    GLOBAL_PROFILER_ENTER_REGION("glDraw", "", "")
+    TRACING_ENTER_REGION("glDraw", "", "")
 
     OGL_PRINTCALL_6(mode, start, end, count, type, indices);
 
@@ -1166,23 +1166,23 @@ GLAPI void GLAPIENTRY OGL_glDrawRangeElements( GLenum mode, GLuint start, GLuint
     if (!bufBM.getTarget(GL_ELEMENT_ARRAY_BUFFER).hasCurrent())
         _ctx->gal().destroy(indicesBuffer);
 
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 GLAPI void GLAPIENTRY OGL_glMultMatrixf( const GLfloat *m )
 {
-    GLOBAL_PROFILER_ENTER_REGION("OGL2", "", "")
+    TRACING_ENTER_REGION("OGL2", "", "")
     OGL_PRINTCALL_1(arrayParam(m,16));
 
     GALxFloatMatrix4x4 mat(m, false);
     _ctx->matrixStack().multiply(mat);
 
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 GLAPI void GLAPIENTRY OGL_glBindBufferARB(GLenum target, GLuint buffer)
 {
-    GLOBAL_PROFILER_ENTER_REGION("OGL2", "", "")
+    TRACING_ENTER_REGION("OGL2", "", "")
 
     OGL_PRINTCALL_2(target,buffer);
 
@@ -1195,54 +1195,54 @@ GLAPI void GLAPIENTRY OGL_glBindBufferARB(GLenum target, GLuint buffer)
         BufferObject& buff = static_cast<BufferObject&>(bufBM.bindObject(target, buffer));
         buff.attachDevice(&_ctx->gal());
     }
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 GLAPI void GLAPIENTRY OGL_glDeleteBuffersARB(GLsizei n, const GLuint *buffers)
 {
-    GLOBAL_PROFILER_ENTER_REGION("OGL2", "", "")
+    TRACING_ENTER_REGION("OGL2", "", "")
     OGL_PRINTCALL_2(n,buffers);
 
     BufferManager& bufBM = _ctx->bufferManager();
     bufBM.removeObjects(n, buffers);
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 GLAPI void GLAPIENTRY OGL_glBufferDataARB(GLenum target, GLsizeiptr size, const GLvoid *data, GLenum usage)
 {
-    GLOBAL_PROFILER_ENTER_REGION("OGL2", "", "")
+    TRACING_ENTER_REGION("OGL2", "", "")
 
     OGL_PRINTCALL_4(target, size, data, usage);
 
     BufferManager& bufBM = _ctx->bufferManager();
     bufBM.target(target).getCurrent().setContents(size, (U08*)data, usage);
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 GLAPI void GLAPIENTRY OGL_glBufferSubDataARB (GLenum target, GLintptrARB offset,
                                               GLsizeiptrARB size, const GLvoid *data)
 {
-    GLOBAL_PROFILER_ENTER_REGION("OGL2", "", "")
+    TRACING_ENTER_REGION("OGL2", "", "")
     
     OGL_PRINTCALL_4(target, offset, size, data);
 
     BufferManager& bufBM = _ctx->bufferManager();
     bufBM.target(target).getCurrent().setPartialContents(offset, size, (U08*)data);
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 GLAPI void GLAPIENTRY OGL_glTexCoord2f( GLfloat s, GLfloat t )
 {
-    GLOBAL_PROFILER_ENTER_REGION("OGL2", "", "")
+    TRACING_ENTER_REGION("OGL2", "", "")
     OGL_PRINTCALL_2(s, t);
 
     _ctx->setTexCoord(0,s,t); // Set texture coordinate for texture unit 0
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 GLAPI void GLAPIENTRY OGL_glBindTexture( GLenum target, GLuint texture )
 {
-    GLOBAL_PROFILER_ENTER_REGION("OGL2", "", "")
+    TRACING_ENTER_REGION("OGL2", "", "")
     OGL_PRINTCALL_2(target, texture);
 
     GLTextureManager& tm = _ctx->textureManager(); // Get the texture manager
@@ -1263,27 +1263,27 @@ GLAPI void GLAPIENTRY OGL_glBindTexture( GLenum target, GLuint texture )
         to.attachDevice(&_ctx->gal(),target);
         _ctx->getTextureUnit(tu).setTextureObject(target, &to);
     }
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 GLAPI void GLAPIENTRY OGL_glTexParameteri( GLenum target, GLenum pname, GLint param )
 {
-    GLOBAL_PROFILER_ENTER_REGION("OGL2", "", "")
+    TRACING_ENTER_REGION("OGL2", "", "")
     OGL_PRINTCALL_3(target, pname, param);
 
     GLTextureManager& texTM = _ctx->textureManager();
     texTM.getTarget(target).getCurrent().setParameter(pname, &param);
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 GLAPI void GLAPIENTRY OGL_glTexParameterf( GLenum target, GLenum pname, GLfloat param )
 {
-    GLOBAL_PROFILER_ENTER_REGION("OGL2", "", "")
+    TRACING_ENTER_REGION("OGL2", "", "")
     OGL_PRINTCALL_3(target, pname, param);
 
     GLTextureManager& texTM = _ctx->textureManager();
     texTM.getTarget(target).getCurrent().setParameter(pname, &param);
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 GLAPI void GLAPIENTRY OGL_glTexImage2D( GLenum target, GLint level,
@@ -1292,7 +1292,7 @@ GLAPI void GLAPIENTRY OGL_glTexImage2D( GLenum target, GLint level,
                                         GLint border, GLenum format, GLenum type,
                                         const GLvoid *pixels )
 {
-    GLOBAL_PROFILER_ENTER_REGION("OGL2", "", "")
+    TRACING_ENTER_REGION("OGL2", "", "")
 
 
     OGL_PRINTCALL_9(target,level, internalFormat, width, height, border, format, type, pixels);
@@ -1300,7 +1300,7 @@ GLAPI void GLAPIENTRY OGL_glTexImage2D( GLenum target, GLint level,
     GLTextureObject& to = getTextureObject(target);
     to.attachDevice(&_ctx->gal(),target);
 
-    GLOBAL_PROFILER_ENTER_REGION("setContents", "GLTextureObject", "setContents")
+    TRACING_ENTER_REGION("setContents", "GLTextureObject", "setContents")
 
     switch (internalFormat)
     {
@@ -1317,8 +1317,8 @@ GLAPI void GLAPIENTRY OGL_glTexImage2D( GLenum target, GLint level,
 
     to.setContents(target, level, internalFormat, width, height, 1, border, format, type, (const GLubyte*)pixels);
     
-    GLOBAL_PROFILER_EXIT_REGION()
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 
@@ -1330,7 +1330,7 @@ GLAPI void GLAPIENTRY OGL_glTexImage3D( GLenum target, GLint level,
                                         const GLvoid *pixels )
 
 {
-    GLOBAL_PROFILER_ENTER_REGION("OGL2", "", "")
+    TRACING_ENTER_REGION("OGL2", "", "")
 
 
     OGL_PRINTCALL_9(target,level, internalFormat, width, height, border, format, type, pixels);
@@ -1338,7 +1338,7 @@ GLAPI void GLAPIENTRY OGL_glTexImage3D( GLenum target, GLint level,
     GLTextureObject& to = getTextureObject(target);
     to.attachDevice(&_ctx->gal(),target);
 
-    GLOBAL_PROFILER_ENTER_REGION("setContents", "GLTextureObject", "setContents")
+    TRACING_ENTER_REGION("setContents", "GLTextureObject", "setContents")
     
         switch (internalFormat)
     {
@@ -1355,8 +1355,8 @@ GLAPI void GLAPIENTRY OGL_glTexImage3D( GLenum target, GLint level,
 
     to.setContents(target, level, internalFormat, width, height, depth, border, format, type, (const GLubyte*)pixels);
     
-    GLOBAL_PROFILER_EXIT_REGION()
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
+    TRACING_EXIT_REGION()
 
 }
 
@@ -1366,7 +1366,7 @@ GLAPI void GLAPIENTRY OGL_glCompressedTexImage2D( GLenum target, GLint level,
                                               GLint border, GLsizei imageSize,
                                               const GLvoid *data )
 {
-    GLOBAL_PROFILER_ENTER_REGION("OGL2", "", "")
+    TRACING_ENTER_REGION("OGL2", "", "")
     
 
     OGL_PRINTCALL_8(target, level, internalFormat, width, height, border, imageSize, data);
@@ -1376,14 +1376,14 @@ GLAPI void GLAPIENTRY OGL_glCompressedTexImage2D( GLenum target, GLint level,
     to.attachDevice(&_ctx->gal(),target);
 
 
-    GLOBAL_PROFILER_ENTER_REGION("setContents", "GLTextureObject", "setContents")
+    TRACING_ENTER_REGION("setContents", "GLTextureObject", "setContents")
 
 
     to.setContents(target, level, internalFormat, width, height, 1, border, 0, 0, (const GLubyte*)data, imageSize);
 
 
-    GLOBAL_PROFILER_EXIT_REGION()
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 GLAPI void GLAPIENTRY OGL_glCompressedTexSubImage2DARB (  GLenum target,
@@ -1396,7 +1396,7 @@ GLAPI void GLAPIENTRY OGL_glCompressedTexSubImage2DARB (  GLenum target,
                                                     GLsizei imageSize,
                                                     const GLvoid *data)
 {
-    GLOBAL_PROFILER_ENTER_REGION("OGL2", "", "")
+    TRACING_ENTER_REGION("OGL2", "", "")
     
 
     OGL_PRINTCALL_8(target, level, internalFormat, width, height, border, imageSize, data);
@@ -1405,14 +1405,14 @@ GLAPI void GLAPIENTRY OGL_glCompressedTexSubImage2DARB (  GLenum target,
     to.attachDevice(&_ctx->gal(),target);
 
 
-    GLOBAL_PROFILER_ENTER_REGION("setContents", "GLTextureObject", "setContents")
+    TRACING_ENTER_REGION("setContents", "GLTextureObject", "setContents")
 
 
     to.setPartialContents(target, level, xoffset, yoffset, 0, width, height, 1, format, 0, (const GLubyte*)data, imageSize);
 
 
-    GLOBAL_PROFILER_EXIT_REGION()
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
+    TRACING_EXIT_REGION()
 
 }
 
@@ -1422,7 +1422,7 @@ GLAPI void GLAPIENTRY OGL_glCompressedTexImage2DARB( GLenum target, GLint level,
                                                  GLint border, GLsizei imageSize,
                                                  const GLvoid *data )
 {
-    GLOBAL_PROFILER_ENTER_REGION("OGL2", "", "")
+    TRACING_ENTER_REGION("OGL2", "", "")
 
 
     OGL_PRINTCALL_8(target, level, internalFormat, width, height, border, imageSize, data);
@@ -1430,61 +1430,61 @@ GLAPI void GLAPIENTRY OGL_glCompressedTexImage2DARB( GLenum target, GLint level,
     GLTextureObject& to = getTextureObject(target);
     to.attachDevice(&_ctx->gal(),target);
 
-    GLOBAL_PROFILER_ENTER_REGION("setContents", "GLTextureObject", "setContents")
+    TRACING_ENTER_REGION("setContents", "GLTextureObject", "setContents")
 
     to.setContents(target, level, internalFormat, width, height, 1, border, 0, 0, (const GLubyte*)data, imageSize);
 
-    GLOBAL_PROFILER_EXIT_REGION()
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 GLAPI void GLAPIENTRY OGL_glLoadMatrixf( const GLfloat *m )
 {
-    GLOBAL_PROFILER_ENTER_REGION("OGL2", "", "")
+    TRACING_ENTER_REGION("OGL2", "", "")
     OGL_PRINTCALL_1(m);
     // Create identity matrix
     GALxFloatMatrix4x4 mat(m, false);
 
     _ctx->matrixStack().set(mat);
 
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 GLAPI void GLAPIENTRY OGL_glTexEnvi( GLenum target, GLenum pname, GLint param )
 {
-    GLOBAL_PROFILER_ENTER_REGION("OGL2", "", "")
+    TRACING_ENTER_REGION("OGL2", "", "")
     OGL_PRINTCALL_3(target, pname, param);
 
     TextureUnit& tu = _ctx->getActiveTextureUnit();
     tu.setParameter(target, pname, &param);
 
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 GLAPI void GLAPIENTRY OGL_glTexEnvf( GLenum target, GLenum pname, GLfloat param )
 {
-    GLOBAL_PROFILER_ENTER_REGION("OGL2", "", "")
+    TRACING_ENTER_REGION("OGL2", "", "")
     OGL_PRINTCALL_3(target, pname, param);
 
     TextureUnit& tu = _ctx->getActiveTextureUnit();
     tu.setParameter(target, pname, &param);
 
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 GLAPI void GLAPIENTRY OGL_glTexEnvfv( GLenum target, GLenum pname, const GLfloat* param )
 {
-    GLOBAL_PROFILER_ENTER_REGION("OGL2", "", "")
+    TRACING_ENTER_REGION("OGL2", "", "")
     OGL_PRINTCALL_3(target, pname, param);
 
     TextureUnit& tu = _ctx->getActiveTextureUnit();
     tu.setParameter(target, pname, param);
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 GLAPI void GLAPIENTRY OGL_glActiveTextureARB(GLenum texture)
 {
-    GLOBAL_PROFILER_ENTER_REGION("OGL2", "", "")
+    TRACING_ENTER_REGION("OGL2", "", "")
     OGL_PRINTCALL_1(texture);
 
     GLTextureManager& texTM = _ctx->textureManager();
@@ -1499,48 +1499,48 @@ GLAPI void GLAPIENTRY OGL_glActiveTextureARB(GLenum texture)
         sprintf(msg, "TextureUnit %d does not exist", group);
         CG_ASSERT(msg);
     }
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 GLAPI void GLAPIENTRY OGL_glFogf( GLenum pname, GLfloat param )
 {
-    GLOBAL_PROFILER_ENTER_REGION("OGL2", "", "")
+    TRACING_ENTER_REGION("OGL2", "", "")
     OGL_PRINTCALL_2(pname,param);
 
     _ctx->setFog(pname, &param);
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 GLAPI void GLAPIENTRY OGL_glFogi( GLenum pname, GLint param )
 {
-    GLOBAL_PROFILER_ENTER_REGION("OGL2", "", "")
+    TRACING_ENTER_REGION("OGL2", "", "")
     OGL_PRINTCALL_2(pname,param);
 
     _ctx->setFog(pname, &param);
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 GLAPI void GLAPIENTRY OGL_glFogfv( GLenum pname, const GLfloat *params )
 {
-    GLOBAL_PROFILER_ENTER_REGION("OGL2", "", "")
+    TRACING_ENTER_REGION("OGL2", "", "")
     OGL_PRINTCALL_2(pname,params);
 
     _ctx->setFog(pname, params);
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 GLAPI void GLAPIENTRY OGL_glFogiv( GLenum pname, const GLint *params )
 {
-    GLOBAL_PROFILER_ENTER_REGION("OGL2", "", "")
+    TRACING_ENTER_REGION("OGL2", "", "")
     OGL_PRINTCALL_2(pname,params);
 
     _ctx->setFog(pname, params);
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 GLAPI void GLAPIENTRY OGL_glTexCoordPointer( GLint size, GLenum type, GLsizei stride, const GLvoid *ptr )
 {
-    GLOBAL_PROFILER_ENTER_REGION("OGL2", "", "")
+    TRACING_ENTER_REGION("OGL2", "", "")
     OGL_PRINTCALL_4(size, type, stride, ptr);
 
     BufferManager& bufBM = _ctx->bufferManager();
@@ -1551,24 +1551,24 @@ GLAPI void GLAPIENTRY OGL_glTexCoordPointer( GLint size, GLenum type, GLsizei st
 
     if (bufBM.getTarget(GL_ARRAY_BUFFER).hasCurrent())
         _ctx->getTextureVArray(clientTUnit).bufferID = bufBM.getTarget(GL_ARRAY_BUFFER).getCurrent().getName();
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 GLAPI void GLAPIENTRY OGL_glBlendFunc( GLenum sfactor, GLenum dfactor )
 {
-    GLOBAL_PROFILER_ENTER_REGION("OGL2", "", "")
+    TRACING_ENTER_REGION("OGL2", "", "")
     OGL_PRINTCALL_2(sfactor, dfactor);
 
     _ctx->gal().blending().setSrcBlend(0, ogl::getGALBlendOption(sfactor));
     _ctx->gal().blending().setSrcBlendAlpha(0, ogl::getGALBlendOption(sfactor));
     _ctx->gal().blending().setDestBlend(0, ogl::getGALBlendOption(dfactor));
     _ctx->gal().blending().setDestBlendAlpha(0, ogl::getGALBlendOption(dfactor));
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 GLAPI void GLAPIENTRY OGL_glFrontFace( GLenum mode )
 {
-    GLOBAL_PROFILER_ENTER_REGION("OGL2", "", "")
+    TRACING_ENTER_REGION("OGL2", "", "")
     OGL_PRINTCALL_1(mode);
 
     switch ( mode )
@@ -1582,39 +1582,39 @@ GLAPI void GLAPIENTRY OGL_glFrontFace( GLenum mode )
         default:
             CG_ASSERT("Unkown front face mode");
     }
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 GLAPI void GLAPIENTRY OGL_glTexGenfv(GLenum coord, GLenum pname, const GLfloat* param)
 {
-    GLOBAL_PROFILER_ENTER_REGION("OGL2", "", "")
+    TRACING_ENTER_REGION("OGL2", "", "")
     OGL_PRINTCALL_3(coord,pname,param);
 
     _ctx->setTexGen(coord, pname, param);
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 GLAPI void GLAPIENTRY OGL_glTexGeni(GLenum coord, GLenum pname, const GLint param)
 {
-    GLOBAL_PROFILER_ENTER_REGION("OGL2", "", "")
+    TRACING_ENTER_REGION("OGL2", "", "")
     OGL_PRINTCALL_3(coord,pname,param);
 
     _ctx->setTexGen(coord, pname, param);
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 GLAPI void GLAPIENTRY OGL_glTexGenf(GLenum coord, GLenum pname, const GLfloat param)
 {
-    GLOBAL_PROFILER_ENTER_REGION("OGL2", "", "")
+    TRACING_ENTER_REGION("OGL2", "", "")
     OGL_PRINTCALL_3(coord,pname,param);
 
     _ctx->setTexGen(coord, pname, GLfloat(param));
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 GLAPI void GLAPIENTRY OGL_glClientActiveTextureARB(GLenum texture)
 {
-    GLOBAL_PROFILER_ENTER_REGION("OGL2", "", "")
+    TRACING_ENTER_REGION("OGL2", "", "")
     OGL_PRINTCALL_1(texture);
 
     _ctx->setCurrentClientTextureUnit(texture - GL_TEXTURE0);
@@ -1626,7 +1626,7 @@ GLAPI void GLAPIENTRY OGL_glCopyTexImage2D( GLenum target, GLint level,
                                             GLsizei width, GLsizei height,
                                             GLint border )
 {
-    GLOBAL_PROFILER_ENTER_REGION("OGL2", "", "")
+    TRACING_ENTER_REGION("OGL2", "", "")
     OGL_PRINTCALL_8(target, level, internalFormat, x, y, width, height, border);
 
     GLTextureObject& to = getTextureObject(target);
@@ -1677,16 +1677,16 @@ GLAPI void GLAPIENTRY OGL_glCopyTexImage2D( GLenum target, GLint level,
         }
     }
 
-    GLOBAL_PROFILER_ENTER_REGION("setContents", "GLTextureObject", "setContext")
+    TRACING_ENTER_REGION("setContents", "GLTextureObject", "setContext")
     to.setContents(target, level, internalFormat, width, height, 1, border, internalFormat, GL_UNSIGNED_BYTE, (const GLubyte*)data, 0);
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 
     delete[] data;
 
     _ctx->gal().sampler(_ctx->getActiveTextureUnitNumber()).performBlitOperation2D(0, 0,
         x, y, width, height, to.getWidth(target,level), ogl::getGALTextureFormat(internalFormat), (libGAL::GALTexture2D*)to.getTexture(), level);
 
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 GLAPI void GLAPIENTRY OGL_glCopyTexSubImage2D( GLenum target, GLint level,
@@ -1694,7 +1694,7 @@ GLAPI void GLAPIENTRY OGL_glCopyTexSubImage2D( GLenum target, GLint level,
                                            GLint x, GLint y,
                                            GLsizei width, GLsizei height )
 {
-    GLOBAL_PROFILER_ENTER_REGION("OGL2", "", "")
+    TRACING_ENTER_REGION("OGL2", "", "")
 
     OGL_PRINTCALL_8(target, level, xoffset, yoffset, x, y, width, height);
 
@@ -1748,50 +1748,50 @@ GLAPI void GLAPIENTRY OGL_glCopyTexSubImage2D( GLenum target, GLint level,
         }
     }
 
-    GLOBAL_PROFILER_ENTER_REGION("setContents", "GLTextureObject", "setContext")
+    TRACING_ENTER_REGION("setContents", "GLTextureObject", "setContext")
     to.setPartialContents(target, level, xoffset, yoffset, 0, width, height, 1, GL_RGBA, GL_UNSIGNED_BYTE, subData, 0);
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 
     delete[] subData;
 
     _ctx->gal().sampler(_ctx->getActiveTextureUnitNumber()).performBlitOperation2D(xoffset, yoffset,
         x, y, width, height,to.getWidth(target,level), ogl::getGALTextureFormat(internalFormat), (libGAL::GALTexture2D*)to.getTexture(), level);
 
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 
 GLAPI void GLAPIENTRY OGL_glDepthMask( GLboolean flag )
 {
-    GLOBAL_PROFILER_ENTER_REGION("OGL2", "", "")
+    TRACING_ENTER_REGION("OGL2", "", "")
     OGL_PRINTCALL_1(flag);
 
     _ctx->gal().zStencil().setZMask(flag);
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 GLAPI void GLAPIENTRY OGL_glEnableVertexAttribArrayARB (GLuint index)
 {
-    GLOBAL_PROFILER_ENTER_REGION("OGL2", "", "")
+    TRACING_ENTER_REGION("OGL2", "", "")
     OGL_PRINTCALL_1(index);
 
     _ctx->setEnabledGenericAttribArray(index, true);
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 GLAPI void GLAPIENTRY OGL_glDisableVertexAttribArrayARB (GLuint index)
 {
-    GLOBAL_PROFILER_ENTER_REGION("OGL2", "", "")
+    TRACING_ENTER_REGION("OGL2", "", "")
     OGL_PRINTCALL_1(index);
 
     _ctx->setEnabledGenericAttribArray(index, false);
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 GLAPI void GLAPIENTRY OGL_glVertexAttribPointerARB(GLuint index, GLint size, GLenum type,
                                                 GLboolean normalized, GLsizei stride, const GLvoid *pointer)
 {
-    GLOBAL_PROFILER_ENTER_REGION("OGL2", "", "")
+    TRACING_ENTER_REGION("OGL2", "", "")
     OGL_PRINTCALL_6(index, size, type, normalized, stride, pointer);
 
     BufferManager& bufBM = _ctx->bufferManager();
@@ -1801,21 +1801,21 @@ GLAPI void GLAPIENTRY OGL_glVertexAttribPointerARB(GLuint index, GLint size, GLe
     if (bufBM.getTarget(GL_ARRAY_BUFFER).hasCurrent())
         _ctx->getGenericVArray(index).bufferID = bufBM.getTarget(GL_ARRAY_BUFFER).getCurrent().getName();
 
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 GLAPI void GLAPIENTRY OGL_glStencilFunc( GLenum func, GLint ref, GLuint mask )
 {
-    GLOBAL_PROFILER_ENTER_REGION("OGL2", "", "")
+    TRACING_ENTER_REGION("OGL2", "", "")
     OGL_PRINTCALL_3(func, ref, mask);
 
     _ctx->gal().zStencil().setStencilFunc(libGAL::GAL_FACE_FRONT,ogl::getGALCompareFunc(func), ref, mask);
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 GLAPI void GLAPIENTRY OGL_glStencilOp( GLenum fail, GLenum zfail, GLenum zpass )
 {
-    GLOBAL_PROFILER_ENTER_REGION("OGL2", "", "")
+    TRACING_ENTER_REGION("OGL2", "", "")
 
     OGL_PRINTCALL_3 (fail, zfail, zpass);
 
@@ -1824,12 +1824,12 @@ GLAPI void GLAPIENTRY OGL_glStencilOp( GLenum fail, GLenum zfail, GLenum zpass )
                                         ogl::getGALStencilOp(zfail),
                                         ogl::getGALStencilOp(zpass));
 
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 GLAPI void GLAPIENTRY OGL_glStencilOpSeparateATI(GLenum face, GLenum fail, GLenum zfail, GLenum zpass )
 {
-    GLOBAL_PROFILER_ENTER_REGION("OGL2", "", "")
+    TRACING_ENTER_REGION("OGL2", "", "")
 
     OGL_PRINTCALL_3 (fail, zfail, zpass);
 
@@ -1838,135 +1838,135 @@ GLAPI void GLAPIENTRY OGL_glStencilOpSeparateATI(GLenum face, GLenum fail, GLenu
                                         ogl::getGALStencilOp(zfail),
                                         ogl::getGALStencilOp(zpass));
 
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 GLAPI void GLAPIENTRY OGL_glClearStencil( GLint stencilValue )
 {
-    GLOBAL_PROFILER_ENTER_REGION("OGL2", "", "")
+    TRACING_ENTER_REGION("OGL2", "", "")
 
     OGL_PRINTCALL_1(stencilValue);
 
     _ctx->setStencilClearValue(stencilValue);
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 GLAPI void GLAPIENTRY OGL_glStencilMask( GLuint mask )
 {
-    GLOBAL_PROFILER_ENTER_REGION("OGL2", "", "")
+    TRACING_ENTER_REGION("OGL2", "", "")
     OGL_PRINTCALL_1(mask);
 
     _ctx->gal().zStencil().setStencilUpdateMask(mask);
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 GLAPI void GLAPIENTRY OGL_glColorMask( GLboolean red, GLboolean green, GLboolean blue, GLboolean alpha )
 {
-    GLOBAL_PROFILER_ENTER_REGION("OGL2", "", "")
+    TRACING_ENTER_REGION("OGL2", "", "")
 
     OGL_PRINTCALL_4(red, green, blue, alpha);
 
     _ctx->gal().blending().setColorMask(0, red, green, blue, alpha);
 
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 GLAPI void GLAPIENTRY OGL_glAlphaFunc( GLenum func, GLclampf ref )
 {
-    GLOBAL_PROFILER_ENTER_REGION("OGL2", "", "")
+    TRACING_ENTER_REGION("OGL2", "", "")
     OGL_PRINTCALL_2(func, ref);
 
     _ctx->fixedPipelineSettings().alphaTestFunction = ogl::getGALxAlphaFunc(func);
     //_ctx->fixedPipelineState().postshade().setAlphaTestRefValue((gal_float) ref);
 
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 GLAPI void GLAPIENTRY OGL_glBlendColor( GLclampf red, GLclampf green, GLclampf blue, GLclampf alpha )
 {
-    GLOBAL_PROFILER_ENTER_REGION("OGL2", "", "")
+    TRACING_ENTER_REGION("OGL2", "", "")
     OGL_PRINTCALL_4(red, green, blue, alpha);
 
     _ctx->gal().blending().setBlendColor(0, red, green, blue, alpha);
 
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 GLAPI void GLAPIENTRY OGL_glColorMaterial( GLenum face, GLenum mode )
 {
-    GLOBAL_PROFILER_ENTER_REGION("OGL2", "", "")
+    TRACING_ENTER_REGION("OGL2", "", "")
 
     OGL_PRINTCALL_2(face, mode);
 
     _ctx->fixedPipelineSettings().colorMaterialEnabledFace = ogl::getGALxColorMaterialFace(face);
     _ctx->fixedPipelineSettings().colorMaterialMode = ogl::getGALxColorMaterialMode(mode);
 
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 GLAPI void GLAPIENTRY OGL_glScissor( GLint x, GLint y, GLsizei width, GLsizei height)
 {
-    GLOBAL_PROFILER_ENTER_REGION("OGL2", "", "")
+    TRACING_ENTER_REGION("OGL2", "", "")
     OGL_PRINTCALL_4(x, y, width, height);
 
     _ctx->gal().rast().setScissor(x, y, width, height);
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 GLAPI void GLAPIENTRY OGL_glDepthRange( GLclampd near_val, GLclampd far_val )
 {
-    GLOBAL_PROFILER_ENTER_REGION("OGL2", "", "")
+    TRACING_ENTER_REGION("OGL2", "", "")
 
     OGL_PRINTCALL_2(near_val, far_val);
 
     _ctx->fixedPipelineState().fshade().setDepthRange(near_val, far_val);
     _ctx->gal().zStencil().setDepthRange(static_cast<GLfloat>(near_val), static_cast<GLfloat>(far_val));
 
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 GLAPI void GLAPIENTRY OGL_glPolygonOffset( GLfloat factor, GLfloat units )
 {
-    GLOBAL_PROFILER_ENTER_REGION("OGL2", "", "")
+    TRACING_ENTER_REGION("OGL2", "", "")
 
     OGL_PRINTCALL_2(factor, units);
 
     _ctx->gal().zStencil().setPolygonOffset (factor, units);
 
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 GLAPI void GLAPIENTRY OGL_glPushAttrib( GLbitfield mask )
 {
-    GLOBAL_PROFILER_ENTER_REGION("OGL2", "", "")
+    TRACING_ENTER_REGION("OGL2", "", "")
     OGL_PRINTCALL_1(mask);
 
     _ctx->pushAttrib(mask);
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 GLAPI void GLAPIENTRY OGL_glPopAttrib( void )
 {
-    GLOBAL_PROFILER_ENTER_REGION("OGL2", "", "")
+    TRACING_ENTER_REGION("OGL2", "", "")
     OGL_PRINTCALL_1(void);
 
     _ctx->popAttrib();
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 GLAPI void GLAPIENTRY OGL_glBlendEquation( GLenum mode )
 {
-    GLOBAL_PROFILER_ENTER_REGION("OGL2", "", "")
+    TRACING_ENTER_REGION("OGL2", "", "")
     OGL_PRINTCALL_1(mode);
 
     _ctx->gal().blending().setBlendFunc(0, ogl::getGALBlendFunction(mode));
 
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 GLAPI void GLAPIENTRY OGL_glColor4ub( GLubyte red, GLubyte green, GLubyte blue, GLubyte alpha )
 {
-    GLOBAL_PROFILER_ENTER_REGION("OGL2", "", "")
+    TRACING_ENTER_REGION("OGL2", "", "")
 
     OGL_PRINTCALL_4(red, green, blue, alpha);
 
@@ -1977,23 +1977,23 @@ GLAPI void GLAPIENTRY OGL_glColor4ub( GLubyte red, GLubyte green, GLubyte blue, 
 
     _ctx->setColor(r, g, b, a);
 
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 GLAPI void GLAPIENTRY OGL_glColor4fv( const GLfloat *v )
 {
-    GLOBAL_PROFILER_ENTER_REGION("OGL2", "", "")
+    TRACING_ENTER_REGION("OGL2", "", "")
 
     OGL_PRINTCALL_4(red, green, blue, alpha);
 
     _ctx->setColor(v[0], v[1], v[2], v[3]);
 
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 GLAPI const GLubyte* GLAPIENTRY OGL_glGetString( GLenum name )
 {
-    GLOBAL_PROFILER_ENTER_REGION("OGL2", "", "")
+    TRACING_ENTER_REGION("OGL2", "", "")
 
     OGL_PRINTCALL_1(name);
 
@@ -2013,7 +2013,7 @@ GLAPI const GLubyte* GLAPIENTRY OGL_glGetString( GLenum name )
             return extensions;
     }
 
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
     CG_ASSERT("Unknown constant");
     return 0;
 
@@ -2025,41 +2025,41 @@ GLAPI void GLAPIENTRY OGL_glTexSubImage2D( GLenum target, GLint level,
                                        GLenum format, GLenum type,
                                        const GLvoid *pixels )
 {
-    GLOBAL_PROFILER_ENTER_REGION("OGL2", "", "")
+    TRACING_ENTER_REGION("OGL2", "", "")
 
     OGL_PRINTCALL_9(target,level, xoffset, yoffset, width, height, format, type, pixels);
 
     GLTextureObject& to = getTextureObject(target);
 
-    GLOBAL_PROFILER_ENTER_REGION("setContents", "GLTextureObject", "setContext")
+    TRACING_ENTER_REGION("setContents", "GLTextureObject", "setContext")
     to.setPartialContents(target, level, xoffset, yoffset, 0, width, height, 0, format, type, (const GLubyte*)pixels);
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 GLAPI void GLAPIENTRY OGL_glMultiTexCoord2f( GLenum texture, GLfloat s, GLfloat t )
 {
-    GLOBAL_PROFILER_ENTER_REGION("OGL2", "", "")
+    TRACING_ENTER_REGION("OGL2", "", "")
 
     OGL_PRINTCALL_3(texture, s, t);
 
     GLuint texUnit = texture - GL_TEXTURE0;
     _ctx->setTexCoord(texUnit, s, t);
 
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 GLAPI void GLAPIENTRY OGL_glMultiTexCoord2fv( GLenum texture, const GLfloat *v )
 {
-    GLOBAL_PROFILER_ENTER_REGION("OGL2", "", "")
+    TRACING_ENTER_REGION("OGL2", "", "")
 
     OGL_PRINTCALL_2(texture, v);
 
     GLuint texUnit = texture - GL_TEXTURE0;
     _ctx->setTexCoord(texUnit, v[0], v[1]);
 
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 GLAPI void GLAPIENTRY OGL_glPixelStorei( GLenum pname, GLint param )
@@ -2072,7 +2072,7 @@ GLAPI void GLAPIENTRY OGL_glPixelStorei( GLenum pname, GLint param )
 
 GLAPI void GLAPIENTRY OGL_glIndexPointer( GLenum type, GLsizei stride, const GLvoid *ptr )
 {
-    GLOBAL_PROFILER_ENTER_REGION("OGL2", "", "")
+    TRACING_ENTER_REGION("OGL2", "", "")
 
     OGL_PRINTCALL_3(type, stride, ptr);
 
@@ -2083,12 +2083,12 @@ GLAPI void GLAPIENTRY OGL_glIndexPointer( GLenum type, GLsizei stride, const GLv
     if ( bufBM.getTarget(GL_ARRAY_BUFFER).hasCurrent())
         _ctx->getIndexVArray().bufferID = bufBM.getTarget(GL_ARRAY_BUFFER).getCurrent().getName();
 
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 GLAPI void GLAPIENTRY OGL_glEdgeFlagPointer( GLsizei stride, const GLvoid *ptr )
 {
-    GLOBAL_PROFILER_ENTER_REGION("OGL2", "", "")
+    TRACING_ENTER_REGION("OGL2", "", "")
     OGL_PRINTCALL_2(stride, ptr);
 
     BufferManager& bufBM = _ctx->bufferManager();
@@ -2098,7 +2098,7 @@ GLAPI void GLAPIENTRY OGL_glEdgeFlagPointer( GLsizei stride, const GLvoid *ptr )
     if ( bufBM.getTarget(GL_ARRAY_BUFFER).hasCurrent() )
         _ctx->getEdgeVArray().bufferID = bufBM.getTarget(GL_ARRAY_BUFFER).getCurrent().getName();
 
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 GLAPI void GLAPIENTRY OGL_glArrayElement( GLint i )
@@ -2113,7 +2113,7 @@ GLAPI void GLAPIENTRY OGL_glArrayElement( GLint i )
 
 GLAPI void GLAPIENTRY OGL_glInterleavedArrays( GLenum format, GLsizei stride, const GLvoid *pointer )
 {
-    GLOBAL_PROFILER_ENTER_REGION("OGL2", "", "")
+    TRACING_ENTER_REGION("OGL2", "", "")
 
     OGL_PRINTCALL_3(format, stride, pointer);
 
@@ -2136,24 +2136,24 @@ GLAPI void GLAPIENTRY OGL_glInterleavedArrays( GLenum format, GLsizei stride, co
             CG_ASSERT("Format not yet unsupported");
     }
 
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 GLAPI void GLAPIENTRY OGL_glDeleteTextures(GLsizei n, const GLuint *textures)
 {
-    GLOBAL_PROFILER_ENTER_REGION("OGL2", "", "")
+    TRACING_ENTER_REGION("OGL2", "", "")
 
     OGL_PRINTCALL_2(n, textures);
 
     GLTextureManager& texTM = _ctx->textureManager();
     texTM.removeObjects(n, textures);
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 
 }
 
 GLAPI void GLAPIENTRY OGL_glProgramEnvParameter4fvARB (GLenum target, GLuint index, const GLfloat *params)
 {
-    GLOBAL_PROFILER_ENTER_REGION("OGL2", "", "")
+    TRACING_ENTER_REGION("OGL2", "", "")
     OGL_PRINTCALL_3(target, index, params);
 
     // Get the enviromental parameter bank of the current
@@ -2162,12 +2162,12 @@ GLAPI void GLAPIENTRY OGL_glProgramEnvParameter4fvARB (GLenum target, GLuint ind
     // Update enviromental parameter bank
     env.set(index,params[0], params[1], params[2], params[3]);
 
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 GLAPI void GLAPIENTRY OGL_glProgramEnvParameters4fvEXT (GLenum target, GLuint index, GLsizei count, const GLfloat* d)
 {
-    GLOBAL_PROFILER_ENTER_REGION("OGL2", "", "")
+    TRACING_ENTER_REGION("OGL2", "", "")
 
     // Get the enviromental parameter bank of the current
     ARBRegisterBank& env = _ctx->arbProgramManager().target(target).getEnv();
@@ -2176,29 +2176,29 @@ GLAPI void GLAPIENTRY OGL_glProgramEnvParameters4fvEXT (GLenum target, GLuint in
     for (gal_uint i = 0; i < count ; i++)
         env.set(index + i, d[i*4], d[i*4+1], d[i*4+2], d[i*4+3]);
 
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 
 GLAPI void GLAPIENTRY OGL_glPolygonMode	(GLenum face, GLenum mode)
 {
 
-    GLOBAL_PROFILER_ENTER_REGION("OGL2", "", "")
+    TRACING_ENTER_REGION("OGL2", "", "")
     OGL_PRINTCALL_2(face, mode);
 
     if (mode != GL_FILL)
         CG_ASSERT("GPU only supports GL_FILL mode");
 
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 GLAPI void GLAPIENTRY OGL_glBlendEquationEXT (GLenum mode)
 {
 
-    GLOBAL_PROFILER_ENTER_REGION("OGL2", "", "")
+    TRACING_ENTER_REGION("OGL2", "", "")
     OGL_PRINTCALL_1(mode);
 
     _ctx->gal().blending().setBlendFunc(0, ogl::getGALBlendFunction(mode));
 
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }

@@ -9,7 +9,7 @@
 #include "HAL.h"
 #include <sstream>
 
-#include "GlobalProfiler.h"
+#include "Profiler.h"
 
 using namespace libGAL;
 using namespace std;
@@ -20,7 +20,7 @@ HAL* TextureMipmap::_driver = 0;
 
 void TextureMipmap::setTextureTiling(gal_uint tileLevel1Sz, gal_uint tileLevel2Sz)
 {
-    GLOBAL_PROFILER_ENTER_REGION("TextureMipmap", "", "")
+    TRACING_ENTER_REGION("TextureMipmap", "", "")
     static gal_bool alreadyCalled = false;
 
     if ( !alreadyCalled )
@@ -28,30 +28,30 @@ void TextureMipmap::setTextureTiling(gal_uint tileLevel1Sz, gal_uint tileLevel2S
         alreadyCalled = true;
         _tileLevel1Sz = tileLevel1Sz;
         _tileLevel2Sz = tileLevel2Sz;
-        GLOBAL_PROFILER_EXIT_REGION()
+        TRACING_EXIT_REGION()
     }
 }
 
 void TextureMipmap::setDriver(HAL* driver)
 {
-    GLOBAL_PROFILER_ENTER_REGION("TextureMipmap", "", "")
+    TRACING_ENTER_REGION("TextureMipmap", "", "")
     static gal_bool alreadyCalled = false;
 
     if ( !alreadyCalled )
     {
         alreadyCalled = true;
         _driver = driver;
-        GLOBAL_PROFILER_EXIT_REGION()
+        TRACING_EXIT_REGION()
     }
 }
 
 
 void TextureMipmap::getTextureTiling(gal_uint& tileLevel1Sz, gal_uint& tileLevel2Sz)
 {
-    GLOBAL_PROFILER_ENTER_REGION("TextureMipmap", "", "")
+    TRACING_ENTER_REGION("TextureMipmap", "", "")
     tileLevel1Sz = _tileLevel1Sz;
     tileLevel2Sz = _tileLevel2Sz;
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 TextureMipmap::TextureMipmap() : _data(0), _dataSize(0), _rowPitch(0), _planePitch(0), _mortonData(0), 
@@ -140,13 +140,13 @@ gal_float TextureMipmap::getTexelSize(GAL_FORMAT format)
 
 bool TextureMipmap::getData(gal_ubyte*& pData, gal_uint& rowPitch, gal_uint& planePitch)
 {
-    GLOBAL_PROFILER_ENTER_REGION("TextureMipmap", "", "")
+    TRACING_ENTER_REGION("TextureMipmap", "", "")
 
     pData = _data;
     rowPitch = _rowPitch;
     planePitch = _planePitch;
 
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
     return true;
 }
 
@@ -208,13 +208,13 @@ void TextureMipmap::dump2PPM (gal_ubyte* filename)
 
 bool TextureMipmap::getData(const gal_ubyte*& pData, gal_uint& rowPitch, gal_uint& planePitch) const
 {
-    GLOBAL_PROFILER_ENTER_REGION("TextureMipmap", "", "")
+    TRACING_ENTER_REGION("TextureMipmap", "", "")
 
     pData = _data;
     rowPitch = _rowPitch;
     planePitch = _planePitch;
 
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 
     return true;    
 }
@@ -222,7 +222,7 @@ bool TextureMipmap::getData(const gal_ubyte*& pData, gal_uint& rowPitch, gal_uin
 void TextureMipmap::setData( gal_uint width, gal_uint height, gal_uint depth, GAL_FORMAT format, 
                              gal_uint rowPitch, const gal_ubyte* srcTexelData, gal_uint texSize )
 {
-    GLOBAL_PROFILER_ENTER_REGION("TextureMipmap", "", "")
+    TRACING_ENTER_REGION("TextureMipmap", "", "")
 
     // Delete previous mipmap contents
     delete[] _data;
@@ -285,12 +285,12 @@ void TextureMipmap::setData( gal_uint width, gal_uint height, gal_uint depth, GA
         }
     }
 
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 void TextureMipmap::setData(gal_uint width, gal_uint height, gal_uint depth, gal_bool multisampling, gal_uint samples, GAL_FORMAT format)
 {
-    GLOBAL_PROFILER_ENTER_REGION("TextureMipmap", "", "")
+    TRACING_ENTER_REGION("TextureMipmap", "", "")
 
     // Delete previous mipmap contents
     delete[] _data;
@@ -314,7 +314,7 @@ void TextureMipmap::setData(gal_uint width, gal_uint height, gal_uint depth, gal
     _multisampling = multisampling;
     _samples = samples;   
 
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 void TextureMipmap::updateData(const gal_ubyte* srcTexelData)
@@ -336,7 +336,7 @@ void TextureMipmap::copyData( gal_uint mipLevel, GALTexture2D* destTexture)
 void TextureMipmap::updateData( gal_uint xoffset, gal_uint yoffset, gal_uint zoffset, gal_uint width, gal_uint height, gal_uint depth, GAL_FORMAT format, 
                                 gal_uint rowPitch, const gal_ubyte* srcTexelData )
 {
-    GLOBAL_PROFILER_ENTER_REGION("TextureMipmap", "", "")
+    TRACING_ENTER_REGION("TextureMipmap", "", "")
     if ( _data == 0 )
         CG_ASSERT("Mipmap has no defined data yet");
 
@@ -437,12 +437,12 @@ void TextureMipmap::updateData( gal_uint xoffset, gal_uint yoffset, gal_uint zof
     }
 
 
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 const gal_ubyte* TextureMipmap::getDataInMortonOrder( gal_uint& sizeInBytes ) const
 {
-    GLOBAL_PROFILER_ENTER_REGION("TextureMipmap", "", "")
+    TRACING_ENTER_REGION("TextureMipmap", "", "")
 
     //  Check if the mipmap was already converted to morton order.
     if (!_mortonData)
@@ -484,6 +484,6 @@ const gal_ubyte* TextureMipmap::getDataInMortonOrder( gal_uint& sizeInBytes ) co
     }
 
     sizeInBytes = _mortonDataSize;
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
     return _mortonData;
 }

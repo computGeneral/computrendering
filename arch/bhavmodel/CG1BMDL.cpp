@@ -5,7 +5,7 @@
  *
  */
 #include "CG1BMDL.h"
-#include "GlobalProfiler.h"
+#include "Profiler.h"
 #include "ImageSaver.h"
 #include "bmClipper.h"
 #include <iostream>
@@ -29,16 +29,16 @@ CG1BMDL::CG1BMDL(cgsArchConfig ArchConf, cgoTraceDriverBase *TraceDriver) :
 
 void CG1BMDL::simulationLoop(cgeModelAbstractLevel MAL)
 {
-    GLOBAL_PROFILER_ENTER_REGION("simulationLoop", "", "")
+    TRACING_ENTER_REGION("simulationLoop", "", "")
     traceEnd = false;
     TraceDriver->startTrace(); //  Start the trace driver.
     GpuBMdl.resetState();
     while(!traceEnd && (GpuBMdl.getFrameCounter() < (ArchParams::get<uint32_t>("SIMULATOR_StartFrame") + ArchParams::get<uint32_t>("SIMULATOR_SimFrames"))) && !AbortSim)
     {
         cgoMetaStream *CurMetaStream;
-        GLOBAL_PROFILER_ENTER_REGION("driver", "", "")
+        TRACING_ENTER_REGION("driver", "", "")
         CurMetaStream = TraceDriver->nxtMetaStream(); //  Get next transaction from the driver
-        GLOBAL_PROFILER_EXIT_REGION()
+        TRACING_EXIT_REGION()
         if (CurMetaStream != NULL)
         {
             GpuBMdl.emulateCommandProcessor(CurMetaStream);
@@ -50,7 +50,7 @@ void CG1BMDL::simulationLoop(cgeModelAbstractLevel MAL)
         }
     }
     CG_INFO_COND(AbortSim, "Simulation aborted");
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 void CG1BMDL::abortSimulation()

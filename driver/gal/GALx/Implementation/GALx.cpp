@@ -18,8 +18,8 @@
 #include "GALxShaderCache.h"
 #include <list>
 
-//#define ENABLE_GLOBAL_PROFILER
-#include "GlobalProfiler.h"
+//#define ENABLE_TRACING
+#include "Profiler.h"
 
 using namespace libGAL;
 using namespace std;
@@ -46,7 +46,7 @@ void libGAL::GALxDestroyFixedPipelineState(GALxFixedPipelineState* fpState)
 // Initializes a GALx_FIXED_PIPELINE_SETTINGS struct with the default values 
 void libGAL::GALxLoadFPDefaultSettings(GALx_FIXED_PIPELINE_SETTINGS& fpSettings)
 {
-    GLOBAL_PROFILER_ENTER_REGION("GALx", "", "")
+    TRACING_ENTER_REGION("GALx", "", "")
     
     fpSettings.lightingEnabled = false;
     fpSettings.localViewer = false;
@@ -115,7 +115,7 @@ void libGAL::GALxLoadFPDefaultSettings(GALx_FIXED_PIPELINE_SETTINGS& fpSettings)
     fpSettings.alphaTestEnabled = false;
     fpSettings.alphaTestFunction = GALx_FIXED_PIPELINE_SETTINGS::GALx_ALPHA_ALWAYS;
 
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 }
 
 
@@ -123,7 +123,7 @@ void libGAL::GALxLoadFPDefaultSettings(GALx_FIXED_PIPELINE_SETTINGS& fpSettings)
 // Private auxiliar function 
 void checkValues(const GALx_FIXED_PIPELINE_SETTINGS& fpSettings)
 {
-    GLOBAL_PROFILER_ENTER_REGION("GALx", "", "")
+    TRACING_ENTER_REGION("GALx", "", "")
     switch(fpSettings.normalizeNormals)
     {
         case GALx_FIXED_PIPELINE_SETTINGS::GALx_NO_NORMALIZE:
@@ -395,7 +395,7 @@ void checkValues(const GALx_FIXED_PIPELINE_SETTINGS& fpSettings)
     }
 
 
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 };
 
 GALxConstantBinding* libGAL::GALxCreateConstantBinding(GALx_BINDING_TARGET target, 
@@ -430,7 +430,7 @@ void libGAL::GALxDestroyConstantBinding(GALxConstantBinding* constantBinding)
 // Generates the compiled vertex program that emulate the Fixed Pipeline 
 void libGAL::GALxGenerateVertexProgram(GALxFixedPipelineState* fpState, const GALx_FIXED_PIPELINE_SETTINGS& fpSettings, GALShaderProgram* &vertexProgram)
 {
-    GLOBAL_PROFILER_ENTER_REGION("GALxGenerateVertexProgram", "", "")
+    TRACING_ENTER_REGION("GALxGenerateVertexProgram", "", "")
 
     GALxConstantBindingList vpcbList;
     GALxTLShader* vtlsh;
@@ -458,9 +458,9 @@ void libGAL::GALxGenerateVertexProgram(GALxFixedPipelineState* fpState, const GA
         // Compile and resolve the vertex program in case it is not in the cache //
         ///////////////////////////////////////////////////////////////////////////
 
-        GLOBAL_PROFILER_ENTER_REGION("compile FX VSH", "", "")
+        TRACING_ENTER_REGION("compile FX VSH", "", "")
         GALxCompiledProgram* cVertexProgram = GALxCompileProgram(vtlsh->getCode());
-        GLOBAL_PROFILER_EXIT_REGION()
+        TRACING_EXIT_REGION()
 
         finalBindingList = GALxResolveProgram(fpState, cVertexProgram, &vpcbList, vertexProgram);
 
@@ -504,13 +504,13 @@ void libGAL::GALxGenerateVertexProgram(GALxFixedPipelineState* fpState, const GA
     }
 
     
-    GLOBAL_PROFILER_EXIT_REGION()   
+    TRACING_EXIT_REGION()   
 }
 
 // Generates the compiled shader programs that emulate the Fixed Pipeline 
 void libGAL::GALxGenerateFragmentProgram(GALxFixedPipelineState* fpState, const GALx_FIXED_PIPELINE_SETTINGS& fpSettings, GALShaderProgram* &fragmentProgram)
 {
-    GLOBAL_PROFILER_ENTER_REGION("GALxGenerateFragmentProgram", "", "")
+    TRACING_ENTER_REGION("GALxGenerateFragmentProgram", "", "")
 
     GALxConstantBindingList vpcbList;
     GALxConstantBindingList* finalBindingList;
@@ -537,9 +537,9 @@ void libGAL::GALxGenerateFragmentProgram(GALxFixedPipelineState* fpState, const 
         // Compile and resolve the fragment program //
         //////////////////////////////////////////////
 
-        GLOBAL_PROFILER_ENTER_REGION("compile FX FSH", "", "")
+        TRACING_ENTER_REGION("compile FX FSH", "", "")
         GALxCompiledProgram* cFragmentProgram = GALxCompileProgram(ftlsh->getCode());
-        GLOBAL_PROFILER_EXIT_REGION()
+        TRACING_EXIT_REGION()
 
         finalBindingList = GALxResolveProgram(fpState, cFragmentProgram, &fpcbList, fragmentProgram);
 
@@ -553,7 +553,7 @@ void libGAL::GALxGenerateFragmentProgram(GALxFixedPipelineState* fpState, const 
 
         delete ftlsh;
             
-        GLOBAL_PROFILER_EXIT_REGION()
+        TRACING_EXIT_REGION()
     }
     else
     {
@@ -582,13 +582,13 @@ void libGAL::GALxGenerateFragmentProgram(GALxFixedPipelineState* fpState, const 
 
     }
 
-    GLOBAL_PROFILER_EXIT_REGION()   
+    TRACING_EXIT_REGION()   
 }
 
 // Generates the compiled shader programs that emulate the Fixed Pipeline 
 void libGAL::GALxGeneratePrograms(GALxFixedPipelineState* fpState, const GALx_FIXED_PIPELINE_SETTINGS& fpSettings, GALShaderProgram* &vertexProgram, GALShaderProgram* &fragmentProgram)
 {
-    GLOBAL_PROFILER_ENTER_REGION("GALxGeneratePrograms", "", "")
+    TRACING_ENTER_REGION("GALxGeneratePrograms", "", "")
 
     // Check all the settings values in the input struct to be proper values. 
     checkValues(fpSettings);
@@ -620,9 +620,9 @@ void libGAL::GALxGeneratePrograms(GALxFixedPipelineState* fpState, const GALx_FI
         // Compile and resolve the vertex program in case it is not in the cache //
         ///////////////////////////////////////////////////////////////////////////
 
-        GLOBAL_PROFILER_ENTER_REGION("compile FX VSH", "", "")
+        TRACING_ENTER_REGION("compile FX VSH", "", "")
         GALxCompiledProgram* cVertexProgram = GALxCompileProgram(vtlsh->getCode());
-        GLOBAL_PROFILER_EXIT_REGION()
+        TRACING_EXIT_REGION()
 
         finalBindingList = GALxResolveProgram(fpState, cVertexProgram, &vpcbList, vertexProgram);
 
@@ -681,9 +681,9 @@ void libGAL::GALxGeneratePrograms(GALxFixedPipelineState* fpState, const GALx_FI
         // Compile and resolve the fragment program //
         //////////////////////////////////////////////
 
-        GLOBAL_PROFILER_ENTER_REGION("compile FX FSH", "", "")
+        TRACING_ENTER_REGION("compile FX FSH", "", "")
         GALxCompiledProgram* cFragmentProgram = GALxCompileProgram(ftlsh->getCode());
-        GLOBAL_PROFILER_EXIT_REGION()
+        TRACING_EXIT_REGION()
 
         finalBindingList = GALxResolveProgram(fpState, cFragmentProgram, &fpcbList, fragmentProgram);
 
@@ -697,7 +697,7 @@ void libGAL::GALxGeneratePrograms(GALxFixedPipelineState* fpState, const GALx_FI
 
         delete ftlsh;
             
-        GLOBAL_PROFILER_EXIT_REGION()
+        TRACING_EXIT_REGION()
     }
     else
     {
@@ -734,7 +734,7 @@ static libGAL::GALx_COMPILATION_LOG lastResults;
 
 GALxCompiledProgram* libGAL::GALxCompileProgram(const std::string& code)
 {
-    GLOBAL_PROFILER_ENTER_REGION("GALxCompileProgram", "", "")
+    TRACING_ENTER_REGION("GALxCompileProgram", "", "")
     GALxCompiledProgramImp* cProgramImp = new GALxCompiledProgramImp;
 
     // Initialize compilers for the first time (using a static pointer)
@@ -798,14 +798,14 @@ GALxCompiledProgram* libGAL::GALxCompileProgram(const std::string& code)
     else
         CG_ASSERT("Unexpected or not supported shader program model");
     
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
     return cProgramImp;
 }
 
 // resolves the compiled program updating a GALShaderProgram code and constant parameters accordingly to the the Fixed Pipeline state. 
 GALxConstantBindingList* libGAL::GALxResolveProgram(GALxFixedPipelineState* fpState, const GALxCompiledProgram* cProgram, const GALxConstantBindingList* constantList, GALShaderProgram* program)
 {
-    GLOBAL_PROFILER_ENTER_REGION("GALxResolveProgram", "", "")
+    TRACING_ENTER_REGION("GALxResolveProgram", "", "")
     // Get the pointer to the GALxFixedPipelineState implementation class 
     GALxFixedPipelineStateImp* fpStateImp = static_cast<GALxFixedPipelineStateImp*>(fpState);
 
@@ -861,7 +861,7 @@ GALxConstantBindingList* libGAL::GALxResolveProgram(GALxFixedPipelineState* fpSt
     //finalConstantList->clear();
     //delete finalConstantList;
     
-    GLOBAL_PROFILER_EXIT_REGION()
+    TRACING_EXIT_REGION()
 
     return finalConstantList;
 }

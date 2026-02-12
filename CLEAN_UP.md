@@ -16,16 +16,16 @@ The following legacy modules have been successfully removed from the codebase:
     *   **Status:** **Removed**.
     *   **Resolution:** Replaced by `apitrace replay` (glretrace) and the internal simulator player.
 
+*   **`driver/ogl/trace/GLInstrument` & `driver/ogl/trace/GLInstrumentTool`**
+    *   **Description:** Legacy Windows-specific OpenGL instrumentation framework and tools.
+    *   **Status:** **Removed**.
+    *   **Resolution:** Obsolete in the new Apitrace workflow; unused in Linux build.
+
 ## 2. Future Removal Candidates
 
 The following modules are legacy artifacts but are currently **required** for dependencies or missing features. They can be removed in future phases.
 
-### A. Legacy Instrumentation
-*   **Modules:** `driver/ogl/trace/GLInstrument`, `driver/ogl/trace/GLInstrumentTool`
-*   **Description:** Tools for OpenGL trace instrumentation.
-*   **Dependency:** Referenced in `OGLApiCodeGen` configuration. Likely obsolete if switching fully to apitrace.
-
-### B. Legacy Trace Reader & Driver
+### A. Legacy Trace Reader & Driver
 *   **Modules:** `driver/utils/TraceReader`, `driver/utils/TraceDriver/TraceDriverOGL`
 *   **Description:** Reader and driver for `.ogl.txt.gz` GLInterceptor traces.
 *   **Blocker:** The current regression test suite (`tests/ogl/trace/`) relies entirely on this format.

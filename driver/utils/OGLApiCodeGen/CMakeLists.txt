@@ -46,7 +46,7 @@ file(WRITE  ${CMAKE_CURRENT_SOURCE_DIR}/OGLApiCodeGen.cfg
             "inSpecificFile=${CMAKE_CURRENT_SOURCE_DIR}/Specific.h\n"
             "inSpecificStatsFile=${CMAKE_CURRENT_SOURCE_DIR}/SpecificStats.h\n"
             "outGLInterceptor=NULL\n"
-            "outGLInstrument=${CMAKE_CURRENT_SOURCE_DIR}/../../../driver/ogl/trace/GLInstrument\n"
+            "outGLInstrument=NULL\n"
             "outTraceReader=${CMAKE_CURRENT_SOURCE_DIR}/../../../driver/utils/TraceReader\n"
             "outGen=${CMAKE_CURRENT_SOURCE_DIR}/../../../driver/utils/OGLApiCodeGen\n")
 

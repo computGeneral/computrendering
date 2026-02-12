@@ -18,7 +18,7 @@
 
 #include "cmHZStateInfo.h"
 
-using namespace cg1gpu;
+using namespace arch;
 
 
 //  Creates a new HZStateInfo object.  

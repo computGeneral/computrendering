@@ -10,7 +10,7 @@
 #include <sstream>
 #include <cstring>
 
-using namespace cg1gpu;
+using namespace arch;
 using std::string;
 using namespace std;
 

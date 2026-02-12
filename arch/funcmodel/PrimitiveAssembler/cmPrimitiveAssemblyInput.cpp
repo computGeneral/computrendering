@@ -6,7 +6,7 @@
 
 #include "cmPrimitiveAssemblyInput.h"
 
-using namespace cg1gpu;
+using namespace arch;
 
 //  Creates a new PrimitiveAssemblyInput.  
 PrimitiveAssemblyInput::PrimitiveAssemblyInput(U32 ID, Vec4FP32 *attrib)

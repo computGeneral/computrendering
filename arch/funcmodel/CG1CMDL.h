@@ -24,7 +24,7 @@
 
 #include <vector>
 
-namespace cg1gpu
+namespace arch
 {
 
 /**
@@ -380,6 +380,6 @@ public:
      */
     U32 applyColorKey(U32 p);
 };  // class CG1CMDL
-};  //  namespace cg1gpu
+};  //  namespace arch
 
 #endif

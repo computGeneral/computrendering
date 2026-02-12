@@ -17,7 +17,7 @@
  *  Shader Behavior Model constructor.
  *  This function creates a multithreaded Shader Behavior Model of the demanded model.
  */
-using namespace cg1gpu;
+using namespace arch;
 
 bmoUnifiedShader::bmoUnifiedShader(char *shaderName, 
                                    bmeShaderModel shaderModel,
@@ -1195,7 +1195,7 @@ void bmoUnifiedShader::textureOperation(cgoShaderInstr::cgoShaderInstrEncoding &
 }
 
 //  Add information for a derivation operation.
-void bmoUnifiedShader::derivOperation(cg1gpu::cgoShaderInstr::cgoShaderInstrEncoding &shInstr, cg1gpu::Vec4FP32 input)
+void bmoUnifiedShader::derivOperation(arch::cgoShaderInstr::cgoShaderInstrEncoding &shInstr, arch::Vec4FP32 input)
 {
     //  Compute the base thread/element for the derivation operation.
     U32 baseThread = shInstr.getNumThread();
@@ -1962,7 +1962,7 @@ inline void bmoUnifiedShader::writeResult(cgoShaderInstr::cgoShaderInstrEncoding
     }    
 }
 
-bool bmoUnifiedShader::checkJump(cg1gpu::cgoShaderInstr::cgoShaderInstrEncoding *shInstrDec, U32 vectorLength, U32 &destPC)
+bool bmoUnifiedShader::checkJump(arch::cgoShaderInstr::cgoShaderInstrEncoding *shInstrDec, U32 vectorLength, U32 &destPC)
 {
     //  Get the first thread corresponding to the vector.
     U32 startThread = shInstrDec->getNumThread() - GPU_MOD(shInstrDec->getNumThread(), vectorLength);
@@ -2904,7 +2904,7 @@ void bmoUnifiedShader::shANDP(cgoShaderInstr::cgoShaderInstrEncoding &shInstr, b
     bmUnifiedShader.PCTable[shInstr.getNumThread()]++;
 }
 
-void bmoUnifiedShader::shJMP(cg1gpu::cgoShaderInstr::cgoShaderInstrEncoding &shInstr, cg1gpu::bmoUnifiedShader &bmUnifiedShader)
+void bmoUnifiedShader::shJMP(arch::cgoShaderInstr::cgoShaderInstrEncoding &shInstr, arch::bmoUnifiedShader &bmUnifiedShader)
 {
     //  This instruction affects control and multiple 'threads' so it has to be implemented
     //  outside the behaviorModel.

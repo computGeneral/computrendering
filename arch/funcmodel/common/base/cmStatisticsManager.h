@@ -14,7 +14,7 @@
 #include "support.h"
 #include "GPUType.h"
 
-namespace cg1gpu
+namespace arch
 {
 
 namespace gpuStatistics
@@ -134,6 +134,6 @@ public:
 
 } // namespace gpuStatistics
 
-} // namespace cg1gpu
+} // namespace arch
 
 #endif // STATISTICSMANAGER_H

@@ -16,10 +16,10 @@
 using namespace std;
 
 //  Static pointer to the active CG1CMDL instance, used by the panic snapshot callback.
-static cg1gpu::CG1MDLBASE* s_panicSnapshotInstance = nullptr;
+static arch::CG1MDLBASE* s_panicSnapshotInstance = nullptr;
 static void panicSnapshotCallback() { if (s_panicSnapshotInstance) s_panicSnapshotInstance->createSnapshot(); }
 
-namespace cg1gpu
+namespace arch
 {
 
 bool NaN(F32 f)
@@ -3696,5 +3696,5 @@ U32 CG1CMDL::applyColorKey(U32 p)
     return 0x00ffffff;
 }
 
-}   // namespace cg1gpu
+}   // namespace arch
 

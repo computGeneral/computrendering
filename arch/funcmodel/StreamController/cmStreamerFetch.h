@@ -17,10 +17,10 @@
 #define _STREAMERFETCH_
 
 
-namespace cg1gpu
+namespace arch
 {
     class StreamerFetch;
-} // namespace cg1gpu
+} // namespace arch
 
 
 #include "GPUType.h"
@@ -33,7 +33,7 @@ namespace cg1gpu
 #include "cmMemoryControllerDefs.h"
 #include "GPUReg.h"
 
-namespace cg1gpu
+namespace arch
 {
 
 /**
@@ -234,6 +234,6 @@ public:
 
 };
 
-} // namespace cg1gpu
+} // namespace arch
 
 #endif

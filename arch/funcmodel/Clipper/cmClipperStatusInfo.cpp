@@ -17,7 +17,7 @@
 
 #include "cmClipperStatusInfo.h"
 
-using namespace cg1gpu;
+using namespace arch;
 
 //  Creates a new ClipperStatusInfo object.  
 ClipperStatusInfo::ClipperStatusInfo(ClipperStatus newStatus) :

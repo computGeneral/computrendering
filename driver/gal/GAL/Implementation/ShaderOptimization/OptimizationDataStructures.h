@@ -132,11 +132,11 @@ public:
     Register readReg1;
     Register readReg2;
 
-    InstructionInfo(cg1gpu::cgoShaderInstr& shInstr, gal_uint instrIndex, gal_uint execLat, const std::string& instrAsm);
+    InstructionInfo(arch::cgoShaderInstr& shInstr, gal_uint instrIndex, gal_uint execLat, const std::string& instrAsm);
 
-    InstructionInfo(cg1gpu::ShOpcode opcode, gal_uint instrIndex);
+    InstructionInfo(arch::ShOpcode opcode, gal_uint instrIndex);
 
-    cg1gpu::cgoShaderInstr* getShaderInstructionCopy(gal_bool lastInstruction) const;
+    arch::cgoShaderInstr* getShaderInstructionCopy(gal_bool lastInstruction) const;
 
     void print(std::ostream& os) const;
 

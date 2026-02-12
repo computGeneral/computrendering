@@ -7,7 +7,7 @@
 #include "D3DTrace.h"
 #include "D3D9.h"
 #include "HAL.h"
-using namespace cg1gpu;
+using namespace arch;
 
 //  TraceDriver constructor.  
 TraceDriverD3D::TraceDriverD3D(char *trace_file, U32 _startFrame)

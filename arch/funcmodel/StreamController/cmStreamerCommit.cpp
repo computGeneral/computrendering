@@ -22,7 +22,7 @@
 #include "support.h"
 #include "GPUMath.h"
 
-using namespace cg1gpu;
+using namespace arch;
 
 //  cmoStreamController Commit constructor.  
 StreamerCommit::StreamerCommit(U32 idxCycle, U32 oFIFOSize, U32 omSize, U32 nShaders,

@@ -22,7 +22,7 @@
 #include "DynamicObject.h"
 #include "cmTriangleSetup.h"
 
-namespace cg1gpu
+namespace arch
 {
 
 /**
@@ -69,6 +69,6 @@ public:
     TriangleSetupState getState();
 };
 
-} // namespace cg1gpu
+} // namespace arch
 
 #endif

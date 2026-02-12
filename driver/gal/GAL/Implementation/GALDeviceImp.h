@@ -127,7 +127,7 @@ public:
     // Only available with GALDeviceImp
     virtual void HACK_setPreloadMemory(gal_bool enablePreload);
 
-    // cg1gpu::cgoMetaStream* nxtMetaStream();
+    // arch::cgoMetaStream* nxtMetaStream();
 
     MemoryObjectAllocator& allocator() const;
     HAL& driver() const;
@@ -290,7 +290,7 @@ private:
 
     void _syncSamplerState();
 
-    void _translatePrimitive(GAL_PRIMITIVE primitive, cg1gpu::GPURegData* data);
+    void _translatePrimitive(GAL_PRIMITIVE primitive, arch::GPURegData* data);
 
     void _syncRenderBuffers();
 

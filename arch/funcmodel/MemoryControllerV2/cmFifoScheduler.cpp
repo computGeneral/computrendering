@@ -10,7 +10,7 @@
 #include <sstream>
 
 using namespace std;
-using namespace cg1gpu::memorycontroller;
+using namespace arch::memorycontroller;
 
 void FifoScheduler::processStateQueueSignals(U64 cycle)
 {

@@ -16,9 +16,9 @@
 #include "cmInputCache.h"
 #include "GPUMath.h"
 
-using cg1gpu::tools::Queue;
+using arch::tools::Queue;
 
-using namespace cg1gpu;
+using namespace arch;
 
 //  Input cache constructor.  
 InputCache::InputCache(U32 cacheId, U32 ways, U32 lines, U32 bytesLine,

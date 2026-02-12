@@ -13,7 +13,7 @@
 
 //  cmoRasterizer constructor.  
 
-using namespace cg1gpu;
+using namespace arch;
 
 cmoRasterizer::cmoRasterizer(bmoRasterizer &rsEmu, U32 trCycle, U32 tsFIFOSize,
     U32 trSetupUnits, U32 trSetupLat, U32 trSetupStartLat, U32 trInputLat, U32 trOutputLat,

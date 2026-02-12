@@ -28,7 +28,7 @@
 #include <fstream>
 #include <sstream>
 
-using namespace cg1gpu;
+using namespace arch;
 
 //  HierarchicalZ constructor.  
 HierarchicalZ::HierarchicalZ(U32 stampCycle, U32 overWidth, U32 overHeight,

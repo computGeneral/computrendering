@@ -10,7 +10,7 @@
 #include <fstream>
 #include <string>
 
-using namespace cg1gpu;
+using namespace arch;
 
 int main(int argc, char *argv[])
 {

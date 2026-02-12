@@ -12,7 +12,7 @@
 using namespace std;
 using namespace libgl;
 using namespace libgl::GenerationCode;
-using namespace cg1gpu;
+using namespace arch;
 
 ShaderInstructionTranslator::ShaderInstrOperand::ShaderInstrOperand()
 : idReg(0), idBank(INVALID), swizzleMode(XYZW),
@@ -104,55 +104,55 @@ bool ShaderInstructionTranslator::thereAreOperandAccessConflicts(
 
     switch(shop1.idBank)
     {
-            case cg1gpu::IN:      diferentReadsToInBank++; break;
-            case cg1gpu::PARAM:   diferentReadsToParamBank++; break;
-            case cg1gpu::TEMP:    diferentReadsToTempBank++; break;
-            case cg1gpu::ADDR:    diferentReadsToAddrBank++; break;
-            case cg1gpu::INVALID: ;
+            case arch::IN:      diferentReadsToInBank++; break;
+            case arch::PARAM:   diferentReadsToParamBank++; break;
+            case arch::TEMP:    diferentReadsToTempBank++; break;
+            case arch::ADDR:    diferentReadsToAddrBank++; break;
+            case arch::INVALID: ;
     }
 
     switch(shop2.idBank)
     {
-            case cg1gpu::IN:
+            case arch::IN:
                 if (shop1.idReg != shop2.idReg || shop1.idBank != shop2.idBank)
                         diferentReadsToInBank++;
                         break;
-            case cg1gpu::PARAM:
+            case arch::PARAM:
                 if (shop1.idReg != shop2.idReg || shop1.idBank != shop2.idBank)
                         diferentReadsToParamBank++;
                         break;
-            case cg1gpu::TEMP:
+            case arch::TEMP:
                 if (shop1.idReg != shop2.idReg || shop1.idBank != shop2.idBank)
                         diferentReadsToTempBank++;
                         break;
-            case cg1gpu::ADDR:
+            case arch::ADDR:
                 if (shop1.idReg != shop2.idReg || shop1.idBank != shop2.idBank)
                         diferentReadsToAddrBank++;
                         break;
-            case cg1gpu::INVALID: ;
+            case arch::INVALID: ;
     }
 
     if (num_operands == 3)
     {
         switch(shop3.idBank)
         {
-                case cg1gpu::IN:    if ((shop1.idReg != shop3.idReg || shop1.idBank != shop3.idBank) &&
+                case arch::IN:    if ((shop1.idReg != shop3.idReg || shop1.idBank != shop3.idBank) &&
                                         (shop2.idReg != shop3.idReg || shop2.idBank != shop3.idBank))
                                         diferentReadsToInBank++;
                                         break;
-                case cg1gpu::PARAM: if ((shop1.idReg != shop3.idReg || shop1.idBank != shop3.idBank) &&
+                case arch::PARAM: if ((shop1.idReg != shop3.idReg || shop1.idBank != shop3.idBank) &&
                                         (shop2.idReg != shop3.idReg || shop2.idBank != shop3.idBank))
                                         diferentReadsToParamBank++;
                                         break;
-                case cg1gpu::TEMP:    if ((shop1.idReg != shop3.idReg || shop1.idBank != shop2.idBank) &&
+                case arch::TEMP:    if ((shop1.idReg != shop3.idReg || shop1.idBank != shop2.idBank) &&
                                          (shop2.idReg != shop3.idReg || shop2.idBank != shop3.idBank))
                                         diferentReadsToTempBank++;
                                         break;
-                case cg1gpu::ADDR:    if ((shop1.idReg != shop3.idReg || shop1.idBank != shop3.idBank) &&
+                case arch::ADDR:    if ((shop1.idReg != shop3.idReg || shop1.idBank != shop3.idBank) &&
                                          (shop2.idReg != shop3.idReg || shop2.idBank != shop3.idBank))
                                         diferentReadsToAddrBank++;
                                         break;
-                case cg1gpu::INVALID: ;
+                case arch::INVALID: ;
         }
     }
 

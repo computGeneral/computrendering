@@ -10,7 +10,7 @@
 using namespace libGAL::GenerationCode;
 using namespace libGAL;
 using namespace std;
-using namespace cg1gpu;
+using namespace arch;
 
 
 bool GALxSemanticTraverser ::swizzleMaskCheck(const char *smask)

@@ -14,10 +14,10 @@
  *
  */
 
-namespace cg1gpu
+namespace arch
 {
     class StreamerLoader;
-} // namespace cg1gpu
+} // namespace arch
 
 #ifndef _STREAMERLOADER_
 
@@ -33,7 +33,7 @@ namespace cg1gpu
 #include "cmStreamerControlCommand.h"
 #include "cmInputCache.h"
 
-namespace cg1gpu
+namespace arch
 {
 
 /**
@@ -305,7 +305,7 @@ public:
     VertexInputMap &getVertexInputInfo();
 };
 
-} // namespace cg1gpu
+} // namespace arch
 
 #endif
 

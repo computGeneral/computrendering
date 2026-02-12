@@ -4,7 +4,7 @@
 
 #include "ShaderGenerate.h"
 
-using namespace cg1gpu;
+using namespace arch;
 
 ShaderInstructionBuilder::ShaderInstructionBuilder() {
     resetParameters();

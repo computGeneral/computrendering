@@ -17,7 +17,7 @@
 #include "support.h"
 #include "GPUMath.h"
 
-using namespace cg1gpu;
+using namespace arch;
 
 //  cmoStreamController Fetch constructor.  
 StreamerFetch::StreamerFetch(U32 idxCycle, U32 idxBufferSize, U32 oFIFOSize,

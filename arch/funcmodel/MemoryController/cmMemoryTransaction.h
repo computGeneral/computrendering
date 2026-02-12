@@ -9,7 +9,7 @@
 #include "DynamicObject.h"
 #include <string>
 
-namespace cg1gpu {
+namespace arch {
 
 /**
  *  This class defines a memory transaction from the Command
@@ -194,7 +194,7 @@ private:
 
 };
 
-} // namespace cg1gpu
+} // namespace arch
 
 
 

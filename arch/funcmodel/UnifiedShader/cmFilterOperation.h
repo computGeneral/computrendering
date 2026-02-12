@@ -10,7 +10,7 @@
 
 #include "DynamicObject.h"
 
-namespace cg1gpu
+namespace arch
 {
 
 /**
@@ -64,6 +64,6 @@ public:
     U32 getFilterEntry();
 };
 
-} // namespace cg1gpu
+} // namespace arch
 
 #endif

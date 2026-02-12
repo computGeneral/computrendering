@@ -4,7 +4,7 @@
 
 #include "BitStreamReader.h"
 
-namespace cg1gpu
+namespace arch
 {
 
 U32 BitStreamReader::read(unsigned int bits)

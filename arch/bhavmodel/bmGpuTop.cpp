@@ -16,7 +16,7 @@ using namespace std;
 
 //#define DUMP_RT_AFTER_DRAW
 
-namespace cg1gpu
+namespace arch
 {
 
 //  Constructor.
@@ -1114,7 +1114,7 @@ void bmoGpuTop::processRegisterWrite(GPURegister gpuReg, U32 gpuSubReg, GPURegDa
                 gpuData.qfVal[1], gpuData.qfVal[2], gpuData.qfVal[3]);
 
             //  Load vertex constant in the shader behaviorModel.
-            bmShader->loadShaderState(0, cg1gpu::PARAM, gpuSubReg + VERTEX_PARTITION * UNIFIED_CONSTANT_NUM_REGS, state.vConstants[gpuSubReg]);
+            bmShader->loadShaderState(0, arch::PARAM, gpuSubReg + VERTEX_PARTITION * UNIFIED_CONSTANT_NUM_REGS, state.vConstants[gpuSubReg]);
 
             break;
 
@@ -1389,31 +1389,31 @@ void bmoGpuTop::processRegisterWrite(GPURegister gpuReg, U32 gpuSubReg, GPURegDa
                 CG_INFO("Write GPU_PRIMITIVE = ");
                 switch(gpuData.primitive)
                 {
-                    case cg1gpu::TRIANGLE:
+                    case arch::TRIANGLE:
                         CG_INFO("TRIANGLE.");
                         break;
-                    case cg1gpu::TRIANGLE_STRIP:
+                    case arch::TRIANGLE_STRIP:
                         CG_INFO("TRIANGLE_STRIP.");
                         break;
-                    case cg1gpu::TRIANGLE_FAN:
+                    case arch::TRIANGLE_FAN:
                         CG_INFO("TRIANGLE_FAN.");
                         break;
-                    case cg1gpu::QUAD:
+                    case arch::QUAD:
                         CG_INFO("QUAD.");
                         break;
-                    case cg1gpu::QUAD_STRIP:
+                    case arch::QUAD_STRIP:
                         CG_INFO("QUAD_STRIP.");
                         break;
-                    case cg1gpu::LINE:
+                    case arch::LINE:
                         CG_INFO("LINE.");
                         break;
-                    case cg1gpu::LINE_STRIP:
+                    case arch::LINE_STRIP:
                         CG_INFO("LINE_STRIP.");
                         break;
-                    case cg1gpu::LINE_FAN:
+                    case arch::LINE_FAN:
                         CG_INFO("LINE_FAN.");
                         break;
-                    case cg1gpu::POINT:
+                    case arch::POINT:
                         CG_INFO("POINT.");
                         break;
                     default:
@@ -1755,7 +1755,7 @@ void bmoGpuTop::processRegisterWrite(GPURegister gpuReg, U32 gpuSubReg, GPURegDa
                 gpuData.qfVal[1], gpuData.qfVal[2], gpuData.qfVal[3]);
 
             //  Load fragment constant in the shader behaviorModel.
-            bmShader->loadShaderState(0, cg1gpu::PARAM, gpuSubReg + FRAGMENT_PARTITION * UNIFIED_CONSTANT_NUM_REGS, state.fConstants[gpuSubReg]);
+            bmShader->loadShaderState(0, arch::PARAM, gpuSubReg + FRAGMENT_PARTITION * UNIFIED_CONSTANT_NUM_REGS, state.fConstants[gpuSubReg]);
 
             break;
 
@@ -5168,7 +5168,7 @@ void bmoGpuTop::resetState()
     state.indexStream = 0;
     state.attributeLoadBypass = false;
 
-    state.primitiveMode = cg1gpu::TRIANGLE;
+    state.primitiveMode = arch::TRIANGLE;
     state.frustumClipping = false;
 
     for(U32 c = 0; c < 6; c++)
@@ -5180,8 +5180,8 @@ void bmoGpuTop::resetState()
     }
 
     state.userClipPlanes = false;
-    state.faceMode = cg1gpu::GPU_CCW;
-    state.cullMode = cg1gpu::NONE;
+    state.faceMode = arch::GPU_CCW;
+    state.cullMode = arch::NONE;
     state.hzTest = false;
     state.earlyZ = true;
 
@@ -5810,7 +5810,7 @@ void bmoGpuTop::emulateVertexShader(ShadedVertex *vertex)
     //  Initialize thread for the current vertex.
     bmShader->resetShaderState(0);
     //  Load the new shader input into the shader input register bank of the thread element in the shader behaviorModel.
-    bmShader->loadShaderState(0, cg1gpu::IN, vertex->getAttributes());
+    bmShader->loadShaderState(0, arch::IN, vertex->getAttributes());
     //  Set PC for the thread element in the shader behaviorModel to the start PC of the vector thread.
     bmShader->setThreadPC(0, state.vertexProgramStartPC);
     bool programEnd = false;
@@ -5888,7 +5888,7 @@ void bmoGpuTop::emulateVertexShader(ShadedVertex *vertex)
     }
 
     //  Get output attributes for the vertex.
-    bmShader->readShaderState(0, cg1gpu::OUT, vertex->getAttributes());
+    bmShader->readShaderState(0, arch::OUT, vertex->getAttributes());
 
     GPU_DEBUG(
         CG_INFO("VSh => Vertex Outputs :");
@@ -6623,7 +6623,7 @@ void bmoGpuTop::emulateFragmentShading(ShadedFragment **quad)
         //  Initialize thread for the current fragment.
         bmShader->resetShaderState(p);
         //  Load the new shader input into the shader input register bank of the thread element in the shader behaviorModel.
-        bmShader->loadShaderState(p, cg1gpu::IN, quad[p]->getAttributes());
+        bmShader->loadShaderState(p, arch::IN, quad[p]->getAttributes());
         //  Set PC for the thread element in the shader behaviorModel to the start PC of the vector thread.
         bmShader->setThreadPC(p, state.fragProgramStartPC);
     }
@@ -6743,7 +6743,7 @@ void bmoGpuTop::emulateFragmentShading(ShadedFragment **quad)
     for(U32 p = 0; p < STAMP_FRAGMENTS; p++)
     {
         //  Get output attributes for the fragment.
-        bmShader->readShaderState(p, cg1gpu::OUT, quad[p]->getAttributes());
+        bmShader->readShaderState(p, arch::OUT, quad[p]->getAttributes());
 
         //  Set fragment as culled if the fragment was killed.
         if (bmShader->threadKill(p))
@@ -8093,10 +8093,10 @@ void bmoGpuTop::printShaderInstructionOperands(cgoShaderInstr::cgoShaderInstrEnc
     {
         switch(shDecInstr->getShaderInstruction()->getBankOp1())
         {
-            case cg1gpu::TEXT:            
+            case arch::TEXT:            
                 break;
           
-            case cg1gpu::PRED:
+            case arch::PRED:
                 {
                     bool *op1 = (bool *) shDecInstr->getShEmulOp1();
                     CG_INFO("             OP1 -> %s", *op1 ? "true" : "false");
@@ -8108,7 +8108,7 @@ void bmoGpuTop::printShaderInstructionOperands(cgoShaderInstr::cgoShaderInstrEnc
                 //  Check for predicator operator instruction with constant register operator.
                 switch(shDecInstr->getShaderInstruction()->getOpcode())
                 {
-                    case cg1gpu::CG1_ISA_OPCODE_ANDP:
+                    case arch::CG1_ISA_OPCODE_ANDP:
                         {
                             bool *op1 = (bool *) shDecInstr->getShEmulOp1();
                             CG_INFO("             OP1 -> {%s, %s, %s, %s}", op1[0] ? "true" : "false", op1[1] ? "true" : "false",
@@ -8116,11 +8116,11 @@ void bmoGpuTop::printShaderInstructionOperands(cgoShaderInstr::cgoShaderInstrEnc
                         }
                         break;
                       
-                    case cg1gpu::CG1_ISA_OPCODE_ADDI:
-                    case cg1gpu::CG1_ISA_OPCODE_MULI:
-                    case cg1gpu::CG1_ISA_OPCODE_STPEQI:
-                    case cg1gpu::CG1_ISA_OPCODE_STPGTI:
-                    case cg1gpu::CG1_ISA_OPCODE_STPLTI:
+                    case arch::CG1_ISA_OPCODE_ADDI:
+                    case arch::CG1_ISA_OPCODE_MULI:
+                    case arch::CG1_ISA_OPCODE_STPEQI:
+                    case arch::CG1_ISA_OPCODE_STPGTI:
+                    case arch::CG1_ISA_OPCODE_STPLTI:
                         {
                             S32 *op1 = (S32 *) shDecInstr->getShEmulOp1();
                             CG_INFO("             OP1 -> {%d, %d, %d, %d}", op1[0], op1[1], op1[2], op1[3]);
@@ -8142,10 +8142,10 @@ void bmoGpuTop::printShaderInstructionOperands(cgoShaderInstr::cgoShaderInstrEnc
     {
         switch(shDecInstr->getShaderInstruction()->getBankOp2())
         {
-            case cg1gpu::TEXT:            
+            case arch::TEXT:            
                 break;
           
-            case cg1gpu::PRED:
+            case arch::PRED:
                 {
                     bool *op2 = (bool *) shDecInstr->getShEmulOp2();
                     CG_INFO("             OP2 -> %s", *op2 ? "true" : "false");
@@ -8157,7 +8157,7 @@ void bmoGpuTop::printShaderInstructionOperands(cgoShaderInstr::cgoShaderInstrEnc
                 //  Check for predicator operator instruction with constant register operator.
                 switch(shDecInstr->getShaderInstruction()->getOpcode())
                 {
-                    case cg1gpu::CG1_ISA_OPCODE_ANDP:
+                    case arch::CG1_ISA_OPCODE_ANDP:
                         {
                             bool *op2 = (bool *) shDecInstr->getShEmulOp2();
                             CG_INFO("             OP2 -> {%s, %s, %s, %s}", op2[0] ? "true" : "false", op2[1] ? "true" : "false",
@@ -8165,11 +8165,11 @@ void bmoGpuTop::printShaderInstructionOperands(cgoShaderInstr::cgoShaderInstrEnc
                         }
                         break;
                       
-                    case cg1gpu::CG1_ISA_OPCODE_ADDI:
-                    case cg1gpu::CG1_ISA_OPCODE_MULI:
-                    case cg1gpu::CG1_ISA_OPCODE_STPEQI:
-                    case cg1gpu::CG1_ISA_OPCODE_STPGTI:
-                    case cg1gpu::CG1_ISA_OPCODE_STPLTI:
+                    case arch::CG1_ISA_OPCODE_ADDI:
+                    case arch::CG1_ISA_OPCODE_MULI:
+                    case arch::CG1_ISA_OPCODE_STPEQI:
+                    case arch::CG1_ISA_OPCODE_STPGTI:
+                    case arch::CG1_ISA_OPCODE_STPLTI:
                         {
                             S32 *op2 = (S32 *) shDecInstr->getShEmulOp2();
                             CG_INFO("             OP2 -> {%d, %d, %d, %d}", op2[0], op2[1], op2[2], op2[3]);
@@ -8192,10 +8192,10 @@ void bmoGpuTop::printShaderInstructionOperands(cgoShaderInstr::cgoShaderInstrEnc
     {
         switch(shDecInstr->getShaderInstruction()->getBankOp3())
         {
-            case cg1gpu::TEXT:            
+            case arch::TEXT:            
                 break;
           
-            case cg1gpu::PRED:
+            case arch::PRED:
                 {
                     bool *op3 = (bool *) shDecInstr->getShEmulOp3();
                     CG_INFO("             OP3 -> %s", *op3 ? "true" : "false");
@@ -8206,7 +8206,7 @@ void bmoGpuTop::printShaderInstructionOperands(cgoShaderInstr::cgoShaderInstrEnc
                 //  Check for predicator operator instruction with constant register operator.
                 switch(shDecInstr->getShaderInstruction()->getOpcode())
                 {
-                    case cg1gpu::CG1_ISA_OPCODE_ANDP:
+                    case arch::CG1_ISA_OPCODE_ANDP:
                         {
                             bool *op3 = (bool *) shDecInstr->getShEmulOp3();
                             CG_INFO("             OP3 -> {%s, %s, %s, %s}", op3[0] ? "true" : "false", op3[1] ? "true" : "false",
@@ -8214,11 +8214,11 @@ void bmoGpuTop::printShaderInstructionOperands(cgoShaderInstr::cgoShaderInstrEnc
                         }
                         break;
                       
-                    case cg1gpu::CG1_ISA_OPCODE_ADDI:
-                    case cg1gpu::CG1_ISA_OPCODE_MULI:
-                    case cg1gpu::CG1_ISA_OPCODE_STPEQI:
-                    case cg1gpu::CG1_ISA_OPCODE_STPGTI:
-                    case cg1gpu::CG1_ISA_OPCODE_STPLTI:
+                    case arch::CG1_ISA_OPCODE_ADDI:
+                    case arch::CG1_ISA_OPCODE_MULI:
+                    case arch::CG1_ISA_OPCODE_STPEQI:
+                    case arch::CG1_ISA_OPCODE_STPGTI:
+                    case arch::CG1_ISA_OPCODE_STPLTI:
                         {
                             S32 *op3 = (S32 *) shDecInstr->getShEmulOp3();
                             CG_INFO("             OP3 -> {%d, %d, %d, %d}", op3[0], op3[1], op3[2], op3[3]);
@@ -8406,4 +8406,4 @@ void bmoGpuTop::setSkipBatch(bool enable)
 //
 
 
-}  // namespace cg1gpu
+}  // namespace arch

@@ -21,7 +21,7 @@
 #include "support.h"
 #include <cstdio>
 
-using namespace cg1gpu;
+using namespace arch;
 
 //  Fragment Operation Behavior Model constructor.  
 bmoFragmentOperator::bmoFragmentOperator(U32 stampFrags)

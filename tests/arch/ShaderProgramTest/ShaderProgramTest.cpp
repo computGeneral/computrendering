@@ -9,7 +9,7 @@
 #include "ConfigLoader.h"
 #include "DynamicMemoryOpt.h"
 
-using namespace cg1gpu;
+using namespace arch;
 using namespace std;
 
 int main(int argc, char **argv)

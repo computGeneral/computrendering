@@ -28,7 +28,7 @@ public:
     ~TraceDriverApitrace();
     
     int startTrace() override;
-    cg1gpu::cgoMetaStream* nxtMetaStream() override;
+    arch::cgoMetaStream* nxtMetaStream() override;
     U32 getTracePosition() override { return currentFrame_; }
 
 private:

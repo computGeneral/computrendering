@@ -18,7 +18,7 @@
 #include "cmInstructionFetchVector.h"
 #include <cstring>
 
-using namespace cg1gpu;
+using namespace arch;
 
 //  VectorShaderInstruction constructor.
 VectorInstructionFetch::VectorInstructionFetch(ShaderExecInstruction **vectorFetch)

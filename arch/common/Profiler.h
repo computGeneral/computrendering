@@ -24,7 +24,7 @@ using namespace std;
 // Macros for use within code so it gets compiled out
 
 // Function prototypes
-namespace cg1gpu
+namespace arch
 {
 
 class Tracer
@@ -337,9 +337,9 @@ private:
 
 //#define ENABLE_TRACING
 #ifdef ENABLE_TRACING
-    #define TRACING_ENTER_REGION(a, b, c) cg1gpu::getTracer().enterRegion((a), (b), (c));
-    #define TRACING_EXIT_REGION()         cg1gpu::getTracer().exitRegion();
-    #define TRACING_GENERATE_REPORT(a)    cg1gpu::getTracer().generateReport((a));
+    #define TRACING_ENTER_REGION(a, b, c) arch::getTracer().enterRegion((a), (b), (c));
+    #define TRACING_EXIT_REGION()         arch::getTracer().exitRegion();
+    #define TRACING_GENERATE_REPORT(a)    arch::getTracer().generateReport((a));
 #else
     #define TRACING_ENTER_REGION(a, b, c)
     #define TRACING_EXIT_REGION()
@@ -349,7 +349,7 @@ private:
 //  Get the global profiler instance
 Tracer& getTracer();
 
-}   // namespace cg1gpu
+}   // namespace arch
 
 
 #endif    // _PROFILER_

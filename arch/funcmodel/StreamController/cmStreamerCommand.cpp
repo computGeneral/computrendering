@@ -6,7 +6,7 @@
 
 #include "cmStreamerCommand.h"
 
-using namespace cg1gpu;
+using namespace arch;
 
 /*  cmoStreamController Command Constructor for reset, start and end streaming
     commands.  */

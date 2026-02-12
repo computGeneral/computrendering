@@ -101,7 +101,7 @@
     <ClCompile>
       <AdditionalOptions>-Zm200 -w34100 -w34189 -Zm200 -w34100 -w34189 -w34100 -w34189 %(AdditionalOptions)</AdditionalOptions>
       <Optimization>MaxSpeed</Optimization>
-      <AdditionalIncludeDirectories>$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\Qt3Support;$(QTDIR)\include;.;$(QTDIR)\include\ActiveQt;release;$(QTDIR)\mkspecs\win32-msvc2005;E:\cg1gpu\svn\trunk\src\trace\utils;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\Qt3Support;$(QTDIR)\include;.;$(QTDIR)\include\ActiveQt;release;$(QTDIR)\mkspecs\win32-msvc2005;E:\arch\svn\trunk\src\trace\utils;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>QT_NO_DEBUG;NDEBUG;_WINDOWS;UNICODE;WIN32;QT_LARGEFILE_SUPPORT;QT_DLL;QT_QT3SUPPORT_LIB;QT3_SUPPORT;QT_GUI_LIB;QT_CORE_LIB;QT_THREAD_SUPPORT;_CRT_SECURE_NO_DEPRECATE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessToFile>false</PreprocessToFile>
       <PreprocessSuppressLineNumbers>false</PreprocessSuppressLineNumbers>

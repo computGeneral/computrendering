@@ -11,7 +11,7 @@
 #include "DynamicObject.h"
 #include "cmRasterizer.h"
 
-namespace cg1gpu
+namespace arch
 {
 
 /**
@@ -57,6 +57,6 @@ public:
     RasterizerState getState();
 };
 
-} // namespace cg1gpu
+} // namespace arch
 
 #endif

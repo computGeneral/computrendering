@@ -15,10 +15,10 @@ bool GPUProxyRegId::operator()(const GPUProxyRegId &a, const GPUProxyRegId &b) c
 
 GPUProxyRegId::GPUProxyRegId() {
     index = 0;
-    gpu_reg = (cg1gpu::GPURegister)(0);
+    gpu_reg = (arch::GPURegister)(0);
 }
 
-GPUProxyRegId::GPUProxyRegId(cg1gpu::GPURegister _gpu_reg, U32 _index) {
+GPUProxyRegId::GPUProxyRegId(arch::GPURegister _gpu_reg, U32 _index) {
     gpu_reg = _gpu_reg;
     index = _index;
 }
@@ -258,11 +258,11 @@ GPUProxy::~GPUProxy()
 }
 
 
-void GPUProxy::writeGPURegister( cg1gpu::GPURegister regId, cg1gpu::GPURegData data) {
+void GPUProxy::writeGPURegister( arch::GPURegister regId, arch::GPURegData data) {
     writeGPURegister( regId, 0, data );
 }
 
-void GPUProxy::writeGPURegister( cg1gpu::GPURegister regId, U32 index, cg1gpu::GPURegData data) {
+void GPUProxy::writeGPURegister( arch::GPURegister regId, U32 index, arch::GPURegData data) {
     GPUProxyRegId id(regId, index);
     GPUProxyAddress addr(0, 0);
     values[id] = data;
@@ -270,18 +270,18 @@ void GPUProxy::writeGPURegister( cg1gpu::GPURegister regId, U32 index, cg1gpu::G
     HAL::getHAL()->writeGPURegister(regId, index, data);
 }
 
-void GPUProxy::writeGPUAddrRegister( cg1gpu::GPURegister regId, U32 index, U32 md, U32 offset) {
+void GPUProxy::writeGPUAddrRegister( arch::GPURegister regId, U32 index, U32 md, U32 offset) {
     GPUProxyRegId id(regId, index);
     GPUProxyAddress addr(md, offset);
     addresses[id] = addr;
     HAL::getHAL()->writeGPUAddrRegister(regId, index, md, offset);
 }
 
-void GPUProxy::readGPURegister( cg1gpu::GPURegister regId, cg1gpu::GPURegData* data) {
+void GPUProxy::readGPURegister( arch::GPURegister regId, arch::GPURegData* data) {
     readGPURegister(regId, 0, data);
 }
 
-void GPUProxy::readGPURegister( cg1gpu::GPURegister regId, U32 index, cg1gpu::GPURegData* data) {
+void GPUProxy::readGPURegister( arch::GPURegister regId, U32 index, arch::GPURegData* data) {
     GPUProxyRegId id(regId, index);
     map<GPUProxyRegId, GPURegData, GPUProxyRegId>::iterator it;
     it = values.find(id);
@@ -291,7 +291,7 @@ void GPUProxy::readGPURegister( cg1gpu::GPURegister regId, U32 index, cg1gpu::GP
     *data = (*it).second;
 }
 
-void GPUProxy::readGPUAddrRegister( cg1gpu::GPURegister regId, U32 index, U32* md, U32* offset) {
+void GPUProxy::readGPUAddrRegister( arch::GPURegister regId, U32 index, U32* md, U32* offset) {
     GPUProxyRegId id(regId, index);
     map<GPUProxyRegId, GPUProxyAddress, GPUProxyRegId>::iterator it;
     it = addresses.find(id);
@@ -315,7 +315,7 @@ void GPUProxy::readGPUAddrRegister( cg1gpu::GPURegister regId, U32 index, U32* m
 }
 
 
-void GPUProxy::sendCommand(cg1gpu::GPUCommand com) {
+void GPUProxy::sendCommand(arch::GPUCommand com) {
     HAL::getHAL()->sendCommand(com);
 
     if(com == GPU_SWAPBUFFERS) {
@@ -618,7 +618,7 @@ void GPUProxy::debug_print_registers() {
     debug_print_register(GPU_BLIT_DST_TX_BLOCK);
 }
 
-void GPUProxy::debug_print_register(cg1gpu::GPURegister reg, U32 index) {
+void GPUProxy::debug_print_register(arch::GPURegister reg, U32 index) {
     GPUProxyRegId id(reg, index);
     map<GPUProxyRegId, GPUProxyRegisterType, GPUProxyRegId>::iterator it_t;
     it_t = register_types.find(id);
@@ -712,7 +712,7 @@ void GPUProxy::debug_print_register(cg1gpu::GPURegister reg, U32 index) {
                         case LINE: D3D_DEBUG( cout << "LINE" << endl; ) break;
                         case LINE_STRIP: D3D_DEBUG( cout << "LINE_STRIP" << endl; ) break;
                         case LINE_FAN: D3D_DEBUG( cout << "LINE_FAN" << endl; ) break;
-                        case cg1gpu::POINT: D3D_DEBUG( cout << "POINT" << endl; ) break;
+                        case arch::POINT: D3D_DEBUG( cout << "POINT" << endl; ) break;
                         default: D3D_DEBUG( cout << (int)data.primitive << endl; ) break;
                     }
                 }; break;

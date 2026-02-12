@@ -12,7 +12,7 @@
 #include "GPUType.h"
 #include "DynamicObject.h"
 
-namespace cg1gpu
+namespace arch
 {
 
 /**
@@ -362,6 +362,6 @@ public:
     U32 getShaderLatency() const;
 };
 
-} // namespace cg1gpu
+} // namespace arch
 
 #endif

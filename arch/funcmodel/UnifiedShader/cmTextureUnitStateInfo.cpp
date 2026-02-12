@@ -16,7 +16,7 @@
 
 #include "cmTextureUnitStateInfo.h"
 
-using namespace cg1gpu;
+using namespace arch;
 
 //  Creates a new TextureUnit State Info object.  
 TextureUnitStateInfo::TextureUnitStateInfo(TextureUnitState newState) : state(newState)

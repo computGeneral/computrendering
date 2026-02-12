@@ -7,8 +7,8 @@
 #include <iomanip>
 
 using namespace std;
-using cg1gpu::memorycontroller::DDRBurst;
-using cg1gpu::memorycontroller::DDRBank;
+using arch::memorycontroller::DDRBurst;
+using arch::memorycontroller::DDRBank;
 
 //U32 DDRBank::defRows = 4096;
 //U32 DDRBank::defColumns = 512; // values of 32 bit

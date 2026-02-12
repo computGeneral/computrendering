@@ -10,7 +10,7 @@
 #include <iostream>
 
 using namespace std;
-using namespace cg1gpu;
+using namespace arch;
 
 RegisterWriteBufferMeta::RegisterWriteBufferMeta()
 {}
@@ -49,7 +49,7 @@ bool RegisterWriteBufferMeta::readRegister(GPURegister reg, U32 index, GPURegDat
     }
 }
 
-bool RegisterWriteBufferMeta::flushNextRegister(cg1gpu::GPURegister &reg, U32 &index, cg1gpu::GPURegData &data, U32 &md)
+bool RegisterWriteBufferMeta::flushNextRegister(arch::GPURegister &reg, U32 &index, arch::GPURegData &data, U32 &md)
 {
     //cout << "RegisterWriteBuffer::flushNextRegister() -> Doing pendent register writes: " << writeBuffer.size() << " (saved "
     //<< registerWritesCount - writeBuffer.size() << " reg. writes)" << endl;

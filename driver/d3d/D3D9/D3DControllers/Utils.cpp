@@ -4,7 +4,7 @@
 #include <map>
 
 using namespace std;
-using namespace cg1gpu;
+using namespace arch;
 
 #define max(a,b)            (((a) > (b)) ? (a) : (b))
 

@@ -18,7 +18,7 @@
 
 #include "cmPrimitiveAssemblyStateInfo.h"
 
-using namespace cg1gpu;
+using namespace arch;
 
 //  Creates a new PrimitiveAssemblyStateInfo object.  
 PrimitiveAssemblyStateInfo::PrimitiveAssemblyStateInfo(AssemblyState newState) :

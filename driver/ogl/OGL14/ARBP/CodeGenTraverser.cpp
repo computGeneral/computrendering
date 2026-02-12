@@ -10,7 +10,7 @@
 using namespace libgl;
 using namespace libgl::GenerationCode;
 using namespace std;
-using namespace cg1gpu;
+using namespace arch;
 
 /* ****************************************************************************
  *                      AUXILIAR FUNCTIONS

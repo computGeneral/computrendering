@@ -9,7 +9,7 @@
 #include <cstdlib>
 #include <cstring>
 
-using namespace cg1gpu;
+using namespace arch;
 
 /**
  *  This table is used to translate from the opcode in the binary encode
@@ -18,7 +18,7 @@ using namespace cg1gpu;
  *
  */
 
-ShOpcode cg1gpu::translateShOpcodeTable[] =
+ShOpcode arch::translateShOpcodeTable[] =
 {
     CG1_ISA_OPCODE_NOP,    CG1_ISA_OPCODE_ADD,    CG1_ISA_OPCODE_ADDI,   CG1_ISA_OPCODE_ARL,    CG1_ISA_OPCODE_ANDP,   INVOPC, INVOPC, CG1_ISA_OPCODE_COS,        //  Opcodes 00h - 07h
     CG1_ISA_OPCODE_DP3,    CG1_ISA_OPCODE_DP4,    CG1_ISA_OPCODE_DPH,    CG1_ISA_OPCODE_DST,    CG1_ISA_OPCODE_EX2,    CG1_ISA_OPCODE_EXP,    CG1_ISA_OPCODE_FLR,    CG1_ISA_OPCODE_FRC,        //  Opcodes 08h - 0Fh
@@ -53,7 +53,7 @@ MaskMode translateMaskModeTable[] =
 
 //  Just a copy of the enum table.  
 
-SwizzleMode cg1gpu::translateSwizzleModeTable[] =
+SwizzleMode arch::translateSwizzleModeTable[] =
 {
 
 //  X--- : Swizzle Modes 00h - 3Fh  
@@ -155,7 +155,7 @@ SwizzleMode cg1gpu::translateSwizzleModeTable[] =
 /*  WARNING:  THE BANK NAMES SHOULD BE GENERIC ONES (VERTEX/PIXEL SHADER).
     THIS WILL BE CHANGED IN A FUTURE VERSION.  */
 
-Bank cg1gpu::translateBankTable[] =
+Bank arch::translateBankTable[] =
 {
    IN,          //  Bank 0
    OUT,         //  Bank 1
@@ -393,7 +393,7 @@ cgoShaderInstr::cgoShaderInstr(U08 *instrCode)
             //  Set default values for undefined parameters.
             negateFlagOp3 = false;
             absoluteFlagOp3 = false;
-            swizzleModeOp3 = cg1gpu::XYZW;
+            swizzleModeOp3 = arch::XYZW;
 
             break;
             

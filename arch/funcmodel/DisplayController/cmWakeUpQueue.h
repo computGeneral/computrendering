@@ -12,7 +12,7 @@
 #include <set>
 #include <list>
 
-namespace cg1gpu
+namespace arch
 {    
 /**
   *  Templatized class implementing a wakeup queue. 
@@ -386,6 +386,6 @@ void WakeUpQueue<Entry, Event>::setName(std::string qName)
 }
 
 
-} // namespace cg1gpu
+} // namespace arch
 
 #endif // WAKEUP_QUEUE_H

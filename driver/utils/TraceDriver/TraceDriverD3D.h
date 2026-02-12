@@ -3,7 +3,7 @@
 
 class D3DTrace;
 
-namespace cg1gpu {
+namespace arch {
     class cgoMetaStream;
 }
 
@@ -16,7 +16,7 @@ public:
     TraceDriverD3D(char *ProfilingFile, U32 start_frame);
     ~TraceDriverD3D();
     int startTrace();
-    cg1gpu::cgoMetaStream* nxtMetaStream();
+    arch::cgoMetaStream* nxtMetaStream();
     U32 getTracePosition();
 
 private:

@@ -25,7 +25,7 @@
 #include <cstdio>
 #include <sstream>
 
-using namespace cg1gpu;
+using namespace arch;
 
 
 //  Constructor for the cmoShaderFetch BOX class.  

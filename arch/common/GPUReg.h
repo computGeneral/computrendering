@@ -4,7 +4,7 @@
 #include "GPUType.h"
 #include "RegStreamMultiprocessor.h"
 
-namespace cg1gpu
+namespace arch
 {
 static const U32 MAX_DISPLAY_RES_X = 4096;  //  Maximum horizontal display resolution.  
 static const U32 MAX_DISPLAY_RES_Y = 4096;  //  Maximum vertical display resolution.  
@@ -958,6 +958,6 @@ enum GPUClockDomain
     MEMORY_CLOCK_DOMAIN = 2         //  Memory clock domain.  
 };
 
-} // namespace cg1gpu
+} // namespace arch
 
 #endif

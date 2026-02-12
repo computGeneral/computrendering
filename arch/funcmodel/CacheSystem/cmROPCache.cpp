@@ -15,14 +15,14 @@
 
 #include "GPUMath.h"
 #include "cmROPCache.h"
-using cg1gpu::tools::Queue;
+using arch::tools::Queue;
 
 #include <fstream>
 #include <sstream>
 
 using namespace std;
 
-using namespace cg1gpu;
+using namespace arch;
 
 //  ROP cache constructor.
 ROPCache::ROPCache(U32 ways, U32 lines, U32 lineSz,

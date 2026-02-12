@@ -15,7 +15,7 @@
 
 using namespace std;
 
-namespace cg1gpu
+namespace arch
 {
 
 //  Constructor.
@@ -536,5 +536,5 @@ cmoGpuTop::~cmoGpuTop()
 
 
 
-}   // namespace cg1gpu
+}   // namespace arch
 

@@ -11,7 +11,7 @@
 #include "DynamicObject.h"
 #include "cmClipper.h"
 
-namespace cg1gpu
+namespace arch
 {
 
 /**
@@ -65,6 +65,6 @@ public:
     ClipperState getState();
 };
 
-} // namespace cg1gpu
+} // namespace arch
 
 #endif

@@ -18,7 +18,7 @@
 #include "cmShaderDecodeCommand.h"
 #include <stdio.h>
 
-using namespace cg1gpu;
+using namespace arch;
 
 //  Creates the DecodeCommand initialized.
 ShaderDecodeCommand::ShaderDecodeCommand(DecodeCommand comm, U32 threadID, U32 newPC):

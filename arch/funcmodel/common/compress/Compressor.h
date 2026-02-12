@@ -7,7 +7,7 @@
 
 #include "GPUType.h"
 
-namespace cg1gpu
+namespace arch
 {
 
 class CompressorInfo

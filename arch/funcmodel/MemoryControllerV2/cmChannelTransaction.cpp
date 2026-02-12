@@ -8,8 +8,8 @@
 #include <sstream>
 #include <cstring>
 
-using namespace cg1gpu::memorycontroller;
-using cg1gpu::MemReqState;
+using namespace arch::memorycontroller;
+using arch::MemReqState;
 
 U32 ChannelTransaction::instances = 0;
 
@@ -104,7 +104,7 @@ U32 ChannelTransaction::getUnitID() const
 }
 
 
-cg1gpu::GPUUnit ChannelTransaction::getRequestSource() const
+arch::GPUUnit ChannelTransaction::getRequestSource() const
 {
     return req->getTransaction()->getRequestSource();
 }

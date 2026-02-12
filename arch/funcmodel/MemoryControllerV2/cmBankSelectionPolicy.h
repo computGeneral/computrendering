@@ -9,7 +9,7 @@
 #include <vector>
 #include <string>
 
-namespace cg1gpu {
+namespace arch {
 namespace memorycontroller {
 
 class BankSelectionPolicy;
@@ -225,7 +225,7 @@ private:
 };
 
 } // namespace memorycontroller
-} // namespace cg1gpu
+} // namespace arch
 
 
 #endif // BANKSELECTIONPOLICY_H

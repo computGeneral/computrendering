@@ -7,7 +7,7 @@
 #include <iostream>
 
 using namespace std;
-using namespace cg1gpu;
+using namespace arch;
 
 RegisterWriteBuffer::RegisterWriteBuffer(HAL* driver, WritePolicy wp) : driver(driver), writePolicy(wp),
     registerWritesCount(0)
@@ -81,7 +81,7 @@ void RegisterWriteBuffer::unbufferedWriteRegister(GPURegister reg, U32 index, co
     driver->_sendcgoMetaStream(new cgoMetaStream(reg, index, data, md));
 }
 
-void RegisterWriteBuffer::readRegister(cg1gpu::GPURegister reg, U32 index, cg1gpu::GPURegData &data)
+void RegisterWriteBuffer::readRegister(arch::GPURegister reg, U32 index, arch::GPURegData &data)
 {
     RegisterIdentifier auxri(reg, index);
     WriteBufferIt aux = registerStatus.find(auxri);

@@ -8,7 +8,7 @@
 using namespace std;
 using namespace libGAL;
 using namespace libGAL_opt;
-using namespace cg1gpu;
+using namespace arch;
 
 /////////////////////////////////////////////////////////////////////////
 //////////// Implementation of Register, OperationInfo and //////////////
@@ -125,7 +125,7 @@ void InstructionInfo::print(ostream& os) const
     os << endl;
 }
 
-InstructionInfo::InstructionInfo(cg1gpu::ShOpcode opcode, gal_uint instrIndex)
+InstructionInfo::InstructionInfo(arch::ShOpcode opcode, gal_uint instrIndex)
 {
     if (opcode != CG1_ISA_OPCODE_NOP)
         CG_ASSERT("The single param constructor allows only construct NOP instructions");
@@ -252,7 +252,7 @@ InstructionInfo::InstructionInfo(cgoShaderInstr& shInstr, gal_uint instrIndex, g
 
 cgoShaderInstr* InstructionInfo::getShaderInstructionCopy(gal_bool lastInstruction) const
 {
-    if (operation.opcode == cg1gpu::CG1_ISA_OPCODE_NOP)
+    if (operation.opcode == arch::CG1_ISA_OPCODE_NOP)
     {
         return new cgoShaderInstr(CG1_ISA_OPCODE_NOP);
     }

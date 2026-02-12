@@ -8,7 +8,7 @@
 #include "DynamicObject.h"
 #include "GPUReg.h"
 
-namespace cg1gpu
+namespace arch
 {
 
 /**
@@ -70,6 +70,6 @@ public:
     GPURegData getRegisterData() const;
 };
 
-} // namespace cg1gpu
+} // namespace arch
 
 #endif

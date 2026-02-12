@@ -5,7 +5,7 @@
 #include "GPUReg.h"
 
 using namespace std;
-using namespace cg1gpu;
+using namespace arch;
 
 
 void dumpRegisters(cgsGpuRegister &state);

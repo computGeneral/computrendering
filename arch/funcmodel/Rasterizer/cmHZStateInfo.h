@@ -21,7 +21,7 @@
 #include "DynamicObject.h"
 #include "cmHierarchicalZ.h"
 
-namespace cg1gpu
+namespace arch
 {
 
 /**
@@ -68,6 +68,6 @@ public:
     HZState getState();
 };
 
-} // namespace cg1gpu
+} // namespace arch
 
 #endif

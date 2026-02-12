@@ -53,7 +53,7 @@ void privateSwapBuffers()
 {
 //if (frame >= START_FRAME)
     //  Request a framebuffer swap to the driver.
-    driver->sendCommand(cg1gpu::GPU_SWAPBUFFERS);
+    driver->sendCommand(arch::GPU_SWAPBUFFERS);
 //else
 //printf("LIB >> Skipping frame %d\n", frame);
 

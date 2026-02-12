@@ -10,7 +10,7 @@
 using namespace libgl::GenerationCode;
 using namespace libgl;
 using namespace std;
-using namespace cg1gpu;
+using namespace arch;
 
 
 bool SemanticTraverser::swizzleMaskCheck(const char *smask)

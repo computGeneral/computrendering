@@ -13,10 +13,10 @@ struct Operand
     bool negate;
     bool absolute;
     bool addressing;
-    cg1gpu::SwizzleMode swizzle;    
+    arch::SwizzleMode swizzle;    
 
     //  Default values
-    Operand() : negate(false), absolute(false), addressing(false), swizzle(cg1gpu::XYZW) {}
+    Operand() : negate(false), absolute(false), addressing(false), swizzle(arch::XYZW) {}
 };
 
 /// Represents a shader instruction result
@@ -24,10 +24,10 @@ struct Result
 {
     GPURegisterId registerId;
     bool saturate;
-    cg1gpu::MaskMode maskMode;
+    arch::MaskMode maskMode;
     
     //  Default values
-    Result() : saturate(false), maskMode(cg1gpu::mXYZW) {}
+    Result() : saturate(false), maskMode(arch::mXYZW) {}
 };
 
 
@@ -63,7 +63,7 @@ public:
     
     void resetParameters();
 
-    void setOpcode(cg1gpu::ShOpcode _opc);
+    void setOpcode(arch::ShOpcode _opc);
 
     void setOperand(U32 i, Operand _operand);
     
@@ -75,11 +75,11 @@ public:
 
     void setLastInstr(bool _lastInstr);
 
-    cg1gpu::ShaderInstruction *buildInstruction();
+    arch::ShaderInstruction *buildInstruction();
     
 private:
 
-    cg1gpu::ShOpcode opc;
+    arch::ShOpcode opc;
     Operand operand[3];
     Result result;
     PredicationInfo predication;
@@ -89,10 +89,10 @@ private:
 
 /** gpu shaders must end with 8 NOP instructions,
     this function generates this serie **/
-list<cg1gpu::ShaderInstruction*> generate_ending_nops();
+list<arch::ShaderInstruction*> generate_ending_nops();
 
 //* generate a mov instruction, not surprisingly *
-cg1gpu::ShaderInstruction* generate_mov(GPURegisterId dest, GPURegisterId src);
+arch::ShaderInstruction* generate_mov(GPURegisterId dest, GPURegisterId src);
 
 
 #endif // SHADINGTYPES_H_INCLUDED

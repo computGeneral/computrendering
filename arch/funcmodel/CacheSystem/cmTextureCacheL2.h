@@ -28,7 +28,7 @@
 #include "cmtoolsQueue.h"
 #include <string>
 
-namespace cg1gpu
+namespace arch
 {
 
 //  Defines a block read request to memory.  
@@ -337,6 +337,6 @@ public:
     void setDebug(bool enable);
 };
 
-} // namespace cg1gpu
+} // namespace arch
 
 #endif

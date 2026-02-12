@@ -20,7 +20,7 @@
 #include "support.h"
 #include <cstdio>
 
-using namespace cg1gpu;
+using namespace arch;
 
 //  Clipper behaviorModel constructor.  
 bmoClipper::bmoClipper()

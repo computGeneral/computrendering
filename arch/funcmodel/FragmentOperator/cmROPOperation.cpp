@@ -18,7 +18,7 @@
 
 #include "cmROPOperation.h"
 
-using namespace cg1gpu;
+using namespace arch;
 
 //  ROP Operation constructor.  
 ROPOperation::ROPOperation(ROPQueue *opStamp)

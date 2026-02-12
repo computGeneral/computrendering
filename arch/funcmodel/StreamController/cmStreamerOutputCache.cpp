@@ -8,7 +8,7 @@
 #include "cmStreamerControlCommand.h"
 #include <iostream>
 
-using namespace cg1gpu;
+using namespace arch;
 using namespace std;
 
 //  cmoStreamController Output Cache mdu constructor.  

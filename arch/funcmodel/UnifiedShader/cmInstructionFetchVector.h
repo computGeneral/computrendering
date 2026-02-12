@@ -22,7 +22,7 @@
 
 #define _VECTORINSTRUCTIONFETCH_
 
-namespace cg1gpu
+namespace arch
 {
 
 /** 

@@ -21,7 +21,7 @@
 #include <vector>
 #include <map>
 
-namespace cg1gpu
+namespace arch
 {
 
 /** GPU Behavior Model class.
@@ -43,7 +43,7 @@ public:
      *  @param TraceDriver Pointer to a cgoTraceDriverBase object from which to obtain MetaStreams.
      *  @return An initialized CG1BMDL object.
      */
-    CG1BMDL(cg1gpu::cgsArchConfig ArchConf, cgoTraceDriverBase *TraceDriver);
+    CG1BMDL(arch::cgsArchConfig ArchConf, cgoTraceDriverBase *TraceDriver);
     void simulationLoop(cgeModelAbstractLevel MAL = CG_BEHV_MODEL);  // Implements a fire and forget emulation main loop. */
     void abortSimulation(); // Abort emulation. */ 
     void saveSnapshot();    // Save a snapshot of the current behaviorModel state. */
@@ -55,6 +55,6 @@ public:
     void getCycles(U64& gpuCycle, U64& shaderCycle, U64& memCycle) {};
     void getCounters(U32& frameCounter, U32& frameBatch, U32& batchCounter) {};
 };  // class CG1BMDL
-};  //  namespace cg1gpu
+};  //  namespace arch
 
 #endif

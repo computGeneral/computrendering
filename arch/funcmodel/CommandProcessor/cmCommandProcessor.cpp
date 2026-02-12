@@ -27,7 +27,7 @@
 using std::cout;
 using std::endl;
 
-using namespace cg1gpu;
+using namespace arch;
 
 //  Command Processor constructor.  
 cmoCommandProcessor::cmoCommandProcessor(

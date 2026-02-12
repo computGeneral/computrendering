@@ -500,7 +500,7 @@ void CRenderTargetZStencil9::setup_clear_shaders(DWORD color, float z) {
     // Move final position to output
     instructions.push_back(generate_mov(GPURegisterId(0, OUT), GPURegisterId(0, TEMP)));
     builder.resetParameters();
-    builder.setOpcode(cg1gpu::END);
+    builder.setOpcode(arch::END);
     instructions.push_back(builder.buildInstruction());
     list<ShaderInstruction*> ending = generate_ending_nops();
     instructions.insert(instructions.end(), ending.begin(), ending.end());
@@ -581,7 +581,7 @@ void CRenderTargetZStencil9::setup_clear_shaders(DWORD color, float z) {
     ending.clear();
     instructions.push_back(generate_mov(GPURegisterId(1, OUT), GPURegisterId(1, IN)));
     builder.resetParameters();
-    builder.setOpcode(cg1gpu::END);
+    builder.setOpcode(arch::END);
     instructions.push_back(builder.buildInstruction());
     ending = generate_ending_nops();
     instructions.insert(instructions.end(), ending.begin(), ending.end());
@@ -755,7 +755,7 @@ void CRenderTargetZStencil9::restore_clear_vertices() {
     gpu->readGPURegister(GPU_HIERARCHICALZ, &stored_hierarchicalz);
 
     GPURegData data;
-    data.culling = cg1gpu::NONE;
+    data.culling = arch::NONE;
     gpu->writeGPURegister(GPU_CULLING, data);
 
     if(flags & D3DCLEAR_ZBUFFER) {

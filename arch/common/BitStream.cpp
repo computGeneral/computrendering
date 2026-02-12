@@ -4,7 +4,7 @@
 
 #include "BitStream.h"
 
-namespace cg1gpu
+namespace arch
 {
 
 const U32 BitStream::mask[BitStream::maxBits + 1] = {

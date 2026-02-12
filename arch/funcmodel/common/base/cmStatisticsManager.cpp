@@ -6,8 +6,8 @@
 #include "support.h"
 #include <algorithm>
 
-using namespace cg1gpu;
-using namespace cg1gpu::gpuStatistics;
+using namespace arch;
+using namespace arch::gpuStatistics;
 using namespace std;
 
 // StatisticsManager* StatisticsManager::sm = 0;

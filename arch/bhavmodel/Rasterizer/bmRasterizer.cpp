@@ -23,7 +23,7 @@
 #include <iostream>
 #include "FixedPoint.h"
 
-using namespace cg1gpu;
+using namespace arch;
 using namespace std;
 
 bmoRasterizer::MSAAOffset bmoRasterizer::MSAAPatternTable2[4] =

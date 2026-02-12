@@ -19,9 +19,9 @@
 
 #include <sstream>
 
-using cg1gpu::tools::Queue;
+using arch::tools::Queue;
 
-using namespace cg1gpu;
+using namespace arch;
 
 //  Calculates the tag bank for a texture cache address.  
 #define TAGBANK(address) ((address >> bankShift) & bankMask)

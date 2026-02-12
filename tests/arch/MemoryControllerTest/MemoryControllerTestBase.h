@@ -15,7 +15,7 @@
 #include "ConfigLoader.h"
 #include "MemoryControllerProxy.h"
 
-namespace cg1gpu {
+namespace arch {
 
 // From ConfigLoader.h (included in implementation .cpp file)
 //struct cgsArchConfig;
@@ -130,6 +130,6 @@ public:
 
 };
 
-} // namespace cg1gpu
+} // namespace arch
 
 #endif // MEMORYCONTROLLERTESTBASE_H

@@ -5,7 +5,7 @@
 #include "MemoryControllerTestBase.h"
 
 
-using namespace cg1gpu;
+using namespace arch;
 
 MemoryControllerTestBase::MemoryControllerTestBase( const cgsArchConfig& arch,
                                                     const char** tuPrefixes,

@@ -6,7 +6,7 @@
 //#include "bmoHiloCompressor.h"
 #include "bmoMsaaCompressor.h"
 
-using namespace cg1gpu;
+using namespace arch;
 
 int fd;
 bool eof = false;

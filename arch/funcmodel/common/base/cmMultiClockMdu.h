@@ -9,7 +9,7 @@
 
 #include "cmMduBase.h"
 
-namespace cg1gpu
+namespace arch
 {
 
 /**
@@ -46,6 +46,6 @@ public:
     virtual void clock(U32 domain, U64 cycle) = 0;
 };
 
-} // namespace cg1gpu
+} // namespace arch
 
 #endif

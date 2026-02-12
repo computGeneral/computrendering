@@ -124,8 +124,8 @@ private:
     _FaceInfo _front;
     _FaceInfo _back;
 
-    static void _getGPUCompareFunction(GAL_COMPARE_FUNCTION comp, cg1gpu::GPURegData* data);
-    static void _getGPUStencilOperation(GAL_STENCIL_OP op, cg1gpu::GPURegData* data);
+    static void _getGPUCompareFunction(GAL_COMPARE_FUNCTION comp, arch::GPURegData* data);
+    static void _getGPUStencilOperation(GAL_STENCIL_OP op, arch::GPURegData* data);
     
     class CompareFunctionPrint: public PrintFunc<GAL_COMPARE_FUNCTION>
     {

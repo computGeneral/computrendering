@@ -18,11 +18,11 @@ public:
 
     RegisterWriteBufferMeta();
 
-    void writeRegister(cg1gpu::GPURegister reg, U32 index, const cg1gpu::GPURegData& data, U32 md = 0);
+    void writeRegister(arch::GPURegister reg, U32 index, const arch::GPURegData& data, U32 md = 0);
 
-    bool readRegister(cg1gpu::GPURegister reg, U32 index, cg1gpu::GPURegData &data, U32 &md);
+    bool readRegister(arch::GPURegister reg, U32 index, arch::GPURegData &data, U32 &md);
     
-    bool flushNextRegister(cg1gpu::GPURegister &reg, U32 &index, cg1gpu::GPURegData &data, U32 &md);
+    bool flushNextRegister(arch::GPURegister &reg, U32 &index, arch::GPURegData &data, U32 &md);
 
 private:
 
@@ -30,10 +30,10 @@ private:
 
     struct RegisterIdentifier
     {
-        cg1gpu::GPURegister reg;
+        arch::GPURegister reg;
         U32 index;
 
-        RegisterIdentifier(cg1gpu::GPURegister reg_, U32 index_) :
+        RegisterIdentifier(arch::GPURegister reg_, U32 index_) :
             reg(reg_), index(index_)
         {}
         
@@ -55,10 +55,10 @@ private:
     
     struct RegisterData
     {
-        cg1gpu::GPURegData data;
+        arch::GPURegData data;
         U32 md;
 
-        RegisterData(cg1gpu::GPURegData data_, U32 md_) :
+        RegisterData(arch::GPURegData data_, U32 md_) :
             data(data_), md(md_)
         {}
         

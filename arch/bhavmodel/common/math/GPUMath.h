@@ -9,7 +9,7 @@
 #include "FixedPoint.h"
 
 
-namespace cg1gpu
+namespace arch
 {
 
 //  Dead to ISOC99!!!! 
@@ -1432,6 +1432,6 @@ public:
 
 }; // class GPUMath
 
-} // namespace cg1gpu
+} // namespace arch
 
 #endif

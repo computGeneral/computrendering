@@ -25,7 +25,7 @@
 
 #include <cstdlib>
 
-namespace cg1gpu
+namespace arch
 {
 
 ImageSaver::ImageSaver()
@@ -160,6 +160,6 @@ void ImageSaver::savePNG(char *filename, U32 xRes, U32 yRes, U08 *data)
 #endif    
 }
 
-}   // namespace cg1gpu
+}   // namespace arch
 
 

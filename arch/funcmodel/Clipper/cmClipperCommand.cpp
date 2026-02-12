@@ -18,7 +18,7 @@
 
 #include "cmClipperCommand.h"
 
-using namespace cg1gpu;
+using namespace arch;
 
 /*  Clipper Command constructor.  For CLPCOM_RESET, CLPCOM_START,
     and CLPCOM_END.  */

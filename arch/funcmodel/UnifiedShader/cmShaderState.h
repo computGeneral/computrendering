@@ -16,7 +16,7 @@
 
 #define _SHADERSTATE_
 
-namespace cg1gpu
+namespace arch
 {
 
 /**
@@ -47,6 +47,6 @@ enum ShaderDecodeState
     SHDEC_BUSY      //  The Shader Decode stage can not receive instructions.  
 };
 
-}  // namespace cg1gpu
+}  // namespace arch
 
 #endif

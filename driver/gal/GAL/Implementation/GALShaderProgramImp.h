@@ -62,9 +62,9 @@ public:
 
     bool isOptimized() const;
 
-    void updateConstants(HAL* driver, cg1gpu::GPURegister constantsType);
+    void updateConstants(HAL* driver, arch::GPURegister constantsType);
 
-    static const gal_uint MAX_SHADER_ATTRIBUTES = (cg1gpu::MAX_VERTEX_ATTRIBUTES > cg1gpu::MAX_FRAGMENT_ATTRIBUTES? cg1gpu::MAX_VERTEX_ATTRIBUTES: cg1gpu::MAX_FRAGMENT_ATTRIBUTES);
+    static const gal_uint MAX_SHADER_ATTRIBUTES = (arch::MAX_VERTEX_ATTRIBUTES > arch::MAX_FRAGMENT_ATTRIBUTES? arch::MAX_VERTEX_ATTRIBUTES: arch::MAX_FRAGMENT_ATTRIBUTES);
 
     void setInputRead(gal_uint inputReg, gal_bool read);
 

@@ -20,7 +20,7 @@
  *
  */
 
-namespace cg1gpu
+namespace arch
 {
 
 class ShaderStateInfo : public DynamicObject
@@ -57,6 +57,6 @@ public:
 
 };
 
-} // namespace cg1gpu
+} // namespace arch
 
 #endif

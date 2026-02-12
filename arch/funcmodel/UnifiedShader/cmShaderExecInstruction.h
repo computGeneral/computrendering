@@ -24,7 +24,7 @@
 
 #define _SHADEREXECINSTRUCTION_
 
-namespace cg1gpu
+namespace arch
 {
 
 enum ExecInstrState { FETCH, WAIT, RUN };
@@ -217,6 +217,6 @@ public:
 
 };
 
-} // namespace cg1gpu
+} // namespace arch
 
 #endif

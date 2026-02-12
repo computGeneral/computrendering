@@ -21,7 +21,7 @@
 #include "DynamicObject.h"
 #include "cmFragmentFIFOState.h"
 
-namespace cg1gpu
+namespace arch
 {
 
 /**
@@ -67,6 +67,6 @@ public:
     FFIFOState getState();
 };
 
-} // namespace cg1gpu
+} // namespace arch
 
 #endif

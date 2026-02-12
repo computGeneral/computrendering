@@ -18,7 +18,7 @@
 
 #include "cmHZUpdate.h"
 
-using namespace cg1gpu;
+using namespace arch;
 
 
 

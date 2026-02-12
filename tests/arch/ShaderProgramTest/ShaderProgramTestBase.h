@@ -22,7 +22,7 @@ namespace libGAL
     }
 }
 
-namespace cg1gpu {
+namespace arch {
 
 //  class prototype (ShaderInstruction.h included in implementation file)
 class ShaderInstruction;
@@ -105,6 +105,6 @@ public:
     void dumpProgram(std::ostream& out);
 };
 
-} // namespace cg1gpu
+} // namespace arch
 
 #endif // SHADERPROGRAMTESTBASE_H

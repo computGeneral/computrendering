@@ -834,7 +834,7 @@ void StaticInstructionScheduling::_reorderCode(vector<InstructionInfo*>& origina
     // Insert the auxiliary NOP instructions at lasts positions
     for(unsigned int i=0; i < NOPsToInsert; i++)
     {
-        InstructionInfo *nop = new InstructionInfo(cg1gpu::CG1_ISA_OPCODE_NOP, originalCode.size() + i);
+        InstructionInfo *nop = new InstructionInfo(arch::CG1_ISA_OPCODE_NOP, originalCode.size() + i);
         originalCode.push_back(nop);
     }
 }

@@ -17,7 +17,7 @@
 
 #include "cmFFIFOStateInfo.h"
 
-using namespace cg1gpu;
+using namespace arch;
 
 
 //  Creates a new FFIFOStateInfo object.  

@@ -11,7 +11,7 @@
 #include "DynamicObject.h"
 #include "cmStreamer.h"
 
-namespace cg1gpu
+namespace arch
 {
 
 //*  This describes the shader consumer state signal states.  
@@ -74,6 +74,6 @@ public:
     ConsumerState getState();
 };
 
-} // namespace cg1gpu
+} // namespace arch
 
 #endif

@@ -18,7 +18,7 @@
 
 #include "cmTextureResult.h"
 
-using namespace cg1gpu;
+using namespace arch;
 
 //  Texture Result constructor.  
 TextureResult::TextureResult(U32 ident, Vec4FP32 *samples, U32 stampFrags, U64 cycle)

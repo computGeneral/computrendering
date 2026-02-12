@@ -2,7 +2,7 @@
 
 #include "RegGpu.hpp"
 
-namespace cg1gpu
+namespace arch
 {
     cgoGpuRegister::cgoGpuRegister()
     {

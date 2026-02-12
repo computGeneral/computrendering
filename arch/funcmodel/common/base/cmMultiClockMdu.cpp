@@ -4,7 +4,7 @@
 
 #include "cmMultiClockMdu.h"
 
-using namespace cg1gpu;
+using namespace arch;
 
  //  Multi clock domain mdu constructor.
  cmoMduMultiClk::cmoMduMultiClk(const char *name, cmoMduBase *parent) :

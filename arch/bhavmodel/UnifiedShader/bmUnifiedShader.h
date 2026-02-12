@@ -20,7 +20,7 @@
 #ifndef __BM_SHADER_H__
 #define __BM_SHADER_H__
 
-namespace cg1gpu
+namespace arch
 {
 
 //  Defines the shader models supported.  
@@ -1010,6 +1010,6 @@ public:
 
 };
 
-} // namespace cg1gpu
+} // namespace arch
 
 #endif

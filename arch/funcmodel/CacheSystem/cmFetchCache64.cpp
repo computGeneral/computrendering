@@ -18,7 +18,7 @@
 #include <cstdio>
 #include <cstring>
 
-using namespace cg1gpu;
+using namespace arch;
 
 #undef GPU_DEBUG
 #define GPU_DEBUG(expr) if (debugMode) { expr }

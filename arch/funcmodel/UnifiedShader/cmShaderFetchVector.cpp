@@ -25,9 +25,9 @@
 #include <cstdio>
 #include <sstream>
 
-using namespace cg1gpu;
+using namespace arch;
 
-using cg1gpu::tools::Queue;
+using arch::tools::Queue;
 
 //  Constructor for the cmoShaderFetchVector BOX class.
 

@@ -18,7 +18,7 @@
 
 #include "cmTriangleSetupRequest.h"
 
-using namespace cg1gpu;
+using namespace arch;
 
 //  Creates a new TriangleSetupRequest object.  
 TriangleSetupRequest::TriangleSetupRequest(U32 trianglesRequested)

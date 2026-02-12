@@ -8,8 +8,8 @@
 #include <sstream>
 
 using namespace std;
-using cg1gpu::memorycontroller::DDRCommand;
-using cg1gpu::memorycontroller::DDRBurst;
+using arch::memorycontroller::DDRCommand;
+using arch::memorycontroller::DDRBurst;
 
 U32 DDRCommand::instances = 0;
 

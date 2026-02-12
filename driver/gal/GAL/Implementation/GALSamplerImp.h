@@ -77,7 +77,7 @@ public:
 private:
 
 
-    static const gal_uint _MAX_TEXTURE_MIPMAPS = cg1gpu::MAX_TEXTURE_SIZE;
+    static const gal_uint _MAX_TEXTURE_MIPMAPS = arch::MAX_TEXTURE_SIZE;
 
     GALDeviceImp* _device;
     HAL* _driver;
@@ -133,15 +133,15 @@ private:
     StateItem<GAL_MEMORY_LAYOUT> _blitTextureBlocking;
 
     static void _getGPUTextureFormat(GAL_FORMAT textureFormat, 
-                                         cg1gpu::GPURegData* dataFormat,
-                                         cg1gpu::GPURegData* dataCompression,
-                                         cg1gpu::GPURegData* dataInverted);
+                                         arch::GPURegData* dataFormat,
+                                         arch::GPURegData* dataCompression,
+                                         arch::GPURegData* dataInverted);
 
-    static void _getGPUClampMode(GAL_TEXTURE_ADDR_MODE mode, cg1gpu::GPURegData* data);
-    static void _getGPUTexFilter(GAL_TEXTURE_FILTER, cg1gpu::GPURegData* data);
-    static void _getGPUTexComp(GAL_TEXTURE_COMPARISON, cg1gpu::GPURegData* data);
-    static void _getGPUTextureMode(GAL_RESOURCE_TYPE, cg1gpu::GPURegData* data);
-    static void _getGPUTexMemoryLayout(GAL_MEMORY_LAYOUT memLayout, cg1gpu::GPURegData* data);
+    static void _getGPUClampMode(GAL_TEXTURE_ADDR_MODE mode, arch::GPURegData* data);
+    static void _getGPUTexFilter(GAL_TEXTURE_FILTER, arch::GPURegData* data);
+    static void _getGPUTexComp(GAL_TEXTURE_COMPARISON, arch::GPURegData* data);
+    static void _getGPUTextureMode(GAL_RESOURCE_TYPE, arch::GPURegData* data);
+    static void _getGPUTexMemoryLayout(GAL_MEMORY_LAYOUT memLayout, arch::GPURegData* data);
 
     static const char* _getFormatString(GAL_FORMAT format);
 

@@ -11,7 +11,7 @@
 #include "DynamicObject.h"
 #include "cmShaderDecodeExecute.h"
 
-namespace cg1gpu
+namespace arch
 {
 
 /**
@@ -58,6 +58,6 @@ public:
     ShaderDecodeState getState();
 };
 
-} // namespace cg1gpu
+} // namespace arch
 
 #endif

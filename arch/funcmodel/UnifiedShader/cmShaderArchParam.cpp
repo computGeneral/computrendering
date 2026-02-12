@@ -9,7 +9,7 @@
  */
 #include "cmShaderArchParam.h"
 
-using namespace cg1gpu;
+using namespace arch;
 
 //  Pointer to the single instance of the class.
 ShaderArchParam *ShaderArchParam::shArchParams = NULL;

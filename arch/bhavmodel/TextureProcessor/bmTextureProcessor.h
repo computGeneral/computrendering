@@ -25,7 +25,7 @@
 #include "DynamicMemoryOpt.h"
 #include "PixelMapper.h"
 
-namespace cg1gpu
+namespace arch
 {
 
 //**  Defines the maximum texture lod bias.  
@@ -1352,6 +1352,6 @@ public:
 
 };
 
-} // namespace cg1gpu
+} // namespace arch
 
 #endif

@@ -21,7 +21,7 @@
 
 #define _CACHEREPLACEMENT_
 
-namespace cg1gpu
+namespace arch
 {
 
 /**
@@ -273,6 +273,6 @@ public:
     U32 victim(U32 line);
 };
 
-} // namespace cg1gpu
+} // namespace arch
 
 #endif

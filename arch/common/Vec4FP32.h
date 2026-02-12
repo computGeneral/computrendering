@@ -12,7 +12,7 @@
 #include "GPUType.h"
 #include <ostream>
 
-namespace cg1gpu
+namespace arch
 {
 
 //! Class Vec4FP32 defines a 4-component vector of floats
@@ -69,6 +69,6 @@ public:
     
 };
 
-} // namespace cg1gpu
+} // namespace arch
 
 #endif

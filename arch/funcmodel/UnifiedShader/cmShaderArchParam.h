@@ -18,7 +18,7 @@
 
 using namespace std;
 
-namespace cg1gpu
+namespace arch
 {
 
 /**
@@ -99,6 +99,6 @@ public:
     U32 getRepeatRate(ShOpcode opcode);
 };
 
-}  // namespace cg1gpu
+}  // namespace arch
 
 #endif

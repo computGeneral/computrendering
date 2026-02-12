@@ -13,7 +13,7 @@
 
 #define MAX_COOKIES 8
 
-namespace cg1gpu
+namespace arch
 {
 
 /**
@@ -132,6 +132,6 @@ public:
 
 };
 
-} // namespace cg1gpu
+} // namespace arch
 
 #endif

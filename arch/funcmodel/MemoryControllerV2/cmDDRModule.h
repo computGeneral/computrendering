@@ -12,7 +12,7 @@
 #include <vector>
 #include <utility>
 
-namespace cg1gpu
+namespace arch
 {
 namespace memorycontroller
 {
@@ -352,6 +352,6 @@ public:
 
 } // namespace memorycontroller
 
-} // namespace cg1gpu
+} // namespace arch
 
 #endif // DDRMODULE_H

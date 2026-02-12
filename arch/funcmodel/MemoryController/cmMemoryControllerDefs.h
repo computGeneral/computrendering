@@ -9,7 +9,7 @@
 
 //#define USE_MEMORY_CONTROLLER_V2
 
-namespace cg1gpu {
+namespace arch {
 
 
 //*  Defines the different states for a memory request entry.  
@@ -77,6 +77,6 @@ const U32 WRITE_MASK_SIZE = (MAX_TRANSACTION_SIZE >> 2);
 static const U32 MAX_MEMORY_TICKETS = 256;
 
 
-} // namespace cg1gpu
+} // namespace arch
 
 #endif // MEMORYCONTROLLERDEFS_H

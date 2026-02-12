@@ -17,7 +17,7 @@
 
 #include "cmBlendOperation.h"
 
-using namespace cg1gpu;
+using namespace arch;
 
 
 //  Blend Operation constructor.  

@@ -25,9 +25,9 @@
 
 using namespace std;
 
-using namespace cg1gpu;
+using namespace arch;
 
-using cg1gpu::tools::Queue;
+using arch::tools::Queue;
 
 // cmoShaderDecExeVector constructor
 cmoShaderDecExeVector::cmoShaderDecExeVector(bmoUnifiedShader &bmShader, U32 threads, U32 vecLength,
@@ -1375,28 +1375,28 @@ void cmoShaderDecExeVector::updateDecodeStage(U64 cycle, ShaderExecInstruction *
         //  Set pending register write tables.
         switch(shInstr->getBankRes())
         {
-                case cg1gpu::ADDR:
+                case arch::ADDR:
 
                     //  Set pending status for address register.
                     threadInfo[threadID].addrBankDep[resReg] = true;
 
                     break;
 
-                case cg1gpu::TEMP:
+                case arch::TEMP:
 
                     //  Set pending status for temporary register.
                     threadInfo[threadID].tempBankDep[resReg] = true;
 
                     break;
 
-                case cg1gpu::PRED:
+                case arch::PRED:
 
                     //  Set pending status for predicate register.
                     threadInfo[threadID].predBankDep[resReg] = true;
                     
                     break;
 
-                case cg1gpu::OUT:
+                case arch::OUT:
 
                     //  Set pending status for output register.
                     threadInfo[threadID].outpBankDep[resReg] = true;
@@ -1427,7 +1427,7 @@ void cmoShaderDecExeVector::updateDecodeStage(U64 cycle, ShaderExecInstruction *
         //  Set register write cycle tables.
         switch(shInstr->getBankRes())
         {
-            case cg1gpu::OUT:
+            case arch::OUT:
 
                 //  If current write latency for the register is less than the instruction latency update the table.
                 if (threadInfo[threadID].outpBankWrite[resReg] < (cycle + instrLat))
@@ -1439,7 +1439,7 @@ void cmoShaderDecExeVector::updateDecodeStage(U64 cycle, ShaderExecInstruction *
 
                 break;
 
-            case cg1gpu::ADDR:
+            case arch::ADDR:
 
                 //  If current write latency for the register is less than the instruction latency update the table.
                 if (threadInfo[threadID].addrBankWrite[resReg] < (cycle + instrLat))
@@ -1451,7 +1451,7 @@ void cmoShaderDecExeVector::updateDecodeStage(U64 cycle, ShaderExecInstruction *
 
                 break;
 
-            case cg1gpu::TEMP:
+            case arch::TEMP:
 
                 //  If current write latency for the register is less than the instruction latency update the table.
                 if (threadInfo[threadID].tempBankWrite[resReg] < (cycle + instrLat))
@@ -1463,7 +1463,7 @@ void cmoShaderDecExeVector::updateDecodeStage(U64 cycle, ShaderExecInstruction *
 
                 break;
 
-            case cg1gpu::PRED:
+            case arch::PRED:
 
                 //  If current write latency for the register is less than the instruction latency update the table.
                 if (threadInfo[threadID].predBankWrite[resReg] < (cycle + instrLat))
@@ -1761,7 +1761,7 @@ void cmoShaderDecExeVector::decodeInstruction(U64 cycle, U32 instruction, bool &
         //    must wait.
         switch(shInstr->getBankRes())
         {
-            case cg1gpu::OUT:
+            case arch::OUT:
 
                 //  Check WAW dependence for output bank register.
                 if (threadInfo[threadID].outpBankWrite[resReg] >= (cycle + instrLat))
@@ -1778,7 +1778,7 @@ void cmoShaderDecExeVector::decodeInstruction(U64 cycle, U32 instruction, bool &
 
                 break;
 
-            case cg1gpu::ADDR:
+            case arch::ADDR:
 
                 //  Check WAW dependence for address bank register.
                 if (threadInfo[threadID].addrBankWrite[resReg] >= (cycle + instrLat))
@@ -1795,7 +1795,7 @@ void cmoShaderDecExeVector::decodeInstruction(U64 cycle, U32 instruction, bool &
 
                 break;
 
-            case cg1gpu::TEMP:
+            case arch::TEMP:
 
                 //  Check WAW dependence for temporal bank register.
                 if (threadInfo[threadID].tempBankWrite[resReg] >= (cycle + instrLat))
@@ -1812,7 +1812,7 @@ void cmoShaderDecExeVector::decodeInstruction(U64 cycle, U32 instruction, bool &
 
                 break;
 
-            case cg1gpu::PRED:
+            case arch::PRED:
 
                 //  Check WAW dependence for predicate bank register.
                 if (threadInfo[threadID].predBankWrite[resReg] >= (cycle + instrLat))
@@ -1909,7 +1909,7 @@ void cmoShaderDecExeVector::clearDependences(U64 cycle, cgoShaderInstr *shInstr,
         //  Determine register bank written by the instruction.
         switch(shInstr->getBankRes())
         {
-            case cg1gpu::ADDR:
+            case arch::ADDR:
 
                 //  Check if clearing the last write pending for the address register.
                 if (threadInfo[threadID].addrBankWrite[resReg] == cycle)
@@ -1920,7 +1920,7 @@ void cmoShaderDecExeVector::clearDependences(U64 cycle, cgoShaderInstr *shInstr,
                 
                 break;
 
-            case cg1gpu::TEMP:
+            case arch::TEMP:
 
                 //  Check if clearing the last write pending for the temporary register.
                 if (threadInfo[threadID].tempBankWrite[resReg] == cycle)
@@ -1931,7 +1931,7 @@ void cmoShaderDecExeVector::clearDependences(U64 cycle, cgoShaderInstr *shInstr,
                 
                 break;
 
-            case cg1gpu::PRED:
+            case arch::PRED:
 
                 //  Check if clearing the last write pending for the predicate register.
                 if (threadInfo[threadID].predBankWrite[resReg] == cycle)
@@ -1942,7 +1942,7 @@ void cmoShaderDecExeVector::clearDependences(U64 cycle, cgoShaderInstr *shInstr,
                 
                 break;
 
-            case cg1gpu::OUT:
+            case arch::OUT:
 
                 //  Check if clearing the last write pending for the output register.
                 if (threadInfo[threadID].outpBankWrite[resReg] == cycle)
@@ -2087,10 +2087,10 @@ void cmoShaderDecExeVector::printShaderInstructionOperands(cgoShaderInstr::cgoSh
     {
         switch(shDecInstr->getShaderInstruction()->getBankOp1())
         {
-            case cg1gpu::TEXT:            
+            case arch::TEXT:            
                 break;
           
-            case cg1gpu::PRED:
+            case arch::PRED:
                 {
                     bool *op1 = (bool *) shDecInstr->getShEmulOp1();
                     printf("             OP1 -> %s\n", *op1 ? "true" : "false");
@@ -2102,7 +2102,7 @@ void cmoShaderDecExeVector::printShaderInstructionOperands(cgoShaderInstr::cgoSh
                 //  Check for predicator operator instruction with constant register operator.
                 switch(shDecInstr->getShaderInstruction()->getOpcode())
                 {
-                    case cg1gpu::CG1_ISA_OPCODE_ANDP:
+                    case arch::CG1_ISA_OPCODE_ANDP:
                         {
                             bool *op1 = (bool *) shDecInstr->getShEmulOp1();
                             printf("             OP1 -> {%s, %s, %s, %s}\n", op1[0] ? "true" : "false", op1[1] ? "true" : "false",
@@ -2110,11 +2110,11 @@ void cmoShaderDecExeVector::printShaderInstructionOperands(cgoShaderInstr::cgoSh
                         }
                         break;
                       
-                    case cg1gpu::CG1_ISA_OPCODE_ADDI:
-                    case cg1gpu::CG1_ISA_OPCODE_MULI:
-                    case cg1gpu::CG1_ISA_OPCODE_STPEQI:
-                    case cg1gpu::CG1_ISA_OPCODE_STPGTI:
-                    case cg1gpu::CG1_ISA_OPCODE_STPLTI:
+                    case arch::CG1_ISA_OPCODE_ADDI:
+                    case arch::CG1_ISA_OPCODE_MULI:
+                    case arch::CG1_ISA_OPCODE_STPEQI:
+                    case arch::CG1_ISA_OPCODE_STPGTI:
+                    case arch::CG1_ISA_OPCODE_STPLTI:
                         {
                             S32 *op1 = (S32 *) shDecInstr->getShEmulOp1();
                             printf("             OP1 -> {%d, %d, %d, %d}\n", op1[0], op1[1], op1[2], op1[3]);
@@ -2136,10 +2136,10 @@ void cmoShaderDecExeVector::printShaderInstructionOperands(cgoShaderInstr::cgoSh
     {
         switch(shDecInstr->getShaderInstruction()->getBankOp2())
         {
-            case cg1gpu::TEXT:            
+            case arch::TEXT:            
                 break;
           
-            case cg1gpu::PRED:
+            case arch::PRED:
                 {
                     bool *op2 = (bool *) shDecInstr->getShEmulOp2();
                     printf("             OP2 -> %s\n", *op2 ? "true" : "false");
@@ -2151,7 +2151,7 @@ void cmoShaderDecExeVector::printShaderInstructionOperands(cgoShaderInstr::cgoSh
                 //  Check for predicator operator instruction with constant register operator.
                 switch(shDecInstr->getShaderInstruction()->getOpcode())
                 {
-                    case cg1gpu::CG1_ISA_OPCODE_ANDP:
+                    case arch::CG1_ISA_OPCODE_ANDP:
                         {
                             bool *op2 = (bool *) shDecInstr->getShEmulOp2();
                             printf("             OP2 -> {%s, %s, %s, %s}\n", op2[0] ? "true" : "false", op2[1] ? "true" : "false",
@@ -2159,11 +2159,11 @@ void cmoShaderDecExeVector::printShaderInstructionOperands(cgoShaderInstr::cgoSh
                         }
                         break;
                       
-                    case cg1gpu::CG1_ISA_OPCODE_ADDI:
-                    case cg1gpu::CG1_ISA_OPCODE_MULI:
-                    case cg1gpu::CG1_ISA_OPCODE_STPEQI:
-                    case cg1gpu::CG1_ISA_OPCODE_STPGTI:
-                    case cg1gpu::CG1_ISA_OPCODE_STPLTI:
+                    case arch::CG1_ISA_OPCODE_ADDI:
+                    case arch::CG1_ISA_OPCODE_MULI:
+                    case arch::CG1_ISA_OPCODE_STPEQI:
+                    case arch::CG1_ISA_OPCODE_STPGTI:
+                    case arch::CG1_ISA_OPCODE_STPLTI:
                         {
                             S32 *op2 = (S32 *) shDecInstr->getShEmulOp2();
                             printf("             OP2 -> {%d, %d, %d, %d}\n", op2[0], op2[1], op2[2], op2[3]);
@@ -2186,10 +2186,10 @@ void cmoShaderDecExeVector::printShaderInstructionOperands(cgoShaderInstr::cgoSh
     {
         switch(shDecInstr->getShaderInstruction()->getBankOp3())
         {
-            case cg1gpu::TEXT:            
+            case arch::TEXT:            
                 break;
           
-            case cg1gpu::PRED:
+            case arch::PRED:
                 {
                     bool *op3 = (bool *) shDecInstr->getShEmulOp3();
                     printf("             OP3 -> %s\n", *op3 ? "true" : "false");
@@ -2200,7 +2200,7 @@ void cmoShaderDecExeVector::printShaderInstructionOperands(cgoShaderInstr::cgoSh
                 //  Check for predicator operator instruction with constant register operator.
                 switch(shDecInstr->getShaderInstruction()->getOpcode())
                 {
-                    case cg1gpu::CG1_ISA_OPCODE_ANDP:
+                    case arch::CG1_ISA_OPCODE_ANDP:
                         {
                             bool *op3 = (bool *) shDecInstr->getShEmulOp3();
                             printf("             OP3 -> {%s, %s, %s, %s}\n", op3[0] ? "true" : "false", op3[1] ? "true" : "false",
@@ -2208,11 +2208,11 @@ void cmoShaderDecExeVector::printShaderInstructionOperands(cgoShaderInstr::cgoSh
                         }
                         break;
                       
-                    case cg1gpu::CG1_ISA_OPCODE_ADDI:
-                    case cg1gpu::CG1_ISA_OPCODE_MULI:
-                    case cg1gpu::CG1_ISA_OPCODE_STPEQI:
-                    case cg1gpu::CG1_ISA_OPCODE_STPGTI:
-                    case cg1gpu::CG1_ISA_OPCODE_STPLTI:
+                    case arch::CG1_ISA_OPCODE_ADDI:
+                    case arch::CG1_ISA_OPCODE_MULI:
+                    case arch::CG1_ISA_OPCODE_STPEQI:
+                    case arch::CG1_ISA_OPCODE_STPGTI:
+                    case arch::CG1_ISA_OPCODE_STPLTI:
                         {
                             S32 *op3 = (S32 *) shDecInstr->getShEmulOp3();
                             printf("             OP3 -> {%d, %d, %d, %d}\n", op3[0], op3[1], op3[2], op3[3]);

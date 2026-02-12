@@ -2,7 +2,7 @@
 
 #include "RegStreamMultiprocessor.h"
 
-namespace cg1gpu
+namespace arch
 {
     class cgoGpuRegister
     {

@@ -6,7 +6,7 @@
 #include <new> // bad_alloc definition
 #include <string>
 
-namespace cg1gpu
+namespace arch
 {
 
 /**
@@ -154,6 +154,6 @@ public:
     // static void printNotDeletedObjects();
 }; // class DynamicMemoryOpt
 
-} // namespace cg1gpu
+} // namespace arch
 
 #endif

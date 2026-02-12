@@ -7,7 +7,7 @@
 #include <cstring>
 
 using namespace std;
-using namespace cg1gpu;
+using namespace arch;
 
 // Macro for fast typing in cgoMetaStream::dump() method 
 #define CASE_PRINT(value)\

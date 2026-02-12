@@ -9,7 +9,7 @@
 #include "cmStreamerControlCommand.h"
 #include "cmShaderStateInfo.h"
 
-using namespace cg1gpu;
+using namespace arch;
 
 //  cmoStreamController Loader mdu constructor.  
 StreamerLoader::StreamerLoader(U32 unitId, U32 idxCycle, U32 irqSize, U32 attrCycle,

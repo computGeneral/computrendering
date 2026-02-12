@@ -17,7 +17,7 @@
 
 #include "cmZStencilStatusInfo.h"
 
-using namespace cg1gpu;
+using namespace arch;
 
 //  Z Stencil Status Info constructor.  
 ZStencilStatusInfo::ZStencilStatusInfo(ZStencilTestState stat)

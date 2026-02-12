@@ -27,7 +27,7 @@
     )
 
 using namespace std;
-using namespace cg1gpu::memorycontroller;
+using namespace arch::memorycontroller;
 
 void DDRModule::setModuleParameters( const GPUMemorySpecs& memSpecs, U32 burstLength_ )
 {

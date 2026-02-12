@@ -15,7 +15,7 @@
 #include <fstream>
 
 using namespace libgl;
-using namespace cg1gpu;
+using namespace arch;
 using namespace std;
 
 GLuint afl::computeHighestIndex(GLenum type, const GLvoid* indices, GLsizei count)
@@ -113,7 +113,7 @@ PrimitiveMode afl::translatePrimitive(GLenum primitive)
     switch ( primitive )
     {
         case GL_POINTS:
-            return cg1gpu::POINT;
+            return arch::POINT;
         case GL_LINES:
             return LINE;
         case GL_LINE_LOOP:
@@ -1018,7 +1018,7 @@ void afl::setupShaders(GLContext* ctx, ::HAL* driver)
     //  Check if triangle setup shader constants are updated.  
     if (!ctx->areSetupShaderConstantsUpdated())
     {
-        cg1gpu::GPURegData data;
+        arch::GPURegData data;
         GLint x, y;
         GLsizei w, h;
 
@@ -1028,22 +1028,22 @@ void afl::setupShaders(GLContext* ctx, ::HAL* driver)
         data.qfVal[1] = 2.0f / F32(w);
         data.qfVal[2] = 2.0f / F32(w);
         data.qfVal[3] = 2.0f / F32(w);
-        driver->writeGPURegister(cg1gpu::GPU_VERTEX_CONSTANT, 200, data);
+        driver->writeGPURegister(arch::GPU_VERTEX_CONSTANT, 200, data);
 
         data.qfVal[0] = 2.0f / F32(h);
         data.qfVal[1] = 2.0f / F32(h);
         data.qfVal[2] = 2.0f / F32(h);
         data.qfVal[3] = 2.0f / F32(h);
-        driver->writeGPURegister(cg1gpu::GPU_VERTEX_CONSTANT, 201, data);
+        driver->writeGPURegister(arch::GPU_VERTEX_CONSTANT, 201, data);
 
         data.qfVal[0] =  data.qfVal[1] =  data.qfVal[2] =  data.qfVal[3] = -(((F32(x) * 2.0f) / F32(w)) + 1);
-        driver->writeGPURegister(cg1gpu::GPU_VERTEX_CONSTANT, 202, data);
+        driver->writeGPURegister(arch::GPU_VERTEX_CONSTANT, 202, data);
 
         data.qfVal[0] =  data.qfVal[1] =  data.qfVal[2] =  data.qfVal[3] = -(((F32(y) * 2.0f) / F32(h)) + 1);
-        driver->writeGPURegister(cg1gpu::GPU_VERTEX_CONSTANT, 203, data);
+        driver->writeGPURegister(arch::GPU_VERTEX_CONSTANT, 203, data);
 
         data.qfVal[0] =  data.qfVal[1] =  data.qfVal[2] =  data.qfVal[3] = 0.5f;
-        driver->writeGPURegister(cg1gpu::GPU_VERTEX_CONSTANT, 204, data);
+        driver->writeGPURegister(arch::GPU_VERTEX_CONSTANT, 204, data);
 
         //  Set as updated.  
         ctx->setSetupShaderConstantsUpdate(true);

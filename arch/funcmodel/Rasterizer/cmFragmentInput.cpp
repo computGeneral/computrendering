@@ -18,7 +18,7 @@
 #include "cmFragmentInput.h"
 #include "stdio.h"
 
-using namespace cg1gpu;
+using namespace arch;
 
 //  Creates a new FragmentInput.  
 FragmentInput::FragmentInput(U32 ID, U32 setupID, Fragment *fragment, TileIdentifier id, U32 stampUnitID):

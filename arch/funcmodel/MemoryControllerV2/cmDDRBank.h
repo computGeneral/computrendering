@@ -8,7 +8,7 @@
 #include "GPUType.h"
 #include "cmDDRBurst.h"
 
-namespace cg1gpu
+namespace arch
 {
 namespace memorycontroller
 {
@@ -175,7 +175,7 @@ public:
     
 };
 
-} // namespace cg1gpu
+} // namespace arch
 } // namespace memorycontroller
 
 #endif // DDRBANK_H

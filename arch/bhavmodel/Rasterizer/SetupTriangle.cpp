@@ -18,7 +18,7 @@
 
 #include "SetupTriangle.h"
 
-using namespace cg1gpu;
+using namespace arch;
 
 //  Setup Triangle constructor.  
 SetupTriangle::SetupTriangle(Vec4FP32 *vattr1, Vec4FP32 *vattr2,

@@ -11,7 +11,7 @@
 #include <vector>
 #include "cmSwitchOperationMode.h"
 
-namespace cg1gpu
+namespace arch
 {
 namespace memorycontroller
 {
@@ -159,6 +159,6 @@ private:
 };
 
 } // namespace memorycontroller
-} // namespace cg1gpu
+} // namespace arch
 
 #endif // BANKQUEUESCHEDULER_H

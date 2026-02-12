@@ -43,7 +43,7 @@ public:
      *
      * From vertex shader to fragment shader: i -> outputAttrib[i]
      */
-	static const S32 outputAttrib[cg1gpu::MAX_VERTEX_ATTRIBUTES];
+	static const S32 outputAttrib[arch::MAX_VERTEX_ATTRIBUTES];
 
     struct VertexAttribute
     {
@@ -53,7 +53,7 @@ public:
         U32 md; // memory descriptor asociated to this VertexAttribute 
         U32 offset; // offset 
         U32 stride; // stride 
-		cg1gpu::StreamData componentsType; // type of components 
+		arch::StreamData componentsType; // type of components 
         U32 components; // number of components per stream element 
     };
 
@@ -191,7 +191,7 @@ public:
      * @param indicesType type of indices
      */
 	virtual bool setIndexedStreamingMode( U32 stream, U32 count, U32 start, U32 mdIndices, 
-										  U32 offsetBytes, cg1gpu::StreamData indicesType ) = 0;
+										  U32 offsetBytes, arch::StreamData indicesType ) = 0;
 
 
     /**
@@ -309,7 +309,7 @@ public:
      * @param md Memory descriptor associated with this register write.
      *
      */
-	void writeGPURegister( cg1gpu::GPURegister regId, cg1gpu::GPURegData data, U32 md = 0 );
+	void writeGPURegister( arch::GPURegister regId, arch::GPURegData data, U32 md = 0 );
 
     /**
      * Writes a GPU simulator's register
@@ -320,20 +320,20 @@ public:
      * @param md Memory descriptor associated with this register write.
      *
      */
-	void writeGPURegister( cg1gpu::GPURegister regId, U32 index, cg1gpu::GPURegData data, U32 md = 0);
+	void writeGPURegister( arch::GPURegister regId, U32 index, arch::GPURegData data, U32 md = 0);
 
     /**
      * Writes a GPU simulator's register with the start address contained in the internal
      * MemoryDescriptor aliased to 'md' handler + the offset (expressed in bytes)
      */
-	void writeGPUAddrRegister( cg1gpu::GPURegister regId, U32 index, U32 md, U32 offset = 0);
+	void writeGPUAddrRegister( arch::GPURegister regId, U32 index, U32 md, U32 offset = 0);
 
     /**
      * Sends a command to the GPU Simulator
      *
      * @param com command to be sent
      */
-	void sendCommand( cg1gpu::GPUCommand com );
+	void sendCommand( arch::GPUCommand com );
 
     /**
      * Returns the number of mipmaps supported for a texture
@@ -349,7 +349,7 @@ public:
 	 * Invoked by Command Processor
 	 * Implements elemental comunication between Driver and MetaStream Port
 	 */	
-	cg1gpu::cgoMetaStream* nextcgoMetaStream();
+	arch::cgoMetaStream* nextcgoMetaStream();
 
 
     /////////////////////

@@ -28,7 +28,7 @@
 
 using namespace std;
 
-namespace cg1gpu
+namespace arch
 {
 
 /**
@@ -473,6 +473,6 @@ public:
     void printTextureAccessInfo(TextureAccess *texAccess);
 };
 
-} // namespace cg1gpu
+} // namespace arch
 
 #endif

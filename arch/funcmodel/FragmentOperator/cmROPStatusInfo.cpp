@@ -18,7 +18,7 @@
 
 #include "cmROPStatusInfo.h"
 
-using namespace cg1gpu;
+using namespace arch;
 
 //  ROP Status Info constructor.  
 ROPStatusInfo::ROPStatusInfo(ROPState stat)

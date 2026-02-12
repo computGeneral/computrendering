@@ -94,7 +94,7 @@ private:
 
     StateItem<gal_bool> _invertStreamType;
 
-    static void _convertToGPUStreamData(GAL_STREAM_DATA componentsType, cg1gpu::GPURegData* data);
+    static void _convertToGPUStreamData(GAL_STREAM_DATA componentsType, arch::GPURegData* data);
 
     // print help classes
     

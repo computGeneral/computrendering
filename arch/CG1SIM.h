@@ -12,7 +12,7 @@
 #include <string>
 #include "MetaStreamTrace.h"
 
-namespace cg1gpu
+namespace arch
 {
 
 //#ifdef WIN32
@@ -26,6 +26,6 @@ bool MetaTraceSignChecker(MetaStreamHeader *metaTraceHeader);
 bool MetaTraceParamChecker(MetaStreamHeader *metaTraceHeader);
 bool fileExtensionTester(const std::string file_name, const std::string extension);// case insensitive file extension test
 
-} // namespace cg1gpu;
+} // namespace arch;
 
 #endif // #ifndef __CG1GPU_SIM_H__

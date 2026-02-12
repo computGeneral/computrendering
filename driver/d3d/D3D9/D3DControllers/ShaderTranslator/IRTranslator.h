@@ -106,7 +106,7 @@ public:
      *  the translated shader program.
      *
      */
-    std::list<cg1gpu::ShaderInstruction *> &get_instructions();
+    std::list<arch::ShaderInstruction *> &get_instructions();
 
     /**
      *
@@ -198,7 +198,7 @@ private:
     bool insideREPBlock;                            //  Stores if translating instructions inside a REP code block.  
     std::stack<U32> startREPBlock;               //  Stores the start instruction offset for the current REP code blocks.  
     
-    std::list<cg1gpu::ShaderInstruction*> instructions;  //  Stores the list of CG1 shader instructions for the translated shader program.  
+    std::list<arch::ShaderInstruction*> instructions;  //  Stores the list of CG1 shader instructions for the translated shader program.  
     
     //  Information about register availability.
     std::set<GPURegisterId> availableConst;         //  Stores the currently available CG1 constant registers.  
@@ -220,9 +220,9 @@ private:
     std::map<D3DRegisterId, GPURegisterId> registerMap;     //  Current mapping of D3D9 registers to CG1 registers.  
 
     //  Static tables for instruction translation.    
-    std::map<D3DSHADER_INSTRUCTION_OPCODE_TYPE, cg1gpu::ShOpcode> opcodeMap;     //  Maps D3D9 opcodes to CG1 opcodes.  
-    std::map<DWORD, cg1gpu::MaskMode> maskModeMap;                               //  Maps D3D9 result mask modes to the corresponding CG1 result mask modes.  
-    std::map<DWORD, cg1gpu::SwizzleMode> swizzleModeMap;                         //  Maps D3D9 operand swizzle modes to the corresponding CG1 operand swizzle modes.  
+    std::map<D3DSHADER_INSTRUCTION_OPCODE_TYPE, arch::ShOpcode> opcodeMap;     //  Maps D3D9 opcodes to CG1 opcodes.  
+    std::map<DWORD, arch::MaskMode> maskModeMap;                               //  Maps D3D9 result mask modes to the corresponding CG1 result mask modes.  
+    std::map<DWORD, arch::SwizzleMode> swizzleModeMap;                         //  Maps D3D9 operand swizzle modes to the corresponding CG1 operand swizzle modes.  
 
 
     /**
@@ -580,7 +580,7 @@ private:
      *
      */
      
-    cg1gpu::MaskMode nativeMaskMode(DWORD d3dmm);
+    arch::MaskMode nativeMaskMode(DWORD d3dmm);
     
     /**
      *
@@ -592,7 +592,7 @@ private:
      *
      */
      
-    cg1gpu::SwizzleMode nativeSwizzleMode(DWORD d3dswizz);
+    arch::SwizzleMode nativeSwizzleMode(DWORD d3dswizz);
 
 
 

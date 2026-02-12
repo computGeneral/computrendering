@@ -6,8 +6,8 @@
 #include "cmMemoryTransaction.h"
 
 using namespace std;
-using namespace cg1gpu;
-using namespace cg1gpu::memorycontroller;
+using namespace arch;
+using namespace arch::memorycontroller;
 
 bool MemoryTraceRecorder::open(const char* path)
 {

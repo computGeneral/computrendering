@@ -7,7 +7,7 @@
 #include "cmChannelTransaction.h"
 #include "support.h"
 
-using namespace cg1gpu::memorycontroller;
+using namespace arch::memorycontroller;
 using namespace std;
 
 MCSplitter::MCSplitter(U32 burstLength, U32 channels, U32 channelBanks, 

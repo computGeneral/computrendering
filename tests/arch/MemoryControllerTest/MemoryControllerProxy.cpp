@@ -4,7 +4,7 @@
 
 #include "MemoryControllerProxy.h"
 
-using namespace cg1gpu;
+using namespace arch;
 
 MemoryControllerProxy::MemoryControllerProxy(const cmoMduBase* mc) : mc(mc)
 {}

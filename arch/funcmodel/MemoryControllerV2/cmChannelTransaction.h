@@ -10,7 +10,7 @@
 #include "cmMemoryControllerDefs.h"
 
 
-namespace cg1gpu
+namespace arch
 {
 namespace memorycontroller
 {
@@ -198,6 +198,6 @@ private:
 
 } // namespace memorycontroller
 
-} // namespace cg1gpu
+} // namespace arch
 
 #endif // CHANNELTRANSACTION_H

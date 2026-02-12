@@ -25,9 +25,9 @@
 
 #include <sstream>
 
-using namespace cg1gpu;
+using namespace arch;
 
-using cg1gpu::tools::Queue;
+using arch::tools::Queue;
 
 //  Generic ROP mdu constructor.  
 GenericROP::GenericROP(

@@ -16,7 +16,7 @@
 #include "cmTextureCacheGen.h"
 #include "GPUMath.h"
 
-using namespace cg1gpu;
+using namespace arch;
 
 //  Texture cache constructor.  
 TextureCacheGen::TextureCacheGen()

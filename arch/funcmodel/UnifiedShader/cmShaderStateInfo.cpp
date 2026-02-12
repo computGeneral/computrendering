@@ -7,7 +7,7 @@
 #include "cmShaderStateInfo.h"
 
 
-using namespace cg1gpu;
+using namespace arch;
 
 //  Creates a new Shader State Info object.  
 ShaderStateInfo::ShaderStateInfo(ShaderState newState) : state(newState)

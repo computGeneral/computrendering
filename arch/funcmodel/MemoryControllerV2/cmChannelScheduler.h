@@ -16,7 +16,7 @@
 // included to be able to identify clients
 #include "cmMemoryTransaction.h"
 
-namespace cg1gpu
+namespace arch
 {
 namespace memorycontroller
 {
@@ -497,6 +497,6 @@ protected:
     
 };
 } // namespace memorycontroller
-} // namespace cg1gpu
+} // namespace arch
 
 #endif // CHANNELSCHEDULER_H

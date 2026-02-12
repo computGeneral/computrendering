@@ -17,7 +17,7 @@
 #include <typeinfo>
 
 using namespace std;
-using namespace cg1gpu;
+using namespace arch;
 
 #ifndef CG_LOG2
 #define CG_LOG2(x) (log(F64(x))/log(2.0))
@@ -36,7 +36,7 @@ U32 DynamicMemoryOpt::freqSize[24];
 U64 DynamicMemoryOpt::timeStamp = 0;
 
 using namespace std;
-using namespace cg1gpu;
+using namespace arch;
 
 void DynamicMemoryOpt::Bucket::init(U32 maxObjectSize, U32 maxObjects)
 {

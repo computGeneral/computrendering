@@ -17,7 +17,7 @@
 #include "support.h"
 #include <stdio.h>
 
-using namespace cg1gpu;
+using namespace arch;
 
 //  Constructor for STRC_DEALLOC_X.  
 StreamerControlCommand::StreamerControlCommand(StreamControl comm, U32 entry)

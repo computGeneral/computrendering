@@ -8,7 +8,7 @@
 
 #include "GPUMath.h"
 
-namespace cg1gpu
+namespace arch
 {
 
 bmoCompressor* bmoColorCompressor::instance = NULL;

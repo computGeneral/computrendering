@@ -103,7 +103,7 @@ struct D3DRegisterId {
 /// Identifies a GPURegister, not surprisingly uh?
 struct GPURegisterId {
     U32 num;
-    cg1gpu::Bank bank;
+    arch::Bank bank;
     bool operator<(const GPURegisterId &b) const {
         if((unsigned int)(bank) < (unsigned int)(b.bank))
             return true;
@@ -117,8 +117,8 @@ struct GPURegisterId {
         return (num == b.num) & (bank == b.bank);
     }
 
-    GPURegisterId(): num(0), bank(cg1gpu::INVALID) {}
-    GPURegisterId(U32 _num, cg1gpu::Bank _bank): num(_num), bank(_bank) {}
+    GPURegisterId(): num(0), bank(arch::INVALID) {}
+    GPURegisterId(U32 _num, arch::Bank _bank): num(_num), bank(_bank) {}
 };
 
 struct SamplerDeclaration {

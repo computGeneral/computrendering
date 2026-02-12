@@ -10,7 +10,7 @@
 #include <list>
 #include "cmtoolsQueue.h"
 
-namespace cg1gpu
+namespace arch
 {
 namespace memorycontroller
 {
@@ -112,7 +112,7 @@ private:
      *
      * This queue should have data only when cSchedState is equal to CSS_AccessingData
      */
-    cg1gpu::tools::Queue<CTAccessInfo> ongoingAccessesQueue; 
+    arch::tools::Queue<CTAccessInfo> ongoingAccessesQueue; 
 
     gpuStatistics::Statistic& cSched_IdleCycles;
     gpuStatistics::Statistic& cSched_PrevCmdWaitCycles;
@@ -187,6 +187,6 @@ private:
 };
 
 } // namespace memorycontroller
-} // namespace cg1gpu
+} // namespace arch
 
 #endif

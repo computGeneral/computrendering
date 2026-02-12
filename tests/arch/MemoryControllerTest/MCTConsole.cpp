@@ -10,7 +10,7 @@
 #include <fstream>
 
 
-using namespace cg1gpu;
+using namespace arch;
 using namespace std;
 using memorycontroller::MemoryRequestSplitter;
 using memorycontroller::MCSplitter;
@@ -238,13 +238,13 @@ bool MCTConsole::processRunCommand(const vector<string>& params)
 
 bool MCTConsole::processSaveMemoryCommand(const std::vector<std::string>& params)
 {
-    sendMCCommand( cg1gpu::MemoryControllerCommand::createSaveMemory() );
+    sendMCCommand( arch::MemoryControllerCommand::createSaveMemory() );
     return true;
 }
 
 bool MCTConsole::processLoadMemoryCommand(const std::vector<std::string>& params)
 {
-    sendMCCommand( cg1gpu::MemoryControllerCommand::createLoadMemory() );
+    sendMCCommand( arch::MemoryControllerCommand::createLoadMemory() );
     return true;
 }
 

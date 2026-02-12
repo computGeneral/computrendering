@@ -23,7 +23,7 @@
 
 #include <fstream>
 
-using namespace cg1gpu;
+using namespace arch;
 using namespace std;
 
 // Patch for windows
@@ -3043,7 +3043,7 @@ void MemoryController::loadMemory()
 
 //  GPU Unit to Memory Controller data bus width (default values).  
 /*
-U32 cg1gpu::busWidth[] =
+U32 arch::busWidth[] =
 {
     8,      //  Data bus with the Command Processor (MetaStream)
     16,     //  Data bus with the cmoStreamController Fetch unit (indexes)
@@ -3060,7 +3060,7 @@ U32 cg1gpu::busWidth[] =
 
 //  Names of the GPU units for each of the Memory Controller buses.  
 /*
-char* cg1gpu::busNames[] =
+char* arch::busNames[] =
 {
     "CommandProcessor",
     "StreamerFetch",

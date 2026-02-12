@@ -8,7 +8,7 @@
 #include "support.h"
 #include <iostream>
 
-using namespace cg1gpu;
+using namespace arch;
 
 U32 DynamicObject::nextCookie[MAX_COOKIES]; // static implies zero initialization automatically
 

@@ -32,7 +32,7 @@
 #include "cmTileEvaluator.h"
 #include "cmInterpolator.h"
 
-namespace cg1gpu
+namespace arch
 {
 
 /**
@@ -183,6 +183,6 @@ public:
     void clock(U64 cycle);
 };
 
-} // namespace cg1gpu
+} // namespace arch
 
 #endif

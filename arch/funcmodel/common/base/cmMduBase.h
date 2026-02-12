@@ -11,7 +11,7 @@
 
 //using namespace std;
 
-namespace cg1gpu
+namespace arch
 {
 
 #ifdef GPU_DEBUG_ON
@@ -248,6 +248,6 @@ protected:
 
 };
 
-} // namespace cg1gpu
+} // namespace arch
 
 #endif

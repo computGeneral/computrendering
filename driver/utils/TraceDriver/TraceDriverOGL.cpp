@@ -17,7 +17,7 @@
 
 #include "Profiler.h"
 
-using namespace cg1gpu;
+using namespace arch;
 using namespace std;
 
 //  TraceDriver constructor.  

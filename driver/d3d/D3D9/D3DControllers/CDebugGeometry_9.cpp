@@ -90,7 +90,7 @@ void CDebugGeometry9::load_vertex_shader() {
     // Compose the vertex shader
     instructions.push_back(generate_mov(GPURegisterId(0, TEMP), GPURegisterId(8, IN)));
 
-    builder.setOpcode(cg1gpu::MAX);
+    builder.setOpcode(arch::MAX);
     op0.negate = true;
     op0.registerId = GPURegisterId(0, TEMP);
     builder.setOperand(0, op0);
@@ -101,7 +101,7 @@ void CDebugGeometry9::load_vertex_shader() {
     instructions.push_back(builder.buildInstruction());
 
     builder.resetParameters(); op0 = op1 = Operand(); res = Result();
-    builder.setOpcode(cg1gpu::DP4);
+    builder.setOpcode(arch::DP4);
     op0.registerId = GPURegisterId(0, IN);
     builder.setOperand(0, op0);
     op1.registerId = GPURegisterId(0, PARAM);
@@ -112,7 +112,7 @@ void CDebugGeometry9::load_vertex_shader() {
     instructions.push_back(builder.buildInstruction());
 
     builder.resetParameters(); op0 = op1 = Operand(); res = Result();
-    builder.setOpcode(cg1gpu::DP4);
+    builder.setOpcode(arch::DP4);
     op0.registerId = GPURegisterId(0, IN);
     builder.setOperand(0, op0);
     op1.registerId = GPURegisterId(1, PARAM);
@@ -123,7 +123,7 @@ void CDebugGeometry9::load_vertex_shader() {
     instructions.push_back(builder.buildInstruction());
 
     builder.resetParameters(); op0 = op1 = Operand(); res = Result();
-    builder.setOpcode(cg1gpu::DP4);
+    builder.setOpcode(arch::DP4);
     op0.registerId = GPURegisterId(0, IN);
     builder.setOperand(0, op0);
     op1.registerId = GPURegisterId(2, PARAM);
@@ -134,7 +134,7 @@ void CDebugGeometry9::load_vertex_shader() {
     instructions.push_back(builder.buildInstruction());
 
     builder.resetParameters(); op0 = op1 = Operand(); res = Result();
-    builder.setOpcode(cg1gpu::DP4);
+    builder.setOpcode(arch::DP4);
     op0.registerId = GPURegisterId(0, IN);
     builder.setOperand(0, op0);
     op1.registerId = GPURegisterId(3, PARAM);
@@ -145,7 +145,7 @@ void CDebugGeometry9::load_vertex_shader() {
     instructions.push_back(builder.buildInstruction());
 
     builder.resetParameters(); op0 = op1 = Operand(); res = Result();
-    builder.setOpcode(cg1gpu::END);
+    builder.setOpcode(arch::END);
     instructions.push_back(builder.buildInstruction());
 
     list<ShaderInstruction*> ending = generate_ending_nops();
@@ -198,7 +198,7 @@ void CDebugGeometry9::load_pixel_shader() {
     ShaderInstructionBuilder builder;
 
     builder.resetParameters();
-    builder.setOpcode(cg1gpu::END);
+    builder.setOpcode(arch::END);
     instructions.push_back(builder.buildInstruction());
     list<ShaderInstruction*> ending = generate_ending_nops();
     instructions.insert(instructions.end(), ending.begin(), ending.end());

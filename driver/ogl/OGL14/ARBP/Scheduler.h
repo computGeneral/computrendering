@@ -151,7 +151,7 @@ private:
     mutable U32 maxAliveTemps;
     mutable bool maxAliveTempsComputed;
 
-    std::vector<InstructionInfo*>* extractInstructionInfo(const std::list<cg1gpu::cgoShaderInstr*>& originalCode);
+    std::vector<InstructionInfo*>* extractInstructionInfo(const std::list<arch::cgoShaderInstr*>& originalCode);
 
     DependencyGraph* buildDependencyGraph(const std::vector<InstructionInfo*>& code, unsigned int temporaries, unsigned int outputRegs, unsigned int addrRegs) const;
 
@@ -161,13 +161,13 @@ private:
     
     void reorderCode(std::vector<InstructionInfo*>& originalCode, const std::vector<IssueInfo>& orderList) const;
 
-    std::list<cg1gpu::cgoShaderInstr*> createNewCode(const std::vector<InstructionInfo*>& newcode) const;
+    std::list<arch::cgoShaderInstr*> createNewCode(const std::vector<InstructionInfo*>& newcode) const;
 
 public:
 
     Scheduler();
     
-    std::list<cg1gpu::cgoShaderInstr*> optimizeCode(std::list<cg1gpu::cgoShaderInstr*>& originalCode, unsigned int nway = 4, unsigned int temporaries = 16,  unsigned int outputRegs = 12, unsigned int addrRegs = 1, bool reorderCode = true);
+    std::list<arch::cgoShaderInstr*> optimizeCode(std::list<arch::cgoShaderInstr*>& originalCode, unsigned int nway = 4, unsigned int temporaries = 16,  unsigned int outputRegs = 12, unsigned int addrRegs = 1, bool reorderCode = true);
 
     U32 getMaxAliveTemps() const;
 

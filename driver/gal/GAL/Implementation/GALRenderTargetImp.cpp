@@ -30,33 +30,33 @@ GALRenderTargetImp::GALRenderTargetImp(GALDeviceImp *device, GALTexture* resourc
                     //  Get the GPU driver from the GAL device.
                     HAL& driver = device->driver();
                     
-                    cg1gpu::TextureFormat format;
+                    arch::TextureFormat format;
                     
                     switch(_surface.getFormat(face, _mipLevel))
                     {
                         case GAL_FORMAT_XRGB_8888:
                         case GAL_FORMAT_ARGB_8888:
-                            format = cg1gpu::GPU_RGBA8888;
+                            format = arch::GPU_RGBA8888;
                             break;
                             
                         case GAL_FORMAT_RG16F:
-                            format = cg1gpu::GPU_RG16F;
+                            format = arch::GPU_RG16F;
                             break;
                             
                         case GAL_FORMAT_R32F:
-                            format = cg1gpu::GPU_R32F;
+                            format = arch::GPU_R32F;
                             break;
                             
                         case GAL_FORMAT_RGBA16F:
-                            format = cg1gpu::GPU_RGBA16F;
+                            format = arch::GPU_RGBA16F;
                             break;
 
                         case GAL_FORMAT_ABGR_161616:
-                            format = cg1gpu::GPU_RGBA16;
+                            format = arch::GPU_RGBA16;
                             break;
                             
                         case GAL_FORMAT_S8D24:
-                            format = cg1gpu::GPU_DEPTH_COMPONENT24;
+                            format = arch::GPU_DEPTH_COMPONENT24;
                             break;
                             
                         default:

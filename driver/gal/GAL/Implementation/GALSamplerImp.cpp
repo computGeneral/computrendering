@@ -294,11 +294,11 @@ const char* GALSamplerImp::_getFormatString(GAL_FORMAT textureFormat)
 }
 
 void GALSamplerImp::_getGPUTextureFormat(GAL_FORMAT textureFormat,
-                                         cg1gpu::GPURegData* dataFormat,
-                                         cg1gpu::GPURegData* dataCompression,
-                                         cg1gpu::GPURegData* dataInverted)
+                                         arch::GPURegData* dataFormat,
+                                         arch::GPURegData* dataCompression,
+                                         arch::GPURegData* dataInverted)
 {
-    using namespace cg1gpu;
+    using namespace arch;
     switch ( textureFormat )
     {
 
@@ -495,9 +495,9 @@ void GALSamplerImp::_getGPUTextureFormat(GAL_FORMAT textureFormat,
     }
 }
 
-void GALSamplerImp::_getGPUTextureMode(GAL_RESOURCE_TYPE textureType, cg1gpu::GPURegData* data)
+void GALSamplerImp::_getGPUTextureMode(GAL_RESOURCE_TYPE textureType, arch::GPURegData* data)
 {
-    using namespace cg1gpu;
+    using namespace arch;
     switch ( textureType )
     {
         case GAL_RESOURCE_TEXTURE1D:
@@ -523,16 +523,16 @@ void GALSamplerImp::_getGPUTextureMode(GAL_RESOURCE_TYPE textureType, cg1gpu::GP
     }
 }
 
-void GALSamplerImp::_getGPUTexMemoryLayout(GAL_MEMORY_LAYOUT memLayout, cg1gpu::GPURegData* data)
+void GALSamplerImp::_getGPUTexMemoryLayout(GAL_MEMORY_LAYOUT memLayout, arch::GPURegData* data)
 {
     //  Set texture blocking/memory layout mode.
     switch(memLayout)
     {
         case GAL_LAYOUT_TEXTURE:
-            data->txBlocking = cg1gpu::GPU_TXBLOCK_TEXTURE;
+            data->txBlocking = arch::GPU_TXBLOCK_TEXTURE;
             break;
         case GAL_LAYOUT_RENDERBUFFER:
-            data->txBlocking = cg1gpu::GPU_TXBLOCK_FRAMEBUFFER;
+            data->txBlocking = arch::GPU_TXBLOCK_FRAMEBUFFER;
             break;
         default:
             CG_ASSERT("Undefined memory layout mode.");
@@ -542,7 +542,7 @@ void GALSamplerImp::_getGPUTexMemoryLayout(GAL_MEMORY_LAYOUT memLayout, cg1gpu::
 
 void GALSamplerImp::_syncTexture()
 {
-    using namespace cg1gpu;
+    using namespace arch;
 
     GPURegData data;
 
@@ -725,7 +725,7 @@ void GALSamplerImp::performBlitOperation2D(gal_uint xoffset, gal_uint yoffset, g
 {
     TRACING_ENTER_REGION("GAL", "", "")
 
-    using namespace cg1gpu;
+    using namespace arch;
     GPURegData data;
 
     if (xoffset < 0 || yoffset < 0)
@@ -847,11 +847,11 @@ void GALSamplerImp::sync()
             CG_ASSERT("Texture is not well defined (texture completness required)");
     )
 
-    cg1gpu::GPURegData data;
+    arch::GPURegData data;
 
     if ( _enabled.changed() ) {
         data.booleanVal = _enabled;
-        _driver->writeGPURegister(cg1gpu::GPU_TEXTURE_ENABLE, _SAMPLER_ID, data);
+        _driver->writeGPURegister(arch::GPU_TEXTURE_ENABLE, _SAMPLER_ID, data);
         _enabled.restart();
     }
 
@@ -868,84 +868,84 @@ void GALSamplerImp::sync()
     /// Update SAMPLER STATE independent of the texture
     if ( _sCoord.changed() || _requiredSync ) {
         _getGPUClampMode(_sCoord, &data);
-        _driver->writeGPURegister(cg1gpu::GPU_TEXTURE_WRAP_S, _SAMPLER_ID, data);
+        _driver->writeGPURegister(arch::GPU_TEXTURE_WRAP_S, _SAMPLER_ID, data);
         _sCoord.restart();
     }
     if ( _tCoord.changed() || _requiredSync ) {
         _getGPUClampMode(_tCoord, &data);
-        _driver->writeGPURegister(cg1gpu::GPU_TEXTURE_WRAP_T, _SAMPLER_ID, data);
+        _driver->writeGPURegister(arch::GPU_TEXTURE_WRAP_T, _SAMPLER_ID, data);
         _tCoord.restart();
     }
     if ( _rCoord.changed() || _requiredSync ) {
         _getGPUClampMode(_rCoord, &data);
-        _driver->writeGPURegister(cg1gpu::GPU_TEXTURE_WRAP_R, _SAMPLER_ID, data);
+        _driver->writeGPURegister(arch::GPU_TEXTURE_WRAP_R, _SAMPLER_ID, data);
         _rCoord.restart();
     }
 
     if ( _nonNormalizedCoords.changed() || _requiredSync )
     {
         data.booleanVal = _nonNormalizedCoords;
-        _driver->writeGPURegister(cg1gpu::GPU_TEXTURE_NON_NORMALIZED, _SAMPLER_ID, data);
+        _driver->writeGPURegister(arch::GPU_TEXTURE_NON_NORMALIZED, _SAMPLER_ID, data);
         _nonNormalizedCoords.restart();
     }
 
     if ( _minFilter.changed() || _requiredSync ) {
         _getGPUTexFilter(_minFilter, &data);
-        _driver->writeGPURegister(cg1gpu::GPU_TEXTURE_MIN_FILTER, _SAMPLER_ID, data);
+        _driver->writeGPURegister(arch::GPU_TEXTURE_MIN_FILTER, _SAMPLER_ID, data);
         _minFilter.restart();
     }
     if ( _magFilter.changed() || _requiredSync ) {
         _getGPUTexFilter(_magFilter, &data);
-        _driver->writeGPURegister(cg1gpu::GPU_TEXTURE_MAG_FILTER, _SAMPLER_ID, data);
+        _driver->writeGPURegister(arch::GPU_TEXTURE_MAG_FILTER, _SAMPLER_ID, data);
         _magFilter.restart();
     }
 
     if (_enableComparison.changed() || _requiredSync)
     {
         data.booleanVal = _enableComparison;
-        _driver->writeGPURegister(cg1gpu::GPU_TEXTURE_ENABLE_COMPARISON, _SAMPLER_ID, data);
+        _driver->writeGPURegister(arch::GPU_TEXTURE_ENABLE_COMPARISON, _SAMPLER_ID, data);
         _enableComparison.restart();
     }
     
     if (_comparisonFunction.changed() || _requiredSync)
     {
         _getGPUTexComp(_comparisonFunction, &data);
-        _driver->writeGPURegister(cg1gpu::GPU_TEXTURE_COMPARISON_FUNCTION, _SAMPLER_ID, data);
+        _driver->writeGPURegister(arch::GPU_TEXTURE_COMPARISON_FUNCTION, _SAMPLER_ID, data);
         _comparisonFunction.restart();        
     }
     
     if (_sRGBConversion.changed() || _requiredSync)
     {
         data.booleanVal = _sRGBConversion;
-        _driver->writeGPURegister(cg1gpu::GPU_TEXTURE_SRGB, _SAMPLER_ID, data);
+        _driver->writeGPURegister(arch::GPU_TEXTURE_SRGB, _SAMPLER_ID, data);
         _sRGBConversion.restart();
     }
 
     if ( _minLOD.changed() || _requiredSync ) {
         data.f32Val = _minLOD;
         data.f32Val = 0.0f;
-        _driver->writeGPURegister(cg1gpu::GPU_TEXTURE_MIN_LOD, _SAMPLER_ID, data);
+        _driver->writeGPURegister(arch::GPU_TEXTURE_MIN_LOD, _SAMPLER_ID, data);
         _minLOD.restart();
     }
     if ( _maxLOD.changed() || _requiredSync ) {
         data.f32Val = _maxLOD;
         data.f32Val = 12.0f;
-        _driver->writeGPURegister(cg1gpu::GPU_TEXTURE_MAX_LOD, _SAMPLER_ID, data);
+        _driver->writeGPURegister(arch::GPU_TEXTURE_MAX_LOD, _SAMPLER_ID, data);
         _maxLOD.restart();
     }
     if ( _maxAniso.changed() || _requiredSync ) {
         data.uintVal = _maxAniso;
-        _driver->writeGPURegister(cg1gpu::GPU_TEXTURE_MAX_ANISOTROPY, _SAMPLER_ID, data);
+        _driver->writeGPURegister(arch::GPU_TEXTURE_MAX_ANISOTROPY, _SAMPLER_ID, data);
         _maxAniso.restart();
     }
     if ( _lodBias.changed() || _requiredSync ) {
         data.f32Val = _lodBias;
-        _driver->writeGPURegister(cg1gpu::GPU_TEXTURE_LOD_BIAS, _SAMPLER_ID, data);
+        _driver->writeGPURegister(arch::GPU_TEXTURE_LOD_BIAS, _SAMPLER_ID, data);
         _lodBias.restart();
     }
     if ( _unitLodBias.changed() || _requiredSync ) {
         data.f32Val = _unitLodBias;
-        _driver->writeGPURegister(cg1gpu::GPU_TEXT_UNIT_LOD_BIAS, _SAMPLER_ID, data);
+        _driver->writeGPURegister(arch::GPU_TEXT_UNIT_LOD_BIAS, _SAMPLER_ID, data);
         _unitLodBias.restart();
     }
 }
@@ -958,82 +958,82 @@ void GALSamplerImp::forceSync()
     _requiredSync = false;
 }
 
-void GALSamplerImp::_getGPUClampMode(GAL_TEXTURE_ADDR_MODE mode, cg1gpu::GPURegData* data)
+void GALSamplerImp::_getGPUClampMode(GAL_TEXTURE_ADDR_MODE mode, arch::GPURegData* data)
 {
     switch ( mode ) {
         case GAL_TEXTURE_ADDR_CLAMP:
-            data->txClamp = cg1gpu::GPU_TEXT_CLAMP;
+            data->txClamp = arch::GPU_TEXT_CLAMP;
             break;
         case GAL_TEXTURE_ADDR_CLAMP_TO_EDGE:
-            data->txClamp = cg1gpu::GPU_TEXT_CLAMP_TO_EDGE;
+            data->txClamp = arch::GPU_TEXT_CLAMP_TO_EDGE;
             break;
         case GAL_TEXTURE_ADDR_REPEAT:
-            data->txClamp = cg1gpu::GPU_TEXT_REPEAT;
+            data->txClamp = arch::GPU_TEXT_REPEAT;
             break;
         case GAL_TEXTURE_ADDR_CLAMP_TO_BORDER:
-            data->txClamp = cg1gpu::GPU_TEXT_CLAMP_TO_BORDER;
+            data->txClamp = arch::GPU_TEXT_CLAMP_TO_BORDER;
             break;
         case GAL_TEXTURE_ADDR_MIRRORED_REPEAT:
-            data->txClamp = cg1gpu::GPU_TEXT_MIRRORED_REPEAT;
+            data->txClamp = arch::GPU_TEXT_MIRRORED_REPEAT;
             break;
         default:
             CG_ASSERT("GAL_TEXTURE_ADDR_MODE unknown");
     }
 }
 
-void GALSamplerImp::_getGPUTexFilter(GAL_TEXTURE_FILTER filter, cg1gpu::GPURegData* data)
+void GALSamplerImp::_getGPUTexFilter(GAL_TEXTURE_FILTER filter, arch::GPURegData* data)
 {
     switch ( filter ) {
         case GAL_TEXTURE_FILTER_NEAREST:
-            data->txFilter = cg1gpu::GPU_NEAREST;
+            data->txFilter = arch::GPU_NEAREST;
             break;
         case GAL_TEXTURE_FILTER_LINEAR:
-            data->txFilter = cg1gpu::GPU_LINEAR;
+            data->txFilter = arch::GPU_LINEAR;
             break;
         case GAL_TEXTURE_FILTER_NEAREST_MIPMAP_NEAREST:
-            data->txFilter = cg1gpu::GPU_NEAREST_MIPMAP_NEAREST;
+            data->txFilter = arch::GPU_NEAREST_MIPMAP_NEAREST;
             break;
         case GAL_TEXTURE_FILTER_NEAREST_MIPMAP_LINEAR:
-            data->txFilter = cg1gpu::GPU_NEAREST_MIPMAP_LINEAR;
+            data->txFilter = arch::GPU_NEAREST_MIPMAP_LINEAR;
             break;
         case GAL_TEXTURE_FILTER_LINEAR_MIPMAP_NEAREST:
-            data->txFilter = cg1gpu::GPU_LINEAR_MIPMAP_NEAREST;
+            data->txFilter = arch::GPU_LINEAR_MIPMAP_NEAREST;
             break;
         case GAL_TEXTURE_FILTER_LINEAR_MIPMAP_LINEAR:
-            data->txFilter = cg1gpu::GPU_LINEAR_MIPMAP_LINEAR;
+            data->txFilter = arch::GPU_LINEAR_MIPMAP_LINEAR;
             break;
         default:
             CG_ASSERT("Unknown GAL_TEXTURE_FILTER");
     }
 }
 
-void GALSamplerImp::_getGPUTexComp(GAL_TEXTURE_COMPARISON function, cg1gpu::GPURegData* data)
+void GALSamplerImp::_getGPUTexComp(GAL_TEXTURE_COMPARISON function, arch::GPURegData* data)
 {
     switch(function)    
     {
         case GAL_TEXTURE_COMPARISON_NEVER:
-            data->compare = cg1gpu::GPU_NEVER;
+            data->compare = arch::GPU_NEVER;
             break;
         case GAL_TEXTURE_COMPARISON_ALWAYS:
-            data->compare = cg1gpu::GPU_ALWAYS;
+            data->compare = arch::GPU_ALWAYS;
             break;
         case GAL_TEXTURE_COMPARISON_LESS:
-            data->compare = cg1gpu::GPU_LESS;
+            data->compare = arch::GPU_LESS;
             break;
         case GAL_TEXTURE_COMPARISON_LEQUAL:
-            data->compare = cg1gpu::GPU_LEQUAL;
+            data->compare = arch::GPU_LEQUAL;
             break;
         case GAL_TEXTURE_COMPARISON_EQUAL:
-            data->compare = cg1gpu::GPU_EQUAL;
+            data->compare = arch::GPU_EQUAL;
             break;
         case GAL_TEXTURE_COMPARISON_GEQUAL:
-            data->compare = cg1gpu::GPU_GEQUAL;
+            data->compare = arch::GPU_GEQUAL;
             break;
         case GAL_TEXTURE_COMPARISON_GREATER:
-            data->compare = cg1gpu::GPU_GREATER;
+            data->compare = arch::GPU_GREATER;
             break;
         case GAL_TEXTURE_COMPARISON_NOTEQUAL:
-            data->compare = cg1gpu::GPU_NOTEQUAL;
+            data->compare = arch::GPU_NOTEQUAL;
             break;
         default:
             CG_ASSERT("Unknown GAL_TEXTURE_COMPARISON");

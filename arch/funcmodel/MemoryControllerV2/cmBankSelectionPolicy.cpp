@@ -9,8 +9,8 @@
 #include <iostream>
 
 using namespace std;
-using namespace cg1gpu;
-using namespace cg1gpu::memorycontroller;
+using namespace arch;
+using namespace arch::memorycontroller;
 
 ///////////////////////////////////////////////////////////////////
 ////////// Factory to create BankSelectionPolicy objects //////////

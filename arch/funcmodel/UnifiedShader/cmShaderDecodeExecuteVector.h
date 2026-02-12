@@ -30,7 +30,7 @@
 #include "cmShaderFetchVector.h"
 #include "cmtoolsQueue.h"
 
-namespace cg1gpu
+namespace arch
 {
 
 /**
@@ -548,6 +548,6 @@ public:
        
 };
 
-} // namespace cg1gpu
+} // namespace arch
 
 #endif

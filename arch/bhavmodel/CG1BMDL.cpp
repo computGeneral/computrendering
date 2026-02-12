@@ -13,7 +13,7 @@
 
 using namespace std;
 
-namespace cg1gpu
+namespace arch
 {
 
 CG1BMDL::CG1BMDL(cgsArchConfig ArchConf, cgoTraceDriverBase *TraceDriver) :
@@ -132,4 +132,4 @@ void CG1BMDL::loadSnapshot()
 //
 
 
-}  // namespace cg1gpu
+}  // namespace arch

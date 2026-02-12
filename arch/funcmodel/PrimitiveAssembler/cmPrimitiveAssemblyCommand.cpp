@@ -17,7 +17,7 @@
 
 #include "cmPrimitiveAssemblyCommand.h"
 
-using namespace cg1gpu;
+using namespace arch;
 
 /*  Primitive Assembly Command constructor.  For PACOM_RESET, PACOM_DRAW,
     and PACOM_END.  */

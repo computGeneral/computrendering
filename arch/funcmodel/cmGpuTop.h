@@ -46,7 +46,7 @@
 
 #include <vector>
 
-namespace cg1gpu
+namespace arch
 {
 
 /**
@@ -134,6 +134,6 @@ public:
     ~cmoGpuTop();
     
 };  // class cmoGpuTop
-};  //  namespace cg1gpu
+};  //  namespace arch
 
 #endif

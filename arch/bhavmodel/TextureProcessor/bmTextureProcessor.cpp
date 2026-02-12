@@ -20,7 +20,7 @@
 #include "GPUMath.h"
 #include <stdio.h>
 #
-using namespace cg1gpu;
+using namespace arch;
 
 //  Texture Behavior Model constructor.
 bmoTextureProcessor::bmoTextureProcessor(U32 stampFrags, U32 blockDim, U32 superBlockDim, U32 anisoAlg,

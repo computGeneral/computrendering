@@ -14,13 +14,13 @@ void CRasterization9::on_write_node_data(StateDataNode* node, size_t size, unsig
             GPURegData gpu_cull;
             switch(d3d_cull) {
                 case D3DCULL_CW:
-                    gpu_cull.culling = cg1gpu::FRONT;
+                    gpu_cull.culling = arch::FRONT;
                     break;
                 case D3DCULL_CCW:
-                    gpu_cull.culling = cg1gpu::BACK;
+                    gpu_cull.culling = arch::BACK;
                     break;
                 case D3DCULL_NONE:
-                    gpu_cull.culling = cg1gpu::NONE;
+                    gpu_cull.culling = arch::NONE;
                     break;
             }
             GPUProxy::get_instance()->writeGPURegister(GPU_CULLING, gpu_cull);

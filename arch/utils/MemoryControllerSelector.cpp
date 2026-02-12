@@ -9,9 +9,9 @@
 #include "cmGPUMemorySpecs.h"
 
 
-using namespace cg1gpu;
+using namespace arch;
 
-cmoMduBase* cg1gpu::createMemoryController(cgsArchConfig& arch, 
+cmoMduBase* arch::createMemoryController(cgsArchConfig& arch, 
                             const char** tuPrefixes, 
                             const char** suPrefix,
                             const char** slPrefixes,

@@ -6,8 +6,8 @@
 #include <iostream>
 
 using namespace std;
-using namespace cg1gpu;
-using namespace cg1gpu::gpuStatistics;
+using namespace arch;
+using namespace arch::gpuStatistics;
 
 bool Statistic::disabled = false;
 

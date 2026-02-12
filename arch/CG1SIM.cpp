@@ -37,7 +37,7 @@
 
 
 using namespace std;
-using namespace cg1gpu;
+using namespace arch;
 
 //  Trace reader+driver.
 cgoTraceDriverBase *TraceDriver;
@@ -60,7 +60,7 @@ static void panicSnapshotWrapper() {
 
 // from emulation
 // #ifdef WIN32
-// int cg1gpu::abortSignalHandler(int s)
+// int arch::abortSignalHandler(int s)
 // {
 //     if (s == CTRL_C_EVENT)
 //     {
@@ -73,7 +73,7 @@ static void panicSnapshotWrapper() {
 // 
 // #else
 // //  Signal handler for abort signal mode
-// void cg1gpu::abortSignalHandler(int s)
+// void arch::abortSignalHandler(int s)
 // {
 //     if (s == SIGINT)
 //     {
@@ -85,14 +85,14 @@ static void panicSnapshotWrapper() {
 // #endif
 
 //  Signal handler for abort signal in debug mode
-void cg1gpu::abortSignalHandler(int s)
+void arch::abortSignalHandler(int s)
 {
     CG1GPUSIM->abortSimulation();
     signal(SIGINT, &abortSignalHandler);        
 }
 
 //bool segFaultAlreadyReceived = false;
-//void cg1gpu::segFaultSignalHandler(int s)
+//void arch::segFaultSignalHandler(int s)
 //{
 //    if (s == SIGSEGV)
 //    {
@@ -112,7 +112,7 @@ void cg1gpu::abortSignalHandler(int s)
 //    }
 //}
 U32 segFaultAlreadyReceived = 0;
-void cg1gpu::segFaultSignalHandler(int s)
+void arch::segFaultSignalHandler(int s)
 {
     if (s == SIGSEGV)
     {
@@ -177,14 +177,14 @@ void out_of_memory()
     exit(-1);
 }
 
-bool cg1gpu::MetaTraceSignChecker(MetaStreamHeader *metaTraceHeader)
+bool arch::MetaTraceSignChecker(MetaStreamHeader *metaTraceHeader)
 {
     string str(metaTraceHeader->signature, strlen(MetaStreamTRACEFILE_SIGNATURE));
     bool signatureFound = (str.compare(MetaStreamTRACEFILE_SIGNATURE) == 0);
     return signatureFound;
 }
 
-bool cg1gpu::fileExtensionTester(const string file, const string expExtension) {
+bool arch::fileExtensionTester(const string file, const string expExtension) {
     size_t namePos = file.find_last_of("/");
     if(namePos == 0xffffffff)
         namePos = file.find_last_of("\\");
@@ -205,7 +205,7 @@ bool cg1gpu::fileExtensionTester(const string file, const string expExtension) {
     }
 }
 
-bool cg1gpu::MetaTraceParamChecker(MetaStreamHeader *metaTraceHeader)
+bool arch::MetaTraceParamChecker(MetaStreamHeader *metaTraceHeader)
 {
     bool allParamsOK = (ArchConf.mem.memSize == metaTraceHeader->parameters.memSize) &&
                        (ArchConf.mem.mappedMemSize == metaTraceHeader->parameters.mappedMemSize) &&

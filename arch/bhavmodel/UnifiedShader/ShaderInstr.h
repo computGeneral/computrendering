@@ -14,7 +14,7 @@
 
 using namespace std;
 
-namespace cg1gpu
+namespace arch
 {
     class bmoUnifiedShader;
 
@@ -1546,6 +1546,6 @@ public:
     bool hasResult();     
 };
 
-} // namespace cg1gpu
+} // namespace arch
 
 #endif

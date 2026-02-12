@@ -16,8 +16,8 @@ public:
 private:
     ShaderTranslator();
     ~ShaderTranslator();
-    std::string printInstructionsDisassembled(std::list<cg1gpu::ShaderInstruction *> instr);
-    std::string printInstructionsBinary(std::list<cg1gpu::ShaderInstruction *> instr);
+    std::string printInstructionsDisassembled(std::list<arch::ShaderInstruction *> instr);
+    std::string printInstructionsBinary(std::list<arch::ShaderInstruction *> instr);
     IRTranslator *translator;
     IRPrinter *printer;
     IRDisassembler *disassembler;

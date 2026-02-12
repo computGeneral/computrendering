@@ -12,10 +12,10 @@
 #include "cmRasterizer.h"
 
 
-using namespace cg1gpu;
+using namespace arch;
 
 //  Table with the size in bytes of each Stream data type.  
-U32 cg1gpu::streamDataSize[] =
+U32 arch::streamDataSize[] =
 {
     1,      //  SD_UNORM8.  
     1,      //  SD_SNORM8.  

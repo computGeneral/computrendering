@@ -18,7 +18,7 @@
 #include <cstring>
 
 using namespace std;
-using namespace cg1gpu;
+using namespace arch;
 
 /**
  * Define these flags to enable debug of cgoMetaStreams
@@ -482,7 +482,7 @@ U32 HAL::createRenderBuffer(U32 width, U32 height, bool multisampling, U32 sampl
 }
 
 void HAL::tileRenderBufferData(U08 *sourceData, U32 width, U32 height, bool multisampling, U32 samples,
-                                     cg1gpu::TextureFormat format, bool invertColors, U08* &destData, U32 &renderBufferSize)
+                                     arch::TextureFormat format, bool invertColors, U08* &destData, U32 &renderBufferSize)
 {
     TRACING_ENTER_REGION("HAL", "", "")
 
@@ -604,7 +604,7 @@ void HAL::writeGPURegister( GPURegister regId, U32 index, GPURegData data, U32 m
     //_sendcgoMetaStream(new cgoMetaStream( regId, index, data ));
 }
 
-void HAL::readGPURegister(cg1gpu::GPURegister regID, U32 index, cg1gpu::GPURegData &data)
+void HAL::readGPURegister(arch::GPURegister regID, U32 index, arch::GPURegData &data)
 {
     TRACING_ENTER_REGION("HAL", "", "")
 
@@ -613,7 +613,7 @@ void HAL::readGPURegister(cg1gpu::GPURegister regID, U32 index, cg1gpu::GPURegDa
     TRACING_EXIT_REGION()
 }
 
-void HAL::readGPURegister(cg1gpu::GPURegister regID, cg1gpu::GPURegData &data)
+void HAL::readGPURegister(arch::GPURegister regID, arch::GPURegData &data)
 {
     TRACING_ENTER_REGION("HAL", "", "")
 
@@ -659,7 +659,7 @@ void HAL::sendCommand( GPUCommand com )
     TRACING_ENTER_REGION("HAL", "", "")
 
     // This code moved before "if (preloadMemory)" to release pendentReleases
-    if ( com == cg1gpu::GPU_DRAW )
+    if ( com == arch::GPU_DRAW )
     {
         //vshSched.dump();
         //fshSched.dump();
@@ -678,7 +678,7 @@ void HAL::sendCommand( GPUCommand com )
         batch++;
     }
 
-    if (com == cg1gpu::GPU_SWAPBUFFERS)
+    if (com == arch::GPU_SWAPBUFFERS)
     {
         frame++;
         batch = 0;
@@ -694,7 +694,7 @@ void HAL::sendCommand( GPUCommand com )
     registerWriteBuffer.flush();
 
     //  Send end of frame signal to the simulator before the swap command.
-    if (com == cg1gpu::GPU_SWAPBUFFERS)
+    if (com == arch::GPU_SWAPBUFFERS)
     {
         signalEvent(GPU_END_OF_FRAME_EVENT, "Frame rendered.");
         frame++;

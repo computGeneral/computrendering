@@ -167,7 +167,7 @@ gal_uint GALStreamImp::getFrequency() const
 
 void GALStreamImp::sync()
 {
-    cg1gpu::GPURegData data;
+    arch::GPURegData data;
     
     // Buffer synchronization is always required
     GALBufferImp* buf = _buffer;
@@ -178,7 +178,7 @@ void GALStreamImp::sync()
         //if ( _buffer.changed() || (_buffer.initial()->getUID()!=buf->getUID()) || _offset.changed() || _gpuMemTrack != buf->trackRealloc(0) || _requiredSync ) {
             // Stream address requires to be recomputed
             gal_uint md = _device->allocator().md(buf);
-            _driver->writeGPUAddrRegister(cg1gpu::GPU_STREAM_ADDRESS, _STREAM_ID, md, _offset);
+            _driver->writeGPUAddrRegister(arch::GPU_STREAM_ADDRESS, _STREAM_ID, md, _offset);
             // reset IF conditions
             _buffer.restart();
             _offset.restart();
@@ -193,35 +193,35 @@ void GALStreamImp::sync()
     if ( _components.changed() || _requiredSync )
     {
         data.uintVal = _components;
-        _driver->writeGPURegister(cg1gpu::GPU_STREAM_ELEMENTS, _STREAM_ID, data);
+        _driver->writeGPURegister(arch::GPU_STREAM_ELEMENTS, _STREAM_ID, data);
         _components.restart();
     }
 
     if (_frequency.changed() || _requiredSync)
     {
         data.uintVal = _frequency;
-        _driver->writeGPURegister(cg1gpu::GPU_STREAM_FREQUENCY, _STREAM_ID, data);
+        _driver->writeGPURegister(arch::GPU_STREAM_FREQUENCY, _STREAM_ID, data);
         _frequency.restart();
     }
     
     if ( _componentsType.changed() || _requiredSync )
     {
         _convertToGPUStreamData(_componentsType, &data);
-        _driver->writeGPURegister(cg1gpu::GPU_STREAM_DATA, _STREAM_ID, data);
+        _driver->writeGPURegister(arch::GPU_STREAM_DATA, _STREAM_ID, data);
         _componentsType.restart();
     }
 
     if ( _invertStreamType.changed() || _requiredSync )
     {
         data.booleanVal = _invertStreamType;
-        _driver->writeGPURegister(cg1gpu::GPU_D3D9_COLOR_STREAM, _STREAM_ID, data);
+        _driver->writeGPURegister(arch::GPU_D3D9_COLOR_STREAM, _STREAM_ID, data);
         _invertStreamType.restart();
     }
 
     if ( _stride.changed() || _requiredSync )
     {
         data.uintVal = _stride;
-        _driver->writeGPURegister(cg1gpu::GPU_STREAM_STRIDE, _STREAM_ID, data);
+        _driver->writeGPURegister(arch::GPU_STREAM_STRIDE, _STREAM_ID, data);
         _stride.restart();
     }
 }
@@ -383,65 +383,65 @@ string GALStreamImp::DBG_getState() const
     return getInternalState();
 }
 
-void GALStreamImp::_convertToGPUStreamData(GAL_STREAM_DATA componentsType, cg1gpu::GPURegData* data)
+void GALStreamImp::_convertToGPUStreamData(GAL_STREAM_DATA componentsType, arch::GPURegData* data)
 {
     switch ( componentsType )
     {
         case GAL_SD_UNORM8:
         case GAL_SD_INV_UNORM8:
-            data->streamData = cg1gpu::SD_UNORM8;
+            data->streamData = arch::SD_UNORM8;
             break;
         case GAL_SD_SNORM8:
         case GAL_SD_INV_SNORM8:
-            data->streamData = cg1gpu::SD_SNORM8;
+            data->streamData = arch::SD_SNORM8;
             break;
         case GAL_SD_UNORM16:
         case GAL_SD_INV_UNORM16:
-            data->streamData = cg1gpu::SD_UNORM16;
+            data->streamData = arch::SD_UNORM16;
             break;
         case GAL_SD_SNORM16:
         case GAL_SD_INV_SNORM16:
-            data->streamData = cg1gpu::SD_SNORM16;
+            data->streamData = arch::SD_SNORM16;
             break;
         case GAL_SD_UNORM32:
         case GAL_SD_INV_UNORM32:
-            data->streamData = cg1gpu::SD_UNORM32;
+            data->streamData = arch::SD_UNORM32;
             break;
         case GAL_SD_SNORM32:
         case GAL_SD_INV_SNORM32:
-            data->streamData = cg1gpu::SD_SNORM32;
+            data->streamData = arch::SD_SNORM32;
             break;
         case GAL_SD_FLOAT16:
         case GAL_SD_INV_FLOAT16:
-            data->streamData = cg1gpu::SD_FLOAT16;
+            data->streamData = arch::SD_FLOAT16;
             break;
         case GAL_SD_FLOAT32:
         case GAL_SD_INV_FLOAT32:
-            data->streamData = cg1gpu::SD_FLOAT32;
+            data->streamData = arch::SD_FLOAT32;
             break;
         case GAL_SD_UINT8:
         case GAL_SD_INV_UINT8:
-            data->streamData = cg1gpu::SD_UINT8;
+            data->streamData = arch::SD_UINT8;
             break;
         case GAL_SD_SINT8:
         case GAL_SD_INV_SINT8:
-            data->streamData = cg1gpu::SD_SINT8;
+            data->streamData = arch::SD_SINT8;
             break;
         case GAL_SD_UINT16:
         case GAL_SD_INV_UINT16:
-            data->streamData = cg1gpu::SD_UINT16;
+            data->streamData = arch::SD_UINT16;
             break;
         case GAL_SD_SINT16:
         case GAL_SD_INV_SINT16:
-            data->streamData = cg1gpu::SD_SINT16;
+            data->streamData = arch::SD_SINT16;
             break;
         case GAL_SD_UINT32:
         case GAL_SD_INV_UINT32:
-            data->streamData = cg1gpu::SD_UINT32;
+            data->streamData = arch::SD_UINT32;
             break;
         case GAL_SD_SINT32:
         case GAL_SD_INV_SINT32:
-            data->streamData = cg1gpu::SD_SINT32;
+            data->streamData = arch::SD_SINT32;
             break;                        
         default:
             CG_ASSERT("Unknown GAL_STREAM_DATA value");

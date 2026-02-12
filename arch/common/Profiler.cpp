@@ -23,7 +23,7 @@
     #pragma intrinsic(__rdtsc)
 #endif
 
-namespace cg1gpu
+namespace arch
 {
 
 Tracer::Tracer()
@@ -277,12 +277,12 @@ void Tracer::generateReport(char *filename)
     fclose(outFile);
 }
 
-}   // namespace cg1gpu
+}   // namespace arch
 
 //=============================================================================
 // Global profiler instance and accessor
 //=============================================================================
-namespace cg1gpu
+namespace arch
 {
 
 static Tracer *globalTracer = NULL;
@@ -295,6 +295,6 @@ Tracer& getTracer()
     return *globalTracer;
 }
 
-}   // namespace cg1gpu
+}   // namespace arch
 
 

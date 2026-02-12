@@ -6,7 +6,7 @@
 
 #include "cmShaderInput.h"
 
-using namespace cg1gpu;
+using namespace arch;
 
 //  Creates a new ShaderInput.  
 ShaderInput::ShaderInput(U32 ID, U32 unitID, U32 stEntry, Vec4FP32 *attrib)

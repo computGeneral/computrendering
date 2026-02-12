@@ -45,10 +45,10 @@ void computeIndexBounds(GLenum type, const GLvoid* indices, GLsizei count, GLuin
 GLuint getSize(GLenum openGLType);
 
 // Obtains the corresponding StreamData type for a given GL type 
-cg1gpu::StreamData getStreamDataType(GLenum openGLType);
+arch::StreamData getStreamDataType(GLenum openGLType);
 
 // Obtains the corresponding GPU primitive enum for a given GL primitive enum 
-cg1gpu::PrimitiveMode translatePrimitive(GLenum primitive);
+arch::PrimitiveMode translatePrimitive(GLenum primitive);
 
 void normalizeQuad(QuadReg<float>& qr);
 

@@ -9,7 +9,7 @@
 #include <utility>
 #include "cmFifoSchedulerBase.h"
 
-namespace cg1gpu
+namespace arch
 {
 namespace memorycontroller
 {
@@ -59,7 +59,7 @@ protected:
     
 };
 } // namespace memorycontroller
-} // namespace cg1gpu
+} // namespace arch
 
 #endif // FIFOSCHEDULER_H
 

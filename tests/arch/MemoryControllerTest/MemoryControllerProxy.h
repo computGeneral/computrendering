@@ -9,7 +9,7 @@
 #include "MemoryController.h"
 #include <string>
 
-namespace cg1gpu
+namespace arch
 {
 
 // Simplified memory controller interface to query memory controllers state

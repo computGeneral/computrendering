@@ -447,36 +447,36 @@ const gal_ubyte* TextureMipmap::getDataInMortonOrder( gal_uint& sizeInBytes ) co
     //  Check if the mipmap was already converted to morton order.
     if (!_mortonData)
     {
-        cg1gpu::TextureCompression compressed;
+        arch::TextureCompression compressed;
         switch ( _format )
         {
             case GAL_COMPRESSED_S3TC_DXT1_RGB:
-                compressed = cg1gpu::GPU_S3TC_DXT1_RGB;
+                compressed = arch::GPU_S3TC_DXT1_RGB;
                 break;
             case GAL_COMPRESSED_S3TC_DXT1_RGBA:
-                compressed = cg1gpu::GPU_S3TC_DXT1_RGBA;
+                compressed = arch::GPU_S3TC_DXT1_RGBA;
                 break;
             case GAL_COMPRESSED_S3TC_DXT3_RGBA:
-                compressed = cg1gpu::GPU_S3TC_DXT3_RGBA;
+                compressed = arch::GPU_S3TC_DXT3_RGBA;
                 break;
             case GAL_COMPRESSED_S3TC_DXT5_RGBA:
-                compressed = cg1gpu::GPU_S3TC_DXT5_RGBA;
+                compressed = arch::GPU_S3TC_DXT5_RGBA;
                 break;
 
             case GAL_COMPRESSED_LUMINANCE_LATC1_EXT:
-                compressed = cg1gpu::GPU_LATC1;
+                compressed = arch::GPU_LATC1;
                 break;
             case GAL_COMPRESSED_SIGNED_LUMINANCE_LATC1_EXT:
-                compressed = cg1gpu::GPU_LATC2_SIGNED;
+                compressed = arch::GPU_LATC2_SIGNED;
                 break;
             case GAL_COMPRESSED_LUMINANCE_ALPHA_LATC2_EXT:
-                compressed = cg1gpu::GPU_LATC2;
+                compressed = arch::GPU_LATC2;
                 break;
             case GAL_COMPRESSED_SIGNED_LUMINANCE_ALPHA_LATC2_EXT:
-                compressed = cg1gpu::GPU_LATC2_SIGNED;
+                compressed = arch::GPU_LATC2_SIGNED;
                 break;
             default:
-                compressed = cg1gpu::GPU_NO_TEXTURE_COMPRESSION;
+                compressed = arch::GPU_NO_TEXTURE_COMPRESSION;
         }
 
         _mortonData = _driver->getDataInMortonOrder(_data, _width, _height, _depth, compressed, getTexelSize(), _mortonDataSize);

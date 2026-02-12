@@ -33,15 +33,15 @@ public:
 
     void clear(); // reset the shader program sched state (equals to remove all md's with remove method)
     void remove(U32 md); // must be called every time a md is removed from GPU driver
-    void select(U32 md, U32 nInstr, cg1gpu::ShaderTarget target); // add (if required) and select as current
-    void loadShaderProgram (cg1gpu::ShaderTarget target, U32 nInstr, U32 startPC, U32 md);
+    void select(U32 md, U32 nInstr, arch::ShaderTarget target); // add (if required) and select as current
+    void loadShaderProgram (arch::ShaderTarget target, U32 nInstr, U32 startPC, U32 md);
     
     U32 instructionSlots() const;
     
     // defaults to clear the shader instruction memory when is full
     // you can rewrite this method in subclasses to allow a more
     // complex behaviour
-    virtual U32 reclaimRoom(U32 nInstrSlots, cg1gpu::ShaderTarget target);
+    virtual U32 reclaimRoom(U32 nInstrSlots, arch::ShaderTarget target);
     
     virtual void dump() const;
     
@@ -63,7 +63,7 @@ private:
     {
         U32 startPC; // Start slots
         U32 nInstr; // # of instruction slots
-        cg1gpu::ShaderTarget target;    //  Shader target of the program.
+        arch::ShaderTarget target;    //  Shader target of the program.
     };
 
     typedef std::map<U32,ProgInfoStruct> ProgInfo;

@@ -8,7 +8,7 @@
 #include "Vec4Int.h"
 #include <iostream>
 
-using namespace cg1gpu;
+using namespace arch;
 using namespace std;
 
 Vec4Int::Vec4Int( S32 x, S32 y, S32 z, S32 w ) {

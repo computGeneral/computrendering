@@ -8,7 +8,7 @@
 #include <GPUReg.h>
 #include <GPUMath.h>
 #include <HAL.h>
-using namespace cg1gpu;
+using namespace arch;
 
 #include "GPUProxy.h"
 #include "ShaderTranslator/Types.h"

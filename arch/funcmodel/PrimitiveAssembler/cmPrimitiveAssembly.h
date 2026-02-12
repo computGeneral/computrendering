@@ -10,7 +10,7 @@
 #include "GPUReg.h"
 #include "cmPrimitiveAssemblyCommand.h"
 
-namespace cg1gpu
+namespace arch
 {
 
 //*  Number of shaded vertices in the assembly vertex queue.  
@@ -195,6 +195,6 @@ public:
 
 };
 
-} // namespace cg1gpu
+} // namespace arch
 
 #endif

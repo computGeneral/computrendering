@@ -9,7 +9,7 @@
 #include <vector>
 #include <list>
 
-namespace cg1gpu
+namespace arch
 {
 
 class SPTConsole : public ShaderProgramTestBase
@@ -48,6 +48,6 @@ public:
 
 };
 
-} // namespace cg1gpu
+} // namespace arch
 
 #endif // SPTCONSOLE_H

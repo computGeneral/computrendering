@@ -14,7 +14,7 @@
 #include <ostream>
 #include <cstdio>
 
-namespace cg1gpu
+namespace arch
 {
 
 /**

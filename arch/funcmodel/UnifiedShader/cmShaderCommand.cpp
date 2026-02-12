@@ -18,7 +18,7 @@
 #include "cmShaderCommand.h"
 #include <cstring>
 
-using namespace cg1gpu;
+using namespace arch;
 
 //  Creates the ShaderCommand and sets the command type.  
 ShaderCommand::ShaderCommand(Command com)

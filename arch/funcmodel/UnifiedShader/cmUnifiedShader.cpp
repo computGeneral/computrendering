@@ -11,7 +11,7 @@
 
 using namespace std;
 
-namespace cg1gpu
+namespace arch
 {
 
 //  Constructor.
@@ -192,5 +192,5 @@ cmoUnifiedShader::~cmoUnifiedShader()
 
 
 
-}   // namespace cg1gpu
+}   // namespace arch
 

@@ -10,7 +10,7 @@
 #include <iostream>
 
 using namespace std;
-using namespace cg1gpu;
+using namespace arch;
 
 cmoSignalBinder cmoSignalBinder::binder;
 

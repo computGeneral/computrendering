@@ -26,7 +26,7 @@
 #define __BM_CACHEBASE_H__
 
 
-namespace cg1gpu
+namespace arch
 {
 
 /**
@@ -582,6 +582,6 @@ public:
 
 };
 
-} // namespace cg1gpu
+} // namespace arch
 
 #endif

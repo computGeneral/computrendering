@@ -6,7 +6,7 @@
 #include "cmChannelTransaction.h"
 #include <sstream>
 
-using namespace cg1gpu::memorycontroller;
+using namespace arch::memorycontroller;
 using std::stringstream;
 using std::string;
 

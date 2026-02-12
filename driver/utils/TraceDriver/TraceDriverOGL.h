@@ -76,7 +76,7 @@ public:
      *  @return A pointer to the new MetaStream, NULL if there are no more MetaStreams.
      *
      */
-    cg1gpu::cgoMetaStream* nxtMetaStream();
+    arch::cgoMetaStream* nxtMetaStream();
 
     
     /**

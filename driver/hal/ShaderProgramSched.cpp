@@ -6,7 +6,7 @@
 #include <string>
 
 using namespace std;
-using namespace cg1gpu;
+using namespace arch;
 
 void ShaderProgramSched::clear()
 {   

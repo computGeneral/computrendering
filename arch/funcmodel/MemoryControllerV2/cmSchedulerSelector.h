@@ -8,7 +8,7 @@
 #include "cmChannelScheduler.h"
 #include "cmMemoryControllerV2.h"
 
-namespace cg1gpu
+namespace arch
 {
 namespace memorycontroller
 {
@@ -19,7 +19,7 @@ ChannelScheduler* createChannelScheduler(const char* name,
                                          cmoMduBase* parent);
 
 } // namespace memorycontroller
-} // namespace cg1gpu
+} // namespace arch
 
 
 #endif // SCHEDULERSELECTOR_H

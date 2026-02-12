@@ -108,13 +108,13 @@ bool checkRegionTouched(U32 md);
 void insertFragmentProgram();
 void insertVertexProgram();
 void insertShaderProgram(U32 pc, U32 address, U32 size, ShaderProgramMap *shaderPrograms);
-void checkFragmentProgram(cg1gpu::cgoMetaStream *agpTrans, U32 agpTransID);
-void checkVertexProgram(cg1gpu::cgoMetaStream *agpTrans, U32 agpTransID);
+void checkFragmentProgram(arch::cgoMetaStream *agpTrans, U32 agpTransID);
+void checkVertexProgram(arch::cgoMetaStream *agpTrans, U32 agpTransID);
 void checkShaderProgram(U08 *data, U32 agpTransID, ShaderProgramMap *shaderPrograms, U08 *shaderCache);
 void loadFragmentShaderPrograms(gzofstream *outTrace);
 void loadVertexShaderPrograms(gzofstream *outTrace);
-void loadShaderPrograms(gzofstream *outTrace, U08 *shaderProgramCache, cg1gpu::GPURegister addressReg,
-                        cg1gpu::GPURegister pcReg, cg1gpu::GPURegister sizeReg, cg1gpu::GPUCommand loadCommand);
+void loadShaderPrograms(gzofstream *outTrace, U08 *shaderProgramCache, arch::GPURegister addressReg,
+                        arch::GPURegister pcReg, arch::GPURegister sizeReg, arch::GPUCommand loadCommand);
 
 
 

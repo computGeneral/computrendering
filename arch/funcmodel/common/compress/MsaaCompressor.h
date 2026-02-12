@@ -8,7 +8,7 @@
 #include "GPUType.h"
 #include "Compressor.h"
 
-namespace cg1gpu
+namespace arch
 {
 
 // This class represents the configuration used to compress a block. 

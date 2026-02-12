@@ -28,7 +28,7 @@ enum GPUProxyRegisterType {
 };
 
 struct GPUProxyRegId {
-    cg1gpu::GPURegister gpu_reg;
+    arch::GPURegister gpu_reg;
     U32 index;
     bool operator()(const GPUProxyRegId &a, const GPUProxyRegId &b) const;
     friend bool operator<(const GPUProxyRegId &a, const GPUProxyRegId &b)
@@ -48,7 +48,7 @@ struct GPUProxyRegId {
     }
 
     GPUProxyRegId();
-    GPUProxyRegId(cg1gpu::GPURegister _gpu_reg, U32 _index = 0);
+    GPUProxyRegId(arch::GPURegister _gpu_reg, U32 _index = 0);
 };
 
 struct GPUProxyAddress {
@@ -67,13 +67,13 @@ class GPUProxy {
         void getGPUParameters(U32& gpuMemSz, U32& sysMemSz, U32& blocksz, U32& sblocksz,
         U32& scanWidth, U32& scanHeight, U32& overScanWidth, U32& overScanHeight,
         bool& doubleBuffer, U32& fetchRate) const;
-        void writeGPURegister( cg1gpu::GPURegister regId, cg1gpu::GPURegData data);
-        void writeGPURegister( cg1gpu::GPURegister regId, U32 index, cg1gpu::GPURegData data);
-        void writeGPUAddrRegister( cg1gpu::GPURegister regId, U32 index, U32 md, U32 offset = 0);
-        void readGPURegister( cg1gpu::GPURegister regId, cg1gpu::GPURegData* data);
-        void readGPURegister( cg1gpu::GPURegister regId, U32 index, cg1gpu::GPURegData* data);
-        void readGPUAddrRegister( cg1gpu::GPURegister regId, U32 index, U32* md, U32* offset);
-        void sendCommand(cg1gpu::GPUCommand com);
+        void writeGPURegister( arch::GPURegister regId, arch::GPURegData data);
+        void writeGPURegister( arch::GPURegister regId, U32 index, arch::GPURegData data);
+        void writeGPUAddrRegister( arch::GPURegister regId, U32 index, U32 md, U32 offset = 0);
+        void readGPURegister( arch::GPURegister regId, arch::GPURegData* data);
+        void readGPURegister( arch::GPURegister regId, U32 index, arch::GPURegData* data);
+        void readGPUAddrRegister( arch::GPURegister regId, U32 index, U32* md, U32* offset);
+        void sendCommand(arch::GPUCommand com);
         void initBuffers(U32* mdFront = 0, U32* mdBack = 0, U32* mdZS = 0);
         void setResolution(U32 width, U32 height);
         /**@todo Add parameter MemoryRequestPolicy memRequestPolicy = GPUMemoryFirst,
@@ -92,11 +92,11 @@ class GPUProxy {
     private:
         map<GPUProxyRegId, GPURegData, GPUProxyRegId> values;
         map<GPUProxyRegId, GPUProxyAddress, GPUProxyRegId> addresses;
-        void debug_print_register(cg1gpu::GPURegister reg, U32 index = 0);
+        void debug_print_register(arch::GPURegister reg, U32 index = 0);
 
         map<GPUProxyRegId, GPUProxyRegisterType, GPUProxyRegId> register_types;
 
-        map<cg1gpu::GPURegister, string> register_names;
+        map<arch::GPURegister, string> register_names;
 
         GPUProxy();
         ~GPUProxy();

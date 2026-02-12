@@ -28,7 +28,7 @@
 
 #define _TRIANGLESETUP_
 
-namespace cg1gpu
+namespace arch
 {
 
 //*  Defines the different Triangle Setup states.  
@@ -292,6 +292,6 @@ public:
 
 };
 
-} // namespace cg1gpu
+} // namespace arch
 
 #endif

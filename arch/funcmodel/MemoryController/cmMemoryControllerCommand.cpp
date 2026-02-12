@@ -4,7 +4,7 @@
 
 #include "cmMemoryControllerCommand.h"
 
-using namespace cg1gpu;
+using namespace arch;
 
 MemoryControllerCommand::MemoryControllerCommand(MCCommand command, GPURegister reg, 
                                                  GPURegData data) :

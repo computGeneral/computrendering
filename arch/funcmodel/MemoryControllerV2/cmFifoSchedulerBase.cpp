@@ -9,7 +9,7 @@
 
 using std::cout;
 
-using namespace cg1gpu::memorycontroller;
+using namespace arch::memorycontroller;
 using std::make_pair;
 
 FifoSchedulerBase::FifoSchedulerBase(const char* name, const char* prefix, cmoMduBase* parent, const ChannelScheduler::CommonConfig& config):

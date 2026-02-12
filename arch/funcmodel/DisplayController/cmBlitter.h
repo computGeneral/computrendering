@@ -30,7 +30,7 @@
 #include <utility>
 #include <set>
 
-namespace cg1gpu
+namespace arch
 {
 
 /** 
@@ -662,6 +662,6 @@ private:
     void swizzleTextureBlock(TextureBlock* textureBlock);
 };
 
-} // namespace cg1gpu
+} // namespace arch
 
 #endif

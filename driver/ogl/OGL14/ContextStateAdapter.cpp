@@ -7,7 +7,7 @@
 #include "glext.h"
 #include "MathLib.h"
 
-using namespace cg1gpu;
+using namespace arch;
 
 using namespace libgl;
     

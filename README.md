@@ -328,7 +328,7 @@ cp ../../arch/common/params/CG1GPU.ini .
                 IV)  End of simulation message with the last simulated cycle and dynamic
                      memory usage statistics
             Example:
-                > ~/cg1gpu/bin/CG1SIM texComb256.txt 1
+                > ~/arch/bin/CG1SIM texComb256.txt 1
                 Simulator Parameters.
                 --------------------
 

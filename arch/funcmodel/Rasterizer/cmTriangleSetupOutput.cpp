@@ -17,7 +17,7 @@
 
 #include "cmTriangleSetupOutput.h"
 #include <stdio.h>
-using namespace cg1gpu;
+using namespace arch;
 
 //  Creates a new TriangleSetupOutput.  
 TriangleSetupOutput::TriangleSetupOutput(U32 ID, U32 setupID, bool lastTri)

@@ -15,7 +15,7 @@
 #define VS2_CONSTANT_NUM_REGS 64
 #define VS2_INSTRUCTION_MEMORY_SIZE 32768
 
-using namespace cg1gpu;
+using namespace arch;
 using namespace libGAL;
 
 ShaderProgramTestBase::ShaderProgramTestBase( const cgsArchConfig& arch )

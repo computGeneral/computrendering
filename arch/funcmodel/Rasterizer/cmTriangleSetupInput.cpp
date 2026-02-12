@@ -14,7 +14,7 @@
 
 #include "cmTriangleSetupInput.h"
 
-using namespace cg1gpu;
+using namespace arch;
 
 //  Creates a new TriangleSetupInput.  
 TriangleSetupInput::TriangleSetupInput(U32 ID, Vec4FP32 *attrib1,

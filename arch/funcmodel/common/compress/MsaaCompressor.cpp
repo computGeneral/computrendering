@@ -6,7 +6,7 @@
 #include "BitStreamWriter.h"
 #include "BitStreamReader.h"
 
-namespace cg1gpu
+namespace arch
 {
 
 const MsaaLevelConfig bmoMsaaCompressor::configs[] = {

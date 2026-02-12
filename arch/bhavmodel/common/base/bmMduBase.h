@@ -2,7 +2,7 @@
 #define __BM_MDUBASE_H__
 #include "GPUType.h"
 
-namespace cg1gpu
+namespace arch
 {
     class bmoTextureProcessor;
 

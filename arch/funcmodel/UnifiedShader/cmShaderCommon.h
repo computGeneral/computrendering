@@ -16,7 +16,7 @@
 
 #define _SHADERCOMMON_
 
-namespace cg1gpu
+namespace arch
 {
 /**
  *
@@ -100,6 +100,6 @@ static const U32 MAX_OUTP_BANK_REGS = 16;
 static const U32 MAX_PRED_BANK_REGS = 32;
 
 
-}   // namespace cg1gpu
+}   // namespace arch
 
 #endif

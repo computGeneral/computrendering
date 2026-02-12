@@ -26,7 +26,7 @@
 
 #define _RASTERIZEREMULATOR_
 
-namespace cg1gpu
+namespace arch
 {
 
 /**
@@ -1682,6 +1682,6 @@ public:
          
 }; // bmoRasterizer
 
-} // namespace cg1gpu
+} // namespace arch
 
 #endif

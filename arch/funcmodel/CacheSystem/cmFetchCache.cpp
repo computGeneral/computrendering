@@ -18,7 +18,7 @@
 #include <stdio.h>
 #include <string.h>
 
-using namespace cg1gpu;
+using namespace arch;
 
 #undef GPU_DEBUG
 #define GPU_DEBUG(expr) if (debugMode) { expr }

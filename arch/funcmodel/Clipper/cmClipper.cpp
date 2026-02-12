@@ -25,7 +25,7 @@
 
 #include <sstream>
 
-using namespace cg1gpu;
+using namespace arch;
 
 //  cmoClipper constructor.  
 cmoClipper::cmoClipper(U32 trCycle, U32 clipUnits, U32 startLat, U32 execLat, U32 bufferSize,

@@ -8,7 +8,7 @@
 #include "GPUType.h"
 #include "cmChannelScheduler.h"
 
-namespace cg1gpu 
+namespace arch 
 {
 namespace memorycontroller 
 {
@@ -127,7 +127,7 @@ private:
 
 
 } // namespace memorycontroller
-} // namespace cg1gpu
+} // namespace arch
 
 
 

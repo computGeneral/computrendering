@@ -4,9 +4,9 @@
 #include <string>
 
 using namespace std;
-using namespace cg1gpu;
+using namespace arch;
 
-namespace cg1gpu
+namespace arch
 {
 struct cgsArchConfig;
 class cgoMetaStream;

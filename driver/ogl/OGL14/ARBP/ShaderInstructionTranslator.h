@@ -28,8 +28,8 @@ private:
     {
     public:
         U32 idReg;
-        cg1gpu::Bank idBank;
-        cg1gpu::SwizzleMode swizzleMode;
+        arch::Bank idBank;
+        arch::SwizzleMode swizzleMode;
         bool absoluteFlag;
         bool negateFlag;
         bool relativeModeFlag;
@@ -43,16 +43,16 @@ private:
     class ShaderInstrResult 
     {
     public:
-        cg1gpu::MaskMode writeMask;
+        arch::MaskMode writeMask;
         U32 idReg;
-        cg1gpu::Bank idBank;
+        arch::Bank idBank;
         ShaderInstrResult();
     };    
         
     bool maxLiveTempsComputed;
     U32 maxLiveTemps;
 
-    std::list<cg1gpu::cgoShaderInstr*> shaderCode; ///< Specific hardware-dependent instruction code
+    std::list<arch::cgoShaderInstr*> shaderCode; ///< Specific hardware-dependent instruction code
 
     RBank<F32> paramBank;
     RBank<F32> tempBank;
@@ -77,7 +77,7 @@ private:
                                          const ShaderInstrOperand& shop3, unsigned int num_operands,
                                          bool& preloadOp1, bool& preloadOp2) const;
     
-    std::list<cg1gpu::cgoShaderInstr*> preloadOperands(int line, 
+    std::list<arch::cgoShaderInstr*> preloadOperands(int line, 
                                                         ShaderInstrOperand& shop1, ShaderInstrOperand& shop2,
                                                         ShaderInstrOperand& shop3,
                                                         bool preloadOp1, bool preloadOp2, 
@@ -85,9 +85,9 @@ private:
                                              
     
     
-    cg1gpu::ShOpcode translateOpcode(GenericInstruction::Opcode opc, bool &saturated, bool &texture, bool &sample);
+    arch::ShOpcode translateOpcode(GenericInstruction::Opcode opc, bool &saturated, bool &texture, bool &sample);
     
-    std::list<cg1gpu::cgoShaderInstr*> translateInstruction(GenericInstruction::Opcode opcode, 
+    std::list<arch::cgoShaderInstr*> translateInstruction(GenericInstruction::Opcode opcode, 
                                                               int line, int num_operands,
                                                               ShaderInstrOperand shop1,
                                                               ShaderInstrOperand shop2,
@@ -96,9 +96,9 @@ private:
                                                               unsigned int textureImageUnit,
                                                               bool lastInstruction);
     
-    cg1gpu::SwizzleMode composeSwizzles(cg1gpu::SwizzleMode swz1, cg1gpu::SwizzleMode swz2) const;
+    arch::SwizzleMode composeSwizzles(arch::SwizzleMode swz1, arch::SwizzleMode swz2) const;
     
-    std::list<cg1gpu::cgoShaderInstr*> generateEquivalentInstructionList(GenericInstruction::Opcode opcode, 
+    std::list<arch::cgoShaderInstr*> generateEquivalentInstructionList(GenericInstruction::Opcode opcode, 
                                                                           int line,int num_operands,
                                                                           ShaderInstrOperand shop1,
                                                                           ShaderInstrOperand shop2,

@@ -18,7 +18,7 @@
 #include "GPUType.h"
 #include "DynamicObject.h"
 
-namespace cg1gpu
+namespace arch
 {
 
 //  cmoStreamController Control Command.  
@@ -234,6 +234,6 @@ public:
 
 };
 
-} // namespace cg1gpu
+} // namespace arch
 
 #endif

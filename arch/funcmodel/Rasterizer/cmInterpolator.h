@@ -27,7 +27,7 @@
 #include "bmRasterizer.h"
 #include "cmRasterizerState.h"
 
-namespace cg1gpu
+namespace arch
 {
 //** Maximum interpolation latency.  
 static const U32 MAX_INTERPOLATION_LATENCY = 8;
@@ -148,6 +148,6 @@ public:
     void clock(U64 cycle);
 };
 
-} // namespace cg1gpu
+} // namespace arch
 
 #endif

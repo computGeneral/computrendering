@@ -24,7 +24,7 @@
 #include "GPUType.h"
 #include "GPUReg.h"
 
-namespace cg1gpu
+namespace arch
 {
 
 //**  Primitive Assembly Command types.  
@@ -147,6 +147,6 @@ public:
 };
 
 
-} // namespace cg1gpu
+} // namespace arch
 
 #endif

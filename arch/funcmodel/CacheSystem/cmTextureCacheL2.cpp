@@ -18,9 +18,9 @@
 #include "GPUMath.h"
 #include <sstream>
 
-using cg1gpu::tools::Queue;
+using arch::tools::Queue;
 
-using namespace cg1gpu;
+using namespace arch;
 
 #undef GPU_DEBUG
 #define GPU_DEBUG(expr) if (debugMode) { expr }

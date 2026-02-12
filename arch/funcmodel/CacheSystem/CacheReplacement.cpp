@@ -16,7 +16,7 @@
 #include "CacheReplacement.h"
 #include "GPUMath.h"
 
-using namespace cg1gpu;
+using namespace arch;
 
 
 //  Generic cache replacement policy constructor.  

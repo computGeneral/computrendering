@@ -25,7 +25,7 @@
 #include "cmStatisticsManager.h"
 #include "cmtoolsQueue.h"
 
-namespace cg1gpu
+namespace arch
 {
 
 //  Defines a block read request to memory.  
@@ -268,6 +268,6 @@ public:
 
 };
 
-} // namespace cg1gpu
+} // namespace arch
 
 #endif

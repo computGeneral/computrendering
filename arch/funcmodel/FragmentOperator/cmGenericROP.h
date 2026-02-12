@@ -34,7 +34,7 @@
 #include "cmtoolsQueue.h"
 #include "PixelMapper.h"
 
-namespace cg1gpu
+namespace arch
 {
 
 /**
@@ -562,7 +562,7 @@ public:
 
 };
 
-} // namespace cg1gpu
+} // namespace arch
 
 #endif
 

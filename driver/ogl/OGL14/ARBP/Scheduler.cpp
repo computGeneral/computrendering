@@ -13,7 +13,7 @@
 using namespace std;
 using namespace libgl;
 using namespace GenerationCode;
-using namespace cg1gpu;
+using namespace arch;
 
 /////////////////////////////////////////////////////////////////////////
 //////////// Implementation of Register, OperationInfo and //////////////

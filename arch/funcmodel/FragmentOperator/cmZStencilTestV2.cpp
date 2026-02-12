@@ -24,7 +24,7 @@
 #include "GPUReg.h" // Access to STAMP_FRAGMENTS
 #include <sstream>
 
-using namespace cg1gpu;
+using namespace arch;
 
 //  Z Stencil Test mdu constructor.  
 cmoDepthStencilTester::cmoDepthStencilTester(U32 numStamps, U32 overWidth, U32 overHeight,

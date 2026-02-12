@@ -18,7 +18,7 @@
 
 #include "cmColorBlockStateInfo.h"
 
-using namespace cg1gpu;
+using namespace arch;
 
 //  Constructor.  
 ColorBlockStateInfo::ColorBlockStateInfo(ROPBlockState *state, U32 numBlocks)

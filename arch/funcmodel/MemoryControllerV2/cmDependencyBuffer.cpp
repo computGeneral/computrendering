@@ -6,7 +6,7 @@
 #include <sstream>
 #include <iostream>
 
-using namespace cg1gpu::memorycontroller;
+using namespace arch::memorycontroller;
 using namespace std;
 
 DependencyBuffer::DependencyBuffer() : 

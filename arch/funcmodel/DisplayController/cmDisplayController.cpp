@@ -27,7 +27,7 @@
 #include "ColorCompressor.h"
 #include "ImageSaver.h"
 
-using namespace cg1gpu;
+using namespace arch;
 
 //  cmoDisplayController constructor.  
 cmoDisplayController::cmoDisplayController(U32 overWidth, U32 overHeight, U32 scanWidth, U32 scanHeight,

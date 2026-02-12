@@ -11,8 +11,8 @@
 #include <stdio.h>
 #include <bitset>
 
-using namespace cg1gpu;
-using namespace cg1gpu::memorycontroller;
+using namespace arch;
+using namespace arch::memorycontroller;
 using std::vector;
 using std::make_pair;
 

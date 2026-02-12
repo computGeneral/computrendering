@@ -19,7 +19,7 @@
 #include <cstring>
 #include "Parser.h"
 
-using namespace cg1gpu;
+using namespace arch;
 
 // Minimum and maximum values a `signed long long int' can hold.  
 #ifndef LLONG_MAX

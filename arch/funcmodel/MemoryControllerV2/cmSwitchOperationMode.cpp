@@ -4,7 +4,7 @@
 
 #include "cmSwitchOperationMode.h"
 
-using namespace cg1gpu::memorycontroller;
+using namespace arch::memorycontroller;
 
 SwitchOperationModeBase* SwitchOperationModeSelector::create(const ChannelScheduler::CommonConfig& config)
 {

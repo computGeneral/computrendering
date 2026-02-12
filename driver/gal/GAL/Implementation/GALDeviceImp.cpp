@@ -42,22 +42,22 @@ gal_ubyte GALDeviceImp::defaultFSh[] = "mov o1, i1\n";
 GALDeviceImp::GALDeviceImp(HAL* driver) :
     _driver(driver),
     _requiredSync(true),
-    _MAX_STREAMS(cg1gpu::MAX_STREAM_BUFFERS - 1),
+    _MAX_STREAMS(arch::MAX_STREAM_BUFFERS - 1),
     _MAX_SAMPLES(16),
     //_MAX_STREAMS(3),
     _indexedMode(false),
     _clearColorBuffer(0),
     _primitive(GAL_POINTS),
-    _vaMap(cg1gpu::MAX_VERTEX_ATTRIBUTES, cg1gpu::ST_INACTIVE_ATTRIBUTE),
+    _vaMap(arch::MAX_VERTEX_ATTRIBUTES, arch::ST_INACTIVE_ATTRIBUTE),
     _gsh(0), _gpuMemGshTrack(0),
     _vsh(0), _gpuMemVshTrack(0),
     _fsh(0), _gpuMemFshTrack(0),
-    _vshOutputs(cg1gpu::MAX_VERTEX_ATTRIBUTES, false),
-    _fshInputs(cg1gpu::MAX_FRAGMENT_ATTRIBUTES, false),
+    _vshOutputs(arch::MAX_VERTEX_ATTRIBUTES, false),
+    _fshInputs(arch::MAX_FRAGMENT_ATTRIBUTES, false),
     _vshResources(1),
     _fshResources(1),
     _shOptimizer(libGAL_opt::SHADER_ARCH_PARAMS()),
-    //_stream(cg1gpu::MAX_STREAM_BUFFERS - 1),
+    //_stream(arch::MAX_STREAM_BUFFERS - 1),
     _stream(_MAX_STREAMS),
     _zClearValue(1.0f),
     _stencilClearValue(0x00ffffff),
@@ -100,12 +100,12 @@ GALDeviceImp::GALDeviceImp(HAL* driver) :
     _indexStream = new GALStreamImp(this, _driver, _MAX_STREAMS);
 
     // Init register with the stream of indices
-    cg1gpu::GPURegData data;
+    arch::GPURegData data;
     data.uintVal = _MAX_STREAMS;
-    _driver->writeGPURegister(cg1gpu::GPU_INDEX_STREAM, 0, data);
+    _driver->writeGPURegister(arch::GPU_INDEX_STREAM, 0, data);
 
-    _sampler = new GALSamplerImp*[cg1gpu::MAX_TEXTURES];
-    for ( gal_uint i = 0; i < cg1gpu::MAX_TEXTURES; ++i )
+    _sampler = new GALSamplerImp*[arch::MAX_TEXTURES];
+    for ( gal_uint i = 0; i < arch::MAX_TEXTURES; ++i )
         _sampler[i] = new GALSamplerImp(this, _driver, i);
 
     // Create rasterization stage object
@@ -123,7 +123,7 @@ GALDeviceImp::GALDeviceImp(HAL* driver) :
     _nextDumpEvent.valid = false;
 
     data.uintVal = _MAX_STREAMS;
-    _driver->writeGPURegister(cg1gpu::GPU_INDEX_STREAM, 0, data);
+    _driver->writeGPURegister(arch::GPU_INDEX_STREAM, 0, data);
 
 
     _defaultVshProgram = (GALShaderProgramImp*)(createShaderProgram());
@@ -138,11 +138,11 @@ GALDeviceImp::GALDeviceImp(HAL* driver) :
     for ( gal_uint i = 0; i < _fshInputs.size(); ++i )
         _defaultFshProgram->setInputRead(i, false);
 
-    _defaultVshProgram->setOutputWritten(cg1gpu::POSITION_ATTRIBUTE, true);
+    _defaultVshProgram->setOutputWritten(arch::POSITION_ATTRIBUTE, true);
     _defaultVshProgram->setOutputWritten(3, true);
 
-    _defaultVshProgram->setInputRead(cg1gpu::POSITION_ATTRIBUTE, true);
-    _defaultVshProgram->setInputRead(cg1gpu::COLOR_ATTRIBUTE, true);
+    _defaultVshProgram->setInputRead(arch::POSITION_ATTRIBUTE, true);
+    _defaultVshProgram->setInputRead(arch::COLOR_ATTRIBUTE, true);
 
     _vsh = _defaultVshProgram;
     _fsh = _defaultFshProgram;
@@ -180,48 +180,48 @@ void GALDeviceImp::setOptions(const GAL_CONFIG_OPTIONS& configOptions)
 
 void GALDeviceImp::_syncRegisters()
 {
-    cg1gpu::GPURegData data;
+    arch::GPURegData data;
 
     if ( _indexedMode )
         data.uintVal = 1;
     else
         data.uintVal = 0;
-    _driver->writeGPURegister(cg1gpu::GPU_INDEX_MODE, 0, data); // Init INDEX MODE
+    _driver->writeGPURegister(arch::GPU_INDEX_MODE, 0, data); // Init INDEX MODE
 
     _translatePrimitive(_primitive, &data);
-    _driver->writeGPURegister(cg1gpu::GPU_PRIMITIVE, data); // Init primitive topology
+    _driver->writeGPURegister(arch::GPU_PRIMITIVE, data); // Init primitive topology
 
-    for ( gal_uint i = 0; i < cg1gpu::MAX_VERTEX_ATTRIBUTES; ++i ) {
+    for ( gal_uint i = 0; i < arch::MAX_VERTEX_ATTRIBUTES; ++i ) {
         data.uintVal = _vaMap[i];
-        _driver->writeGPURegister(cg1gpu::GPU_VERTEX_ATTRIBUTE_MAP, i, data);
+        _driver->writeGPURegister(arch::GPU_VERTEX_ATTRIBUTE_MAP, i, data);
     }
 
     data.qfVal[0] =  float(_clearColorBuffer         & 0xff) / 255.0f;
     data.qfVal[1] =  float((_clearColorBuffer >> 8)  & 0xff) / 255.0f;
     data.qfVal[2] =  float((_clearColorBuffer >> 16) & 0xff) / 255.0f;
     data.qfVal[3] =  float((_clearColorBuffer >> 24) & 0xff) / 255.0f;
-    _driver->writeGPURegister(cg1gpu::GPU_COLOR_BUFFER_CLEAR, data);
+    _driver->writeGPURegister(arch::GPU_COLOR_BUFFER_CLEAR, data);
 
     data.uintVal = static_cast<gal_uint>(static_cast<gal_float>(_zClearValue) * static_cast<gal_float>((1 << 24) - 1));
-    _driver->writeGPURegister(cg1gpu::GPU_Z_BUFFER_CLEAR, data);
+    _driver->writeGPURegister(arch::GPU_Z_BUFFER_CLEAR, data);
 
     data.intVal = _stencilClearValue;
-    _driver->writeGPURegister(cg1gpu::GPU_STENCIL_BUFFER_CLEAR, data);
+    _driver->writeGPURegister(arch::GPU_STENCIL_BUFFER_CLEAR, data);
 
     data.booleanVal = _hzActivated;
-    //_driver->writeGPURegister(cg1gpu::GPU_HIERARCHICALZ, data);
+    //_driver->writeGPURegister(arch::GPU_HIERARCHICALZ, data);
 
-    cg1gpu::GPURegData bValue;
+    arch::GPURegData bValue;
 
     for ( gal_uint i = 0; i < _vshOutputs.size(); ++i ) {
         bValue.booleanVal = _vshOutputs[i];
-        _driver->writeGPURegister(cg1gpu::GPU_VERTEX_OUTPUT_ATTRIBUTE, i, bValue);
+        _driver->writeGPURegister(arch::GPU_VERTEX_OUTPUT_ATTRIBUTE, i, bValue);
         _vshOutputs[i].restart();
     }
 
     for ( gal_uint i = 0; i < _fshInputs.size(); ++i ) {
         bValue.booleanVal = _fshInputs[i];
-        _driver->writeGPURegister(cg1gpu::GPU_FRAGMENT_INPUT_ATTRIBUTES, i, bValue);
+        _driver->writeGPURegister(arch::GPU_FRAGMENT_INPUT_ATTRIBUTES, i, bValue);
         _fshInputs[i].restart();
     }
 
@@ -229,15 +229,15 @@ void GALDeviceImp::_syncRegisters()
     cout << "CDDeviceImp::_syncRegisters() -> "
             "Temporary initializing VERTEX_THREAD_RESOURCES & FRAGMENT_THREAD_RESOURCES statically to 5"  << endl;
     data.uintVal = 5;
-    _driver->writeGPURegister(cg1gpu::GPU_VERTEX_THREAD_RESOURCES, data);
-    _driver->writeGPURegister(cg1gpu::GPU_FRAGMENT_THREAD_RESOURCES, data);
+    _driver->writeGPURegister(arch::GPU_VERTEX_THREAD_RESOURCES, data);
+    _driver->writeGPURegister(arch::GPU_FRAGMENT_THREAD_RESOURCES, data);
     */
 
     data.uintVal = _vshResources;
-    _driver->writeGPURegister(cg1gpu::GPU_VERTEX_THREAD_RESOURCES, data);
+    _driver->writeGPURegister(arch::GPU_VERTEX_THREAD_RESOURCES, data);
 
     data.uintVal = _fshResources;
-    _driver->writeGPURegister(cg1gpu::GPU_FRAGMENT_THREAD_RESOURCES, data);
+    _driver->writeGPURegister(arch::GPU_FRAGMENT_THREAD_RESOURCES, data);
 
     // Note: If more registers must be initialized by the device, put the initialization code here
 }
@@ -381,7 +381,7 @@ void GALDeviceImp::setResolution(gal_uint width, gal_uint height)
     _mdColorBufferSavedState = _driver->obtainMemory(512 * 1024);
 
     //  Set the gpu register that points to the color state buffer save area.
-    _driver->writeGPUAddrRegister(cg1gpu::GPU_COLOR_STATE_BUFFER_MEM_ADDR, 0, _mdColorBufferSavedState);
+    _driver->writeGPUAddrRegister(arch::GPU_COLOR_STATE_BUFFER_MEM_ADDR, 0, _mdColorBufferSavedState);
 
     //  Create a buffer for saving the z stencil block state data on z stencil buffer switch.
     //
@@ -391,7 +391,7 @@ void GALDeviceImp::setResolution(gal_uint width, gal_uint height)
     _mdZStencilBufferSavedState = _driver->obtainMemory(512 * 1024);
 
     //  Set the gpu register that points to the z stencil state buffer save area.
-    _driver->writeGPUAddrRegister(cg1gpu::GPU_ZSTENCIL_STATE_BUFFER_MEM_ADDR, 0, _mdZStencilBufferSavedState);
+    _driver->writeGPUAddrRegister(arch::GPU_ZSTENCIL_STATE_BUFFER_MEM_ADDR, 0, _mdZStencilBufferSavedState);
 
     //  Set the z stencil buffer as defined.
     _zStencil->setZStencilBufferDefined(true);
@@ -413,7 +413,7 @@ void GALDeviceImp::enableVertexAttribute(gal_uint vaIndex, gal_uint streamID)
 {
     TRACING_ENTER_REGION("GAL", "", "")
     GAL_ASSERT(
-        if ( vaIndex >= cg1gpu::MAX_VERTEX_ATTRIBUTES )
+        if ( vaIndex >= arch::MAX_VERTEX_ATTRIBUTES )
             CG_ASSERT("Vertex attribute index too high");
 
         if ( _usedStreams.count(streamID) != 0 ) {
@@ -432,15 +432,15 @@ void GALDeviceImp::disableVertexAttribute(gal_uint vaIndex)
 {
     TRACING_ENTER_REGION("GAL", "", "")
     GAL_ASSERT(
-        if ( vaIndex >= cg1gpu::MAX_VERTEX_ATTRIBUTES )
+        if ( vaIndex >= arch::MAX_VERTEX_ATTRIBUTES )
             CG_ASSERT("Vertex attribute index too high");
     )
 
     gal_uint stream = _vaMap[vaIndex];
 
-    if ( stream != cg1gpu::ST_INACTIVE_ATTRIBUTE )  { // Mark this stream as free
+    if ( stream != arch::ST_INACTIVE_ATTRIBUTE )  { // Mark this stream as free
         _usedStreams.erase(stream);
-        _vaMap[vaIndex] = cg1gpu::ST_INACTIVE_ATTRIBUTE;
+        _vaMap[vaIndex] = arch::ST_INACTIVE_ATTRIBUTE;
     }
     TRACING_EXIT_REGION()    
 }
@@ -449,9 +449,9 @@ void GALDeviceImp::disableVertexAttributes()
 {
     TRACING_ENTER_REGION("GAL", "", "")
     _usedStreams.clear();
-    //_vaMap.assign(cg1gpu::MAX_VERTEX_ATTRIBUTES, cg1gpu::ST_INACTIVE_ATTRIBUTE);
+    //_vaMap.assign(arch::MAX_VERTEX_ATTRIBUTES, arch::ST_INACTIVE_ATTRIBUTE);
     for(U32 a = 0; a < _vaMap.size(); a++)
-        _vaMap[a] = cg1gpu::ST_INACTIVE_ATTRIBUTE;
+        _vaMap[a] = arch::ST_INACTIVE_ATTRIBUTE;
     TRACING_EXIT_REGION()    
 }
 
@@ -465,9 +465,9 @@ void GALDeviceImp::_syncStreamerState()
 #endif
 
     // Create a sorted map
-    cg1gpu::GPURegData data;
+    arch::GPURegData data;
     map<gal_uint,gal_uint> m;
-    for ( gal_uint i = 0; i < cg1gpu::MAX_VERTEX_ATTRIBUTES; i++ ) {
+    for ( gal_uint i = 0; i < arch::MAX_VERTEX_ATTRIBUTES; i++ ) {
         m.insert(make_pair(i, _vaMap[i]));
     }
 
@@ -478,11 +478,11 @@ void GALDeviceImp::_syncStreamerState()
         gal_uint attrib = it->first;
 		if ( _vaMap[attrib].changed() ) {
 			data.uintVal = _vaMap[attrib];
-			_driver->writeGPURegister(cg1gpu::GPU_VERTEX_ATTRIBUTE_MAP, attrib, data);
+			_driver->writeGPURegister(arch::GPU_VERTEX_ATTRIBUTE_MAP, attrib, data);
 			_vaMap[attrib].restart();
 		}
 
-		if ( _vaMap[attrib] != cg1gpu::ST_INACTIVE_ATTRIBUTE) // Sync stream if the vertex attribute is enabled
+		if ( _vaMap[attrib] != arch::ST_INACTIVE_ATTRIBUTE) // Sync stream if the vertex attribute is enabled
 			_stream[_vaMap[attrib]]->sync();
         it++ ;
     }
@@ -492,9 +492,9 @@ void GALDeviceImp::_syncSamplerState()
 {
 
 #ifdef GAL_DUMP_SAMPLERS
-    for (gal_uint i = 0; i < cg1gpu::MAX_TEXTURES; i++)
+    for (gal_uint i = 0; i < arch::MAX_TEXTURES; i++)
         for (gal_uint j = 0; j < 6; j++)
-            for (gal_uint k = 0; k < cg1gpu::MAX_TEXTURE_SIZE; k++)
+            for (gal_uint k = 0; k < arch::MAX_TEXTURE_SIZE; k++)
             {
                     gal_ubyte filename[30];
                     sprintf((char*)filename, "Sampler%d_Face%d_Mipmap%d.ppm", i,j,k);
@@ -504,7 +504,7 @@ void GALDeviceImp::_syncSamplerState()
 
     GALShaderProgramImp* fProgramImp = _fsh;
 
-    for ( gal_uint i = 0; i < cg1gpu::MAX_TEXTURES; ++i )
+    for ( gal_uint i = 0; i < arch::MAX_TEXTURES; ++i )
     {
         //if (!fProgramImp->getTextureUnitsUsage(i)) // If the texture is not used in the shader, there is no need to sync it
         //    _sampler[i]->setEnabled(false);
@@ -522,7 +522,7 @@ gal_uint GALDeviceImp::availableStreams() const
 
 gal_uint GALDeviceImp::availableVertexAttributes() const
 {
-    return cg1gpu::MAX_VERTEX_ATTRIBUTES;
+    return arch::MAX_VERTEX_ATTRIBUTES;
 }
 
 GALSampler& GALDeviceImp::sampler(gal_uint samplerID)
@@ -553,7 +553,7 @@ void GALDeviceImp::_syncStreamingMode(gal_uint start, gal_uint count, gal_uint i
 {
     // min & max params ignored currently
 
-    cg1gpu::GPURegData data;
+    arch::GPURegData data;
 
     // Update GPU registers with the start vertex/index and the vertex/index count
 
@@ -561,7 +561,7 @@ void GALDeviceImp::_syncStreamingMode(gal_uint start, gal_uint count, gal_uint i
     if(_streamStart.changed())
     {
         data.uintVal = _streamStart;
-        _driver->writeGPURegister(cg1gpu::GPU_STREAM_START, 0, data);
+        _driver->writeGPURegister(arch::GPU_STREAM_START, 0, data);
         _streamStart.restart();
     }
 
@@ -569,7 +569,7 @@ void GALDeviceImp::_syncStreamingMode(gal_uint start, gal_uint count, gal_uint i
     if(_streamCount.changed())
     {
         data.uintVal = _streamCount;
-        _driver->writeGPURegister(cg1gpu::GPU_STREAM_COUNT, 0, data);
+        _driver->writeGPURegister(arch::GPU_STREAM_COUNT, 0, data);
         _streamCount.restart();
     }
 
@@ -577,7 +577,7 @@ void GALDeviceImp::_syncStreamingMode(gal_uint start, gal_uint count, gal_uint i
     if(_streamInstances.changed())
     {
         data.uintVal = _streamInstances;
-        _driver->writeGPURegister(cg1gpu::GPU_STREAM_INSTANCES, 0, data);
+        _driver->writeGPURegister(arch::GPU_STREAM_INSTANCES, 0, data);
         _streamInstances.restart();
     }
 
@@ -585,7 +585,7 @@ void GALDeviceImp::_syncStreamingMode(gal_uint start, gal_uint count, gal_uint i
         if ( _indexedMode.changed() ) {
             // Changing from sequential to indexed mode (enable GPU indexed mode)
             data.uintVal = 1;
-            _driver->writeGPURegister(cg1gpu::GPU_INDEX_MODE, 0, data);
+            _driver->writeGPURegister(arch::GPU_INDEX_MODE, 0, data);
             _indexedMode.restart();
         }
         // Synchronize the stream of indices
@@ -595,7 +595,7 @@ void GALDeviceImp::_syncStreamingMode(gal_uint start, gal_uint count, gal_uint i
         if ( _indexedMode.changed() ) {
             // Changing from indexed to sequential mode (disable GPU indexed mode)
             data.uintVal = 0;
-            _driver->writeGPURegister(cg1gpu::GPU_INDEX_MODE, 0, data);
+            _driver->writeGPURegister(arch::GPU_INDEX_MODE, 0, data);
             _indexedMode.restart();
         }
         // else (nothing to do)
@@ -665,10 +665,10 @@ gal_bool GALDeviceImp::setRenderTarget(gal_uint indexRenderTarget, GALRenderTarg
         }
 
         // Ensures any pending drawing is done on previous RT.
-        _driver->sendCommand(cg1gpu::GPU_FLUSHCOLOR);
+        _driver->sendCommand(arch::GPU_FLUSHCOLOR);
 
         //  Save default render buffer state.
-        _driver->sendCommand(cg1gpu::GPU_SAVE_COLOR_STATE);
+        _driver->sendCommand(arch::GPU_SAVE_COLOR_STATE);
 
         _currentRenderTarget[indexRenderTarget] = rt;
 
@@ -686,7 +686,7 @@ gal_bool GALDeviceImp::setRenderTarget(gal_uint indexRenderTarget, GALRenderTarg
     else
     {
         // Ensures any pending drawing is done on previous RT.
-        _driver->sendCommand(cg1gpu::GPU_FLUSHCOLOR);
+        _driver->sendCommand(arch::GPU_FLUSHCOLOR);
 
         //  Check if changing to the default render buffers.
         if (rt == _defaultFrontBuffer)
@@ -698,7 +698,7 @@ gal_bool GALDeviceImp::setRenderTarget(gal_uint indexRenderTarget, GALRenderTarg
             _defaultRenderBuffers = true;
 
             //  Restore the color block state data from the save area.
-            _driver->sendCommand(cg1gpu::GPU_RESTORE_COLOR_STATE);
+            _driver->sendCommand(arch::GPU_RESTORE_COLOR_STATE);
 
             //  Reset viewport.
             _rast->setViewport(0, 0, rt->getWidth(), rt->getHeight());
@@ -717,7 +717,7 @@ gal_bool GALDeviceImp::setRenderTarget(gal_uint indexRenderTarget, GALRenderTarg
             _defaultRenderBuffers = true;
 
             //  Restore the color block state data from the save area.
-            _driver->sendCommand(cg1gpu::GPU_RESTORE_COLOR_STATE);
+            _driver->sendCommand(arch::GPU_RESTORE_COLOR_STATE);
 
             //  Reset viewport.
             _rast->setViewport(0, 0, rt->getWidth(), rt->getHeight());
@@ -780,22 +780,22 @@ bool GALDeviceImp::setZStencilBuffer(GALRenderTarget *zstencilBuffer)
         }
         
         // Ensures any pending drawing is done on previous RT.
-        _driver->sendCommand(cg1gpu::GPU_FLUSHZSTENCIL);
+        _driver->sendCommand(arch::GPU_FLUSHZSTENCIL);
 
         //  Save default render buffer state.
-        _driver->sendCommand(cg1gpu::GPU_SAVE_ZSTENCIL_STATE);
+        _driver->sendCommand(arch::GPU_SAVE_ZSTENCIL_STATE);
 
         _defaultZStencilBufferInUse = false;
     }
     else
     {
         // Ensures any pending drawing is done on previous RT.
-        _driver->sendCommand(cg1gpu::GPU_FLUSHZSTENCIL);
+        _driver->sendCommand(arch::GPU_FLUSHZSTENCIL);
 
         if (zstencil == _defaultZStencilBuffer)
         {
             //  Restore the color block state data from the save area.
-            _driver->sendCommand(cg1gpu::GPU_RESTORE_ZSTENCIL_STATE);
+            _driver->sendCommand(arch::GPU_RESTORE_ZSTENCIL_STATE);
 
             _defaultZStencilBufferInUse = true;
         }
@@ -832,7 +832,7 @@ bool GALDeviceImp::_multipleRenderTargetsSet() {
 void GALDeviceImp::_syncRenderBuffers()
 {
 
-    cg1gpu::GPURegData data;
+    arch::GPURegData data;
     GALRenderTargetImp *zstencil = _currentZStencilBuffer;
 
     bool resolutionSet = false;
@@ -887,41 +887,41 @@ void GALDeviceImp::_syncRenderBuffers()
             //_driver->setResolution(rt->getWidth(), rt->getHeight());
 
             data.booleanVal = true;
-            _driver->writeGPURegister(cg1gpu::GPU_RENDER_TARGET_ENABLE, i, data);
+            _driver->writeGPURegister(arch::GPU_RENDER_TARGET_ENABLE, i, data);
 
             //  Set compression.
             data.booleanVal = rt->allowsCompression() && !_multipleRenderTargetsSet();
 
-            _driver->writeGPURegister(cg1gpu::GPU_COLOR_COMPRESSION, 0, data);
+            _driver->writeGPURegister(arch::GPU_COLOR_COMPRESSION, 0, data);
 
             //  Set render target format.
             switch (rt->getFormat())
             {
                 case GAL_FORMAT_XRGB_8888:
                 case GAL_FORMAT_ARGB_8888:
-                    data.txFormat = cg1gpu::GPU_RGBA8888;
+                    data.txFormat = arch::GPU_RGBA8888;
                     break;
                 case GAL_FORMAT_RG16F:
-                    data.txFormat = cg1gpu::GPU_RG16F;
+                    data.txFormat = arch::GPU_RG16F;
                     break;
                 case GAL_FORMAT_R32F:
-                    data.txFormat = cg1gpu::GPU_R32F;
+                    data.txFormat = arch::GPU_R32F;
                     break;                
                 case GAL_FORMAT_ABGR_161616:
-                    data.txFormat = cg1gpu::GPU_RGBA16;
+                    data.txFormat = arch::GPU_RGBA16;
                     break;
                 case GAL_FORMAT_RGBA16F:
-                    data.txFormat = cg1gpu::GPU_RGBA16F;
+                    data.txFormat = arch::GPU_RGBA16F;
                     break;
                 case GAL_FORMAT_S8D24:
-                    data.txFormat = cg1gpu::GPU_DEPTH_COMPONENT24;
+                    data.txFormat = arch::GPU_DEPTH_COMPONENT24;
                     break;
                 default:
                     CG_ASSERT("Render target format unknown.");
                     break;
             }
-            //_driver->writeGPURegister(cg1gpu::GPU_COLOR_BUFFER_FORMAT, 0, data);
-            _driver->writeGPURegister(cg1gpu::GPU_RENDER_TARGET_FORMAT, i, data);
+            //_driver->writeGPURegister(arch::GPU_COLOR_BUFFER_FORMAT, 0, data);
+            _driver->writeGPURegister(arch::GPU_RENDER_TARGET_FORMAT, i, data);
 
             //  Set multisampling parameters
             //  TODO
@@ -932,23 +932,23 @@ void GALDeviceImp::_syncRenderBuffers()
                 GALRenderTargetImp *rtTemp = _defaultFrontBuffer;
 
                 if (i == 0)
-                    _driver->writeGPUAddrRegister(cg1gpu::GPU_FRONTBUFFER_ADDR, 0, rtTemp->md());
+                    _driver->writeGPUAddrRegister(arch::GPU_FRONTBUFFER_ADDR, 0, rtTemp->md());
 
                 rtTemp = _defaultBackBuffer;
-                //_driver->writeGPUAddrRegister(cg1gpu::GPU_BACKBUFFER_ADDR , 0, rtTemp->md());
-                _driver->writeGPUAddrRegister(cg1gpu::GPU_RENDER_TARGET_ADDRESS , i, rtTemp->md());
+                //_driver->writeGPUAddrRegister(arch::GPU_BACKBUFFER_ADDR , 0, rtTemp->md());
+                _driver->writeGPUAddrRegister(arch::GPU_RENDER_TARGET_ADDRESS , i, rtTemp->md());
 
             }
             else
             {
                 // This cleans block state bits in the color caches
-                _driver->sendCommand(cg1gpu::GPU_RESET_COLOR_STATE);
+                _driver->sendCommand(arch::GPU_RESET_COLOR_STATE);
 
                 if (i == 0)
-                    _driver->writeGPUAddrRegister(cg1gpu::GPU_FRONTBUFFER_ADDR, 0, rt->md());
+                    _driver->writeGPUAddrRegister(arch::GPU_FRONTBUFFER_ADDR, 0, rt->md());
 
-                //_driver->writeGPUAddrRegister(cg1gpu::GPU_BACKBUFFER_ADDR , 0, rt->md());
-                _driver->writeGPUAddrRegister(cg1gpu::GPU_RENDER_TARGET_ADDRESS , i, rt->md());
+                //_driver->writeGPUAddrRegister(arch::GPU_BACKBUFFER_ADDR , 0, rt->md());
+                _driver->writeGPUAddrRegister(arch::GPU_RENDER_TARGET_ADDRESS , i, rt->md());
             }
 
             _currentRenderTarget[i].restart();
@@ -956,7 +956,7 @@ void GALDeviceImp::_syncRenderBuffers()
         else if (_currentRenderTarget[i].changed() && rt == NULL && i != 0){
 
             data.booleanVal = false;
-            _driver->writeGPURegister(cg1gpu::GPU_RENDER_TARGET_ENABLE, i, data);
+            _driver->writeGPURegister(arch::GPU_RENDER_TARGET_ENABLE, i, data);
 
         }
 
@@ -975,18 +975,18 @@ void GALDeviceImp::_syncRenderBuffers()
             if (!_defaultZStencilBufferInUse)
             {
                 // This cleans block state bits in the color caches
-                _driver->sendCommand(cg1gpu::GPU_RESET_ZSTENCIL_STATE);
+                _driver->sendCommand(arch::GPU_RESET_ZSTENCIL_STATE);
             }
 
             //  Set the z stencil buffer address.
-            _driver->writeGPUAddrRegister(cg1gpu::GPU_ZSTENCILBUFFER_ADDR, 0, zstencil->md());
+            _driver->writeGPUAddrRegister(arch::GPU_ZSTENCILBUFFER_ADDR, 0, zstencil->md());
 
             //  Sets the z and stencil buffer as defined.
             _zStencil->setZStencilBufferDefined(true);
 
             //  Set compression.
             data.booleanVal = zstencil->allowsCompression();
-            _driver->writeGPURegister(cg1gpu::GPU_ZSTENCIL_COMPRESSION, 0, data);
+            _driver->writeGPURegister(arch::GPU_ZSTENCIL_COMPRESSION, 0, data);
         }
 
         _currentZStencilBuffer.restart();
@@ -1008,7 +1008,7 @@ void GALDeviceImp::_syncRenderBuffers()
     {
         //  Set convert color from linear to sRGB space on color write.
         data.booleanVal = _colorSRGBWrite;
-        _driver->writeGPURegister(cg1gpu::GPU_COLOR_SRGB_WRITE, 0, data);
+        _driver->writeGPURegister(arch::GPU_COLOR_SRGB_WRITE, 0, data);
         _colorSRGBWrite.restart();
     }
 }
@@ -1077,35 +1077,35 @@ void GALDeviceImp::drawIndexed(gal_uint startIndex, gal_uint indexCount, gal_uin
     }
 }
 
-void GALDeviceImp::_translatePrimitive(GAL_PRIMITIVE primitive, cg1gpu::GPURegData* data)
+void GALDeviceImp::_translatePrimitive(GAL_PRIMITIVE primitive, arch::GPURegData* data)
 {
     switch ( primitive ) {
         case GAL_TRIANGLES:
-            data->primitive = cg1gpu::TRIANGLE;
+            data->primitive = arch::TRIANGLE;
             break;
         case GAL_TRIANGLE_STRIP:
-            data->primitive = cg1gpu::TRIANGLE_STRIP;
+            data->primitive = arch::TRIANGLE_STRIP;
             break;
         case GAL_TRIANGLE_FAN:
-            data->primitive = cg1gpu::TRIANGLE_FAN;
+            data->primitive = arch::TRIANGLE_FAN;
             break;
         case GAL_QUADS:
-            data->primitive = cg1gpu::QUAD;
+            data->primitive = arch::QUAD;
             break;
         case GAL_QUAD_STRIP:
-            data->primitive = cg1gpu::QUAD_STRIP;
+            data->primitive = arch::QUAD_STRIP;
             break;
         case GAL_LINES:
-            data->primitive = cg1gpu::LINE;
+            data->primitive = arch::LINE;
             break;
         case GAL_LINE_STRIP:
-            data->primitive = cg1gpu::LINE_STRIP;
+            data->primitive = arch::LINE_STRIP;
             break;
         case GAL_LINE_LOOP:
-            data->primitive = cg1gpu::LINE_FAN;
+            data->primitive = arch::LINE_FAN;
             break;
         case GAL_POINTS:
-            data->primitive = cg1gpu::POINT;
+            data->primitive = arch::POINT;
             break;
         default:
             CG_ASSERT("GAL Unsupported primitive");
@@ -1146,7 +1146,7 @@ void GALDeviceImp::_dump(const gal_char* file, gal_enum flags)
     {
         out << "VERTEX_ATTR" << i << "_STREAM";
 
-        if ((*iter) != cg1gpu::ST_INACTIVE_ATTRIBUTE)
+        if ((*iter) != arch::ST_INACTIVE_ATTRIBUTE)
             out << " = " << (*iter);
         else
             out << " = INACTIVE";
@@ -1154,7 +1154,7 @@ void GALDeviceImp::_dump(const gal_char* file, gal_enum flags)
         if ( (*iter).changed() )
         {
             out << " NotSync = ";
-            if ((*iter).initial() != cg1gpu::ST_INACTIVE_ATTRIBUTE)
+            if ((*iter).initial() != arch::ST_INACTIVE_ATTRIBUTE)
             {
                 out << (*iter).initial() << "\n";
             }
@@ -1164,7 +1164,7 @@ void GALDeviceImp::_dump(const gal_char* file, gal_enum flags)
         else
             out << " Sync\n";
 
-        if ((*iter) != cg1gpu::ST_INACTIVE_ATTRIBUTE && (*iter) < _MAX_STREAMS)
+        if ((*iter) != arch::ST_INACTIVE_ATTRIBUTE && (*iter) < _MAX_STREAMS)
         {
             out << _stream[(*iter)]->getInternalState();
         }
@@ -1236,7 +1236,7 @@ void GALDeviceImp::_dump(const gal_char* file, gal_enum flags)
         out << "FALSE" << endl;
 
 
-    for ( gal_uint i = 0; i < cg1gpu::MAX_TEXTURES; ++i )
+    for ( gal_uint i = 0; i < arch::MAX_TEXTURES; ++i )
         out << _sampler[i]->getInternalState();
 
     out.close();
@@ -1311,7 +1311,7 @@ void GALDeviceImp::_check_deferred_dump()
 void GALDeviceImp::_addBaseVertexIndex(gal_uint baseVertexIndex, gal_uint start, gal_uint count)
 {
 
-    /*if ( _vaMap[31] != cg1gpu::ST_INACTIVE_ATTRIBUTE)
+    /*if ( _vaMap[31] != arch::ST_INACTIVE_ATTRIBUTE)
         CG_ASSERT("Trying to perform a draw indexed call without any stream of indexes setted");
     else
     {*/
@@ -1399,9 +1399,9 @@ void GALDeviceImp::_draw(gal_uint start, gal_uint count, gal_uint min, gal_uint 
     //////////////////////////////////
     if ( _primitive.changed() )
     {
-        cg1gpu::GPURegData data;
+        arch::GPURegData data;
         _translatePrimitive(_primitive, &data);
-        _driver->writeGPURegister(cg1gpu::GPU_PRIMITIVE, data);
+        _driver->writeGPURegister(arch::GPU_PRIMITIVE, data);
         _primitive.restart();
     }
 
@@ -1442,7 +1442,7 @@ void GALDeviceImp::_draw(gal_uint start, gal_uint count, gal_uint min, gal_uint 
     //////////////////////////////////////////////////////////////////////////////
     /// Enable or disable VERTEX_OUTPUT_ATTRIBUTES & FRAGMENT_INPUT_ATTRIBUTES ///
     //////////////////////////////////////////////////////////////////////////////
-    cg1gpu::GPURegData bValue;
+    arch::GPURegData bValue;
 
     const gal_uint vshOutputsCount = _vshOutputs.size();
     for ( gal_uint i = 0; i < vshOutputsCount; ++i ) 
@@ -1450,7 +1450,7 @@ void GALDeviceImp::_draw(gal_uint start, gal_uint count, gal_uint min, gal_uint 
         if ( _vshOutputs[i].changed() ) 
         {
             bValue.booleanVal = _vshOutputs[i];
-            _driver->writeGPURegister(cg1gpu::GPU_VERTEX_OUTPUT_ATTRIBUTE, i, bValue);
+            _driver->writeGPURegister(arch::GPU_VERTEX_OUTPUT_ATTRIBUTE, i, bValue);
             _vshOutputs[i].restart();
         }
     }
@@ -1463,7 +1463,7 @@ void GALDeviceImp::_draw(gal_uint start, gal_uint count, gal_uint min, gal_uint 
         if ( _fshInputs[i].changed() ) 
         {
             bValue.booleanVal = _fshInputs[i];
-            _driver->writeGPURegister(cg1gpu::GPU_FRAGMENT_INPUT_ATTRIBUTES, i, bValue);
+            _driver->writeGPURegister(arch::GPU_FRAGMENT_INPUT_ATTRIBUTES, i, bValue);
             _fshInputs[i].restart();
         }
 
@@ -1472,10 +1472,10 @@ void GALDeviceImp::_draw(gal_uint start, gal_uint count, gal_uint min, gal_uint 
 
     if ( !oneFragmentInput )
     {
-        _fshInputs[cg1gpu::COLOR_ATTRIBUTE] = true;
+        _fshInputs[arch::COLOR_ATTRIBUTE] = true;
         bValue.booleanVal = true;
-        _driver->writeGPURegister(cg1gpu::GPU_FRAGMENT_INPUT_ATTRIBUTES, cg1gpu::COLOR_ATTRIBUTE, bValue);
-        _fshInputs[cg1gpu::COLOR_ATTRIBUTE].restart();
+        _driver->writeGPURegister(arch::GPU_FRAGMENT_INPUT_ATTRIBUTES, arch::COLOR_ATTRIBUTE, bValue);
+        _fshInputs[arch::COLOR_ATTRIBUTE].restart();
     }
 
     // EarlyZ can be actived if Z is not modified by the fragment shader
@@ -1489,7 +1489,7 @@ void GALDeviceImp::_draw(gal_uint start, gal_uint count, gal_uint min, gal_uint 
         if (_earlyZ.changed())
         {
             bValue.booleanVal = false;
-            _driver->writeGPURegister(cg1gpu::GPU_EARLYZ, bValue);
+            _driver->writeGPURegister(arch::GPU_EARLYZ, bValue);
             _alphaTest.restart();
             _earlyZ.restart();
         }
@@ -1500,7 +1500,7 @@ void GALDeviceImp::_draw(gal_uint start, gal_uint count, gal_uint min, gal_uint 
         if (_earlyZ.changed())
         {
             bValue.booleanVal = true;
-            _driver->writeGPURegister(cg1gpu::GPU_EARLYZ, bValue);
+            _driver->writeGPURegister(arch::GPU_EARLYZ, bValue);
             _alphaTest.restart();
             _earlyZ.restart();
         }
@@ -1510,19 +1510,19 @@ void GALDeviceImp::_draw(gal_uint start, gal_uint count, gal_uint min, gal_uint 
     ///                 Synchronize Shader Thread Resources                    ///
     //////////////////////////////////////////////////////////////////////////////
 
-    cg1gpu::GPURegData data;
+    arch::GPURegData data;
 
     if ( _vshResources.changed() )
     {
         data.uintVal = _vshResources;
-        _driver->writeGPURegister(cg1gpu::GPU_VERTEX_THREAD_RESOURCES, data);
+        _driver->writeGPURegister(arch::GPU_VERTEX_THREAD_RESOURCES, data);
         _vshResources.restart();
     }
 
     if ( _fshResources.changed() )
     {
         data.uintVal = _fshResources;
-        _driver->writeGPURegister(cg1gpu::GPU_FRAGMENT_THREAD_RESOURCES, data);
+        _driver->writeGPURegister(arch::GPU_FRAGMENT_THREAD_RESOURCES, data);
         _fshResources.restart();
     }
 
@@ -1532,7 +1532,7 @@ void GALDeviceImp::_draw(gal_uint start, gal_uint count, gal_uint min, gal_uint 
     ////////////
     /// DRAW ///
     ////////////
-    _driver->sendCommand( cg1gpu::GPU_DRAW );
+    _driver->sendCommand( arch::GPU_DRAW );
 
     _moa->realeaseLockedMemoryRegions();
 
@@ -1555,7 +1555,7 @@ gal_bool GALDeviceImp::swapBuffers()
     TRACING_ENTER_REGION("GAL", "", "")    
     
     cout << "GALDeviceImp::swapBuffers() - OK" << endl;
-    _driver->sendCommand(cg1gpu::GPU_SWAPBUFFERS);
+    _driver->sendCommand(arch::GPU_SWAPBUFFERS);
 
     //  If using the default render buffer swap front and back buffers (double buffering).
     /*if (_defaultRenderBuffers)
@@ -1614,17 +1614,17 @@ void GALDeviceImp::clearColorBuffer(gal_ubyte red, gal_ubyte green, gal_ubyte bl
         // Check if update GPU is required.
         if ( _clearColorBuffer.changed() )
         {
-            cg1gpu::GPURegData data;
+            arch::GPURegData data;
             data.qfVal[0] =  float(_clearColorBuffer         & 0xff) / 255.0f;
             data.qfVal[1] =  float((_clearColorBuffer >> 8)  & 0xff) / 255.0f;
             data.qfVal[2] =  float((_clearColorBuffer >> 16) & 0xff) / 255.0f;
             data.qfVal[3] =  float((_clearColorBuffer >> 24) & 0xff) / 255.0f;
-            _driver->writeGPURegister(cg1gpu::GPU_COLOR_BUFFER_CLEAR, data);
+            _driver->writeGPURegister(arch::GPU_COLOR_BUFFER_CLEAR, data);
             _clearColorBuffer.restart();
         }
 
         // Perform a full (fast) clear of the color buffer
-        _driver->sendCommand(cg1gpu::GPU_CLEARCOLORBUFFER);
+        _driver->sendCommand(arch::GPU_CLEARCOLORBUFFER);
     }
     else
     {
@@ -1691,21 +1691,21 @@ void GALDeviceImp::clearZStencilBuffer( gal_bool clearZ, gal_bool clearStencil,
                 //  configurable using the wgl functions that initialize the framebuffer.  By default
                 //  should be 24 (stencil 8 depth 24).  Currently the simulator only supports 24.
                 //
-                cg1gpu::GPURegData data;
+                arch::GPURegData data;
                 data.uintVal = static_cast<gal_uint>(static_cast<gal_float>(_zClearValue) * static_cast<gal_float>((1 << 24) - 1));
-                _driver->writeGPURegister(cg1gpu::GPU_Z_BUFFER_CLEAR, data);
+                _driver->writeGPURegister(arch::GPU_Z_BUFFER_CLEAR, data);
                 _zClearValue.restart();
             }
 
             if (_stencilClearValue.changed())
             {
-                cg1gpu::GPURegData data;
+                arch::GPURegData data;
                 data.intVal = _stencilClearValue;
-                _driver->writeGPURegister(cg1gpu::GPU_STENCIL_BUFFER_CLEAR, data);
+                _driver->writeGPURegister(arch::GPU_STENCIL_BUFFER_CLEAR, data);
                 _stencilClearValue.restart();
             }
 
-            _driver->sendCommand( cg1gpu::GPU_CLEARZSTENCILBUFFER );
+            _driver->sendCommand( arch::GPU_CLEARZSTENCILBUFFER );
             _hzBufferValid = true; // HZ buffer contents are valid
         }
         else
@@ -1734,22 +1734,22 @@ void GALDeviceImp::clearZStencilBuffer( gal_bool clearZ, gal_bool clearStencil,
                 //  configurable using the wgl functions that initialize the framebuffer.  By default
                 //  should be 24 (stencil 8 depth 24).  Currently the simulator only supports 24.
                 //
-                cg1gpu::GPURegData data;
+                arch::GPURegData data;
                 data.uintVal = static_cast<gal_uint>(static_cast<gal_float>(_zClearValue) * static_cast<gal_float>((1 << 24) - 1));
-                _driver->writeGPURegister(cg1gpu::GPU_Z_BUFFER_CLEAR, data);
+                _driver->writeGPURegister(arch::GPU_Z_BUFFER_CLEAR, data);
                 _zClearValue.restart();
             }
 
             if (_stencilClearValue.changed())
             {
-                cg1gpu::GPURegData data;
+                arch::GPURegData data;
                 data.intVal = _stencilClearValue;
-                _driver->writeGPURegister(cg1gpu::GPU_STENCIL_BUFFER_CLEAR, data);
+                _driver->writeGPURegister(arch::GPU_STENCIL_BUFFER_CLEAR, data);
                 _stencilClearValue.restart();
             }
 
             cout << "Warning: Clear Z implemented as Clear Z and Stencil (optimization)" << endl;
-            _driver->sendCommand( cg1gpu::GPU_CLEARZSTENCILBUFFER );
+            _driver->sendCommand( arch::GPU_CLEARZSTENCILBUFFER );
             _hzBufferValid = true; // HZ buffer contents are valid
         }
         else
@@ -1771,8 +1771,8 @@ void GALDeviceImp::_partialClear(gal_bool clearColor, gal_bool clearZ, gal_bool 
                                  gal_ubyte red, gal_ubyte green, gal_ubyte blue, gal_ubyte alpha,
                                  gal_float zValue, gal_int stencilValue)
 {
-    cg1gpu::GPURegData data;
-    vector<cg1gpu::GPURegData> savedRegState;
+    arch::GPURegData data;
+    vector<arch::GPURegData> savedRegState;
     vector<const StoredStateItem*> storedState;
 
     storedState.push_back(_blending->createStoredStateItem(GAL_BLENDING_COLOR_MASK_R));
@@ -1801,13 +1801,13 @@ void GALDeviceImp::_partialClear(gal_bool clearColor, gal_bool clearZ, gal_bool 
     storedState.push_back(createStoredStateItem(GAL_DEV_VERTEX_THREAD_RESOURCES));
     storedState.push_back(createStoredStateItem(GAL_DEV_FRAGMENT_THREAD_RESOURCES));
 
-    for (gal_uint i = 0; i < cg1gpu::MAX_VERTEX_ATTRIBUTES; i++)
+    for (gal_uint i = 0; i < arch::MAX_VERTEX_ATTRIBUTES; i++)
         storedState.push_back(createStoredStateItem(GAL_STORED_ITEM_ID(GAL_DEV_VERTEX_ATTRIBUTE_MAP + i)));
 
-    for (gal_uint i = 0; i < cg1gpu::MAX_VERTEX_ATTRIBUTES; i++)
+    for (gal_uint i = 0; i < arch::MAX_VERTEX_ATTRIBUTES; i++)
         storedState.push_back(createStoredStateItem(GAL_STORED_ITEM_ID(GAL_DEV_VERTEX_OUTPUT_ATTRIBUTE + i)));
 
-    for (gal_uint i = 0; i < cg1gpu::MAX_FRAGMENT_ATTRIBUTES; i++)
+    for (gal_uint i = 0; i < arch::MAX_FRAGMENT_ATTRIBUTES; i++)
         storedState.push_back(createStoredStateItem(GAL_STORED_ITEM_ID(GAL_DEV_FRAGMENT_INPUT_ATTRIBUTES + i)));
 
     storedState.push_back(_stream[0]->createStoredStateItem(GAL_STREAM_STRIDE));
@@ -1821,7 +1821,7 @@ void GALDeviceImp::_partialClear(gal_bool clearColor, gal_bool clearZ, gal_bool 
     storedState.push_back(createStoredStateItem(GAL_DEV_VSH));
     storedState.push_back(createStoredStateItem(GAL_DEV_FSH));
 
-    _driver->readGPURegister(cg1gpu::GPU_VERTEX_ATTRIBUTE_DEFAULT_VALUE, cg1gpu::COLOR_ATTRIBUTE, data);
+    _driver->readGPURegister(arch::GPU_VERTEX_ATTRIBUTE_DEFAULT_VALUE, arch::COLOR_ATTRIBUTE, data);
     savedRegState.push_back(data);
 
     //  Check if the color buffer must be cleared.
@@ -1903,10 +1903,10 @@ void GALDeviceImp::_partialClear(gal_bool clearColor, gal_bool clearZ, gal_bool 
     _fshResources = 1;
 
     //  Set all vertex attributes but position to disabled.
-    for (gal_uint i = 0; i < cg1gpu::MAX_VERTEX_ATTRIBUTES; i++)
-       _vaMap[i] = cg1gpu::ST_INACTIVE_ATTRIBUTE;
+    for (gal_uint i = 0; i < arch::MAX_VERTEX_ATTRIBUTES; i++)
+       _vaMap[i] = arch::ST_INACTIVE_ATTRIBUTE;
     
-    _vaMap[cg1gpu::POSITION_ATTRIBUTE] = 0;
+    _vaMap[arch::POSITION_ATTRIBUTE] = 0;
 
 
     GALFloatVector4 color;
@@ -1922,7 +1922,7 @@ void GALDeviceImp::_partialClear(gal_bool clearColor, gal_bool clearZ, gal_bool 
     data.qfVal[2] = color[2];
     data.qfVal[3] = color[3];
 
-    _driver->writeGPURegister(cg1gpu::GPU_VERTEX_ATTRIBUTE_DEFAULT_VALUE, cg1gpu::COLOR_ATTRIBUTE, data);
+    _driver->writeGPURegister(arch::GPU_VERTEX_ATTRIBUTE_DEFAULT_VALUE, arch::COLOR_ATTRIBUTE, data);
 
     zValuePartialClear = zValue;
 
@@ -1991,13 +1991,13 @@ void GALDeviceImp::_partialClear(gal_bool clearColor, gal_bool clearZ, gal_bool 
     restoreStoredStateItem(storedState[nextReg++]);
     restoreStoredStateItem(storedState[nextReg++]);
 
-    for (gal_uint i = 0; i < cg1gpu::MAX_VERTEX_ATTRIBUTES; i++)
+    for (gal_uint i = 0; i < arch::MAX_VERTEX_ATTRIBUTES; i++)
         restoreStoredStateItem(storedState[nextReg++]);
 
-    for (gal_uint i = 0; i < cg1gpu::MAX_VERTEX_ATTRIBUTES; i++)
+    for (gal_uint i = 0; i < arch::MAX_VERTEX_ATTRIBUTES; i++)
         restoreStoredStateItem(storedState[nextReg++]);
 
-    for (gal_uint i = 0; i < cg1gpu::MAX_FRAGMENT_ATTRIBUTES; i++)
+    for (gal_uint i = 0; i < arch::MAX_FRAGMENT_ATTRIBUTES; i++)
         restoreStoredStateItem(storedState[nextReg++]);
 
     _stream[0]->restoreStoredStateItem(storedState[nextReg++]);
@@ -2011,7 +2011,7 @@ void GALDeviceImp::_partialClear(gal_bool clearColor, gal_bool clearZ, gal_bool 
     restoreStoredStateItem(storedState[nextReg++]);
     restoreStoredStateItem(storedState[nextReg++]);
 
-    _driver->writeGPURegister(cg1gpu::GPU_VERTEX_ATTRIBUTE_DEFAULT_VALUE, cg1gpu::COLOR_ATTRIBUTE, savedRegState[0]);
+    _driver->writeGPURegister(arch::GPU_VERTEX_ATTRIBUTE_DEFAULT_VALUE, arch::COLOR_ATTRIBUTE, savedRegState[0]);
 }
 
 void GALDeviceImp::clearRenderTarget( GALRenderTarget* rTarget,
@@ -2046,29 +2046,29 @@ void GALDeviceImp::copySurfaceDataToRenderBuffer(GALTexture2D *sourceTexture, ga
     U32 sourceHeight = sourceTexture->getHeight(mipLevel);
     U32 width = destRenderTarget->getWidth();
     U32 height = destRenderTarget->getHeight();
-    cg1gpu::TextureFormat format;
+    arch::TextureFormat format;
     bool invertColors;
     switch(sourceTexture->getFormat(mipLevel))
     {
         case GAL_FORMAT_XRGB_8888:
         case GAL_FORMAT_ARGB_8888:
-            format = cg1gpu::GPU_RGBA8888;
+            format = arch::GPU_RGBA8888;
             invertColors = true;
             break;
         case GAL_FORMAT_RG16F:
-            format = cg1gpu::GPU_RG16F;
+            format = arch::GPU_RG16F;
             invertColors = false;
             break;
         case GAL_FORMAT_R32F:
-            format = cg1gpu::GPU_R32F;
+            format = arch::GPU_R32F;
             invertColors = false;
             break;                
         case GAL_FORMAT_RGBA16F:
-            format = cg1gpu::GPU_RGBA16F;
+            format = arch::GPU_RGBA16F;
             invertColors = false;
             break;
         case GAL_FORMAT_ABGR_161616:
-            format = cg1gpu::GPU_RGBA16;
+            format = arch::GPU_RGBA16;
             invertColors = false;
             break;
 
@@ -2156,14 +2156,14 @@ void GALDeviceImp::_syncVertexShader()
 
     if( _currentColor.changed())
     {
-        cg1gpu::GPURegData data;
+        arch::GPURegData data;
         const GALFloatVector4& _currentAux = _currentColor;
         data.qfVal[0] = _currentAux[0];
         data.qfVal[1] = _currentAux[1];
         data.qfVal[2] = _currentAux[2];
         data.qfVal[3] = _currentAux[3];
 
-        _driver->writeGPURegister(cg1gpu::GPU_VERTEX_ATTRIBUTE_DEFAULT_VALUE, (U32)HAL::VS_COLOR, data);
+        _driver->writeGPURegister(arch::GPU_VERTEX_ATTRIBUTE_DEFAULT_VALUE, (U32)HAL::VS_COLOR, data);
             
         _currentColor.restart();
 
@@ -2187,7 +2187,7 @@ void GALDeviceImp::_syncVertexShader()
     _moa->syncGPU(vsh);
 
     // Update constants
-    vsh->updateConstants(_driver, cg1gpu::GPU_VERTEX_CONSTANT);
+    vsh->updateConstants(_driver, arch::GPU_VERTEX_CONSTANT);
 
     // Get program size (bytes occupied in GPU)
     gal_uint programSize;
@@ -2233,7 +2233,7 @@ void GALDeviceImp::_syncFragmentShader()
     _moa->syncGPU(fsh);
 
     // Update constants
-    fsh->updateConstants(_driver, cg1gpu::GPU_FRAGMENT_CONSTANT);
+    fsh->updateConstants(_driver, arch::GPU_FRAGMENT_CONSTANT);
 
     // Get program size (bytes occupied in GPU)
     gal_uint programSize;
@@ -2327,7 +2327,7 @@ void GALDeviceImp::_optimizeShader(GALShaderProgramImp* shProgramImp, GAL_SHADER
         settings.zPerspective = true;
 
         //  Set attribute interpolation.
-        for (unsigned int attr = 0; attr < cg1gpu::MAX_FRAGMENT_ATTRIBUTES; attr++)
+        for (unsigned int attr = 0; attr < arch::MAX_FRAGMENT_ATTRIBUTES; attr++)
         {
             switch(_rast->_interpolation[attr])
             {
@@ -2672,9 +2672,9 @@ void GALDeviceImp::_syncHZRegister()
     _hzActivated = activateHZ;
 
     if ( _hzActivated.changed() ) {
-        cg1gpu::GPURegData data;
+        arch::GPURegData data;
         data.booleanVal = _hzActivated;
-        _driver->writeGPURegister(cg1gpu::GPU_HIERARCHICALZ, data);
+        _driver->writeGPURegister(arch::GPU_HIERARCHICALZ, data);
         _hzActivated.restart();
     }
 }
@@ -2693,17 +2693,17 @@ const StoredStateItem* GALDeviceImp::createStoredStateItem(GAL_STORED_ITEM_ID st
 
     if (stateId >= GAL_DEVICE_FIRST_ID && stateId < GAL_DEV_LAST)
     {  
-        if ((stateId >= GAL_DEV_VERTEX_ATTRIBUTE_MAP) && (stateId < GAL_DEV_VERTEX_ATTRIBUTE_MAP + cg1gpu::MAX_FRAGMENT_ATTRIBUTES))
+        if ((stateId >= GAL_DEV_VERTEX_ATTRIBUTE_MAP) && (stateId < GAL_DEV_VERTEX_ATTRIBUTE_MAP + arch::MAX_FRAGMENT_ATTRIBUTES))
         {    
             aux = stateId - GAL_DEV_VERTEX_ATTRIBUTE_MAP;
             ret = new GALSingleUintStoredStateItem(_vaMap[aux]);
         }
-        else if ((stateId >= GAL_DEV_VERTEX_OUTPUT_ATTRIBUTE) && (stateId < GAL_DEV_VERTEX_OUTPUT_ATTRIBUTE + cg1gpu::MAX_FRAGMENT_ATTRIBUTES))
+        else if ((stateId >= GAL_DEV_VERTEX_OUTPUT_ATTRIBUTE) && (stateId < GAL_DEV_VERTEX_OUTPUT_ATTRIBUTE + arch::MAX_FRAGMENT_ATTRIBUTES))
         {    
             aux = stateId - GAL_DEV_VERTEX_OUTPUT_ATTRIBUTE;
             ret = new GALSingleBoolStoredStateItem(_vshOutputs[aux]);
         }
-            else if ((stateId >= GAL_DEV_FRAGMENT_INPUT_ATTRIBUTES) && (stateId < GAL_DEV_FRAGMENT_INPUT_ATTRIBUTES + cg1gpu::MAX_FRAGMENT_ATTRIBUTES))
+            else if ((stateId >= GAL_DEV_FRAGMENT_INPUT_ATTRIBUTES) && (stateId < GAL_DEV_FRAGMENT_INPUT_ATTRIBUTES + arch::MAX_FRAGMENT_ATTRIBUTES))
         {    
             aux = stateId - GAL_DEV_FRAGMENT_INPUT_ATTRIBUTES;
             ret = new GALSingleBoolStoredStateItem(_fshInputs[aux]);
@@ -2761,17 +2761,17 @@ void GALDeviceImp::restoreStoredStateItem(const StoredStateItem* ssi)
 
     if (stateId >= GAL_DEVICE_FIRST_ID && stateId < GAL_DEV_LAST)
     {  
-        if ((stateId >= GAL_DEV_VERTEX_ATTRIBUTE_MAP) && (stateId < GAL_DEV_VERTEX_ATTRIBUTE_MAP + cg1gpu::MAX_FRAGMENT_ATTRIBUTES))
+        if ((stateId >= GAL_DEV_VERTEX_ATTRIBUTE_MAP) && (stateId < GAL_DEV_VERTEX_ATTRIBUTE_MAP + arch::MAX_FRAGMENT_ATTRIBUTES))
         {    
             aux = stateId - GAL_DEV_VERTEX_ATTRIBUTE_MAP;
             _vaMap[aux] = *(static_cast<const GALSingleUintStoredStateItem*>(galssi));
         }
-        else if ((stateId >= GAL_DEV_VERTEX_OUTPUT_ATTRIBUTE) && (stateId < GAL_DEV_VERTEX_OUTPUT_ATTRIBUTE + cg1gpu::MAX_FRAGMENT_ATTRIBUTES))
+        else if ((stateId >= GAL_DEV_VERTEX_OUTPUT_ATTRIBUTE) && (stateId < GAL_DEV_VERTEX_OUTPUT_ATTRIBUTE + arch::MAX_FRAGMENT_ATTRIBUTES))
         {    
             aux = stateId - GAL_DEV_VERTEX_OUTPUT_ATTRIBUTE;
             _vshOutputs[aux] = *(static_cast<const GALSingleBoolStoredStateItem*>(galssi));
         }
-        else if ((stateId >= GAL_DEV_FRAGMENT_INPUT_ATTRIBUTES) && (stateId < GAL_DEV_FRAGMENT_INPUT_ATTRIBUTES + cg1gpu::MAX_FRAGMENT_ATTRIBUTES))
+        else if ((stateId >= GAL_DEV_FRAGMENT_INPUT_ATTRIBUTES) && (stateId < GAL_DEV_FRAGMENT_INPUT_ATTRIBUTES + arch::MAX_FRAGMENT_ATTRIBUTES))
         {    
             aux = stateId - GAL_DEV_FRAGMENT_INPUT_ATTRIBUTES;
             _fshInputs[aux] = *(static_cast<const GALSingleBoolStoredStateItem*>(galssi));
@@ -2902,8 +2902,8 @@ void GALDeviceImp::copyMipmap (GALTexture* inTexture, libGAL::GAL_CUBEMAP_FACE i
 		
     GALRenderTargetImp* outRT = new GALRenderTargetImp(this, outTexture, GAL_RT_DIMENSION_TEXTURE2D, inFace, inMipmap);
     
-    cg1gpu::GPURegData data;
-    vector<cg1gpu::GPURegData> savedRegState;
+    arch::GPURegData data;
+    vector<arch::GPURegData> savedRegState;
     vector<const StoredStateItem*> storedState;
 
 
@@ -2927,13 +2927,13 @@ void GALDeviceImp::copyMipmap (GALTexture* inTexture, libGAL::GAL_CUBEMAP_FACE i
     storedState.push_back(createStoredStateItem(GAL_DEV_VSH));
     storedState.push_back(createStoredStateItem(GAL_DEV_FSH));
 
-    for (gal_uint i = 0; i < cg1gpu::MAX_VERTEX_ATTRIBUTES; i++)
+    for (gal_uint i = 0; i < arch::MAX_VERTEX_ATTRIBUTES; i++)
         storedState.push_back(createStoredStateItem(GAL_STORED_ITEM_ID(GAL_DEV_VERTEX_ATTRIBUTE_MAP + i)));
 
-    for (gal_uint i = 0; i < cg1gpu::MAX_VERTEX_ATTRIBUTES; i++)
+    for (gal_uint i = 0; i < arch::MAX_VERTEX_ATTRIBUTES; i++)
         storedState.push_back(createStoredStateItem(GAL_STORED_ITEM_ID(GAL_DEV_VERTEX_OUTPUT_ATTRIBUTE + i)));
 
-    for (gal_uint i = 0; i < cg1gpu::MAX_FRAGMENT_ATTRIBUTES; i++)
+    for (gal_uint i = 0; i < arch::MAX_FRAGMENT_ATTRIBUTES; i++)
         storedState.push_back(createStoredStateItem(GAL_STORED_ITEM_ID(GAL_DEV_FRAGMENT_INPUT_ATTRIBUTES + i)));
 
     storedState.push_back(_stream[0]->createStoredStateItem(GAL_STREAM_STRIDE));
@@ -2953,7 +2953,7 @@ void GALDeviceImp::copyMipmap (GALTexture* inTexture, libGAL::GAL_CUBEMAP_FACE i
     storedState.push_back(_sampler[0]->createStoredStateItem(GAL_SAMPLER_UNIT_LOD_BIAS));
     storedState.push_back(_sampler[0]->createStoredStateItem(GAL_SAMPLER_TEXTURE));
 
-    _driver->readGPURegister(cg1gpu::GPU_VERTEX_ATTRIBUTE_DEFAULT_VALUE, cg1gpu::COLOR_ATTRIBUTE, data);
+    _driver->readGPURegister(arch::GPU_VERTEX_ATTRIBUTE_DEFAULT_VALUE, arch::COLOR_ATTRIBUTE, data);
     savedRegState.push_back(data);
 
     gal_uint inWidthTexture = adaptedIn.getWidth(inFace, inMipmap);
@@ -3056,13 +3056,13 @@ void GALDeviceImp::copyMipmap (GALTexture* inTexture, libGAL::GAL_CUBEMAP_FACE i
     restoreStoredStateItem(storedState[nextReg++]);
     restoreStoredStateItem(storedState[nextReg++]);
 
-    for (gal_uint i = 0; i < cg1gpu::MAX_VERTEX_ATTRIBUTES; i++)
+    for (gal_uint i = 0; i < arch::MAX_VERTEX_ATTRIBUTES; i++)
         restoreStoredStateItem(storedState[nextReg++]);
 
-    for (gal_uint i = 0; i < cg1gpu::MAX_VERTEX_ATTRIBUTES; i++)
+    for (gal_uint i = 0; i < arch::MAX_VERTEX_ATTRIBUTES; i++)
         restoreStoredStateItem(storedState[nextReg++]);
 
-    for (gal_uint i = 0; i < cg1gpu::MAX_FRAGMENT_ATTRIBUTES; i++)
+    for (gal_uint i = 0; i < arch::MAX_FRAGMENT_ATTRIBUTES; i++)
         restoreStoredStateItem(storedState[nextReg++]);
 
     _stream[0]->restoreStoredStateItem(storedState[nextReg++]);
@@ -3082,7 +3082,7 @@ void GALDeviceImp::copyMipmap (GALTexture* inTexture, libGAL::GAL_CUBEMAP_FACE i
     _sampler[0]->restoreStoredStateItem(storedState[nextReg++]);
     _sampler[0]->restoreStoredStateItem(storedState[nextReg++]);
 
-    _driver->writeGPURegister(cg1gpu::GPU_VERTEX_ATTRIBUTE_DEFAULT_VALUE, cg1gpu::COLOR_ATTRIBUTE, savedRegState[0]);
+    _driver->writeGPURegister(arch::GPU_VERTEX_ATTRIBUTE_DEFAULT_VALUE, arch::COLOR_ATTRIBUTE, savedRegState[0]);
 
 
 
@@ -3090,8 +3090,8 @@ void GALDeviceImp::copyMipmap (GALTexture* inTexture, libGAL::GAL_CUBEMAP_FACE i
 
 void GALDeviceImp::copyTexture2RenderTarget(GALTexture2DImp* texture, GALRenderTargetImp* renderTarget)
 {
-    cg1gpu::GPURegData data;
-    vector<cg1gpu::GPURegData> savedRegState;
+    arch::GPURegData data;
+    vector<arch::GPURegData> savedRegState;
     vector<const StoredStateItem*> storedState;
 
 
@@ -3115,13 +3115,13 @@ void GALDeviceImp::copyTexture2RenderTarget(GALTexture2DImp* texture, GALRenderT
     storedState.push_back(createStoredStateItem(GAL_DEV_VSH));
     storedState.push_back(createStoredStateItem(GAL_DEV_FSH));
 
-    for (gal_uint i = 0; i < cg1gpu::MAX_VERTEX_ATTRIBUTES; i++)
+    for (gal_uint i = 0; i < arch::MAX_VERTEX_ATTRIBUTES; i++)
         storedState.push_back(createStoredStateItem(GAL_STORED_ITEM_ID(GAL_DEV_VERTEX_ATTRIBUTE_MAP + i)));
 
-    for (gal_uint i = 0; i < cg1gpu::MAX_VERTEX_ATTRIBUTES; i++)
+    for (gal_uint i = 0; i < arch::MAX_VERTEX_ATTRIBUTES; i++)
         storedState.push_back(createStoredStateItem(GAL_STORED_ITEM_ID(GAL_DEV_VERTEX_OUTPUT_ATTRIBUTE + i)));
 
-    for (gal_uint i = 0; i < cg1gpu::MAX_FRAGMENT_ATTRIBUTES; i++)
+    for (gal_uint i = 0; i < arch::MAX_FRAGMENT_ATTRIBUTES; i++)
         storedState.push_back(createStoredStateItem(GAL_STORED_ITEM_ID(GAL_DEV_FRAGMENT_INPUT_ATTRIBUTES + i)));
 
     storedState.push_back(_stream[0]->createStoredStateItem(GAL_STREAM_STRIDE));
@@ -3141,7 +3141,7 @@ void GALDeviceImp::copyTexture2RenderTarget(GALTexture2DImp* texture, GALRenderT
     storedState.push_back(_sampler[0]->createStoredStateItem(GAL_SAMPLER_UNIT_LOD_BIAS));
     storedState.push_back(_sampler[0]->createStoredStateItem(GAL_SAMPLER_TEXTURE));
 
-    _driver->readGPURegister(cg1gpu::GPU_VERTEX_ATTRIBUTE_DEFAULT_VALUE, cg1gpu::COLOR_ATTRIBUTE, data);
+    _driver->readGPURegister(arch::GPU_VERTEX_ATTRIBUTE_DEFAULT_VALUE, arch::COLOR_ATTRIBUTE, data);
     savedRegState.push_back(data);
 
 
@@ -3238,13 +3238,13 @@ void GALDeviceImp::copyTexture2RenderTarget(GALTexture2DImp* texture, GALRenderT
     restoreStoredStateItem(storedState[nextReg++]);
     restoreStoredStateItem(storedState[nextReg++]);
 
-    for (gal_uint i = 0; i < cg1gpu::MAX_VERTEX_ATTRIBUTES; i++)
+    for (gal_uint i = 0; i < arch::MAX_VERTEX_ATTRIBUTES; i++)
         restoreStoredStateItem(storedState[nextReg++]);
 
-    for (gal_uint i = 0; i < cg1gpu::MAX_VERTEX_ATTRIBUTES; i++)
+    for (gal_uint i = 0; i < arch::MAX_VERTEX_ATTRIBUTES; i++)
         restoreStoredStateItem(storedState[nextReg++]);
 
-    for (gal_uint i = 0; i < cg1gpu::MAX_FRAGMENT_ATTRIBUTES; i++)
+    for (gal_uint i = 0; i < arch::MAX_FRAGMENT_ATTRIBUTES; i++)
         restoreStoredStateItem(storedState[nextReg++]);
 
     _stream[0]->restoreStoredStateItem(storedState[nextReg++]);
@@ -3264,7 +3264,7 @@ void GALDeviceImp::copyTexture2RenderTarget(GALTexture2DImp* texture, GALRenderT
     _sampler[0]->restoreStoredStateItem(storedState[nextReg++]);
     _sampler[0]->restoreStoredStateItem(storedState[nextReg++]);
 
-    _driver->writeGPURegister(cg1gpu::GPU_VERTEX_ATTRIBUTE_DEFAULT_VALUE, cg1gpu::COLOR_ATTRIBUTE, savedRegState[0]);
+    _driver->writeGPURegister(arch::GPU_VERTEX_ATTRIBUTE_DEFAULT_VALUE, arch::COLOR_ATTRIBUTE, savedRegState[0]);
 }
 
 GALRenderTarget* GALDeviceImp::getFrontBufferRT()

@@ -22,7 +22,7 @@
 #include "cmTileEvaluatorStateInfo.h"
 #include "Tile.h"
 
-using namespace cg1gpu;
+using namespace arch;
 
 //  Recursive Descent constructor.  
 RecursiveDescent::RecursiveDescent(bmoRasterizer &bm, U32 trFIFOSize,

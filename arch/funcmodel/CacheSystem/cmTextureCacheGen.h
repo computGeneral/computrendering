@@ -22,7 +22,7 @@
 #include "cmMemoryTransaction.h"
 #include <string>
 
-namespace cg1gpu
+namespace arch
 {
 
 /**
@@ -185,6 +185,6 @@ public:
     virtual void setDebug(bool enable) = 0;
 };
 
-} // namespace cg1gpu
+} // namespace arch
 
 #endif

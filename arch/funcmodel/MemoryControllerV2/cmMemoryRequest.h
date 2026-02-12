@@ -10,7 +10,7 @@
 #include <vector>
 
 
-namespace cg1gpu
+namespace arch
 {
 namespace memorycontroller
 {
@@ -60,7 +60,7 @@ private:
 };
 
 } // namespace memorycontroller
-} // namespace cg1gpu
+} // namespace arch
 
 
 #endif // MEMORYREQUEST_H

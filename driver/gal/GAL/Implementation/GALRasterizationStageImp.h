@@ -109,9 +109,9 @@ private:
     //  Pixel coordinates convention
     StateItem<gal_bool> _useD3D9PixelCoordConvention;
     
-    static void _getGPUCullMode(GAL_CULL_MODE mode, cg1gpu::GPURegData* data);
-    static void _getGPUFaceMode(GAL_FACE_MODE mode, cg1gpu::GPURegData* data);
-    static void _getGPUInterpolationMode(GAL_INTERPOLATION_MODE mode, cg1gpu::GPURegData* data);
+    static void _getGPUCullMode(GAL_CULL_MODE mode, arch::GPURegData* data);
+    static void _getGPUFaceMode(GAL_FACE_MODE mode, arch::GPURegData* data);
+    static void _getGPUInterpolationMode(GAL_INTERPOLATION_MODE mode, arch::GPURegData* data);
 
     //  Allow the device implementation class to access private attributes.
     friend class GALDeviceImp;

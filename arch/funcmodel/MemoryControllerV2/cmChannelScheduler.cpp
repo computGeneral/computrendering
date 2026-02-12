@@ -8,8 +8,8 @@
 #include <cmath>
 
 using namespace std;
-using namespace cg1gpu;
-using namespace cg1gpu::memorycontroller;
+using namespace arch;
+using namespace arch::memorycontroller;
 
 #ifdef GPU_DEBUG
     #undef GPU_DEBUG

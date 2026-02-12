@@ -20,7 +20,7 @@
 #include "GPUType.h"
 
 
-namespace cg1gpu
+namespace arch
 {
 
 static const U32 GPU_ADDRESS_SPACE    = 0x00000000; //*  Address space for the GPU memory.
@@ -28,6 +28,6 @@ static const U32 SYSTEM_ADDRESS_SPACE = 0x80000000; //*  Address space for the s
 static const U32 ADDRESS_SPACE_MASK   = 0x80000000; //*  Address space mask.
 static const U32 SPACE_ADDRESS_MASK   = 0x7fffffff; //*  Address space mask.
 
-} // namespace cg1gpu
+} // namespace arch
 
 #endif

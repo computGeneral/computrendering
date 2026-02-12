@@ -5,7 +5,7 @@
 #include "cmRWFifoScheduler.h"
 #include "cmChannelTransaction.h"
 
-using namespace cg1gpu::memorycontroller;
+using namespace arch::memorycontroller;
 using namespace std;
 
 RWFifoScheduler::RWFifoScheduler(const char* name,

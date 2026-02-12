@@ -23,7 +23,7 @@
 #include "cmROPCache.h"
 #include "cmMemoryTransaction.h"
 
-namespace cg1gpu
+namespace arch
 {
 
 //  Defines a block memory write request.  
@@ -498,6 +498,6 @@ public:
 
 };
 
-} // namespace cg1gpu
+} // namespace arch
 
 #endif

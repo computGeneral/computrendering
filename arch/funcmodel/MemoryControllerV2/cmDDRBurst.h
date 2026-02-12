@@ -9,7 +9,7 @@
 #include "DynamicObject.h"
 
 
-namespace cg1gpu
+namespace arch
 {
 namespace memorycontroller
 {
@@ -177,6 +177,6 @@ public:
 
 } // namespace memorycontroller
 
-} // namespace cg1gpu
+} // namespace arch
 
 #endif // DDRBURST_H

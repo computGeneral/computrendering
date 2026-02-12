@@ -648,13 +648,13 @@ void GLContext::setColor(GLfloat r, GLfloat g, GLfloat b, GLfloat a)
     /*******************************************
      * Update default color value GPU register *
      *******************************************/
-    cg1gpu::GPURegData data;
+    arch::GPURegData data;
     data.qfVal[0] = r;
     data.qfVal[1] = g;
     data.qfVal[2] = b;
     data.qfVal[3] = a;
 // cout << "GLContext::setColor() -> ignoring GPU_VERTEX_ATTRIBUTE_DEFAULT_VALUE to debug purposes" << endl;
-    driver->writeGPURegister(cg1gpu::GPU_VERTEX_ATTRIBUTE_DEFAULT_VALUE, (U32)HAL::VS_COLOR, data);
+    driver->writeGPURegister(arch::GPU_VERTEX_ATTRIBUTE_DEFAULT_VALUE, (U32)HAL::VS_COLOR, data);
 }
 
 const glsNS::GLState& GLContext::getGLState() const
@@ -987,7 +987,7 @@ void GLContext::setLightModel(GLenum pname, const float* params)
     }
     else if ( pname == GL_LIGHT_MODEL_TWO_SIDE )
     {
-        cg1gpu::GPURegData data;
+        arch::GPURegData data;
 
         if ( params[0] != 0.0f )
         {
@@ -1000,7 +1000,7 @@ void GLContext::setLightModel(GLenum pname, const float* params)
             data.booleanVal = false;
         }
 
-        driver->writeGPURegister(cg1gpu::GPU_TWOSIDED_LIGHTING, data);
+        driver->writeGPURegister(arch::GPU_TWOSIDED_LIGHTING, data);
     }
     else if ( pname == GL_LIGHT_MODEL_COLOR_CONTROL )
         CG_ASSERT("GL_LIGHT_MODEL_COLOR_CONTROL not supported here");
@@ -1031,7 +1031,7 @@ void GLContext::setLightModel(GLenum pname, const GLint* params)
     }
     else if ( pname == GL_LIGHT_MODEL_TWO_SIDE )
     {
-        cg1gpu::GPURegData data;
+        arch::GPURegData data;
 
         if ( params[0] != 0.0f )
         {
@@ -1043,7 +1043,7 @@ void GLContext::setLightModel(GLenum pname, const GLint* params)
             testAndResetFlags(flagTwoSidedLighting);
             data.booleanVal = false;
         }
-        driver->writeGPURegister(cg1gpu::GPU_TWOSIDED_LIGHTING, data);
+        driver->writeGPURegister(arch::GPU_TWOSIDED_LIGHTING, data);
     }
     else if ( pname == GL_LIGHT_MODEL_COLOR_CONTROL )
     {

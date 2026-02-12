@@ -14,12 +14,12 @@
 using std::cout;
 using std::stringstream;
 
-using namespace cg1gpu;
-using namespace cg1gpu::memorycontroller;
+using namespace arch;
+using namespace arch::memorycontroller;
 
 typedef MemoryControllerParameters MCParams;
 
-ChannelScheduler* cg1gpu::memorycontroller::createChannelScheduler(const char* name, 
+ChannelScheduler* arch::memorycontroller::createChannelScheduler(const char* name, 
                                          const char* prefix, 
                                          const MemoryControllerParameters& params,
                                          cmoMduBase* parent)

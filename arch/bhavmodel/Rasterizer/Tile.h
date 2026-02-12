@@ -24,7 +24,7 @@
 #include "SetupTriangle.h"
 #include "DynamicMemoryOpt.h"
 
-namespace cg1gpu
+namespace arch
 {
 
 /**
@@ -272,6 +272,6 @@ public:
     void setNextTriangle(U32 next);
 };
 
-} // namespace cg1gpu
+} // namespace arch
 
 #endif

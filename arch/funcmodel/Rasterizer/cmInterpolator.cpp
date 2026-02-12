@@ -20,7 +20,7 @@
 #include "cmRasterizerStateInfo.h"
 #include <cmath>
 
-using namespace cg1gpu;
+using namespace arch;
 using namespace std;
 
 //  Interpolator mdu constructor.  

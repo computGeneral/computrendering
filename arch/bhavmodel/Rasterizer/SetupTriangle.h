@@ -25,7 +25,7 @@
 
 #define _SETUPTRIANGLE_
 
-namespace cg1gpu
+namespace arch
 {
 
 //*  Maximum saved positions per triangle.  
@@ -721,7 +721,7 @@ public:
         
 }; // SetupTriangle
 
-} // namespace cg1gpu
+} // namespace arch
 
 
 #endif

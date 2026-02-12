@@ -30,7 +30,7 @@
 #include "cmRasterizerCommand.h"
 #include "cmTileInput.h"
 
-namespace cg1gpu
+namespace arch
 {
 
 /**
@@ -171,6 +171,6 @@ public:
 
 };
 
-} // namespace cg1gpu
+} // namespace arch
 
 #endif

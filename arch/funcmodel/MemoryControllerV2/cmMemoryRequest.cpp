@@ -5,8 +5,8 @@
 #include "cmMemoryRequest.h"
 #include <iostream>
 
-using namespace cg1gpu::memorycontroller;
-using namespace cg1gpu;
+using namespace arch::memorycontroller;
+using namespace arch;
 using std::vector;
 
 

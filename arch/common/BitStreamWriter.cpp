@@ -4,7 +4,7 @@
 
 #include "BitStreamWriter.h"
 
-namespace cg1gpu
+namespace arch
 {
 
 void BitStreamWriter::write(U32 data, unsigned int bits)

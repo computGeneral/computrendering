@@ -21,7 +21,7 @@
 #include "cmShaderDecodeCommand.h"
 #include "cmShaderExecInstruction.h"
 
-namespace cg1gpu
+namespace arch
 {
 
 /***
@@ -418,6 +418,6 @@ public:
 
 };
 
-} // namespace cg1gpu
+} // namespace arch
 
 #endif

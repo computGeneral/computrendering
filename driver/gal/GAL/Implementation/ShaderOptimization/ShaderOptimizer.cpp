@@ -8,7 +8,7 @@
 using namespace libGAL;
 using namespace libGAL_opt;
 using namespace std;
-using namespace cg1gpu;
+using namespace arch;
 
 OptimizationStep::OptimizationStep(ShaderOptimizer* shOptimizer)
 : _shOptimizer(shOptimizer)
@@ -97,7 +97,7 @@ void ShaderOptimizer::setCode(const gal_ubyte* code, gal_uint sizeInBytes)
         
         instrCount++;
 
-        binary_pointer += cg1gpu::cgoShaderInstr::CG1_ISA_INSTR_SIZE;
+        binary_pointer += arch::cgoShaderInstr::CG1_ISA_INSTR_SIZE;
         
         programEnd = shInstr.getEndFlag();
     }
@@ -129,7 +129,7 @@ void ShaderOptimizer::optimize()
     if (_outputCode)
         delete[] _outputCode;
 
-    _outputSizeInBytes = _inputInstrInfoVect.size() * cg1gpu::cgoShaderInstr::CG1_ISA_INSTR_SIZE;
+    _outputSizeInBytes = _inputInstrInfoVect.size() * arch::cgoShaderInstr::CG1_ISA_INSTR_SIZE;
     _outputCode = new gal_ubyte[_outputSizeInBytes];
     
     vector<InstructionInfo*>::const_iterator iter = _inputInstrInfoVect.begin();
@@ -171,7 +171,7 @@ void ShaderOptimizer::optimize()
 
         shInstr->getCode((U08 *)outputPointer);
         delete shInstr;
-        outputPointer += cg1gpu::cgoShaderInstr::CG1_ISA_INSTR_SIZE;
+        outputPointer += arch::cgoShaderInstr::CG1_ISA_INSTR_SIZE;
         iter++;
         listCount++;
     }
@@ -181,20 +181,20 @@ void ShaderOptimizer::optimize()
     ////////////////////////////////////////////////////
     //    1. Add the 16 required NOPS for the shader fetch unit.
 
-    /*gal_ubyte* auxPointer = new gal_ubyte[_outputSizeInBytes + cg1gpu::cgoShaderInstr::CG1_ISA_INSTR_SIZE * 16];
+    /*gal_ubyte* auxPointer = new gal_ubyte[_outputSizeInBytes + arch::cgoShaderInstr::CG1_ISA_INSTR_SIZE * 16];
     memcpy((void *)auxPointer,(const void*)_outputCode, _outputSizeInBytes);
     
     for (gal_uint i=0; i < 16; i++)
     {
         cgoShaderInstr shInstr(NOP);
-        shInstr.getCode((U08 *)(auxPointer + _outputSizeInBytes + i * cg1gpu::cgoShaderInstr::CG1_ISA_INSTR_SIZE));
+        shInstr.getCode((U08 *)(auxPointer + _outputSizeInBytes + i * arch::cgoShaderInstr::CG1_ISA_INSTR_SIZE));
     }
 
     delete[] _outputCode;
 
     _outputCode = auxPointer;
 
-    _outputSizeInBytes += cg1gpu::cgoShaderInstr::CG1_ISA_INSTR_SIZE * 16;*/
+    _outputSizeInBytes += arch::cgoShaderInstr::CG1_ISA_INSTR_SIZE * 16;*/
 }
 
 const gal_ubyte* ShaderOptimizer::getCode(gal_uint& sizeInBytes) const

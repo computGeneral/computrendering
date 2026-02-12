@@ -20,7 +20,7 @@
 
 using namespace std;
 
-namespace cg1gpu
+namespace arch
 {
 namespace tools
 {
@@ -1400,8 +1400,8 @@ void ContentAddressableQueue<Key, Data>::dump() const
     cout << "}";
 }
 
-} // namespace cg1gpu::tools
+} // namespace arch::tools
 
-} // namespace cg1gpu
+} // namespace arch
 
 #endif // GPU3D_TOOLS_QUEUE_H

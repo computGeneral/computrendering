@@ -19,7 +19,7 @@
 #include "cmTriangleSetupStateInfo.h"
 
 
-using namespace cg1gpu;
+using namespace arch;
 
 //  Creates a new TriangleSetupStateInfo object.  
 TriangleSetupStateInfo::TriangleSetupStateInfo(TriangleSetupState newState) :

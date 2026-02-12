@@ -22,7 +22,7 @@ GALRasterizationStageImp::GALRasterizationStageImp(GALDeviceImp* device, HAL* dr
     _yViewport(0),
     _widthViewport(0),
     _heightViewport(0),
-    _interpolation(cg1gpu::MAX_FRAGMENT_ATTRIBUTES, GAL_INTERPOLATION_LINEAR),
+    _interpolation(arch::MAX_FRAGMENT_ATTRIBUTES, GAL_INTERPOLATION_LINEAR),
     _scissorEnabled(false),
     _xScissor(0),
     _yScissor(0),
@@ -129,7 +129,7 @@ void GALRasterizationStageImp::getScissor(gal_bool &enabled, gal_int &x, gal_int
 
 void GALRasterizationStageImp::sync()
 {
-    cg1gpu::GPURegData data;
+    arch::GPURegData data;
     
     // Fill mode not sync. CG1 GPU doesn�t support wireframe mode
     if ( _fillMode.changed() || _syncRequired ) {
@@ -140,44 +140,44 @@ void GALRasterizationStageImp::sync()
     }
     if ( _cullMode.changed() || _syncRequired ) {
         _getGPUCullMode(_cullMode, &data);
-        _driver->writeGPURegister(cg1gpu::GPU_CULLING, data);
+        _driver->writeGPURegister(arch::GPU_CULLING, data);
         _cullMode.restart();
     }
     if ( _faceMode.changed() || _syncRequired ) {
         _getGPUFaceMode(_faceMode, &data);
-        _driver->writeGPURegister(cg1gpu::GPU_FACEMODE, data);
+        _driver->writeGPURegister(arch::GPU_FACEMODE, data);
         _faceMode.restart();
     }
     if (_useD3D9RasterizationRules.changed() || _syncRequired)
     {
         data.booleanVal = _useD3D9RasterizationRules;
-        _driver->writeGPURegister(cg1gpu::GPU_D3D9_RASTERIZATION_RULES, data);
+        _driver->writeGPURegister(arch::GPU_D3D9_RASTERIZATION_RULES, data);
         _useD3D9RasterizationRules.restart();
     }    
     if (_useD3D9PixelCoordConvention.changed() || _syncRequired)
     {
         data.booleanVal = _useD3D9PixelCoordConvention;
-        _driver->writeGPURegister(cg1gpu::GPU_D3D9_PIXEL_COORDINATES, data);
+        _driver->writeGPURegister(arch::GPU_D3D9_PIXEL_COORDINATES, data);
         _useD3D9PixelCoordConvention.restart();
     }    
     if ( _xViewport.changed() || _syncRequired ) {
         data.intVal = _xViewport;
-        _driver->writeGPURegister(cg1gpu::GPU_VIEWPORT_INI_X, data);
+        _driver->writeGPURegister(arch::GPU_VIEWPORT_INI_X, data);
         _xViewport.restart();
     }
     if ( _yViewport.changed() || _syncRequired ) {
         data.intVal = _yViewport;
-        _driver->writeGPURegister(cg1gpu::GPU_VIEWPORT_INI_Y, data);
+        _driver->writeGPURegister(arch::GPU_VIEWPORT_INI_Y, data);
         _yViewport.restart();
     }
     if ( _widthViewport.changed() || _syncRequired ) {
         data.uintVal = _widthViewport;
-        _driver->writeGPURegister(cg1gpu::GPU_VIEWPORT_WIDTH, data);
+        _driver->writeGPURegister(arch::GPU_VIEWPORT_WIDTH, data);
         _widthViewport.restart();
     }
     if ( _heightViewport.changed() || _syncRequired ) {
         data.uintVal = _heightViewport;
-        _driver->writeGPURegister(cg1gpu::GPU_VIEWPORT_HEIGHT, data);
+        _driver->writeGPURegister(arch::GPU_VIEWPORT_HEIGHT, data);
         _heightViewport.restart();
     }
 
@@ -185,38 +185,38 @@ void GALRasterizationStageImp::sync()
     for ( gal_uint i = 0; i < iCount; ++i ) {
         if ( _interpolation[i].changed() || _syncRequired ) {
             _getGPUInterpolationMode(_interpolation[i], &data);
-            _driver->writeGPURegister(cg1gpu::GPU_INTERPOLATION, i, data);
+            _driver->writeGPURegister(arch::GPU_INTERPOLATION, i, data);
             _interpolation[i].restart();
         }
     }
 
     if ( _scissorEnabled.changed() || _syncRequired ) {
         data.booleanVal = _scissorEnabled;
-        _driver->writeGPURegister( cg1gpu::GPU_SCISSOR_TEST, data );
+        _driver->writeGPURegister( arch::GPU_SCISSOR_TEST, data );
         _scissorEnabled.restart();
     }
 
     if ( _xScissor.changed() || _syncRequired ) {
         data.intVal = _xScissor;
-        _driver->writeGPURegister( cg1gpu::GPU_SCISSOR_INI_X, data );
+        _driver->writeGPURegister( arch::GPU_SCISSOR_INI_X, data );
         _xScissor.restart();
     }
 
     if ( _yScissor.changed() || _syncRequired ) {
         data.intVal = _yScissor;
-        _driver->writeGPURegister( cg1gpu::GPU_SCISSOR_INI_Y, data );
+        _driver->writeGPURegister( arch::GPU_SCISSOR_INI_Y, data );
         _yScissor.restart();
     }
 
     if ( _widthScissor.changed() || _syncRequired ) {
         data.uintVal = _widthScissor;
-        _driver->writeGPURegister( cg1gpu::GPU_SCISSOR_WIDTH, data );
+        _driver->writeGPURegister( arch::GPU_SCISSOR_WIDTH, data );
         _widthScissor.restart();
     }
     
     if ( _heightScissor.changed() || _syncRequired ) {
         data.uintVal = _heightScissor;
-        _driver->writeGPURegister( cg1gpu::GPU_SCISSOR_HEIGHT, data );
+        _driver->writeGPURegister( arch::GPU_SCISSOR_HEIGHT, data );
         _heightScissor.restart();
     }
 }
@@ -228,43 +228,43 @@ void GALRasterizationStageImp::forceSync()
     _syncRequired = false;
 }
 
-void GALRasterizationStageImp::_getGPUCullMode(GAL_CULL_MODE mode, cg1gpu::GPURegData* data)
+void GALRasterizationStageImp::_getGPUCullMode(GAL_CULL_MODE mode, arch::GPURegData* data)
 {
     switch ( mode )
     {
         case GAL_CULL_NONE:
-            data->culling = cg1gpu::NONE;
+            data->culling = arch::NONE;
             break;
         case GAL_CULL_FRONT:
-            data->culling = cg1gpu::FRONT;
+            data->culling = arch::FRONT;
             break;
         case GAL_CULL_BACK:
-            data->culling = cg1gpu::BACK;
+            data->culling = arch::BACK;
             break;
         case GAL_CULL_FRONT_AND_BACK:
-            data->culling = cg1gpu::FRONT_AND_BACK;
+            data->culling = arch::FRONT_AND_BACK;
             break;
         default:
             CG_ASSERT("Unknown cull mode");
     }    
 }
 
-void GALRasterizationStageImp::_getGPUFaceMode(GAL_FACE_MODE mode, cg1gpu::GPURegData* data)
+void GALRasterizationStageImp::_getGPUFaceMode(GAL_FACE_MODE mode, arch::GPURegData* data)
 {
     switch ( mode )
     {
         case GAL_FACE_CW:
-            data->faceMode = cg1gpu::GPU_CW;
+            data->faceMode = arch::GPU_CW;
             break;
         case GAL_FACE_CCW:
-            data->faceMode = cg1gpu::GPU_CCW;
+            data->faceMode = arch::GPU_CCW;
             break;
         default:
             CG_ASSERT("Unknown cull mode");
     }    
 }
 
-void GALRasterizationStageImp::_getGPUInterpolationMode(GAL_INTERPOLATION_MODE mode, cg1gpu::GPURegData* data)
+void GALRasterizationStageImp::_getGPUInterpolationMode(GAL_INTERPOLATION_MODE mode, arch::GPURegData* data)
 {
     switch ( mode ) {
         case GAL_INTERPOLATION_NONE:
@@ -350,7 +350,7 @@ const StoredStateItem* GALRasterizationStageImp::createStoredStateItem(GAL_STORE
 
     if (stateId >= GAL_RASTER_FIRST_ID && stateId < GAL_RASTER_LAST)
     {  
-        if ((stateId >= GAL_RASTER_INTERPOLATION) && (stateId < GAL_RASTER_INTERPOLATION + cg1gpu::MAX_FRAGMENT_ATTRIBUTES))
+        if ((stateId >= GAL_RASTER_INTERPOLATION) && (stateId < GAL_RASTER_INTERPOLATION + arch::MAX_FRAGMENT_ATTRIBUTES))
         {    
             // It�s a blending enabled state
             interpolation = stateId - GAL_RASTER_INTERPOLATION;
@@ -400,7 +400,7 @@ void GALRasterizationStageImp::restoreStoredStateItem(const StoredStateItem* ssi
 
     if (stateId >= GAL_RASTER_FIRST_ID && stateId < GAL_RASTER_LAST)
     {  
-        if ((stateId >= GAL_RASTER_INTERPOLATION) && (stateId < GAL_RASTER_INTERPOLATION + cg1gpu::MAX_FRAGMENT_ATTRIBUTES))
+        if ((stateId >= GAL_RASTER_INTERPOLATION) && (stateId < GAL_RASTER_INTERPOLATION + arch::MAX_FRAGMENT_ATTRIBUTES))
         {    
             // It�s a blending enabled state
             interpolation = stateId - GAL_RASTER_INTERPOLATION;

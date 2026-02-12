@@ -29,8 +29,8 @@ namespace libGAL_opt
  * The maximum number of attributes for both vertex shader and fragment shader
  * input and output registers.
  */
-static const gal_uint MAX_SHADER_ATTRIBUTES = MAX(cg1gpu::MAX_MICROFRAGMENT_ATTRIBUTES, 
-                                                  MAX(cg1gpu::MAX_VERTEX_ATTRIBUTES, cg1gpu::MAX_FRAGMENT_ATTRIBUTES));
+static const gal_uint MAX_SHADER_ATTRIBUTES = MAX(arch::MAX_MICROFRAGMENT_ATTRIBUTES, 
+                                                  MAX(arch::MAX_VERTEX_ATTRIBUTES, arch::MAX_FRAGMENT_ATTRIBUTES));
 
 class ShaderOptimizer;
 
@@ -93,7 +93,7 @@ struct SHADER_ARCH_PARAMS
     gal_uint addrRegs;      ///< The maximum number of address registers
     gal_uint predRegs;      ///< The number of supported predicate registers.
     
-    cg1gpu::ShaderArchParam *shArchParams;  ///< Pointer to the singleton storing shader architecture parameters.
+    arch::ShaderArchParam *shArchParams;  ///< Pointer to the singleton storing shader architecture parameters.
     
 //    gal_uint latencyTable[LATENCY_TABLE_SIZE]; ///< The instruction opcodes latencies
 

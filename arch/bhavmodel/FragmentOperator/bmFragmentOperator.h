@@ -23,7 +23,7 @@
 #include "GPUType.h"
 #include "GPUReg.h"
 
-namespace cg1gpu
+namespace arch
 {
 
 //  Defines the maximum number of pixels for a block to compress.  
@@ -503,6 +503,6 @@ public:
 
 };
 
-} // namespace cg1gpu
+} // namespace arch
 
 #endif

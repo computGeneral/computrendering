@@ -20,7 +20,7 @@
 #include "cmTextureRequest.h"
 #include "cmTextureResult.h"
 
-using namespace cg1gpu;
+using namespace arch;
 
 
 cmoShaderDecExe::cmoShaderDecExe(bmoUnifiedShader &bmShader, U32 threads,
@@ -1074,28 +1074,28 @@ void cmoShaderDecExe::startExecution(U64 cycle, ShaderExecInstruction *shExecIns
         //  Set pending register write tables.  
         switch(shInstr->getBankRes())
         {
-                case cg1gpu::ADDR:
+                case arch::ADDR:
 
                     //  Set pending status for address register.  
                     threadInfo[numThread].addrBankDep[resReg] = TRUE;
 
                     break;
 
-                case cg1gpu::TEMP:
+                case arch::TEMP:
 
                     //  Set pending status for temporary register.  
                     threadInfo[numThread].tempBankDep[resReg] = TRUE;
 
                     break;
 
-                case cg1gpu::PRED:
+                case arch::PRED:
                 
                     //  Set pending status for predicate register.
                     threadInfo[numThread].predBankDep[resReg] = true;
                     
                     break;
                     
-                case cg1gpu::OUT:
+                case arch::OUT:
 
                     //  Set pending status for address register.  
                     threadInfo[numThread].outpBankDep[resReg] = TRUE;
@@ -1132,7 +1132,7 @@ void cmoShaderDecExe::startExecution(U64 cycle, ShaderExecInstruction *shExecIns
         //  Set register write cycle tables.  
         switch(shInstr->getBankRes())
         {
-            case cg1gpu::OUT:
+            case arch::OUT:
 
                 //  If current write latency for the register is less than the instruction latency update the table.  
                 if (threadInfo[numThread].outpBankWrite[resReg] < (cycle + instrLat))
@@ -1144,7 +1144,7 @@ void cmoShaderDecExe::startExecution(U64 cycle, ShaderExecInstruction *shExecIns
 
                 break;
 
-            case cg1gpu::ADDR:
+            case arch::ADDR:
 
                 //  If current write latency for the register is less than the instruction latency update the table.  
                if (threadInfo[numThread].addrBankWrite[resReg] < (cycle + instrLat))
@@ -1156,7 +1156,7 @@ void cmoShaderDecExe::startExecution(U64 cycle, ShaderExecInstruction *shExecIns
 
                 break;
 
-            case cg1gpu::TEMP:
+            case arch::TEMP:
 
                 //  If current write latency for the register is less than the instruction latency update the table.  
                 if (threadInfo[numThread].tempBankWrite[resReg] < (cycle + instrLat))
@@ -1168,7 +1168,7 @@ void cmoShaderDecExe::startExecution(U64 cycle, ShaderExecInstruction *shExecIns
 
                 break;
 
-            case cg1gpu::PRED:
+            case arch::PRED:
 
                 //  If current write latency for the register is less than the instruction latency update the table.
                 if (threadInfo[numThread].predBankWrite[resReg] < (cycle + instrLat))
@@ -1527,7 +1527,7 @@ printf("ShDExec => %lld\n", cycle);
             must wait.  */
         switch(shInstr->getBankRes())
         {
-            case cg1gpu::OUT:
+            case arch::OUT:
 
                 //  Check WAW dependence for output bank register.  
                 if (threadInfo[numThread].outpBankWrite[resReg] >= (cycle + instrLat))
@@ -1552,7 +1552,7 @@ printf("ShDExec => %lld\n", cycle);
 
                 break;
 
-            case cg1gpu::ADDR:
+            case arch::ADDR:
 
                 //  Check WAW dependence for address bank register.  
                 if (threadInfo[numThread].addrBankWrite[resReg] >= (cycle + instrLat))
@@ -1577,7 +1577,7 @@ printf("ShDExec => %lld\n", cycle);
 
                 break;
 
-            case cg1gpu::TEMP:
+            case arch::TEMP:
 
                 //  Check WAW dependence for temporal bank register.  
                 if (threadInfo[numThread].tempBankWrite[resReg] >= (cycle + instrLat))
@@ -1602,7 +1602,7 @@ printf("ShDExec => %lld\n", cycle);
 
                 break;
 
-            case cg1gpu::PRED:
+            case arch::PRED:
 
                 //  Check WAW dependence for predicate bank register.
                 if (threadInfo[numThread].predBankWrite[resReg] >= (cycle + instrLat))
@@ -1774,7 +1774,7 @@ void cmoShaderDecExe::clearDependences(U64 cycle, cgoShaderInstr *shInstr, U32 t
         //  Determine register bank written by the instruction.
         switch(shInstr->getBankRes())
         {
-            case cg1gpu::ADDR:
+            case arch::ADDR:
 
                 //  Check if clearing the last write pending for the address register.
                 if (threadInfo[threadID].addrBankWrite[resReg] == cycle)
@@ -1785,7 +1785,7 @@ void cmoShaderDecExe::clearDependences(U64 cycle, cgoShaderInstr *shInstr, U32 t
                 
                 break;
 
-            case cg1gpu::TEMP:
+            case arch::TEMP:
 
                 //  Check if clearing the last write pending for the temporal register.
                 if (threadInfo[threadID].tempBankWrite[resReg] == cycle)
@@ -1796,7 +1796,7 @@ void cmoShaderDecExe::clearDependences(U64 cycle, cgoShaderInstr *shInstr, U32 t
                 
                 break;
 
-            case cg1gpu::PRED:
+            case arch::PRED:
 
                 //  Check if clearing the last write pending for the predicate register.
                 if (threadInfo[threadID].predBankWrite[resReg] == cycle)
@@ -1807,7 +1807,7 @@ void cmoShaderDecExe::clearDependences(U64 cycle, cgoShaderInstr *shInstr, U32 t
                 
                 break;
 
-            case cg1gpu::OUT:
+            case arch::OUT:
 
                 //  Check if clearing the last write pending for the output register.
                 if (threadInfo[threadID].outpBankWrite[resReg] == cycle)

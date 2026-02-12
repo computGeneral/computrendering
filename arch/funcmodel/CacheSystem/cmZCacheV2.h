@@ -24,7 +24,7 @@
 #include "cmMemoryTransaction.h"
 #include "DepthCompressor.h"
 
-namespace cg1gpu
+namespace arch
 {
 
 /**
@@ -141,6 +141,6 @@ public:
 
 };
 
-} // namespace cg1gpu
+} // namespace arch
 
 #endif

@@ -15,7 +15,7 @@
 
 #include "cmFilterOperation.h"
 
-using namespace cg1gpu;
+using namespace arch;
 
 //  Creates a new Filter Operation object.  
 FilterOperation::FilterOperation(U32 entry) : filterEntry(entry)

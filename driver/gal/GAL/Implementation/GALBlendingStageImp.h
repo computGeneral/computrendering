@@ -87,8 +87,8 @@ private:
     
     std::vector<StateItem<gal_bool> > _colorWriteEnabled;
 
-    static void _getGPUBlendOption(GAL_BLEND_OPTION option, cg1gpu::GPURegData* data);
-    static void _getGPUBlendFunction(GAL_BLEND_FUNCTION func, cg1gpu::GPURegData* data);
+    static void _getGPUBlendOption(GAL_BLEND_OPTION option, arch::GPURegData* data);
+    static void _getGPUBlendFunction(GAL_BLEND_FUNCTION func, arch::GPURegData* data);
     
     class BlendOptionPrint: public PrintFunc<GAL_BLEND_OPTION>
     {

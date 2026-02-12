@@ -26,7 +26,7 @@
 #include "GPUReg.h" // STAMP_FRAGMENTS
 #include <sstream>
 
-using namespace cg1gpu;
+using namespace arch;
 
 //  Color Write mdu constructor.  
 ColorWrite::ColorWrite(U32 numStamps, U32 overWidth, U32 overHeight,

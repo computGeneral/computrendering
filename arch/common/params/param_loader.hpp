@@ -31,8 +31,8 @@
 #include <algorithm>
 
 // Forward declaration so param_loader can populate the legacy config struct.
-namespace cg1gpu { struct cgsArchConfig; }
-using cg1gpu::cgsArchConfig;
+namespace arch { struct cgsArchConfig; }
+using arch::cgsArchConfig;
 
 static inline std::vector<std::string> split(const std::string& s, char delimiter) {
     std::vector<std::string> tokens;

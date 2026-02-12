@@ -2,7 +2,7 @@
 	#include "IRTranslator.h"
 
 	using namespace std;
-	using namespace cg1gpu;
+	using namespace arch;
 
 	// Macros
 	#ifdef D3D_DEBUG_ON
@@ -407,7 +407,7 @@
 	GPURegisterId IRTranslator::reserveTemp(GPURegisterId gpu_temp)
 	{
 	    //  Check that the input register is a temporary register.
-	    if (gpu_temp.bank != cg1gpu::TEMP)
+	    if (gpu_temp.bank != arch::TEMP)
 		CG_ASSERT("Trying to declare a non temporary register as temporary register.");
 	    
 	    //  Check if the temporary register requested is available.
@@ -443,7 +443,7 @@
 	void IRTranslator::releasePredicate(GPURegisterId pred)
 	{
 	    //  Check the type of the requested register.
-	    if(pred.bank != cg1gpu::PRED)
+	    if(pred.bank != arch::PRED)
 		CG_ASSERT("Trying to undeclare a non temp register");
 	    
 	    //  Add to the list of available predicate registers.
@@ -466,7 +466,7 @@
 	GPURegisterId IRTranslator::reservePredicate(GPURegisterId pred)
 	{
 	    //  Check the type of the requested register.
-	    if(pred.bank != cg1gpu::PRED)
+	    if(pred.bank != arch::PRED)
 		CG_ASSERT("Trying to declare a non temp register as temp");
 	    
 	    //  Search for the register in the list of available predicate registers.
@@ -512,7 +512,7 @@
 	    
 	    //  Create the corresponding CG1 texture register.
 	    GPURegisterId declared;
-	    declared.bank = cg1gpu::TEXT;
+	    declared.bank = arch::TEXT;
 	    declared.num = d3d_register.num;
 	    
 	    //  Declare the D3D9 sampler register.
@@ -535,7 +535,7 @@
 	    reserved = outputUsage[usage];
 
 	    //  Check if there is an CG1 output register reserved for the requested output semantic usage.
-	    if (reserved.bank == cg1gpu::INVALID)
+	    if (reserved.bank == arch::INVALID)
 		CG_ASSERT("Output semantic usage is not mapped to an CG1 output register.");
 	    
 	    //  Declare the output.
@@ -593,7 +593,7 @@
 		reserved = inputUsage[usage];
 
 		//  Check if there is an CG1 output register reserved for the requested output semantic usage.
-		if (reserved.bank == cg1gpu::INVALID)
+		if (reserved.bank == arch::INVALID)
 		    CG_ASSERT("Input semantic usage is not mapped to an CG1 input register.");
 
 		//  Remove the CG1 input register from the list of available CG1 input registers.
@@ -643,7 +643,7 @@
             
             D3D_DEBUG( cout << "IRTranslator: WARNING: D3D register type not supported" << endl; )
             ///@note The intention is to avoid halting simulation
-            reserved = GPURegisterId(0, cg1gpu::INVALID);
+            reserved = GPURegisterId(0, arch::INVALID);
             error = true;
             break;
     }
@@ -691,7 +691,7 @@ GPURegisterId IRTranslator::declareMapAndReserveConst(D3DRegisterId d3dreg)
     //       so the order has to be the same.
 
     GPURegisterId reserved;
-    reserved.bank = cg1gpu::PARAM;
+    reserved.bank = arch::PARAM;
     
     //  Check the type of constant register.
     switch(d3dreg.type)
@@ -751,7 +751,7 @@ GPURegisterId IRTranslator::declareMapAndReserveConst(D3DRegisterId d3dreg, Cons
     //        so the order has to be the same.
 
     GPURegisterId reserved;
-    reserved.bank = cg1gpu::PARAM;
+    reserved.bank = arch::PARAM;
     
     //  Check the type of constant register.
     switch(d3dreg.type)
@@ -911,32 +911,32 @@ void IRTranslator::initializeRegisters()
     //  Allocate constant registers.
     availableConst.clear();
     for(U32 c = 0; c < UNIFIED_CONSTANT_NUM_REGS; c++)
-        availableConst.insert(GPURegisterId(c, cg1gpu::PARAM));
+        availableConst.insert(GPURegisterId(c, arch::PARAM));
 
     //  Allocate temporary registers.
     availableTemp.clear();
     for(U32 r = 0; r < UNIFIED_TEMPORARY_NUM_REGS; r++)
-        availableTemp.insert(GPURegisterId(r, cg1gpu::TEMP));
+        availableTemp.insert(GPURegisterId(r, arch::TEMP));
     
     //  Allocate input registers.
     availableInput.clear();
     for(U32 r = 0; r < UNIFIED_INPUT_NUM_REGS; r++)
-        availableInput.insert(GPURegisterId(r, cg1gpu::IN));
+        availableInput.insert(GPURegisterId(r, arch::IN));
     
     //  Allocate output registers.
     availableOutput.clear();
     for(U32 r = 0; r < UNIFIED_OUTPUT_NUM_REGS; r++)
-        availableOutput.insert(GPURegisterId(r, cg1gpu::OUT));
+        availableOutput.insert(GPURegisterId(r, arch::OUT));
 
     //  Allocate predicate registers.
     availablePredicates.clear();
     for(U32 p = 0; p < UNIFIED_PREDICATE_NUM_REGS; p++)
-        availablePredicates.insert(GPURegisterId(p, cg1gpu::PRED));
+        availablePredicates.insert(GPURegisterId(p, arch::PRED));
 
     //  Allocate texture units/samplers.
     availableSamplers.clear();
     for(U32 t = 0; t < MAX_TEXTURES; t++)
-        availableSamplers.insert(GPURegisterId(t, cg1gpu::TEXT));
+        availableSamplers.insert(GPURegisterId(t, arch::TEXT));
     
     //  Clear the mapping of D3D9 registers to CG1 regsiters.
     registerMap.clear();
@@ -951,21 +951,21 @@ void IRTranslator::initializeRegisters()
     if(type == VERTEX_SHADER)
     {
         //  Restrict CG1 output register 0 for the position output semantic usage.
-        outputUsage[D3DUsageId(D3DDECLUSAGE_POSITION, 0)] = GPURegisterId(0, cg1gpu::OUT);
+        outputUsage[D3DUsageId(D3DDECLUSAGE_POSITION, 0)] = GPURegisterId(0, arch::OUT);
 
         //  Restrict CG1 output registers 1 and 2 for the two color output semantic usages.
         for(U32 r = 0; r < 2; r++)
-            outputUsage[D3DUsageId(D3DDECLUSAGE_COLOR, r)] = GPURegisterId(1 + r, cg1gpu::OUT);
+            outputUsage[D3DUsageId(D3DDECLUSAGE_COLOR, r)] = GPURegisterId(1 + r, arch::OUT);
 
         //  Restrict CG1 output registers 3 to 12 for texture coordinates.
         for(U32 r = 0; r < 10; r++)
-            outputUsage[D3DUsageId(D3DDECLUSAGE_TEXCOORD, r)] = GPURegisterId(3 + r, cg1gpu::OUT);
+            outputUsage[D3DUsageId(D3DDECLUSAGE_TEXCOORD, r)] = GPURegisterId(3 + r, arch::OUT);
 
         //  Restrict CG1 output register 14 for the fog output semantic usage.
-        outputUsage[D3DUsageId(D3DDECLUSAGE_FOG, 0)] = GPURegisterId(14, cg1gpu::OUT);
+        outputUsage[D3DUsageId(D3DDECLUSAGE_FOG, 0)] = GPURegisterId(14, arch::OUT);
         
         //  Restrict CG1 output register 15 for point size output semantic usage.
-        outputUsage[D3DUsageId(D3DDECLUSAGE_PSIZE, 0)] = GPURegisterId(15, cg1gpu::OUT);
+        outputUsage[D3DUsageId(D3DDECLUSAGE_PSIZE, 0)] = GPURegisterId(15, arch::OUT);
 
         //  Check the shader version.
         switch(version)
@@ -981,7 +981,7 @@ void IRTranslator::initializeRegisters()
                 // Temps will be declared when found
                 
                 // a0 (address register)
-                mapRegister(D3DRegisterId(0, D3DSPR_ADDR), GPURegisterId(0, cg1gpu::ADDR));
+                mapRegister(D3DRegisterId(0, D3DSPR_ADDR), GPURegisterId(0, arch::ADDR));
                 
                 // oPos (position output register)
                 declareMapAndReserveOutput(D3DUsageId(D3DDECLUSAGE_POSITION, 0),  D3DRegisterId(D3DSRO_POSITION, D3DSPR_RASTOUT));
@@ -1016,7 +1016,7 @@ void IRTranslator::initializeRegisters()
                 // Temps will be declared when found
                 
                 // a0 (address register)
-                mapRegister(D3DRegisterId(0,D3DSPR_ADDR), GPURegisterId(0, cg1gpu::ADDR));
+                mapRegister(D3DRegisterId(0,D3DSPR_ADDR), GPURegisterId(0, arch::ADDR));
                 
                 // b#
                 // Not supported
@@ -1057,7 +1057,7 @@ void IRTranslator::initializeRegisters()
                 // Temps will be declared when found
                 
                 // a0 (address register)
-                mapRegister(D3DRegisterId(0, D3DSPR_ADDR), GPURegisterId(0, cg1gpu::ADDR));
+                mapRegister(D3DRegisterId(0, D3DSPR_ADDR), GPURegisterId(0, arch::ADDR));
                 
                 // i#                
                 // Not supported
@@ -1102,25 +1102,25 @@ void IRTranslator::initializeRegisters()
         }       
 
         //  Restrict CG1 input register 0 for position input semantic usage.
-        inputUsage[D3DUsageId(D3DDECLUSAGE_POSITION, 0)] = GPURegisterId(0, cg1gpu::IN);
+        inputUsage[D3DUsageId(D3DDECLUSAGE_POSITION, 0)] = GPURegisterId(0, arch::IN);
 
         //  Restrict CG1 input registers 1 and 2 for color input semantic usage.
         for(U32 r = 0; r < 2; r++) 
-            inputUsage[D3DUsageId(D3DDECLUSAGE_COLOR, r)] = GPURegisterId(1 + r, cg1gpu::IN);
+            inputUsage[D3DUsageId(D3DDECLUSAGE_COLOR, r)] = GPURegisterId(1 + r, arch::IN);
         
         //  Reserve CG1 input registers 3 to 12 for texture coordinate input semantic usage.
         for(U32 r = 0; r < 10; r ++)
-            inputUsage[D3DUsageId(D3DDECLUSAGE_TEXCOORD, r)] = GPURegisterId(3 + r, cg1gpu::IN);
+            inputUsage[D3DUsageId(D3DDECLUSAGE_TEXCOORD, r)] = GPURegisterId(3 + r, arch::IN);
 
         //  Reserve CG1 input register 15 for face input semantic usage.
-        inputUsage[D3DUsageId(D3DDECLUSAGE_POSITION, 1)] = GPURegisterId(15, cg1gpu::IN);
+        inputUsage[D3DUsageId(D3DDECLUSAGE_POSITION, 1)] = GPURegisterId(15, arch::IN);
         
         //  Reserve CG1 output registers 1 to 4 for color output.
         for(U32 r = 0; r < 4; r++)
-            outputUsage[D3DUsageId(D3DDECLUSAGE_COLOR, r)] = GPURegisterId(1 + r, cg1gpu::OUT);
+            outputUsage[D3DUsageId(D3DDECLUSAGE_COLOR, r)] = GPURegisterId(1 + r, arch::OUT);
         
         //  Reserver CG1 output register 0 for depth output.
-        outputUsage[D3DUsageId(D3DDECLUSAGE_POSITION, 0)] = GPURegisterId(0, cg1gpu::OUT);
+        outputUsage[D3DUsageId(D3DDECLUSAGE_POSITION, 0)] = GPURegisterId(0, arch::OUT);
 
         GPURegisterId input;
         GPURegisterId textureTemp;
@@ -1533,7 +1533,7 @@ GPURegisterId IRTranslator::mappedRegister(D3DRegisterId d3dreg)
         D3D_DEBUG( cout << "IRTranslator: WARNING: Unmapped d3d register" << endl; )
         ///@note The intention is to avoid halting simulation
         error = true;
-        return GPURegisterId(0, cg1gpu::INVALID);
+        return GPURegisterId(0, arch::INVALID);
     }
 }
 
@@ -1625,7 +1625,7 @@ void IRTranslator::emulateTEXLD1314(InstructionIRNode *n)
             resultRegister = result.registerId;
             operand.registerId = result.registerId;
             builder.setOperand(0, operand);
-            operand.registerId = GPURegisterId(resultD3DRegister.num, cg1gpu::TEXT);
+            operand.registerId = GPURegisterId(resultD3DRegister.num, arch::TEXT);
             builder.setOperand(1, operand);
             instructions.push_back(builder.buildInstruction());
             break;
@@ -1636,7 +1636,7 @@ void IRTranslator::emulateTEXLD1314(InstructionIRNode *n)
             resultD3DRegister = D3DRegisterId(destN->getNRegister(), destN->getRegisterType());
             builder.setResult(result);
             builder.setOperand(0, operands[0]);
-            operand.registerId = GPURegisterId(resultD3DRegister.num, cg1gpu::TEXT);
+            operand.registerId = GPURegisterId(resultD3DRegister.num, arch::TEXT);
             builder.setOperand(1, operand);
             instructions.push_back(builder.buildInstruction());
             break;
@@ -1708,23 +1708,23 @@ void IRTranslator::emulatePOW()
 
     //  Build => LG2 t0, |src0|
     builder.resetParameters();
-    builder.setOpcode(cg1gpu::LG2);
+    builder.setOpcode(arch::LG2);
     Operand opTemp = operands[0];
     opTemp.absolute = true;
     builder.setOperand(0, opTemp);
     Result resTemp;
     resTemp.registerId = t0;
-    resTemp.maskMode = cg1gpu::XNNN;   
+    resTemp.maskMode = arch::XNNN;   
     builder.setResult(resTemp);
     builder.setPredication(currentPredication);
     instructions.push_back(builder.buildInstruction());
 
     //  Build => MUL t0, t0, src1
     builder.resetParameters();
-    builder.setOpcode(cg1gpu::MUL);
+    builder.setOpcode(arch::MUL);
     opTemp.registerId = t0;
     opTemp.absolute = opTemp.negate = false;
-    opTemp.swizzle = cg1gpu::XXXX;    
+    opTemp.swizzle = arch::XXXX;    
     builder.setOperand(0, opTemp);
     builder.setOperand(1, operands[1]);
     builder.setResult(resTemp);
@@ -1733,7 +1733,7 @@ void IRTranslator::emulatePOW()
     
     //  Build => EX2 dst, dst
     builder.resetParameters();
-    builder.setOpcode(cg1gpu::EX2);
+    builder.setOpcode(arch::EX2);
     builder.setOperand(0, opTemp);
     builder.setResult(result);
     builder.setPredication(currentPredication);
@@ -1756,22 +1756,22 @@ void IRTranslator::emulateNRM()
 
     //  Build => DP3 t0, src0, src0
     builder.resetParameters();
-    builder.setOpcode(cg1gpu::DP3);
+    builder.setOpcode(arch::DP3);
     builder.setOperand(0, operands[0]);
     builder.setOperand(1, operands[0]);
     Result t0_res;
     t0_res.registerId = t0;
-    t0_res.maskMode = cg1gpu::XNNN;
+    t0_res.maskMode = arch::XNNN;
     builder.setResult(t0_res);
     builder.setPredication(currentPredication);
     instructions.push_back(builder.buildInstruction());
    
     //  Build => RSQ t0, t0
     builder.resetParameters();
-    builder.setOpcode(cg1gpu::RSQ);
+    builder.setOpcode(arch::RSQ);
     Operand t0_tempOp;
     t0_tempOp.registerId = t0;
-    t0_tempOp.swizzle = cg1gpu::XXXX;
+    t0_tempOp.swizzle = arch::XXXX;
     builder.setOperand(0, t0_tempOp);
     builder.setResult(t0_res);
     builder.setPredication(currentPredication);
@@ -1779,7 +1779,7 @@ void IRTranslator::emulateNRM()
     
     //  Build => MUL dest, src0, t0
     builder.resetParameters();
-    builder.setOpcode(cg1gpu::MUL);
+    builder.setOpcode(arch::MUL);
     builder.setOperand(0, operands[0]);
     builder.setOperand(1, t0_tempOp);
     builder.setResult(result);
@@ -1852,7 +1852,7 @@ void IRTranslator::emulateDP2ADD()
     builder.setOperand(1, mad_src1);
     builder.setOperand(2, operands[2]);    
     mad_res.registerId = t0;
-    mad_res.maskMode = cg1gpu::XNNN;
+    mad_res.maskMode = arch::XNNN;
     builder.setResult(mad_res);
     builder.setPredication(currentPredication);
     instructions.push_back(builder.buildInstruction());
@@ -1863,7 +1863,7 @@ void IRTranslator::emulateDP2ADD()
     selectSwizzledComponent(1, operands[0], mad_src0);
     selectSwizzledComponent(1, operands[1], mad_src1);
     mad_src2.registerId = t0;
-    mad_src2.swizzle = cg1gpu::XXXX;
+    mad_src2.swizzle = arch::XXXX;
     builder.setOperand(0, mad_src0);
     builder.setOperand(1, mad_src1);
     builder.setOperand(2, mad_src2);
@@ -1920,28 +1920,28 @@ void IRTranslator::emulateSINCOS()
     Result sin_res;
 
     //  Check if the cosinus has to be computed.    
-    if ((result.maskMode == cg1gpu::XNNN) || (result.maskMode == cg1gpu::XYNN))
+    if ((result.maskMode == arch::XNNN) || (result.maskMode == arch::XYNN))
     {
         //   COS dest.x, src
         builder.resetParameters();
         builder.setOpcode(COS);
         builder.setOperand(0, operands[0]);
         cos_res = result;
-        cos_res.maskMode = cg1gpu::XNNN;
+        cos_res.maskMode = arch::XNNN;
         builder.setResult(cos_res);
         builder.setPredication(currentPredication);
         instructions.push_back(builder.buildInstruction());
     }
 
     //  Check if the sinus has to be computed.    
-    if ((result.maskMode == cg1gpu::NYNN) || (result.maskMode == cg1gpu::XYNN))
+    if ((result.maskMode == arch::NYNN) || (result.maskMode == arch::XYNN))
     {
         //   SIN dest.y, src
         builder.resetParameters();
         builder.setOpcode(SIN);
         builder.setOperand(0, operands[0]);
         sin_res = result;
-        sin_res.maskMode = cg1gpu::NYNN;
+        sin_res.maskMode = arch::NYNN;
         builder.setResult(sin_res);
         builder.setPredication(currentPredication);
         instructions.push_back(builder.buildInstruction());
@@ -2041,28 +2041,28 @@ void IRTranslator::selectComponentFromResult(Result result, Operand &opTemp)
     //  result to hold the temporal value.
     switch(result.maskMode)
     {
-        case cg1gpu::NNNW:
-            opTemp.swizzle = cg1gpu::WWWW;
+        case arch::NNNW:
+            opTemp.swizzle = arch::WWWW;
             break;
-        case cg1gpu::NNZN:
-        case cg1gpu::NNZW:
-            opTemp.swizzle = cg1gpu::ZZZZ;
+        case arch::NNZN:
+        case arch::NNZW:
+            opTemp.swizzle = arch::ZZZZ;
             break;
-        case cg1gpu::NYNN:
-        case cg1gpu::NYNW:
-        case cg1gpu::NYZN:
-        case cg1gpu::NYZW:
-            opTemp.swizzle = cg1gpu::YYYY;
+        case arch::NYNN:
+        case arch::NYNW:
+        case arch::NYZN:
+        case arch::NYZW:
+            opTemp.swizzle = arch::YYYY;
             break;        
-        case cg1gpu::XNNN:
-        case cg1gpu::XNNW:
-        case cg1gpu::XNZN:
-        case cg1gpu::XNZW:
-        case cg1gpu::XYNN:
-        case cg1gpu::XYNW:
-        case cg1gpu::XYZN:
-        case cg1gpu::mXYZW:
-            opTemp.swizzle = cg1gpu::XXXX;
+        case arch::XNNN:
+        case arch::XNNW:
+        case arch::XNZN:
+        case arch::XNZW:
+        case arch::XYNN:
+        case arch::XYNW:
+        case arch::XYZN:
+        case arch::mXYZW:
+            opTemp.swizzle = arch::XXXX;
             break;
         default:
             CG_ASSERT("Undefined write mask mode.");
@@ -2080,16 +2080,16 @@ void IRTranslator::selectSwizzledComponent(U32 component, Operand in, Operand &o
     switch(swizzledComponent)
     {
         case 0:
-            out.swizzle = cg1gpu::XXXX;
+            out.swizzle = arch::XXXX;
             break;
         case 1:
-            out.swizzle = cg1gpu::YYYY;
+            out.swizzle = arch::YYYY;
             break;
         case 2:
-            out.swizzle = cg1gpu::ZZZZ;
+            out.swizzle = arch::ZZZZ;
             break;
         case 3:
-            out.swizzle = cg1gpu::WWWW;
+            out.swizzle = arch::WWWW;
             break;
         default:
             CG_ASSERT("Undefined component identifier.");
@@ -2164,11 +2164,11 @@ void IRTranslator::visit(InstructionIRNode *n)
         if (n->getOpcode() == D3DSIO_TEX)
         {
             if (n->getSpecificControls() == D3DSI_TEXLD_PROJECT)
-                opcode = cg1gpu::TXP;
+                opcode = arch::TXP;
             else if (n->getSpecificControls() == D3DSI_TEXLD_BIAS)
-                opcode = cg1gpu::TXB;
+                opcode = arch::TXB;
             else
-                opcode = cg1gpu::TEX;
+                opcode = arch::TEX;
         }
         else
             opcode = (*it_opc).second;
@@ -2240,7 +2240,7 @@ void IRTranslator::visit(InstructionIRNode *n)
                     currentPredication.predicated = false;
                     
                     //  Release the current predication register.
-                    GPURegisterId predReg(currentPredication.predicateRegister, cg1gpu::PRED);
+                    GPURegisterId predReg(currentPredication.predicateRegister, arch::PRED);
                     releasePredicate(predReg);
                 }
                 else
@@ -2362,7 +2362,7 @@ void IRTranslator::generate_extra_code(GPURegisterId color_temp, GPURegisterId c
                 
                 //  KIL c
                 builder.setOpcode(KIL);
-                op0.registerId = GPURegisterId(alpha_test_declaration.alpha_const_minus_one, cg1gpu::PARAM);
+                op0.registerId = GPURegisterId(alpha_test_declaration.alpha_const_minus_one, arch::PARAM);
                 builder.setOperand(0, op0);
                 
                 //  Build instruction and add to the list of translated CG1 shader instructions.
@@ -2388,9 +2388,9 @@ void IRTranslator::generate_extra_code(GPURegisterId color_temp, GPURegisterId c
                 // SGE temp, color_temp.w, alpha_ref.w
                 builder.setOpcode(SGE);
                 op0.registerId = color_temp;
-                op0.swizzle = cg1gpu::WWWW;
-                op1.registerId = GPURegisterId(alpha_test_declaration.alpha_const_ref, cg1gpu::PARAM);
-                op1.swizzle = cg1gpu::WWWW;
+                op0.swizzle = arch::WWWW;
+                op1.registerId = GPURegisterId(alpha_test_declaration.alpha_const_ref, arch::PARAM);
+                op1.swizzle = arch::WWWW;
                 res.registerId = temp;
                 builder.setOperand(0, op0);
                 builder.setOperand(1, op1);
@@ -2435,10 +2435,10 @@ void IRTranslator::generate_extra_code(GPURegisterId color_temp, GPURegisterId c
                 
                 // ADD temp, alpha_ref.w, -color_temp.w
                 builder.setOpcode(ADD);
-                op0.registerId = GPURegisterId(alpha_test_declaration.alpha_const_ref, cg1gpu::PARAM);
-                op0.swizzle = cg1gpu::WWWW;
+                op0.registerId = GPURegisterId(alpha_test_declaration.alpha_const_ref, arch::PARAM);
+                op0.swizzle = arch::WWWW;
                 op1.registerId = color_temp;
-                op1.swizzle = cg1gpu::WWWW;
+                op1.swizzle = arch::WWWW;
                 op1.negate = true;
                 res.registerId = temp;
                 builder.setOperand(0, op0);
@@ -2483,10 +2483,10 @@ void IRTranslator::generate_extra_code(GPURegisterId color_temp, GPURegisterId c
 
                 // ADD temp, alpha_ref.w, -color_temp.w
                 builder.setOpcode(ADD);
-                op0.registerId = GPURegisterId(alpha_test_declaration.alpha_const_ref, cg1gpu::PARAM);
-                op0.swizzle = cg1gpu::WWWW;
+                op0.registerId = GPURegisterId(alpha_test_declaration.alpha_const_ref, arch::PARAM);
+                op0.swizzle = arch::WWWW;
                 op1.registerId = color_temp;
-                op1.swizzle = cg1gpu::WWWW;
+                op1.swizzle = arch::WWWW;
                 op1.negate = true;
                 res.registerId = temp;
                 builder.setOperand(0, op0);
@@ -2534,9 +2534,9 @@ void IRTranslator::generate_extra_code(GPURegisterId color_temp, GPURegisterId c
                 // ADD temp, color_temp.w, -alpha_ref.w
                 builder.setOpcode(ADD);
                 op0.registerId = color_temp;
-                op0.swizzle = cg1gpu::WWWW;
-                op1.registerId = GPURegisterId(alpha_test_declaration.alpha_const_ref, cg1gpu::PARAM);
-                op1.swizzle = cg1gpu::WWWW;
+                op0.swizzle = arch::WWWW;
+                op1.registerId = GPURegisterId(alpha_test_declaration.alpha_const_ref, arch::PARAM);
+                op1.swizzle = arch::WWWW;
                 op1.negate = true;
                 res.registerId = temp;
                 builder.setOperand(0, op0);
@@ -2582,10 +2582,10 @@ void IRTranslator::generate_extra_code(GPURegisterId color_temp, GPURegisterId c
                 // SGE temp, -color_temp.w, -alpha_ref.w
                 builder.setOpcode(SGE);
                 op0.registerId = color_temp;
-                op0.swizzle = cg1gpu::WWWW;
+                op0.swizzle = arch::WWWW;
                 op0.negate = true;
-                op1.registerId = GPURegisterId(alpha_test_declaration.alpha_const_ref, cg1gpu::PARAM);
-                op1.swizzle = cg1gpu::WWWW;
+                op1.registerId = GPURegisterId(alpha_test_declaration.alpha_const_ref, arch::PARAM);
+                op1.swizzle = arch::WWWW;
                 op1.negate = true;
                 res.registerId = temp;
                 builder.setOperand(0, op0);
@@ -2633,9 +2633,9 @@ void IRTranslator::generate_extra_code(GPURegisterId color_temp, GPURegisterId c
                 // SGE temp.x, color_temp.w, alpha_ref.w
                 builder.setOpcode(SGE);
                 op0.registerId = color_temp;
-                op0.swizzle = cg1gpu::WWWW;
-                op1.registerId = GPURegisterId(alpha_test_declaration.alpha_const_ref, cg1gpu::PARAM);
-                op1.swizzle = cg1gpu::WWWW;
+                op0.swizzle = arch::WWWW;
+                op1.registerId = GPURegisterId(alpha_test_declaration.alpha_const_ref, arch::PARAM);
+                op1.swizzle = arch::WWWW;
                 res.registerId = temp;
                 res.maskMode = XNNN;
                 builder.setOperand(0, op0);
@@ -2653,10 +2653,10 @@ void IRTranslator::generate_extra_code(GPURegisterId color_temp, GPURegisterId c
                 // SGE temp.y, -color_temp.w, -alpha_ref.w
                 builder.setOpcode(SGE);
                 op0.registerId = color_temp;
-                op0.swizzle = cg1gpu::WWWW;
+                op0.swizzle = arch::WWWW;
                 op0.negate = true;
-                op1.registerId = GPURegisterId(alpha_test_declaration.alpha_const_ref, cg1gpu::PARAM);
-                op1.swizzle = cg1gpu::WWWW;
+                op1.registerId = GPURegisterId(alpha_test_declaration.alpha_const_ref, arch::PARAM);
+                op1.swizzle = arch::WWWW;
                 op1.negate = true;
                 res.registerId = temp;
                 res.maskMode = NYNN;

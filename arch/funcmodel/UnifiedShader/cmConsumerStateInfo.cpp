@@ -6,7 +6,7 @@
 
 #include "cmConsumerStateInfo.h"
 
-using namespace cg1gpu;
+using namespace arch;
 
 //  Creates a new ConsumerStateInfo object.  
 ConsumerStateInfo::ConsumerStateInfo(ConsumerState newState) :

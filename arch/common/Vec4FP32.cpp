@@ -8,7 +8,7 @@
 #include "Vec4FP32.h"
 #include <iostream>
 
-using namespace cg1gpu;
+using namespace arch;
 using namespace std;
 
 Vec4FP32::Vec4FP32( F32 x, F32 y, F32 z, F32 w ) {

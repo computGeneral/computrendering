@@ -23,7 +23,7 @@
 #include <cstdio>
 #include <sstream>
 
-using namespace cg1gpu;
+using namespace arch;
 
 
 //  Constructor for the Texture Unit BOX class.  

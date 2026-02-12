@@ -31,7 +31,7 @@
 #include "cmFragmentInput.h"
 #include "bmFragmentOperator.h"
 
-namespace cg1gpu
+namespace arch
 {
 
 /**
@@ -404,7 +404,7 @@ public:
 
 };
 
-} // namespace cg1gpu
+} // namespace arch
 
 #endif
 

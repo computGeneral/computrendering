@@ -32,7 +32,7 @@
 #include "bmFragmentOperator.h"
 #include "bmRasterizer.h"
 
-namespace cg1gpu
+namespace arch
 {
 
 /**
@@ -345,7 +345,7 @@ public:
     void getState(string &stateString);
 };
 
-} // namespace cg1gpu
+} // namespace arch
 
 #endif
 

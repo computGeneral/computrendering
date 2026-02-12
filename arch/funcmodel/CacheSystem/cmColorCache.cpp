@@ -17,7 +17,7 @@
 #include "GPUMath.h"
 #include "bmFragmentOperator.h"
 
-using namespace cg1gpu;
+using namespace arch;
 
 /*  Color Cache class counter.  Used to create identifiers for the created Color Caches
     that are then used to access the Memory Controller.  */

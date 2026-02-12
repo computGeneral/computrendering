@@ -85,7 +85,7 @@ Adhere strictly to the existing style to maintain consistency.
 - **Variables:** camelCase (e.g., `component`, `index`, `vertexCount`).
 - **Member Variables:** camelCase (no specific prefix like `m_` observed in `Vec4FP32`).
 - **Constants/Macros:** UPPER_CASE (e.g., `GPU_ERROR_CHECK`, `CG1_ISA_OPCODE_DP4`).
-- **Namespaces:** lowercase (e.g., `cg1gpu`).
+- **Namespaces:** lowercase (e.g., `arch`).
 - **Files:** PascalCase, matching the class name (e.g., `Vec4FP32.cpp`, `Vec4FP32.h`).
 
 ### Project Structure & Prefixes

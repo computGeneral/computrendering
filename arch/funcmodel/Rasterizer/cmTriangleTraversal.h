@@ -29,7 +29,7 @@
 
 #define _TRIANGLETRAVERSAL_
 
-namespace cg1gpu
+namespace arch
 {
 
 //*  Defines the different Triangle Traversal  states.  
@@ -214,7 +214,7 @@ public:
 
 };
 
-} // namespace cg1gpu
+} // namespace arch
 
 #endif
 

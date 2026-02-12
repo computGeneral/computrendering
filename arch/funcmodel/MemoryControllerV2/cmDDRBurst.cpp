@@ -8,7 +8,7 @@
 #include "cmDDRBurst.h"
 
 using namespace std;
-using cg1gpu::memorycontroller::DDRBurst;
+using arch::memorycontroller::DDRBurst;
 
 U32 DDRBurst::instances = 0;
 

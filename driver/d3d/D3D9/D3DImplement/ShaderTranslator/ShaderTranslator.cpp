@@ -9,7 +9,7 @@
 #include <stdio.h>
 
 using namespace std;
-using namespace cg1gpu;
+using namespace arch;
 
 U32 ShaderTranslator::buildIR(const DWORD *source, IR *&ir)
 {
@@ -118,7 +118,7 @@ ShaderTranslator::ShaderTranslator()
 
 
 
-string ShaderTranslator::printInstructionsDisassembled(std::vector<cg1gpu::cgoShaderInstr *> instructions) {
+string ShaderTranslator::printInstructionsDisassembled(std::vector<arch::cgoShaderInstr *> instructions) {
     std::stringstream ss;
     vector<cgoShaderInstr *>::iterator itSI;
     char auxs[80];
@@ -132,11 +132,11 @@ string ShaderTranslator::printInstructionsDisassembled(std::vector<cg1gpu::cgoSh
     return ss.str();
 }
 
-string ShaderTranslator::printInstructionsBinary(std::vector<cg1gpu::cgoShaderInstr *> instructions) 
+string ShaderTranslator::printInstructionsBinary(std::vector<arch::cgoShaderInstr *> instructions) 
 {
     U08 *memory = new U08[instructions.size() * 16];
     
-    std::vector<cg1gpu::cgoShaderInstr *>::iterator itSI;
+    std::vector<arch::cgoShaderInstr *>::iterator itSI;
     U32 i = 0;
     bool programEnd = false;
     for(itSI = instructions.begin(); (itSI != instructions.end()) && !programEnd; itSI ++)

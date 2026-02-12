@@ -9,7 +9,7 @@
 #include <list>
 #include <string>
 
-namespace cg1gpu
+namespace arch
 {
 namespace memorycontroller
 {
@@ -130,6 +130,6 @@ public:
 }; // class DependencyQueue
 
 } // namespace memorycontroller
-} // namespace cg1gpu
+} // namespace arch
 
 #endif // DEPENDENCYQUEUE_H

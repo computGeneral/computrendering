@@ -206,51 +206,51 @@ void GALBlendingStageImp::forceSync()
 
 void GALBlendingStageImp::sync()
 {
-    cg1gpu::GPURegData data;
+    arch::GPURegData data;
 
     for ( gal_uint rt = 0; rt < MAX_RENDER_TARGETS; ++rt )
     {
         if ( _enabled[rt].changed() || _syncRequired )
         {
             data.booleanVal = _enabled[rt];
-            _driver->writeGPURegister(cg1gpu::GPU_COLOR_BLEND, rt, data);
+            _driver->writeGPURegister(arch::GPU_COLOR_BLEND, rt, data);
             _enabled[rt].restart();
         }
         
         if ( _blendFunc[rt].changed() || _syncRequired ) {
             _getGPUBlendFunction(_blendFunc[rt], &data);
-            _driver->writeGPURegister(cg1gpu::GPU_BLEND_EQUATION, rt, data);
+            _driver->writeGPURegister(arch::GPU_BLEND_EQUATION, rt, data);
             _blendFunc[rt].restart();
         }
 
         if ( _blendFuncAlpha[rt].changed() || _syncRequired ) {
             _getGPUBlendFunction(_blendFuncAlpha[rt], &data);
             // Remove this comment and fix register name to support independent ALPHA BLEND equation/function 
-            // _driver->writeGPURegister(cg1gpu::GPU_BLEND_ALPHA_EQUATION, rt, data);
+            // _driver->writeGPURegister(arch::GPU_BLEND_ALPHA_EQUATION, rt, data);
             _blendFuncAlpha[rt].restart();
         }
 
         if ( _srcBlend[rt].changed() || _syncRequired ) {
             _getGPUBlendOption(_srcBlend[rt], &data);
-            _driver->writeGPURegister(cg1gpu::GPU_BLEND_SRC_RGB, rt, data);
+            _driver->writeGPURegister(arch::GPU_BLEND_SRC_RGB, rt, data);
             _srcBlend[rt].restart();
         }
 
         if ( _destBlend[rt].changed() || _syncRequired ) {
             _getGPUBlendOption(_destBlend[rt], &data);
-            _driver->writeGPURegister(cg1gpu::GPU_BLEND_DST_RGB, rt, data);
+            _driver->writeGPURegister(arch::GPU_BLEND_DST_RGB, rt, data);
             _destBlend[rt].restart();
         }
 
         if ( _srcBlendAlpha[rt].changed() || _syncRequired ) {
             _getGPUBlendOption(_srcBlendAlpha[rt], &data);
-            _driver->writeGPURegister(cg1gpu::GPU_BLEND_SRC_ALPHA, rt, data);
+            _driver->writeGPURegister(arch::GPU_BLEND_SRC_ALPHA, rt, data);
             _srcBlendAlpha[rt].restart();
         }
 
         if ( _destBlendAlpha[rt].changed() || _syncRequired ) {
             _getGPUBlendOption(_destBlendAlpha[rt], &data);
-            _driver->writeGPURegister(cg1gpu::GPU_BLEND_DST_ALPHA, rt, data);
+            _driver->writeGPURegister(arch::GPU_BLEND_DST_ALPHA, rt, data);
             _destBlendAlpha[rt].restart();
         }
         
@@ -260,7 +260,7 @@ void GALBlendingStageImp::sync()
             data.qfVal[1] = blendColor[1];
             data.qfVal[2] = blendColor[2];
             data.qfVal[3] = blendColor[3];
-            _driver->writeGPURegister(cg1gpu::GPU_BLEND_COLOR, rt, data);
+            _driver->writeGPURegister(arch::GPU_BLEND_COLOR, rt, data);
             _blendColor[rt].restart();
         }
 
@@ -268,7 +268,7 @@ void GALBlendingStageImp::sync()
         {
             //data.booleanVal = (_redMask != 0 ? true : false);
             data.booleanVal = _redMask[rt] && _colorWriteEnabled[rt];
-            _driver->writeGPURegister(cg1gpu::GPU_COLOR_MASK_R, rt, data);  //blending
+            _driver->writeGPURegister(arch::GPU_COLOR_MASK_R, rt, data);  //blending
             _redMask[rt].restart();
         }
 
@@ -276,7 +276,7 @@ void GALBlendingStageImp::sync()
         {
             //data.booleanVal = (_greenMask != 0 ? true : false);
             data.booleanVal = _greenMask[rt] && _colorWriteEnabled[rt];
-            _driver->writeGPURegister(cg1gpu::GPU_COLOR_MASK_G, rt, data);
+            _driver->writeGPURegister(arch::GPU_COLOR_MASK_G, rt, data);
             _greenMask[rt].restart();
         }
 
@@ -284,7 +284,7 @@ void GALBlendingStageImp::sync()
         {
             //data.booleanVal = (_blueMask != 0 ? true : false);
             data.booleanVal = _blueMask[rt] && _colorWriteEnabled[rt];
-            _driver->writeGPURegister(cg1gpu::GPU_COLOR_MASK_B, rt, data);
+            _driver->writeGPURegister(arch::GPU_COLOR_MASK_B, rt, data);
             _blueMask[rt].restart();
         }
 
@@ -292,19 +292,19 @@ void GALBlendingStageImp::sync()
         {
             //data.booleanVal = (_alphaMask != 0 ? true : false);
             data.booleanVal = _alphaMask[rt] && _colorWriteEnabled[rt];
-            _driver->writeGPURegister(cg1gpu::GPU_COLOR_MASK_A, rt, data);
+            _driver->writeGPURegister(arch::GPU_COLOR_MASK_A, rt, data);
             _alphaMask[rt].restart();
         }
     }
 }
 
-void GALBlendingStageImp::_getGPUBlendOption(GAL_BLEND_OPTION option, cg1gpu::GPURegData* data)
+void GALBlendingStageImp::_getGPUBlendOption(GAL_BLEND_OPTION option, arch::GPURegData* data)
 {
     // Note:
     // BLEND_FUNCTION in CG1 GPU is equivalent to BLEND_OPTION in CG1 GAL
     // BLEND_EQUATION in CG1 GPU is equivalent to BLEND_FUNCTION in CG1 GAL
 
-    using namespace cg1gpu;
+    using namespace arch;
     switch ( option )
     {
         case GAL_BLEND_ZERO:
@@ -363,13 +363,13 @@ void GALBlendingStageImp::_getGPUBlendOption(GAL_BLEND_OPTION option, cg1gpu::GP
     }
 }
 
-void GALBlendingStageImp::_getGPUBlendFunction(GAL_BLEND_FUNCTION func, cg1gpu::GPURegData* eq)
+void GALBlendingStageImp::_getGPUBlendFunction(GAL_BLEND_FUNCTION func, arch::GPURegData* eq)
 {
     // Note:
     // BLEND_FUNCTION in CG1 GPU is equivalent to BLEND_OPTION in CG1 GAL
     // BLEND_EQUATION in CG1 GPU is equivalent to BLEND_FUNCTION in CG1 GAL
 
-    using namespace cg1gpu;
+    using namespace arch;
     
     switch ( func )
     {
@@ -395,7 +395,7 @@ void GALBlendingStageImp::_getGPUBlendFunction(GAL_BLEND_FUNCTION func, cg1gpu::
 
 const char* GALBlendingStageImp::BlendOptionPrint::print(const GAL_BLEND_OPTION& option) const
 {
-    using namespace cg1gpu;
+    using namespace arch;
     switch ( option )
     {
         case GAL_BLEND_ZERO:
@@ -440,7 +440,7 @@ const char* GALBlendingStageImp::BlendOptionPrint::print(const GAL_BLEND_OPTION&
 
 const char* GALBlendingStageImp::BlendFunctionPrint::print(const GAL_BLEND_FUNCTION& func) const
 {
-    using namespace cg1gpu;
+    using namespace arch;
     
     switch ( func )
     {

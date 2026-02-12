@@ -4,7 +4,7 @@
 #include <sstream>
 
 using namespace std;
-using namespace cg1gpu;
+using namespace arch;
 
 NativeShader *ShaderTranslator::translate(const DWORD *source, D3DCMPFUNC alpha_test) {
 
@@ -85,7 +85,7 @@ ShaderTranslator::ShaderTranslator()
 
 
 
-string ShaderTranslator::printInstructionsDisassembled(std::list<cg1gpu::ShaderInstruction *> instructions) {
+string ShaderTranslator::printInstructionsDisassembled(std::list<arch::ShaderInstruction *> instructions) {
     std::stringstream ss;
     list<ShaderInstruction *>::iterator itSI;
     char auxs[80];
@@ -99,11 +99,11 @@ string ShaderTranslator::printInstructionsDisassembled(std::list<cg1gpu::ShaderI
     return ss.str();
 }
 
-string ShaderTranslator::printInstructionsBinary(std::list<cg1gpu::ShaderInstruction *> instructions) 
+string ShaderTranslator::printInstructionsBinary(std::list<arch::ShaderInstruction *> instructions) 
 {
     U08 *memory = new U08[instructions.size() * 16];
     
-    std::list<cg1gpu::ShaderInstruction *>::iterator itSI;
+    std::list<arch::ShaderInstruction *>::iterator itSI;
     U32 i = 0;
     bool programEnd = false;
     for(itSI = instructions.begin(); (itSI != instructions.end()) && !programEnd; itSI ++)

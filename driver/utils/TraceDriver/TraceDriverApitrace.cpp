@@ -10,7 +10,7 @@
 #include "OGL.h"
 #include "OGLEntryPoints.h"
 
-using namespace cg1gpu;
+using namespace arch;
 #include "support.h"
 #include <iostream>
 #include <cstring>
@@ -79,11 +79,11 @@ unsigned int TraceDriverApitrace::storeBlob(const apitrace::Value& val) {
     return blobId;
 }
 
-cg1gpu::cgoMetaStream* TraceDriverApitrace::nxtMetaStream() {
+arch::cgoMetaStream* TraceDriverApitrace::nxtMetaStream() {
     if (!initialized_ || parser_.eof()) 
         return nullptr;
     
-    cg1gpu::cgoMetaStream* agpt = nullptr;
+    arch::cgoMetaStream* agpt = nullptr;
 
     // Try to drain a MetaStream from HAL buffer first
     while (!(agpt = driver_->nextMetaStream())) {
@@ -105,7 +105,7 @@ cg1gpu::cgoMetaStream* TraceDriverApitrace::nxtMetaStream() {
             if (currentFrame_ >= startFrame_) {
                 std::cout << "Dumping frame " << currentFrame_ << std::endl;
                 ogl::swapBuffers();
-                driver_->signalEvent(cg1gpu::GPU_END_OF_FRAME_EVENT, "");
+                driver_->signalEvent(arch::GPU_END_OF_FRAME_EVENT, "");
             }
             currentFrame_++;
             driver_->printMemoryUsage();

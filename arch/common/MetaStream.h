@@ -10,7 +10,7 @@
 #include <iostream>
 #include "zfstream.h"
 
-namespace cg1gpu
+namespace arch
 {
 
 //  Number of bytes per MetaStream Packet.  
@@ -348,6 +348,6 @@ public:
     ~cgoMetaStream();
 };
 
-} // namespace cg1gpu
+} // namespace arch
 
 #endif

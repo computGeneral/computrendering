@@ -11,8 +11,8 @@
 
 // definition for cmsMduList
 
-using namespace cg1gpu::gpuStatistics;
-using namespace cg1gpu;
+using namespace arch::gpuStatistics;
+using namespace arch;
 using namespace std;
 
 bool cmoMduBase::signalTracingFlag = false;

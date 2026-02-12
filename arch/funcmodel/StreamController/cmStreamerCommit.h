@@ -17,10 +17,10 @@
 
 #define _STREAMERCOMMIT_
 
-namespace cg1gpu
+namespace arch
 {
     class StreamerCommit;
-} // namespace cg1gpu
+} // namespace arch
 
 
 #include "GPUType.h"
@@ -29,7 +29,7 @@ namespace cg1gpu
 #include "cmStreamerCommand.h"
 #include "cmStreamerControlCommand.h"
 
-namespace cg1gpu
+namespace arch
 {
 
 //*  Latency signal of the cmoStreamController - Primitive Assembly bus.  
@@ -233,7 +233,7 @@ public:
 
 };
 
-} // namespace cg1gpu
+} // namespace arch
 
 #endif
 

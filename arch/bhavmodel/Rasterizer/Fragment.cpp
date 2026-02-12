@@ -20,7 +20,7 @@
 #include "GPUMath.h"
 #include <cstdio>
 
-using namespace cg1gpu;
+using namespace arch;
 
 //  Tile Identifier constructor.  
 TileIdentifier::TileIdentifier(S32 xIn, S32 yIn):

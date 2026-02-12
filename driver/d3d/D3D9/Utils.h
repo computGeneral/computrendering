@@ -63,7 +63,7 @@ unsigned int ipow(unsigned int x, unsigned int y);
 ///return log2(x) ceiled if it has fractional part.
 unsigned int ceiledLog2(unsigned int x);
 
-void d3dcolor2quadfloat(D3DCOLOR in, cg1gpu::Vec4FP32* out);
+void d3dcolor2quadfloat(D3DCOLOR in, arch::Vec4FP32* out);
 
 /// Return true if fvf defines given texcoord index
 bool fvf_has_texcoord(BYTE index, DWORD fvf);

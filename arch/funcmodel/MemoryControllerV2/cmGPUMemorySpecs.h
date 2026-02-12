@@ -7,7 +7,7 @@
 
 #include "GPUType.h"
 
-namespace cg1gpu
+namespace arch
 {
 namespace memorycontroller
 {
@@ -133,7 +133,7 @@ struct GDDR3SpecsZeroDelay : public GDDR3Specs
 };
 
 } // namespace memorycontroller
-} // namespace cg1gpu
+} // namespace arch
 
 
 #endif // GPUMEMORYSPECS_H

@@ -303,7 +303,7 @@ void CDevice9::initialize_gpu(StateDataNode* s_device) {
     gpu->writeGPURegister(GPU_VIEWPORT_INI_Y, data);
     data.booleanVal = false;
      gpu->writeGPURegister(GPU_TWOSIDED_LIGHTING, data);
-    data.culling = cg1gpu::BACK;
+    data.culling = arch::BACK;
     gpu->writeGPURegister(GPU_CULLING, data);
     data.faceMode = GPU_CW;
     gpu->writeGPURegister(GPU_FACEMODE, data);

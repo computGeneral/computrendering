@@ -10,7 +10,7 @@
 
 using namespace std;
 
-namespace cg1gpu 
+namespace arch 
 {
 
 // This class saves information about minimum and maximum values. 

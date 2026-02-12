@@ -7,7 +7,7 @@
 
 #include "GPUType.h"
 
-namespace cg1gpu
+namespace arch
 {
 
 template <size_t N, size_t base=2> 

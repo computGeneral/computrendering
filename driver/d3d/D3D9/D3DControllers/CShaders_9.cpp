@@ -215,7 +215,7 @@ void CShaders9::load_default_pixel_shader() {
     ShaderInstructionBuilder builder;
 
     builder.resetParameters();
-    builder.setOpcode(cg1gpu::TEX);
+    builder.setOpcode(arch::TEX);
     Result r;
     r.registerId = GPURegisterId(1, OUT);
     builder.setResult(r);
@@ -230,7 +230,7 @@ void CShaders9::load_default_pixel_shader() {
     instructions.push_back(builder.buildInstruction());
 
     builder.resetParameters();
-    builder.setOpcode(cg1gpu::END);
+    builder.setOpcode(arch::END);
     instructions.push_back(builder.buildInstruction());
     list<ShaderInstruction*> ending = generate_ending_nops();
     instructions.insert(instructions.end(), ending.begin(), ending.end());

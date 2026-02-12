@@ -9,7 +9,7 @@
 #include "cmDDRBurst.h"
 #include <string>
 
-namespace cg1gpu
+namespace arch
 {
 namespace memorycontroller
 {
@@ -221,7 +221,7 @@ private:
 
 } // namespace memorycontroller
 
-} // namespace cg1gpu
+} // namespace arch
 
 
 #endif // DDRCOMMAND_H

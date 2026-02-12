@@ -11,7 +11,7 @@
 #include "GPUType.h"
 #include <ostream>
 
-namespace cg1gpu
+namespace arch
 {
 
 //! Class Vec4Int defines a 4-component 32 bit integer vector
@@ -69,6 +69,6 @@ public:
 
 };
 
-} // namespace cg1gpu
+} // namespace arch
 
 #endif

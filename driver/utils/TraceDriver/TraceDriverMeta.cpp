@@ -9,7 +9,7 @@
 #include <iostream>
 #include <cstring>
 
-using namespace cg1gpu;
+using namespace arch;
 using namespace std;
 
 TraceDriverMeta::TraceDriverMeta(gzifstream *ProfilingFile, U32 startFrame_, U32 traceFirstFrame_) :

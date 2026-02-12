@@ -28,7 +28,7 @@
 
 #include <vector>
 
-namespace cg1gpu
+namespace arch
 {
 
 /**
@@ -94,6 +94,6 @@ public:
     void clock(U64 cycle) override {};
     
 };  // class cmoUnifiedShader
-};  //  namespace cg1gpu
+};  //  namespace arch
 
 #endif

@@ -14,7 +14,7 @@
  
 #include "cmTileInput.h"
 
-using namespace cg1gpu;
+using namespace arch;
 
 //  Creates a new TileInput.  
 TileInput::TileInput(U32 ID, U32 setID, Tile *t, bool endTile,

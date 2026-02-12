@@ -11,7 +11,7 @@
 #include "DynamicObject.h"
 #include "cmTextureProcessor.h"
 
-namespace cg1gpu
+namespace arch
 {
 
 /**
@@ -62,6 +62,6 @@ public:
     TextureUnitState getState();
 };
 
-} // namespace cg1gpu
+} // namespace arch
 
 #endif

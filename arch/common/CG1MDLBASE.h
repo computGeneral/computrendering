@@ -11,7 +11,7 @@
 #include "GPUType.h"
 #include "GPUReg.h"
 
-namespace cg1gpu
+namespace arch
 {
 
     class CG1MDLBASE
@@ -328,6 +328,6 @@ namespace cg1gpu
         virtual U32 applyColorKey(U32 p) = 0;
     };  // class CG1MDLBASE
 
-};  //  namespace cg1gpu
+};  //  namespace arch
 
 #endif

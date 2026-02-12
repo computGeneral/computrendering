@@ -21,7 +21,7 @@
 
 #define _SHADERCOMMAND_
 
-namespace cg1gpu
+namespace arch
 {
 
 //*  Commands that can recieve the Shader.  
@@ -412,6 +412,6 @@ public:
 
 };
 
-} // namespace cg1gpu
+} // namespace arch
 
 #endif

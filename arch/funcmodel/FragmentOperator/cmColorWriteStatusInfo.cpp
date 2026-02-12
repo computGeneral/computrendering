@@ -17,7 +17,7 @@
 
 #include "cmColorWriteStatusInfo.h"
 
-using namespace cg1gpu;
+using namespace arch;
 
 //  Color Write Status Info constructor.  
 ColorWriteStatusInfo::ColorWriteStatusInfo(ColorWriteState stat)

@@ -709,23 +709,23 @@ void TextureObject::Mipmap::set2D(GLint ifmt_, GLint width_, GLint height_, GLin
 
         //NEWW
 
-        cg1gpu::TextureCompression compressed;
+        arch::TextureCompression compressed;
         switch (ifmt)
         {
             case GL_COMPRESSED_RGB_S3TC_DXT1_EXT:
-                compressed = cg1gpu::GPU_S3TC_DXT1_RGB;
+                compressed = arch::GPU_S3TC_DXT1_RGB;
                 break;
             case GL_COMPRESSED_RGBA_S3TC_DXT1_EXT:
-                compressed = cg1gpu::GPU_S3TC_DXT1_RGBA;
+                compressed = arch::GPU_S3TC_DXT1_RGBA;
                 break;
             case GL_COMPRESSED_RGBA_S3TC_DXT3_EXT:
-                compressed = cg1gpu::GPU_S3TC_DXT3_RGBA;
+                compressed = arch::GPU_S3TC_DXT3_RGBA;
                 break;
             case GL_COMPRESSED_RGBA_S3TC_DXT5_EXT:
-                compressed = cg1gpu::GPU_S3TC_DXT5_RGBA;
+                compressed = arch::GPU_S3TC_DXT5_RGBA;
                 break;
             default:
-                compressed = cg1gpu::GPU_NO_TEXTURE_COMPRESSION;
+                compressed = arch::GPU_NO_TEXTURE_COMPRESSION;
         }
         data = driver->getDataInMortonOrder((U08*)data_, width, height, depth, compressed, 0, size);
 
@@ -919,23 +919,23 @@ void TextureObject::Mipmap::set2D(GLint ifmt_, GLint width_, GLint height_, GLin
         
         //NEWW
 
-        cg1gpu::TextureCompression compressed;
+        arch::TextureCompression compressed;
         switch (ifmt)
         {
             case GL_COMPRESSED_RGB_S3TC_DXT1_EXT:
-                compressed = cg1gpu::GPU_S3TC_DXT1_RGB;
+                compressed = arch::GPU_S3TC_DXT1_RGB;
                 break;
             case GL_COMPRESSED_RGBA_S3TC_DXT1_EXT:
-                compressed = cg1gpu::GPU_S3TC_DXT1_RGBA;
+                compressed = arch::GPU_S3TC_DXT1_RGBA;
                 break;
             case GL_COMPRESSED_RGBA_S3TC_DXT3_EXT:
-                compressed = cg1gpu::GPU_S3TC_DXT3_RGBA;
+                compressed = arch::GPU_S3TC_DXT3_RGBA;
                 break;
             case GL_COMPRESSED_RGBA_S3TC_DXT5_EXT:
-                compressed = cg1gpu::GPU_S3TC_DXT5_RGBA;
+                compressed = arch::GPU_S3TC_DXT5_RGBA;
                 break;
             default:
-                compressed = cg1gpu::GPU_NO_TEXTURE_COMPRESSION;
+                compressed = arch::GPU_NO_TEXTURE_COMPRESSION;
         }
         data = driver->getDataInMortonOrder((U08*)data_, width, height, depth, compressed, texelsSize, size);
 
@@ -1222,23 +1222,23 @@ void TextureObject::Mipmap::setPartial2D(GLint xoffset, GLint yoffset, GLint wid
 
         //NEWW
 
-        cg1gpu::TextureCompression compressed;
+        arch::TextureCompression compressed;
         switch (ifmt)
         {
             case GL_COMPRESSED_RGB_S3TC_DXT1_EXT:
-                compressed = cg1gpu::GPU_S3TC_DXT1_RGB;
+                compressed = arch::GPU_S3TC_DXT1_RGB;
                 break;
             case GL_COMPRESSED_RGBA_S3TC_DXT1_EXT:
-                compressed = cg1gpu::GPU_S3TC_DXT1_RGBA;
+                compressed = arch::GPU_S3TC_DXT1_RGBA;
                 break;
             case GL_COMPRESSED_RGBA_S3TC_DXT3_EXT:
-                compressed = cg1gpu::GPU_S3TC_DXT3_RGBA;
+                compressed = arch::GPU_S3TC_DXT3_RGBA;
                 break;
             case GL_COMPRESSED_RGBA_S3TC_DXT5_EXT:
-                compressed = cg1gpu::GPU_S3TC_DXT5_RGBA;
+                compressed = arch::GPU_S3TC_DXT5_RGBA;
                 break;
             default:
-                compressed = cg1gpu::GPU_NO_TEXTURE_COMPRESSION;
+                compressed = arch::GPU_NO_TEXTURE_COMPRESSION;
                 heightCompr = height_;
                 break;
         }

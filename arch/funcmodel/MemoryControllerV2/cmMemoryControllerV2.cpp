@@ -20,7 +20,7 @@
 #include "cmMemoryTraceRecorder.h"
 
 using namespace std;
-using namespace cg1gpu::memorycontroller;
+using namespace arch::memorycontroller;
 
 #ifdef GPU_DEBUG
     #undef GPU_DEBUG
@@ -32,11 +32,11 @@ using namespace cg1gpu::memorycontroller;
 #define DEBUG_CYCLE(expr) { if (cycle > 2105) { expr } }
 
 
-// Import cg1gpu symbols
-using cg1gpu::tools::Queue; // to use our model of Queue (cg1gpu::tools::Queue)
-using cg1gpu::GPUUnit;
-using cg1gpu::MemState;
-using cg1gpu::MemoryTransaction;
+// Import arch symbols
+using arch::tools::Queue; // to use our model of Queue (arch::tools::Queue)
+using arch::GPUUnit;
+using arch::MemState;
+using arch::MemoryTransaction;
 
 MemoryControllerParameters MemoryController::MemoryControllerDefaultParameters =
 {
@@ -1050,8 +1050,8 @@ U32 MemoryController::addRequest(MemoryTransaction* memTrans, U64 cycle)
 
     // Check if the request is from a ROP
     switch ( memTrans->getRequestSource() ) {
-        case cg1gpu::COLORWRITE:
-        case cg1gpu::ZSTENCILTEST:
+        case arch::COLORWRITE:
+        case arch::ZSTENCILTEST:
             {
                 // update counters
                 U32 subid = memTrans->getUnitID();
@@ -1693,8 +1693,8 @@ void MemoryController::stage_updateCompletedRequests(U64 cycle)
             /// update per rop counters ///
             // Check if the request is from a ROP
             switch ( requestTransaction->getRequestSource() ) {
-                case cg1gpu::COLORWRITE:
-                case cg1gpu::ZSTENCILTEST:
+                case arch::COLORWRITE:
+                case arch::ZSTENCILTEST:
                     {
                         // update counters
                         U32 subid = requestTransaction->getUnitID();
@@ -1884,8 +1884,8 @@ void MemoryController::sendBusState(U64 cycle, GPUUnit unit, MemState state)
 
         if ( useRopCounters ) {
             switch ( unit ) {
-                case cg1gpu::COLORWRITE:
-                case cg1gpu::ZSTENCILTEST:
+                case arch::COLORWRITE:
+                case arch::ZSTENCILTEST:
                     {
                         GPU_ASSERT( if ( i >= ropCounters.size() ) CG_ASSERT("ROP counter out of bounds"); )
                         if ( ropCounters[i] >= (requestQueueSize / ropCounters.size()) )

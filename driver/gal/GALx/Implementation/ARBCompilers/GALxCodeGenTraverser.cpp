@@ -11,7 +11,7 @@
 using namespace libGAL;
 using namespace libGAL::GenerationCode;
 using namespace std;
-using namespace cg1gpu;
+using namespace arch;
 using namespace libGAL;
 
 /* ****************************************************************************

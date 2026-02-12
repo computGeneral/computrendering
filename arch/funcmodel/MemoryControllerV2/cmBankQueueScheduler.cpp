@@ -8,7 +8,7 @@
 
 using std::cout;
 
-using namespace cg1gpu::memorycontroller;
+using namespace arch::memorycontroller;
 
 ///////// Methods for TQueue /////////////
 

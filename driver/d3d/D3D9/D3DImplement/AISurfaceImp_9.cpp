@@ -529,8 +529,8 @@ HRESULT D3D_CALL AISurfaceImp9::UnlockRect()
     {
         for ( int j = 0; j < (rightLock - leftLock); j++ )
         {
-            fputc( U08(cg1gpu::GPUMath::convertFP16ToFP32(*((U16 *) &index[0])) * 255.0f), fout ); index++; index++;
-            fputc( U08(cg1gpu::GPUMath::convertFP16ToFP32(*((U16 *) &index[0])) * 255.0f), fout ); index++; index++;
+            fputc( U08(arch::GPUMath::convertFP16ToFP32(*((U16 *) &index[0])) * 255.0f), fout ); index++; index++;
+            fputc( U08(arch::GPUMath::convertFP16ToFP32(*((U16 *) &index[0])) * 255.0f), fout ); index++; index++;
             fputc( char(0), fout );
             //index++;
         }

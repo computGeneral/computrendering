@@ -20,7 +20,7 @@
  *
  */
 
-using namespace cg1gpu;
+using namespace arch;
 
 
 //  Constructor to be used with original Shader

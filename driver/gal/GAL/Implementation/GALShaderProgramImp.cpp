@@ -159,9 +159,9 @@ bool GALShaderProgramImp::isOptimized() const
     return _optBytecode != 0;
 }
 
-void GALShaderProgramImp::updateConstants(HAL* driver, cg1gpu::GPURegister constantsType)
+void GALShaderProgramImp::updateConstants(HAL* driver, arch::GPURegister constantsType)
 {
-    cg1gpu::GPURegData data;
+    arch::GPURegData data;
 
     set<gal_uint>::iterator it = _touched.begin();
     const set<gal_uint>::iterator end = _touched.end();

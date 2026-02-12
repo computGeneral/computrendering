@@ -23,7 +23,7 @@
 #include "cmMemorySpace.h"
 #include "cmMemoryControllerDefs.h"
 
-namespace cg1gpu
+namespace arch
 {
     class MemoryTransaction;
 
@@ -663,6 +663,6 @@ public:
     
 };
 
-} // namespace cg1gpu
+} // namespace arch
 
 #endif

@@ -6,7 +6,7 @@
 
 #include "cmRasterizerCommand.h"
 
-using namespace cg1gpu;
+using namespace arch;
 
 /*  Rasterizer Command constructor.  For RSCOM_RESET, RSCOM_DRAW,
     RSCOM_CLEAR_COLOR_BUFFER, RSCOM_CLEAR_ZSTENCIL_BUFFER, RSCOM_SWAP, RSCOM_END.  */

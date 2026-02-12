@@ -199,30 +199,30 @@ void GALZStencilStageImp::setZStencilBufferDefined(gal_bool present)
 
 void GALZStencilStageImp::sync()
 {
-    cg1gpu::GPURegData data;
+    arch::GPURegData data;
 
     if ( _zEnabled.changed() || _zStencilBufferDefined.changed() || _syncRequired ) {
         data.booleanVal = _zEnabled && _zStencilBufferDefined;
-        _driver->writeGPURegister(cg1gpu::GPU_DEPTH_TEST, data);
+        _driver->writeGPURegister(arch::GPU_DEPTH_TEST, data);
         _zEnabled.restart();
         _zStencilBufferDefined.restart();
     }
 
     if ( (_zEnabled && _zFunc.changed()) || _syncRequired ) { // only updates if _zEnabled == true
         _getGPUCompareFunction(_zFunc, &data);
-        _driver->writeGPURegister(cg1gpu::GPU_DEPTH_FUNCTION, data);
+        _driver->writeGPURegister(arch::GPU_DEPTH_FUNCTION, data);
         _zFunc.restart();
     }
 
     if ( (_zEnabled && _zMask.changed()) || _syncRequired ) {
         data.booleanVal = _zMask;
-        _driver->writeGPURegister(cg1gpu::GPU_DEPTH_MASK, data);
+        _driver->writeGPURegister(arch::GPU_DEPTH_MASK, data);
         _zMask.restart();
     }
 
     if ( _stencilEnabled.changed() || _zStencilBufferDefined.changed() || _syncRequired ) {
         data.booleanVal = _stencilEnabled && _zStencilBufferDefined;
-        _driver->writeGPURegister(cg1gpu::GPU_STENCIL_TEST, data);
+        _driver->writeGPURegister(arch::GPU_STENCIL_TEST, data);
         _stencilEnabled.restart();    
         _zStencilBufferDefined.restart();
     }
@@ -231,108 +231,108 @@ void GALZStencilStageImp::sync()
         // Updates FRONT_FACE related state
         if ( _front.stencilFunc.changed() || _syncRequired ) {
             _getGPUCompareFunction(_front.stencilFunc, &data);
-            _driver->writeGPURegister(cg1gpu::GPU_STENCIL_FUNCTION, data);
+            _driver->writeGPURegister(arch::GPU_STENCIL_FUNCTION, data);
             _front.stencilFunc.restart();
         }
         if ( _front.stencilRef.changed() || _syncRequired ) {
             data.uintVal = _front.stencilRef;
-            _driver->writeGPURegister(cg1gpu::GPU_STENCIL_REFERENCE, data);
+            _driver->writeGPURegister(arch::GPU_STENCIL_REFERENCE, data);
             _front.stencilRef.restart();
         }
         if ( _front.stencilMask.changed() || _syncRequired ) {
             data.uintVal = _front.stencilMask;
-            _driver->writeGPURegister(cg1gpu::GPU_STENCIL_COMPARE_MASK, data);
+            _driver->writeGPURegister(arch::GPU_STENCIL_COMPARE_MASK, data);
             _front.stencilMask.restart();
         }
         if ( _front.onStencilFail.changed() || _syncRequired ) {
             _getGPUStencilOperation(_front.onStencilFail, &data);
-            _driver->writeGPURegister(cg1gpu::GPU_STENCIL_FAIL_UPDATE, data);
+            _driver->writeGPURegister(arch::GPU_STENCIL_FAIL_UPDATE, data);
             _front.onStencilFail.restart();
         }
         if ( _front.onStencilPassZFails.changed() || _syncRequired ) {
             _getGPUStencilOperation(_front.onStencilPassZFails, &data);
-            _driver->writeGPURegister(cg1gpu::GPU_DEPTH_FAIL_UPDATE, data);
+            _driver->writeGPURegister(arch::GPU_DEPTH_FAIL_UPDATE, data);
             _front.onStencilPassZFails.restart();
         }
         if ( _front.onStencilPassZPass.changed() || _syncRequired ) {
             _getGPUStencilOperation(_front.onStencilPassZPass, &data);
-            _driver->writeGPURegister(cg1gpu::GPU_DEPTH_PASS_UPDATE, data);
+            _driver->writeGPURegister(arch::GPU_DEPTH_PASS_UPDATE, data);
             _front.onStencilPassZPass.restart();
         }
         // Updates BACK_FACE related state
         if ( _back.stencilFunc.changed() || _syncRequired ) {
             _getGPUCompareFunction(_back.stencilFunc, &data);
-            _driver->writeGPURegister(cg1gpu::GPU_STENCIL_FUNCTION, data);
+            _driver->writeGPURegister(arch::GPU_STENCIL_FUNCTION, data);
             _back.stencilFunc.restart();
         }
         if ( _back.stencilRef.changed() || _syncRequired ) {
             data.uintVal = _back.stencilRef;
-            _driver->writeGPURegister(cg1gpu::GPU_STENCIL_REFERENCE, data);
+            _driver->writeGPURegister(arch::GPU_STENCIL_REFERENCE, data);
             _back.stencilRef.restart();
         }
         if ( _back.stencilMask.changed() || _syncRequired ) {
             data.uintVal = _back.stencilMask;
-            _driver->writeGPURegister(cg1gpu::GPU_STENCIL_COMPARE_MASK, data);
+            _driver->writeGPURegister(arch::GPU_STENCIL_COMPARE_MASK, data);
             _back.stencilMask.restart();
         }
         if ( _back.onStencilFail.changed() || _syncRequired ) {
             _getGPUStencilOperation(_back.onStencilFail, &data);
             // Separate per faces stencil not supported by CG1
             // Remove the comment and fix the register name when the support is available
-            //_driver->writeGPURegister(cg1gpu::GPU_STENCIL_FAIL_UPDATE_BACK, data);
+            //_driver->writeGPURegister(arch::GPU_STENCIL_FAIL_UPDATE_BACK, data);
             _back.onStencilFail.restart();
         }
         if ( _back.onStencilPassZFails.changed() || _syncRequired ) {
             _getGPUStencilOperation(_back.onStencilPassZFails, &data);
             // Separate per faces stencil not supported by CG1
             // Remove the comment and fix the register name when the support is available
-            //_driver->writeGPURegister(cg1gpu::GPU_DEPTH_FAIL_UPDATE_BACK, data);
+            //_driver->writeGPURegister(arch::GPU_DEPTH_FAIL_UPDATE_BACK, data);
             _back.onStencilPassZFails.restart();
         }
         if ( _back.onStencilPassZPass.changed() || _syncRequired ) {
             _getGPUStencilOperation(_back.onStencilPassZPass, &data);
             // Separate per faces stencil not supported by CG1
             // Remove the comment and fix the register name when the support is available
-            //_driver->writeGPURegister(cg1gpu::GPU_DEPTH_PASS_UPDATE_BACK, data);
+            //_driver->writeGPURegister(arch::GPU_DEPTH_PASS_UPDATE_BACK, data);
             _back.onStencilPassZPass.restart();
         }
     }
 
     if (_depthRangeNear.changed() || _syncRequired) {
         data.f32Val = _depthRangeNear;
-        _driver->writeGPURegister( cg1gpu::GPU_DEPTH_RANGE_NEAR, data );
+        _driver->writeGPURegister( arch::GPU_DEPTH_RANGE_NEAR, data );
         _depthRangeNear.restart();
     }
 
     if (_depthRangeFar.changed() || _syncRequired) {
         data.f32Val = _depthRangeFar;
-        _driver->writeGPURegister( cg1gpu::GPU_DEPTH_RANGE_FAR, data );
+        _driver->writeGPURegister( arch::GPU_DEPTH_RANGE_FAR, data );
         _depthRangeFar.restart();
     }
     
     if (_d3d9DepthRange.changed() || _syncRequired)
     {
         data.booleanVal = _d3d9DepthRange;
-        _driver->writeGPURegister(cg1gpu::GPU_D3D9_DEPTH_RANGE, data);
+        _driver->writeGPURegister(arch::GPU_D3D9_DEPTH_RANGE, data);
         _d3d9DepthRange.restart();
     }
 
     if (_depthSlopeFactor.changed() || _syncRequired) {
         data.f32Val = _depthSlopeFactor;
-        _driver->writeGPURegister( cg1gpu::GPU_DEPTH_SLOPE_FACTOR, data );
+        _driver->writeGPURegister( arch::GPU_DEPTH_SLOPE_FACTOR, data );
         _depthSlopeFactor.restart();
     }
 
     if (_depthUnitOffset.changed() || _syncRequired) {
         data.f32Val = _depthUnitOffset;
         data.f32Val = 0;
-        _driver->writeGPURegister( cg1gpu::GPU_DEPTH_UNIT_OFFSET, data );
+        _driver->writeGPURegister( arch::GPU_DEPTH_UNIT_OFFSET, data );
         _depthUnitOffset.restart();
     }
 
     if (_stencilUpdateMask.changed() || _syncRequired) {
         data.uintVal = _stencilUpdateMask;
-        _driver->writeGPURegister( cg1gpu::GPU_STENCIL_UPDATE_MASK, data );
+        _driver->writeGPURegister( arch::GPU_STENCIL_UPDATE_MASK, data );
         _stencilUpdateMask.restart();
     }
 
@@ -372,9 +372,9 @@ string GALZStencilStageImp::getInternalState() const
     return ss.str();
 }
 
-void GALZStencilStageImp::_getGPUCompareFunction(GAL_COMPARE_FUNCTION comp, cg1gpu::GPURegData* data)
+void GALZStencilStageImp::_getGPUCompareFunction(GAL_COMPARE_FUNCTION comp, arch::GPURegData* data)
 {
-    using namespace cg1gpu;
+    using namespace arch;
     switch ( comp ) {
         case GAL_COMPARE_FUNCTION_NEVER:
             data->compare = GPU_NEVER; break;
@@ -397,25 +397,25 @@ void GALZStencilStageImp::_getGPUCompareFunction(GAL_COMPARE_FUNCTION comp, cg1g
     }
 }
 
-void GALZStencilStageImp::_getGPUStencilOperation(GAL_STENCIL_OP op, cg1gpu::GPURegData* data)
+void GALZStencilStageImp::_getGPUStencilOperation(GAL_STENCIL_OP op, arch::GPURegData* data)
 {
     switch ( op ) {
         case GAL_STENCIL_OP_KEEP:
-            data->stencilUpdate = cg1gpu::STENCIL_KEEP; break;
+            data->stencilUpdate = arch::STENCIL_KEEP; break;
         case GAL_STENCIL_OP_ZERO:
-            data->stencilUpdate = cg1gpu::STENCIL_ZERO; break;
+            data->stencilUpdate = arch::STENCIL_ZERO; break;
         case GAL_STENCIL_OP_REPLACE:
-            data->stencilUpdate = cg1gpu::STENCIL_REPLACE; break;
+            data->stencilUpdate = arch::STENCIL_REPLACE; break;
         case GAL_STENCIL_OP_INCR_SAT:
-            data->stencilUpdate = cg1gpu::STENCIL_INCR; break;            
+            data->stencilUpdate = arch::STENCIL_INCR; break;            
         case GAL_STENCIL_OP_DECR_SAT:
-            data->stencilUpdate = cg1gpu::STENCIL_DECR; break;
+            data->stencilUpdate = arch::STENCIL_DECR; break;
         case GAL_STENCIL_OP_INVERT:
-            data->stencilUpdate = cg1gpu::STENCIL_INVERT; break;
+            data->stencilUpdate = arch::STENCIL_INVERT; break;
         case GAL_STENCIL_OP_INCR:
-            data->stencilUpdate = cg1gpu::STENCIL_INCR_WRAP; break;
+            data->stencilUpdate = arch::STENCIL_INCR_WRAP; break;
         case GAL_STENCIL_OP_DECR:
-            data->stencilUpdate = cg1gpu::STENCIL_DECR_WRAP; break;
+            data->stencilUpdate = arch::STENCIL_DECR_WRAP; break;
         default:
             CG_ASSERT("Unknown stencil operation");
     }
@@ -423,7 +423,7 @@ void GALZStencilStageImp::_getGPUStencilOperation(GAL_STENCIL_OP op, cg1gpu::GPU
 
 const char* GALZStencilStageImp::CompareFunctionPrint::print(const GAL_COMPARE_FUNCTION& comp) const
 {
-    using namespace cg1gpu;
+    using namespace arch;
     switch ( comp ) {
         case GAL_COMPARE_FUNCTION_NEVER:
             return "NEVER";

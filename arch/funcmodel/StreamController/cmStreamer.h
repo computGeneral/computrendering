@@ -19,7 +19,7 @@
 
 #include <map>
 
-namespace cg1gpu
+namespace arch
 {
 
 //**  Unassigned output cache tag identifier.  
@@ -39,7 +39,7 @@ enum StreamerState
 //**  Table with the size in bytes of each Stream data type.  
 extern U32 streamDataSize[];
 
-} // namespace cg1gpu
+} // namespace arch
 
 //  Just after all the definitions these files need.  
 #include "cmStreamerFetch.h"
@@ -47,7 +47,7 @@ extern U32 streamDataSize[];
 #include "cmStreamerLoader.h"
 #include "cmStreamerCommit.h"
 
-namespace cg1gpu
+namespace arch
 {
 
 /**
@@ -246,7 +246,7 @@ public:
     
 };
 
-} // namespace cg1gpu
+} // namespace arch
 
 #endif
 

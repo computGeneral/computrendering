@@ -18,9 +18,9 @@
 #include <utility> // For pair<> data type
 
 
-using namespace cg1gpu;
+using namespace arch;
 using namespace std;
-using namespace cg1gpu::gpuStatistics;
+using namespace arch::gpuStatistics;
 
 /******************************************************************************************
  *                       Color Buffer Block class implementation                          *

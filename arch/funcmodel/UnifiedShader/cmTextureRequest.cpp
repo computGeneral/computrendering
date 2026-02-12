@@ -18,7 +18,7 @@
 
 #include "cmTextureRequest.h"
 
-using namespace cg1gpu;
+using namespace arch;
 
 //  Texture Request constructor.  
 TextureRequest::TextureRequest(TextureAccess *txAccess)

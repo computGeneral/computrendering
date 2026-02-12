@@ -19,7 +19,7 @@
 #include "Tile.h"
 #include <cstring>
 
-using namespace cg1gpu;
+using namespace arch;
 
 //  Tile constructor.  
 Tile::Tile(SetupTriangle *tri, U32 startX, U32 startY, F64 *edgEq, F64 zeq, U32 l)

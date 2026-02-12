@@ -8,7 +8,7 @@
 #include "GPUType.h"
 #include "BitStream.h"
 
-namespace cg1gpu
+namespace arch
 {
 
 class BitStreamWriter : public BitStream

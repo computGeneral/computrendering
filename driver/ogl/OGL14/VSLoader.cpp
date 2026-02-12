@@ -79,15 +79,15 @@ void VSLoader::initShader(ProgramObject& po, GLenum target, GLContext* ctx)
 
         //  Initialize the attributes. Smooth interpolated and perspective correct if
         //  perspective transformation.
-        for (unsigned int attr = 0; attr < cg1gpu::MAX_FRAGMENT_ATTRIBUTES; attr++)
+        for (unsigned int attr = 0; attr < arch::MAX_FRAGMENT_ATTRIBUTES; attr++)
         {
             settings.smoothInterp[attr] = true;
             settings.perspectCorrectInterp[attr] = settings.zPerspective;
         }
         
         //  Set flat interpolation for the color attribute if GL_FLAT shade model used.
-        settings.smoothInterp[cg1gpu::COLOR_ATTRIBUTE] = (ctx->getShadeModel() == GL_TRUE);
-        settings.smoothInterp[cg1gpu::COLOR_ATTRIBUTE_SEC] = (ctx->getShadeModel() == GL_TRUE);
+        settings.smoothInterp[arch::COLOR_ATTRIBUTE] = (ctx->getShadeModel() == GL_TRUE);
+        settings.smoothInterp[arch::COLOR_ATTRIBUTE_SEC] = (ctx->getShadeModel() == GL_TRUE);
 
         /////////////////////////////////////////////////////////////////////////////
 
@@ -109,7 +109,7 @@ void VSLoader::initShader(ProgramObject& po, GLenum target, GLContext* ctx)
     //po.printSource();
 //po.printASM();
 
-    cg1gpu::GPURegData data;
+    arch::GPURegData data;
 
     // It is not need to be called each time (patch for now)
     // maxAliveTemps is available after a PO is compiled
@@ -123,12 +123,12 @@ void VSLoader::initShader(ProgramObject& po, GLenum target, GLContext* ctx)
     if ( target == GL_FRAGMENT_PROGRAM_ARB )
     {
         //  Write fragment per thread resource usage.  
-        driver->writeGPURegister(cg1gpu::GPU_FRAGMENT_THREAD_RESOURCES, data);
+        driver->writeGPURegister(arch::GPU_FRAGMENT_THREAD_RESOURCES, data);
     }
     else
     {
         //  Write vertex per thread resource usage.  
-        driver->writeGPURegister(cg1gpu::GPU_VERTEX_THREAD_RESOURCES, data);
+        driver->writeGPURegister(arch::GPU_VERTEX_THREAD_RESOURCES, data);
     }
     
     // Allocate/synchronize program
@@ -159,9 +159,9 @@ void VSLoader::initShader(ProgramObject& po, GLenum target, GLContext* ctx)
         data.qfVal[3] = constants[i][3];
 
         if ( target == GL_VERTEX_PROGRAM_ARB )
-            driver->writeGPURegister(cg1gpu::GPU_VERTEX_CONSTANT, i, data);
+            driver->writeGPURegister(arch::GPU_VERTEX_CONSTANT, i, data);
         else
-            driver->writeGPURegister(cg1gpu::GPU_FRAGMENT_CONSTANT, i, data);
+            driver->writeGPURegister(arch::GPU_FRAGMENT_CONSTANT, i, data);
     }
 
     if ( target == GL_VERTEX_PROGRAM_ARB )

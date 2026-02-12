@@ -34,7 +34,7 @@
 #include <map>
 
 
-namespace cg1gpu
+namespace arch
 {
 
 /**
@@ -266,7 +266,7 @@ public:
      *  @return An initialized bmoGpuTop object.
      *
      */
-    bmoGpuTop(cg1gpu::cgsArchConfig ArchConf, cgoTraceDriverBase *TraceDriver);
+    bmoGpuTop(arch::cgsArchConfig ArchConf, cgoTraceDriverBase *TraceDriver);
 
     /**
      *  Implements a fire and forget emulation main loop.
@@ -849,6 +849,6 @@ public:
 };  // class bmoGpuTop
 
 
-};  //  namespace cg1gpu
+};  //  namespace arch
 
 #endif

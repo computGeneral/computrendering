@@ -14,7 +14,7 @@
 #include <cstdio>
 #include <ostream>
 
-namespace cg1gpu
+namespace arch
 {
 
 class cmoSignalBinder {
@@ -112,6 +112,6 @@ public:
     void dump(bool showOnlyNotBoundSignals = false) const;
 };
 
-} // namespace cg1gpu
+} // namespace arch
 
 #endif

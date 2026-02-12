@@ -8,7 +8,7 @@
 #include "GPUType.h"
 #include "cmGPUMemorySpecs.h"
 
-namespace cg1gpu
+namespace arch
 {
 namespace memorycontroller
 {
@@ -256,6 +256,6 @@ private:
 
 };
 } // namespace memorycontroller
-} // namespace cg1gpu
+} // namespace arch
 
 #endif // DDRMODULESTATE_h

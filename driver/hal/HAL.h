@@ -121,7 +121,7 @@ private:
      *
      * @param agpt the cgoMetaStream to be sent
      */
-    bool _sendcgoMetaStream( cg1gpu::cgoMetaStream* agpt );
+    bool _sendcgoMetaStream( arch::cgoMetaStream* agpt );
 
     /**
      * Map for occupied memory blocks
@@ -158,7 +158,7 @@ private:
     /**
      * Outstanding cgoMetaStreams
      */
-    cg1gpu::cgoMetaStream** metaStreamBuffer;
+    arch::cgoMetaStream** metaStreamBuffer;
 
     /**
      * Position available in the MetaStreamBufferQueue to store an cgoMetaStream
@@ -253,8 +253,8 @@ public:
     struct MicroTriangleRasterSettings
     {
         bool zPerspective;
-        bool smoothInterp[cg1gpu::MAX_FRAGMENT_ATTRIBUTES];
-        bool perspectCorrectInterp[cg1gpu::MAX_FRAGMENT_ATTRIBUTES];
+        bool smoothInterp[arch::MAX_FRAGMENT_ATTRIBUTES];
+        bool perspectCorrectInterp[arch::MAX_FRAGMENT_ATTRIBUTES];
         bool faceCullEnabled;
         bool CWFaceCull;
         bool CCWFaceCull;
@@ -267,7 +267,7 @@ public:
      *
      * From vertex shader to fragment shader: i -> outputAttrib[i]
      */
-    static const S32 outputAttrib[cg1gpu::MAX_VERTEX_ATTRIBUTES];
+    static const S32 outputAttrib[arch::MAX_VERTEX_ATTRIBUTES];
 
 
     struct VertexAttribute
@@ -278,7 +278,7 @@ public:
         U32 md; // memory descriptor asociated to this VertexAttribute 
         U32 offset; // offset 
         U32 stride; // stride 
-        cg1gpu::StreamData componentsType; // type of components 
+        arch::StreamData componentsType; // type of components 
         U32 components; // number of components per stream element 
 
         void dump() const;
@@ -433,7 +433,7 @@ public:
      *
      */
      
-    U32 createRenderBuffer(U32 width, U32 height, bool multisampling, U32 samples, cg1gpu::TextureFormat format);
+    U32 createRenderBuffer(U32 width, U32 height, bool multisampling, U32 samples, arch::TextureFormat format);
 
     /**
      *
@@ -457,7 +457,7 @@ public:
      */
      
     void tileRenderBufferData(U08 *sourceData, U32 width, U32 height, bool multisampling, U32 samples,
-                              cg1gpu::TextureFormat format, bool invertColors, U08* &destData, U32 &size);
+                              arch::TextureFormat format, bool invertColors, U08* &destData, U32 &size);
      
     /**
      *
@@ -479,7 +479,7 @@ public:
      */
      
     U08* getDataInMortonOrder(U08* originalData, U32 width, U32 height, U32 depth,
-                                cg1gpu::TextureCompression format, U32 texelSize, U32& mortonDataSize);
+                                arch::TextureCompression format, U32 texelSize, U32& mortonDataSize);
 
     /**
      * Returns the amount of local memory available in the simulator (in KBytes)
@@ -512,7 +512,7 @@ public:
      * @param offsetBytes offset (in bytes) within mdIndices
      * @param indicesType type of indices
      */
-    bool setIndexedStreamingMode( U32 stream, U32 count, U32 start, U32 mdIndices, U32 offsetBytes, cg1gpu::StreamData indicesType );
+    bool setIndexedStreamingMode( U32 stream, U32 count, U32 start, U32 mdIndices, U32 offsetBytes, arch::StreamData indicesType );
 
     /**
      * Obtains the Singleton class which implements the GPU driver
@@ -703,7 +703,7 @@ public:
      * @param md Memory descriptor associated with this register write.
      *
      */
-    void writeGPURegister( cg1gpu::GPURegister regId, cg1gpu::GPURegData data, U32 md = 0 );
+    void writeGPURegister( arch::GPURegister regId, arch::GPURegData data, U32 md = 0 );
 
     /**
      * Writes a GPU simulator's register
@@ -714,13 +714,13 @@ public:
      * @param md Memory descriptor associated with this register write.
      *
      */
-    void writeGPURegister( cg1gpu::GPURegister regId, U32 index, cg1gpu::GPURegData data, U32 md = 0);
+    void writeGPURegister( arch::GPURegister regId, U32 index, arch::GPURegData data, U32 md = 0);
 
     /**
      * Writes a GPU simulator's register with the start address contained in the internal
      * MemoryDescriptor aliased to 'md' handler + the offset (expressed in bytes)
      */
-    void writeGPUAddrRegister( cg1gpu::GPURegister regId, U32 index, U32 md, U32 offset = 0);
+    void writeGPUAddrRegister( arch::GPURegister regId, U32 index, U32 md, U32 offset = 0);
 
     /**
      *
@@ -731,7 +731,7 @@ public:
      *
      */
      
-    void readGPURegister(cg1gpu::GPURegister regID, cg1gpu::GPURegData &data);
+    void readGPURegister(arch::GPURegister regID, arch::GPURegData &data);
 
     /**
      *
@@ -743,14 +743,14 @@ public:
      *
      */
      
-    void readGPURegister(cg1gpu::GPURegister regID, U32 index, cg1gpu::GPURegData &data);
+    void readGPURegister(arch::GPURegister regID, U32 index, arch::GPURegData &data);
         
     /**
      * Sends a command to the GPU Simulator
      *
      * @param com command to be sent
      */
-    void sendCommand( cg1gpu::GPUCommand com );
+    void sendCommand( arch::GPUCommand com );
 
     /**
      * Sends command list to the GPU Simulator
@@ -759,7 +759,7 @@ public:
      * @param numberOfCommands quantity of commands in the list
      */
      
-    void sendCommand( cg1gpu::GPUCommand* listOfCommands, int numberOfCommands );
+    void sendCommand( arch::GPUCommand* listOfCommands, int numberOfCommands );
 
     /**
      *
@@ -770,7 +770,7 @@ public:
      *
      */
      
-    void signalEvent(cg1gpu::GPUEvent gpuEvent, std::string eventMsg);
+    void signalEvent(arch::GPUEvent gpuEvent, std::string eventMsg);
          
     /**
      * Returns the number of mipmaps supported for a texture
@@ -786,7 +786,7 @@ public:
      * Invoked by Command Processor
      * Implements elemental comunication between Driver and CGD Port
      */
-    cg1gpu::cgoMetaStream* nextMetaStream();
+    arch::cgoMetaStream* nextMetaStream();
 
     /**
      * Destructor

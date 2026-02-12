@@ -19,10 +19,10 @@
 
 #define _STREAMEROUTPUTCACHE_
 
-namespace cg1gpu
+namespace arch
 {
     class StreamerOutputCache;
-} // namespace cg1gpu;
+} // namespace arch;
 
 
 #include "GPUType.h"
@@ -31,7 +31,7 @@ namespace cg1gpu
 #include "cmStreamerCommand.h"
 #include "cmStreamerControlCommand.h"
 
-namespace cg1gpu
+namespace arch
 {
 
 /**
@@ -158,6 +158,6 @@ public:
 
 };
 
-} // namespace cg1gpu
+} // namespace arch
 
 #endif

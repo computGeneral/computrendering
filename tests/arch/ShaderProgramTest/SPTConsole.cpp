@@ -10,7 +10,7 @@
 #include <algorithm>
 #include <limits>
 
-using namespace cg1gpu;
+using namespace arch;
 using namespace std;
 
 string SPTConsole::parseParams(const vector<string>& params)

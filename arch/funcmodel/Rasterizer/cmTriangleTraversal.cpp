@@ -22,7 +22,7 @@
 #include <stdio.h>
 #include <sstream>
 
-using namespace cg1gpu;
+using namespace arch;
 
 
 //  Triangle Traversal mdu constructor.  

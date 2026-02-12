@@ -10,7 +10,7 @@
 #include "GPUType.h"
 #include "cmMemoryRequestSplitter.h"
 
-namespace cg1gpu
+namespace arch
 {
 namespace memorycontroller
 {

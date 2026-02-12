@@ -15,7 +15,7 @@
 #include "GPUMath.h"
 
 
-using namespace cg1gpu;
+using namespace arch;
 using namespace std;
 
 gpuStatistics::Statistic *cyclesCounter;    //  Counts cycles (main clock domain!).

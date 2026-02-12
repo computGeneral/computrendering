@@ -19,7 +19,7 @@
 
 #include "cmPrimitiveAssemblyRequest.h"
 
-using namespace cg1gpu;
+using namespace arch;
 
 //  Creates a new PrimitiveAssemblyRequest object.  
 PrimitiveAssemblyRequest::PrimitiveAssemblyRequest(U32 trianglesRequested)

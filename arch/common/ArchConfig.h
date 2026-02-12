@@ -21,7 +21,7 @@
 #include "GPUType.h"
 // #include "Parser.h"  // removed: no longer needed
 
-namespace cg1gpu
+namespace arch
 {
 
 //**  The initial size of the buffer for the Signal section.  
@@ -204,7 +204,7 @@ struct MemParameters
     // for compatibility with previous configuration files
     // By default disables the new memory controller
     // new option v2MaxChannelTransactions set with a default value to prevent
-    // malfunction with previous "CG1GPU.ini" files
+    // malfunction with previous "arch.ini" files
     MemParameters() : memoryControllerV2(false), 
                       v2MemoryTrace(false),
                       v2MaxChannelTransactions(8), 
@@ -600,6 +600,6 @@ struct cgsArchConfig
     U32 numSignals;      //  Number of signal (parameters).  
 };
 
-}  // namespace cg1gpu
+}  // namespace arch
 
 #endif // _ARCHCONFIG_

@@ -18,7 +18,7 @@
 #include <cmath>
 
 using namespace std;
-using namespace cg1gpu;
+using namespace arch;
 
 PixelMapper::PixelMapper()
 {

@@ -20,7 +20,7 @@
 
 #define _PIXELMAPPER_
 
-namespace cg1gpu
+namespace arch
 {
 
 /**
@@ -230,6 +230,6 @@ public:
     
 }; // class PixelMapper
 
-} // namespace cg1gpu
+} // namespace arch
 
 #endif

@@ -10,7 +10,7 @@
 #include <sstream>
 #include <cmath>
 
-using namespace cg1gpu;
+using namespace arch;
 using namespace std;
 
 Signal::Signal( const char* signalName, U32 bandwidth, U32 latency ) :

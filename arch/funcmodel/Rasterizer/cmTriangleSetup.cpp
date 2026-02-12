@@ -24,7 +24,7 @@
 #include <cmath>
 #include <sstream>
 
-using namespace cg1gpu;
+using namespace arch;
 using namespace std;
 
 //  Triangle Setup mdu constructor.  

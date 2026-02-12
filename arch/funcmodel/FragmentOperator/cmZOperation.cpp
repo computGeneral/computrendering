@@ -17,7 +17,7 @@
 
 #include "cmZOperation.h"
 
-using namespace cg1gpu;
+using namespace arch;
 
 //  Z Operation constructor.  
 ZOperation::ZOperation(U32 opID)

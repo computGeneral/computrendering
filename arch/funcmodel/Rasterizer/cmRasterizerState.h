@@ -17,7 +17,7 @@
 
 #define _RASTERIZERSTATE_
 
-namespace cg1gpu
+namespace arch
 {
 
 //**  Rasterizer states.  
@@ -39,6 +39,6 @@ enum RasterizerState
     RAST_CLEAR_END      //  End of clear buffer state.  
 };
 
-} // namespace cg1gpu
+} // namespace arch
 
 #endif

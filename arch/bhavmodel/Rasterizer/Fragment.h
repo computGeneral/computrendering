@@ -26,7 +26,7 @@
 
 #define _FRAGMENT_
 
-namespace cg1gpu
+namespace arch
 {
 
 /**
@@ -389,6 +389,6 @@ public:
      
 }; // Fragment
 
-} // namespace cg1gpu
+} // namespace arch
 
 #endif

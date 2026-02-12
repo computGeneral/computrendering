@@ -23,7 +23,7 @@
 #include "Tile.h"
 #include "cmRecursiveDescent.h"
 
-using namespace cg1gpu;
+using namespace arch;
 using namespace std;
 
 //  Tile Evaluator constructor.  

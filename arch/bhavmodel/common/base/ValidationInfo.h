@@ -12,7 +12,7 @@
 #include "GPUReg.h"
 #include <map>
 
-namespace cg1gpu
+namespace arch
 {
 
 /**
@@ -124,6 +124,6 @@ struct FragmentQuadMemoryUpdateInfo
 
 typedef std::map<FragmentID, FragmentQuadMemoryUpdateInfo> FragmentQuadMemoryUpdateMap;
 
-};  // namespace cg1gpu
+};  // namespace arch
 
 #endif

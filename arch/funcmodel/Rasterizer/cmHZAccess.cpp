@@ -18,7 +18,7 @@
 
 #include "cmHZAccess.h"
 
-using namespace cg1gpu;
+using namespace arch;
 
 //  Creates a new HZAccess object.  
 HZAccess::HZAccess(HZOperation op, U32 addr, U32 d) :

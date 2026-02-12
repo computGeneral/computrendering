@@ -9,34 +9,34 @@
 #include <stdio.h>
 
 using namespace std;
-using namespace cg1gpu;
+using namespace arch;
 
-F64 cg1gpu::CG_LOG2(F64 x)
+F64 arch::CG_LOG2(F64 x)
 {
     return std::log(x)/std::log(2.0);
 }
 
-F64 cg1gpu::CG_CEIL(F64 x)
+F64 arch::CG_CEIL(F64 x)
 {
     return std::ceil((double)x);
 }
 
-F64 cg1gpu::CG_CEIL2(F64 x)
+F64 arch::CG_CEIL2(F64 x)
 {
     return ((x - std::floor(x) > 0)?std::floor(x) + 1: std::floor(x));
 }
 
-F64 cg1gpu::GPU_FLOOR(F64 x)
+F64 arch::GPU_FLOOR(F64 x)
 {
     return std::floor(x);
 }
 
-F64 cg1gpu::GPU_SQRT(F64 x)
+F64 arch::GPU_SQRT(F64 x)
 {
     return std::sqrt(x);
 }
 
-F64 cg1gpu::GPU_POWER2OF(F64 exp)
+F64 arch::GPU_POWER2OF(F64 exp)
 {
     return std::pow(F64(2.0),exp);
 }

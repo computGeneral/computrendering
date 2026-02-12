@@ -25,7 +25,7 @@
 
 using namespace std;
 using namespace libgl;
-using namespace cg1gpu;
+using namespace arch;
 
 /*************************
  * Vertex Buffer Objects *

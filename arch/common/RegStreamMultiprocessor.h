@@ -1,6 +1,6 @@
 #pragma once
 #include "GPUType.h"
-namespace cg1gpu
+namespace arch
 {
 // Address definition for Stream Multiprocessor registers
 enum cgeStreamMultiprocRegAddr

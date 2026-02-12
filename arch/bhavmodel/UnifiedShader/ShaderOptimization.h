@@ -22,7 +22,7 @@
 
 using namespace std;
 
-namespace cg1gpu
+namespace arch
 {
 
 class ShaderOptimization
@@ -766,6 +766,6 @@ public:
     
 }; // class ShaderOptimization
 
-} // namespace cg1gpu
+} // namespace arch
 
 #endif

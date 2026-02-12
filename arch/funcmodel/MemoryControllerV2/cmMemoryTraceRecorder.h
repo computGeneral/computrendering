@@ -11,7 +11,7 @@
 // #include "zfstream.h"
 
 
-namespace cg1gpu 
+namespace arch 
 {
 namespace memorycontroller
 {
@@ -33,6 +33,6 @@ private:
 }; // class MemoryTraceRecorder
 
 } // namespace memorycontroller
-} // namespace cg1gpu
+} // namespace arch
 
 #endif // MEMORYTRACERECORDER_H

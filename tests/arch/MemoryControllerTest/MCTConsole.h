@@ -10,7 +10,7 @@
 #include <vector>
 #include <list>
 
-namespace cg1gpu
+namespace arch
 {
 
 
@@ -92,6 +92,6 @@ public:
 
 };
 
-} // namespace cg1gpu
+} // namespace arch
 
 #endif // MCTCONSOLE_H

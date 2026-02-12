@@ -11,7 +11,7 @@
 #include "DynamicObject.h"
 #include "cmStreamer.h"
 
-namespace cg1gpu
+namespace arch
 {
 
 /**
@@ -57,6 +57,6 @@ public:
     StreamerState getState();
 };
 
-} // namespace cg1gpu
+} // namespace arch
 
 #endif

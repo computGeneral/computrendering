@@ -13,7 +13,7 @@
 #include "GPUType.h"
 #include "GPUReg.h"
 
-namespace cg1gpu
+namespace arch
 {
 
 //**  Clipper Command types.  
@@ -134,6 +134,6 @@ public:
    
 };
 
-} // namespace cg1gpu
+} // namespace arch
 
 #endif

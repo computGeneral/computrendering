@@ -7,7 +7,7 @@
 #include <sstream>
 
 using namespace std;
-using namespace cg1gpu::memorycontroller;
+using namespace arch::memorycontroller;
 
 DDRModuleState::DDRModuleState(U32 nBanks, U32 burstLength, 
                                // U32 burstElementsPerCycle, 

@@ -8,7 +8,7 @@
 #include "cmMduBase.h"
 #include "ArchConfig.h"
 
-namespace cg1gpu
+namespace arch
 {
 
 cmoMduBase* createMemoryController(cgsArchConfig& arch, 

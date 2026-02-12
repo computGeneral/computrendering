@@ -1,26 +1,52 @@
+# Project Cleanup & Migration Status
 
-Based on my analysis of README.md, TRACE_DRIVE.md, and the codebase, here is my assessment regarding the removal of modules if you switch to apitrace:
+This document tracks the removal of legacy modules as the project migrates to **apitrace** for trace capture and playback.
 
-1. Modules You Can Remove Immediately
-If you decide to use apitrace as your primary trace capture and playback tool, the following modules are redundant because they are specific to the legacy GLInterceptor workflow:
-*   driver/ogl/trace/GLInterceptor: This contains the source code for the custom OpenGL interception DLL (Windows-only). Since apitrace handles capture (cross-platform), this custom maintenance burden can be eliminated.
-*   driver/ogl/trace/GLTracePlayer: This is a standalone Windows GUI tool for replaying GLInterceptor traces. apitrace has its own replayer (glretrace), and the simulator itself can replay traces via TraceDriverOGL (or TraceDriverApitrace). This tool is likely unnecessary.
+## 1. Completed Removals (Phase 1)
 
-2. Modules You MUST Keep (For Now)
-You cannot yet remove the core GLInterceptor reader and driver components because the rest of the ecosystem still depends on them:
-*   driver/utils/TraceReader & driver/utils/TraceDriver/TraceDriverOGL:
-    *   Reason 1: All existing regression tests in tests/ogl/trace/ use the GLInterceptor format (.ogl.txt.gz). Removing this driver would break your test suite.
-    *   Reason 2: The traceTranslator tool (which generates optimized MetaStreams) depends on TraceReader to parse input traces. Until traceTranslator is updated to support apitrace input, you need this reader.
-*   driver/d3d/trace (PIX Support):
-    *   Reason: While apitrace supports D3D capture, your simulator's TraceDriverApitrace currently only implements OpenGL calls (see APITRACE_TODO.md). You cannot simulate D3D traces via apitrace until you implement the D3D mapping in TraceDriverApitrace.
+The following legacy modules have been successfully removed from the codebase:
 
-3. Recommended Plan
-I recommend a phased approach:
-Phase 1: Cleanup (Immediate)
-1.  Remove driver/ogl/trace/GLInterceptor (Capture tool source).
-2.  Remove driver/ogl/trace/GLTracePlayer (Standalone player).
-3.  Keep using apitrace for new trace captures.
-Phase 2: Migration (Future Work)
-1.  Extend TraceDriverApitrace: Implement D3D call support to replace the PIX driver.
-2.  Update traceTranslator: Modify it to read .trace files (via ApitraceParser) so you can generate MetaStreams from apitrace.
-3.  Convert Tests: Re-capture or convert existing regression tests to .trace format.
+*   **`driver/ogl/trace/GLInterceptor`**
+    *   **Description:** Source code for the custom OpenGL interception DLL (Windows-only).
+    *   **Status:** **Removed**.
+    *   **Resolution:** Replaced by the cross-platform `apitrace` CLI. Essential headers (`Specific.h`, `SpecificStats.h`) were migrated to `driver/utils/OGLApiCodeGen` to preserve build integrity.
+
+*   **`driver/ogl/trace/GLTracePlayer`**
+    *   **Description:** Standalone Windows GUI tool for replaying GLInterceptor traces.
+    *   **Status:** **Removed**.
+    *   **Resolution:** Replaced by `apitrace replay` (glretrace) and the internal simulator player.
+
+## 2. Future Removal Candidates
+
+The following modules are legacy artifacts but are currently **required** for dependencies or missing features. They can be removed in future phases.
+
+### A. Legacy Instrumentation
+*   **Modules:** `driver/ogl/trace/GLInstrument`, `driver/ogl/trace/GLInstrumentTool`
+*   **Description:** Tools for OpenGL trace instrumentation.
+*   **Dependency:** Referenced in `OGLApiCodeGen` configuration. Likely obsolete if switching fully to apitrace.
+
+### B. Legacy Trace Reader & Driver
+*   **Modules:** `driver/utils/TraceReader`, `driver/utils/TraceDriver/TraceDriverOGL`
+*   **Description:** Reader and driver for `.ogl.txt.gz` GLInterceptor traces.
+*   **Blocker:** The current regression test suite (`tests/ogl/trace/`) relies entirely on this format.
+*   **Action Required:** Convert all regression traces to `.trace` format before removal.
+
+### C. D3D9 PIX Support
+*   **Modules:** `driver/d3d/trace` (D3DTraceCore, D3DTracePlayer)
+*   **Description:** Support for legacy Microsoft PIX traces.
+*   **Blocker:** `TraceDriverApitrace` currently **only supports OpenGL**. Removing this would drop D3D simulation support.
+*   **Action Required:** Implement Direct3D call mapping in `TraceDriverApitrace`.
+
+### D. MetaStream Translator
+*   **Modules:** `driver/utils/MetaTraceGenerator/traceTranslator`
+*   **Description:** Converts traces to optimized MetaStream format.
+*   **Blocker:** Currently depends on `TraceReader`.
+*   **Action Required:** Update tool to use `ApitraceParser` as input.
+
+## 3. Migration Roadmap (Phase 2)
+
+To enable further cleanup, the following engineering tasks are required:
+
+1.  **Convert Regression Suite:** Capture or convert existing tests (`triangle`, `bunny`, etc.) to `.trace` format and update `tools/script/regression/regression_list`.
+2.  **Update Translator:** Port `traceTranslator` to read from `ApitraceParser` instead of `TraceReader`.
+3.  **D3D Support:** Extend `TraceDriverApitrace` to handle D3D9 calls.

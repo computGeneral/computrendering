@@ -20,18 +20,18 @@
 #    LOG_BUILD ON
 #        )
 
-# Fetch SystemC
-set(SYSTEMC_URL https://github.com/accellera-official/systemc/archive/refs/tags/2.3.3.tar.gz)
-set(SYSTEMC_DEP systemc-2.3.3/src/systemc.h)
-if(NOT EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/${SYSTEMC_DEP}")
-    message("Downloading SystemC Lib...")
-    file(DOWNLOAD ${SYSTEMC_URL} "${CMAKE_CURRENT_SOURCE_DIR}/SystemC-2.3.3.tar.gz" 
-         SHOW_PROGRESS
-         EXPECTED_HASH MD5=589d313f3477f42d259607e5dbd316b4)
-    execute_process(COMMAND ${CMAKE_COMMAND} -E tar xzf ${CMAKE_CURRENT_SOURCE_DIR}/SystemC-2.3.3.tar.gz WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
-    #set_target_properties(systemc PROPERTIES FOLDER "common/thirdparty")
-    #execute_process(COMMAND tar -xzf ${CMAKE_CURRENT_SOURCE_DIR}/SystemC-2.3.3.tar.gz )
-endif()
+## Fetch SystemC
+#set(SYSTEMC_URL https://github.com/accellera-official/systemc/archive/refs/tags/2.3.3.tar.gz)
+#set(SYSTEMC_DEP systemc-2.3.3/src/systemc.h)
+#if(NOT EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/${SYSTEMC_DEP}")
+#    message("Downloading SystemC Lib...")
+#    file(DOWNLOAD ${SYSTEMC_URL} "${CMAKE_CURRENT_SOURCE_DIR}/SystemC-2.3.3.tar.gz" 
+#         SHOW_PROGRESS
+#         EXPECTED_HASH MD5=589d313f3477f42d259607e5dbd316b4)
+#    execute_process(COMMAND ${CMAKE_COMMAND} -E tar xzf ${CMAKE_CURRENT_SOURCE_DIR}/SystemC-2.3.3.tar.gz WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
+#    #set_target_properties(systemc PROPERTIES FOLDER "common/thirdparty")
+#    #execute_process(COMMAND tar -xzf ${CMAKE_CURRENT_SOURCE_DIR}/SystemC-2.3.3.tar.gz )
+#endif()
 
 # Fetch SDL
 set(SDL2_URL https://github.com/libsdl-org/SDL/releases/download/release-2.0.8/SDL2-2.0.8.tar.gz)

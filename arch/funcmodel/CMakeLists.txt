@@ -66,8 +66,8 @@ set( CLIPPER
 )
 
 set( COMMANDPROC
-    CommandProcessor/MetaStream.h
-    CommandProcessor/MetaStream.cpp
+    ../common/MetaStream.h
+    ../common/MetaStream.cpp
     CommandProcessor/cmCommandProcessor.h
     CommandProcessor/cmCommandProcessor.cpp
 )

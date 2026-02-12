@@ -34,7 +34,7 @@ target_link_libraries(CG1CMDL PUBLIC zlibstatic HAL CG1Common)
 
 
 set(OGLSRC 
-              ${CMAKE_SOURCE_DIR}/arch/utils/ArchConfig.h
+              ${CMAKE_SOURCE_DIR}/arch/common/ArchConfig.h
               ${CMAKE_SOURCE_DIR}/arch/utils/CommandLineReader.cpp
               ${CMAKE_SOURCE_DIR}/arch/utils/CommandLineReader.h
 

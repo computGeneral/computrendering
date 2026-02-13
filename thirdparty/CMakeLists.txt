@@ -29,7 +29,7 @@
 #         SHOW_PROGRESS
 #         EXPECTED_HASH MD5=589d313f3477f42d259607e5dbd316b4)
 #    execute_process(COMMAND ${CMAKE_COMMAND} -E tar xzf ${CMAKE_CURRENT_SOURCE_DIR}/SystemC-2.3.3.tar.gz WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
-#    #set_target_properties(systemc PROPERTIES FOLDER "common/thirdparty")
+#    #set_target_properties(systemc PROPERTIES FOLDER "thirdparty")
 #    #execute_process(COMMAND tar -xzf ${CMAKE_CURRENT_SOURCE_DIR}/SystemC-2.3.3.tar.gz )
 #endif()
 

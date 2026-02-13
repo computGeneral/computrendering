@@ -44,7 +44,7 @@ set(SYSTEMC_PROFILER_ENABLED     No      CACHE BOOL   "If set, Generates and bui
 ##### include dirs
 # module path for 3rd party libs
 #list(APPEND CMAKE_MODULE_PATH
-#    ${CMAKE_SOURCE_DIR}/common/thirdparty/zlib-1.2.8
+#    ${CMAKE_SOURCE_DIR}/thirdparty/zlib-1.2.8
 #    )
 
 

@@ -8,7 +8,7 @@ add_library(ApitraceParser
 target_include_directories(ApitraceParser PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}
     ${CMAKE_SOURCE_DIR}/arch/common
-    ${CMAKE_SOURCE_DIR}/common/thirdparty/snappy-1.1.10
+    ${CMAKE_SOURCE_DIR}/thirdparty/snappy-1.1.10
     ${CMAKE_SOURCE_DIR}/driver/utils
     ${CMAKE_SOURCE_DIR}/driver/utils/GL
     ${CMAKE_SOURCE_DIR}/driver/utils/OGLApiCodeGen

@@ -51,7 +51,7 @@ set(SYSTEMC_PROFILER_ENABLED     No      CACHE BOOL   "If set, Generates and bui
 ##### include dirs
 # module path for 3rd party libs
 #list(APPEND CMAKE_MODULE_PATH
-#    ${CMAKE_SOURCE_DIR}/common/thirdparty/zlib-1.2.8
+#    ${CMAKE_SOURCE_DIR}/thirdparty/zlib-1.2.8
 #    )
 
 # module path for arch modules
@@ -84,9 +84,9 @@ add_definitions(
 ##### sub-projects
 # tools
 #include(ExternalProject)
-add_subdirectory(common/thirdparty)
-add_subdirectory(common/thirdparty/zlib-1.2.13)
-add_subdirectory(common/thirdparty/systemc-2.3.3)
+add_subdirectory(thirdparty)
+add_subdirectory(thirdparty/zlib-1.2.13)
+#add_subdirectory(thirdparty/systemc-2.3.3)
 
 # Override SystemC's CMAKE_CXX_STANDARD=98 cache entry with C++17.
 set(CMAKE_CXX_STANDARD 17 CACHE STRING "C++ standard" FORCE)

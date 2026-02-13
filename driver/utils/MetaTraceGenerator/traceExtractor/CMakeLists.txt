@@ -23,8 +23,8 @@ set(EXTRACTOR ${CMAKE_SOURCE_DIR}/traceExtractor/traceExtractor.cpp
 
 add_executable(MetaExtractor ${EXTRACTOR})
 
-include_directories(${CMAKE_SOURCE_DIR}/../../../common/thirdparty/zlib-1.2.13)
-link_directories(${CMAKE_SOURCE_DIR}/../../../_BUILD_/common/thirdparty/zlib-1.2.13/Debug)
+include_directories(${CMAKE_SOURCE_DIR}/../../../thirdparty/zlib-1.2.13)
+link_directories(${CMAKE_SOURCE_DIR}/../../../_BUILD_/thirdparty/zlib-1.2.13/Debug)
 
 target_link_libraries(MetaExtractor PUBLIC zlibstaticd)
 

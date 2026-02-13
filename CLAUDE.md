@@ -178,7 +178,7 @@ computrendering/
 │   ├── DXInterceptor/           # D3D9 trace capturer (Detours-based)
 │   └── script/                  # Build scripts (CompilerGcc.cmake, etc.)
 │
-└── common/thirdparty/           # External dependencies
+└── thirdparty/           # External dependencies
     ├── zlib-1.2.13/             # Compression
     ├── systemc-2.3.3/           # System-level modeling (archmodel)
     ├── SDL2/                    # Simple DirectMedia Layer
@@ -373,7 +373,7 @@ Each test trace directory typically contains:
 | RapidJSON | 1.1.0 | JSON config parsing |
 | TinyXML2 | 8.0.0 | XML parsing |
 
-All third-party libraries are auto-downloaded and built via CMake (`common/thirdparty/`).
+All third-party libraries are auto-downloaded and built via CMake (`thirdparty/`).
 
 ## Important Files Quick Reference
 

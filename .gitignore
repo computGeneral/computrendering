@@ -39,12 +39,12 @@ _deps/
 *.VC.opendb
 
 # ------ Third-party downloads (auto-fetched by CMake) ------
-common/thirdparty/*.tar.gz
-common/thirdparty/SDL2-2.0.8/
-common/thirdparty/systemc-2.3.3/
-common/thirdparty/rapidjson-1.1.0/
-common/thirdparty/tinyxml2-8.0.0/
-common/thirdparty/zlib-1.2.13/
+thirdparty/*.tar.gz
+thirdparty/SDL2-2.0.8/
+thirdparty/systemc-2.3.3/
+thirdparty/rapidjson-1.1.0/
+thirdparty/tinyxml2-8.0.0/
+thirdparty/zlib-1.2.13/
 
 # ------ Simulator output ------
 *.ppm

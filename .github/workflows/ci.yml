@@ -30,7 +30,7 @@ jobs:
       - name: Clean stale thirdparty archives
         run: |
           # Remove 0-byte placeholder archives so CMake re-downloads them
-          find common/thirdparty -name '*.tar.gz' -empty -delete 2>/dev/null || true
+          find thirdparty -name '*.tar.gz' -empty -delete 2>/dev/null || true
 
       - name: Build project
         run: |

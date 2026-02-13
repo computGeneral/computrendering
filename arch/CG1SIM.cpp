@@ -16,6 +16,7 @@
 
 #include "param_loader.hpp"
 #include "CommandLineReader.h"
+#include "Profiler.h"
 
 #include "TraceDriverMeta.h"
 //#include "TraceDriverOGL.h"

@@ -47,7 +47,7 @@ thirdparty/tinyxml2-8.0.0/
 thirdparty/zlib-1.2.13/
 
 # ------ Simulator output ------
-*.ppm
+#*.ppm
 *.png
 stats.*.csv
 stats.*.csv.gz

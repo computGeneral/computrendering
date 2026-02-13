@@ -9,6 +9,7 @@
 #include "ApitraceCallDispatcher.h"
 #include "OGL.h"
 #include "OGLEntryPoints.h"
+#include "Profiler.h"
 
 using namespace arch;
 #include "support.h"
@@ -97,7 +98,9 @@ arch::cgoMetaStream* TraceDriverApitrace::nxtMetaStream() {
         if (fn.empty()) continue;
 
         // Dispatch the GL call through OGL entry points → GAL → HAL → MetaStream
+        TRACING_ENTER_REGION((char*)fn.c_str(), (char*)"OpenGL", (char*)"");
         apitrace::dispatchCall(evt);
+        TRACING_EXIT_REGION();
         
         // Handle SwapBuffers (frame boundary)
         if (fn.find("SwapBuffers") != std::string::npos) {

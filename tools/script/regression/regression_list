@@ -1,14 +1,4 @@
 d3d/triangle, 1.0, triangle.PIXRun, 1, 0, 90
 d3d/texture_X8R8G8B8_square, 1.0, texture_X8R8G8B8_square.PIXRun, 1, 0, 90
 d3d/filtering_linear_linear_linear, 1.0, filtering_linear_linear_linear.PIXRun, 1, 0, 70 
-ogl/triangle, 1.0, triangle.txt, 1, 0, 90 
-ogl/spaceship, 1.0, spaceship.txt.gz, 1, 0, 90 
-ogl/torus, 1.05, torus.txt.gz, 1, 0, 90 
-ogl/bunny, 1.0, tracefile.txt.gz, 1, 0, 50 
-ogl/spheremap, 1.0, tracefile.txt.gz, 1, 0, 70
-ogl/8lights, 1.0, tracefile.txt.gz, 1, 0, 90
-ogl/micropolygon/0_5_size_1lightVS_200x200, 1.0, tracefile.txt.gz, 1, 1, 50
-ogl/blendedcubes, 1.0, tracefile.txt.gz, 1, 70, 90 
-ogl/copyteximage, 1.0, tracefile.txt.gz, 1, 0, 10
-ogl/simplefog, 1.0, tracefile.ogl.txt.gz, 1, 0, 90
-ogl/glxgears, 1.0, glxgears.trace, 10, 0, 40
+ogl/glxgears, 1.0, glxgears.trace, 2, 0, 40

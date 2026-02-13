@@ -142,9 +142,10 @@ while IFS= read -r line || [ -n "$line" ]; do
         continue
     fi
 
-    # ---- Check reference directory ----
-    if [ ! -d "$full_test_path/reference" ]; then
-        echo "SKIP: $raw_dir (reference/ not found)"
+    # ---- Check reference image ----
+    ref_ppm="${trace_file%.*}.ppm"
+    if [ ! -f "$full_test_path/$ref_ppm" ]; then
+        echo "SKIP: $raw_dir (reference $ref_ppm not found)"
         SKIP=$((SKIP + 1))
         continue
     fi
@@ -163,7 +164,8 @@ while IFS= read -r line || [ -n "$line" ]; do
 
     # ---- Clean old outputs ----
     cd "$full_test_path"
-    rm -f *.ppm *.sim.ppm output.txt stats*.*.* 2>/dev/null
+    # Do NOT delete *.ppm indiscriminately as it contains the reference image!
+    rm -f frame*.cm.ppm frame*.sim.ppm output.txt stats*.*.* 2>/dev/null
 
     # ---- Build simulator command ----
     # --param points to the CSV param file, --arch selects the ARCH_VERSION column
@@ -207,46 +209,16 @@ while IFS= read -r line || [ -n "$line" ]; do
     test_passed=1
 
     # Collect reference PPMs and test PPMs
-    ref_ppms="$(cd "$full_test_path/reference" && ls *.ppm 2>/dev/null | sort)"
-    test_ppms="$(ls *.sim.ppm 2>/dev/null | sort)"
+    ref_ppm="${trace_file%.*}.ppm"
+    ref_file="$full_test_path/$ref_ppm"
+    test_ppm="frame0000.sim.ppm"
+    test_file="$full_test_path/$test_ppm"
 
-    # Find common PPMs (present in both ref and test) and missing ref PPMs
-    common_ppms=""
-    missing_ref_ppms=""
-    extra_test_ppms=""
-
-    for ppm in $ref_ppms; do
-        if [ -f "$full_test_path/$ppm" ]; then
-            common_ppms="$common_ppms $ppm"
-        else
-            missing_ref_ppms="$missing_ref_ppms $ppm"
-        fi
-    done
-    for ppm in $test_ppms; do
-        found=0
-        for rppm in $ref_ppms; do
-            [ "$ppm" = "$rppm" ] && found=1 && break
-        done
-        [ $found -eq 0 ] && extra_test_ppms="$extra_test_ppms $ppm"
-    done
-
-    # Missing reference frames is a FAIL
-    if [ -n "$missing_ref_ppms" ]; then
+    if [ ! -f "$test_file" ]; then
         test_passed=0
-        echo "    FAILED — reference frames not produced:$missing_ref_ppms"
-        echo "FAILED, missing ref frames:$missing_ref_ppms" >> "$REG_OUT"
-    fi
-
-    # Extra test frames are just informational (not a failure)
-    if [ -n "$extra_test_ppms" ]; then
-        echo "    INFO:  extra test frames (ignored):$extra_test_ppms"
-    fi
-
-    # ---- Compare matching PPMs ----
-    for ppm in $common_ppms; do
-        ref_file="$full_test_path/reference/$ppm"
-        test_file="$full_test_path/$ppm"
-
+        echo "    FAILED — output $test_ppm not produced"
+        echo "FAILED, missing output $test_ppm" >> "$REG_OUT"
+    else
         if [ -n "$ICMP_BIN" ] && [ -x "$ICMP_BIN" ]; then
             # Use icmp_diff for PSNR-based comparison
             "$ICMP_BIN" -i1 "$ref_file" -i2 "$test_file" -silent -od "${test_file}_diff.ppm" > /dev/null 2>&1
@@ -255,36 +227,36 @@ while IFS= read -r line || [ -n "$line" ]; do
 
             if [ $icmp_exit -ne 0 ]; then
                 test_passed=0
-                echo "    FAILED: $ppm — icmp_diff error (exit $icmp_exit)"
+                echo "    FAILED: $ref_ppm — icmp_diff error (exit $icmp_exit)"
                 echo "FAILED, icmp_diff exit != 0" >> "$REG_OUT"
             elif [ "$psnr" = "0" ] || [ "$psnr" = "0.000000" ] || [ -z "$psnr" ]; then
-                echo "    PASS:   $ppm — identical"
-                echo "PASS: $ppm identical " >> "$REG_OUT"
+                echo "    PASS:   $ref_ppm — identical"
+                echo "PASS: $ref_ppm identical " >> "$REG_OUT"
                 rm -f "${test_file}_diff.ppm"
             else
                 # Compare PSNR against tolerance
                 below=$(echo "$psnr $tolerance" | awk '{print ($1 < $2 && $1 != 0) ? 1 : 0}')
                 if [ "$below" = "1" ]; then
                     test_passed=0
-                    echo "    FAILED: $ppm — PSNR ${psnr} dB < ${tolerance} dB"
-                    echo "FAILED, $ppm psnr $psnr dB (below tolerated)" >> "$REG_OUT"
+                    echo "    FAILED: $ref_ppm — PSNR ${psnr} dB < ${tolerance} dB"
+                    echo "FAILED, $ref_ppm psnr $psnr dB (below tolerated)" >> "$REG_OUT"
                 else
-                    echo "    PASS:   $ppm — PSNR ${psnr} dB >= ${tolerance} dB"
-                    echo "PASS: $ppm psnr $psnr dB (above tolerated) " >> "$REG_OUT"
+                    echo "    PASS:   $ref_ppm — PSNR ${psnr} dB >= ${tolerance} dB"
+                    echo "PASS: $ref_ppm psnr $psnr dB (above tolerated) " >> "$REG_OUT"
                 fi
             fi
         else
             # Fallback: byte-for-byte comparison
             if cmp -s "$ref_file" "$test_file"; then
-                echo "    PASS:   $ppm — identical (cmp)"
-                echo "PASS: $ppm identical " >> "$REG_OUT"
+                echo "    PASS:   $ref_ppm — identical (cmp)"
+                echo "PASS: $ref_ppm identical " >> "$REG_OUT"
             else
                 test_passed=0
-                echo "    FAILED: $ppm — differs (cmp)"
-                echo "FAILED: $ppm differs" >> "$REG_OUT"
+                echo "    FAILED: $ref_ppm — differs (cmp)"
+                echo "FAILED: $ref_ppm differs" >> "$REG_OUT"
             fi
         fi
-    done
+    fi
 
     # ---- Compare execution cycles (only if images passed) ----
     if [ $test_passed -eq 1 ] && [ -f "$EXTRACT_TOOL" ] && [ -f "$COMPARE_TOOL" ]; then

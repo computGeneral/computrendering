@@ -21,15 +21,14 @@ The following legacy modules have been successfully removed from the codebase:
     *   **Status:** **Removed**.
     *   **Resolution:** Obsolete in the new Apitrace workflow; unused in Linux build.
 
+*   **`driver/utils/TraceReader` & `driver/utils/TraceDriver/TraceDriverOGL`**
+    *   **Description:** Reader and driver for `.ogl.txt.gz` GLInterceptor traces.
+    *   **Status:** **Removed**.
+    *   **Resolution:** Switch to Apitrace as the primary OGL trace source. Legacy traces removed.
+
 ## 2. Future Removal Candidates
 
 The following modules are legacy artifacts but are currently **required** for dependencies or missing features. They can be removed in future phases.
-
-### A. Legacy Trace Reader & Driver
-*   **Modules:** `driver/utils/TraceReader`, `driver/utils/TraceDriver/TraceDriverOGL`
-*   **Description:** Reader and driver for `.ogl.txt.gz` GLInterceptor traces.
-*   **Blocker:** The current regression test suite (`tests/ogl/trace/`) relies entirely on this format.
-*   **Action Required:** Convert all regression traces to `.trace` format before removal.
 
 ### C. D3D9 PIX Support
 *   **Modules:** `driver/d3d/trace` (D3DTraceCore, D3DTracePlayer)

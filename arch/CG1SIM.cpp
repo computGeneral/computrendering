@@ -18,7 +18,7 @@
 #include "CommandLineReader.h"
 
 #include "TraceDriverMeta.h"
-#include "TraceDriverOGL.h"
+//#include "TraceDriverOGL.h"
 #include "TraceDriverApitrace.h"
 #ifdef _WIN32
 #include "TraceDriverD3D.h"
@@ -430,6 +430,7 @@ int main(int argc, char *argv[])
     }
     else
 #endif
+    /*
     if (fileExtensionTester(ArchConf.sim.inputFile, "ogl.txt.gz") ||
         fileExtensionTester(ArchConf.sim.inputFile, "txt.gz") ||
         fileExtensionTester(ArchConf.sim.inputFile, "txt"))
@@ -437,12 +438,13 @@ int main(int argc, char *argv[])
         cout << "Using OpenGL Trace File as simulation input." << endl;
         cout << "Using CG1 Graphics Abstraction Layer (GAL) Library." << endl;
         //  Initialize a trace for an OpenGL trace file
-        TraceDriver = new TraceDriverOGL(ArchConf.sim.inputFile,
-                                      HAL::getHAL(),
-                                      ArchConf.ras.shadedSetup,
-                                      ArchConf.sim.startFrame);//  The simulator input is an GLInterceptor OpenGL trace.  
+        //TraceDriver = new TraceDriverOGL(ArchConf.sim.inputFile,
+        //                              HAL::getHAL(),
+        //                              ArchConf.ras.shadedSetup,
+        //                              ArchConf.sim.startFrame);//  The simulator input is an GLInterceptor OpenGL trace.  
     }
-    else if (fileExtensionTester(ArchConf.sim.inputFile, "trace"))
+    else */
+    if (fileExtensionTester(ArchConf.sim.inputFile, "trace"))
     {
         cout << "Using Apitrace Binary Trace File as simulation input." << endl;
         cout << "Using CG1 Graphics Abstraction Layer (GAL) Library." << endl;

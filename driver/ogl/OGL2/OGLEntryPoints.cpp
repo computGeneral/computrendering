@@ -2000,6 +2000,7 @@ GLAPI const GLubyte* GLAPIENTRY OGL_glGetString( GLenum name )
     static GLubyte vendor[] = "DisplayController";
     static GLubyte renderer[] = "CG1 GPU";
     static GLubyte ver[] = "1.0";
+    static GLubyte slver[] = "1.10";
     static GLubyte extensions[] = "Why do you want to check extensions ? We support ALL";
     switch ( name )
     {
@@ -2009,6 +2010,8 @@ GLAPI const GLubyte* GLAPIENTRY OGL_glGetString( GLenum name )
             return renderer;
         case GL_VERSION:
             return ver;
+        case GL_SHADING_LANGUAGE_VERSION:
+            return slver;
         case GL_EXTENSIONS:
             return extensions;
     }

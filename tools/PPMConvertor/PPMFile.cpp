@@ -1,6 +1,7 @@
 #include "PPMFile.h"
 #include <fstream>
 #include <iostream>
+#include <cstring>
 
 using std::cout;
 using std::endl;

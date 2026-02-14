@@ -28,6 +28,8 @@ inline GLboolean asBool(const Value& v)  { return (v.type == VALUE_TRUE) ? GL_TR
 inline GLclampf asClampf(const Value& v) { return (GLclampf)asFloat(v); }
 inline GLclampd asClampd(const Value& v) { return (GLclampd)asDouble(v); }
 
+inline std::string asString(const Value& v) { return (v.type == VALUE_STRING) ? v.strVal : ""; }
+
 inline const GLfloat* asFloatPtr(const Value& v) {
     if (v.type == VALUE_BLOB) return (const GLfloat*)v.blobVal.data();
     if (v.type == VALUE_ARRAY && !v.arrayVal.empty()) {

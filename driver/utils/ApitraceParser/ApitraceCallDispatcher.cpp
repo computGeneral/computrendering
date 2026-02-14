@@ -6,6 +6,7 @@
 
 #include "ApitraceCallDispatcher.h"
 #include "OGLEntryPoints.h"
+#include "../../ogl/OGLShaders/OGLShaderEntryPoints.h"
 #include "OGL.h"
 #include <iostream>
 #include <set>
@@ -70,6 +71,52 @@ bool apitrace::dispatchCall(const CallEvent& evt) {
         }
         return true;
     }
+
+    // ---- Shaders ----
+    if (fn == "glCreateShader") { OGL_glCreateShader(asEnum(A(0))); return true; }
+    if (fn == "glShaderSource") { 
+        // Stub: ignore arguments for now as we don't have shader compiler
+        OGL_glShaderSource(asUInt(A(0)), 0, NULL, NULL); 
+        return true; 
+    }
+    if (fn == "glCompileShader") { OGL_glCompileShader(asUInt(A(0))); return true; }
+    if (fn == "glGetShaderiv") { 
+        // We can't pass pointer to A(2) directly if it's not a pointer in trace value?
+        // A(2) is a pointer (GLint *params).
+        // ApitraceParser treats array/blob arguments.
+        // But for output params, we usually ignore them in replay unless we validate.
+        // Here we just call the stub.
+        GLint params[4];
+        OGL_glGetShaderiv(asUInt(A(0)), asEnum(A(1)), params); 
+        return true; 
+    }
+    if (fn == "glGetShaderInfoLog") { 
+        GLsizei length;
+        GLchar infoLog[1024];
+        OGL_glGetShaderInfoLog(asUInt(A(0)), asInt(A(1)), &length, infoLog); 
+        return true; 
+    }
+    if (fn == "glCreateProgram") { OGL_glCreateProgram(); return true; }
+    if (fn == "glAttachShader") { OGL_glAttachShader(asUInt(A(0)), asUInt(A(1))); return true; }
+    if (fn == "glBindAttribLocation") { OGL_glBindAttribLocation(asUInt(A(0)), asUInt(A(1)), asString(A(2)).c_str()); return true; }
+    if (fn == "glLinkProgram") { OGL_glLinkProgram(asUInt(A(0))); return true; }
+    if (fn == "glGetProgramiv") { 
+        GLint params[4];
+        OGL_glGetProgramiv(asUInt(A(0)), asEnum(A(1)), params); 
+        return true; 
+    }
+    if (fn == "glGetUniformLocation") { OGL_glGetUniformLocation(asUInt(A(0)), asString(A(1)).c_str()); return true; }
+    if (fn == "glGetAttribLocation") { OGL_glGetAttribLocation(asUInt(A(0)), asString(A(1)).c_str()); return true; }
+    if (fn == "glUseProgram") { OGL_glUseProgram(asUInt(A(0))); return true; }
+    if (fn == "glUniform1i") { OGL_glUniform1i(asInt(A(0)), asInt(A(1))); return true; }
+    if (fn == "glUniform4f") { OGL_glUniform4f(asInt(A(0)), asFloat(A(1)), asFloat(A(2)), asFloat(A(3)), asFloat(A(4))); return true; }
+    if (fn == "glUniformMatrix4fv") { 
+        // array
+        OGL_glUniformMatrix4fv(asInt(A(0)), asInt(A(1)), asBool(A(2)), NULL); 
+        return true; 
+    }
+    if (fn == "glUniform1f") { OGL_glUniform1f(asInt(A(0)), asFloat(A(1))); return true; }
+    if (fn == "glValidateProgram") { OGL_glValidateProgram(asUInt(A(0))); return true; }
 
     // ---- Recording ----
     if (isRecording) {

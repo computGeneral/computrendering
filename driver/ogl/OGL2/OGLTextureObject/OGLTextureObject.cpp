@@ -276,6 +276,10 @@ GLenum GLTextureObject::set2D(GLint &width, GLint &height, GLint border, GLenum 
             internalFormat = GL_LUMINANCE;
             break;
 
+        case GL_BGRA:
+            internalFormat = GL_RGBA;
+            break;
+
         default:
             char error[128];
             sprintf(error, "Unexpected internal format: %d", internalFormat);

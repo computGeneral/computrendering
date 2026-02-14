@@ -13,6 +13,7 @@ target_include_directories(ApitraceParser PUBLIC
     ${CMAKE_SOURCE_DIR}/driver/utils/GL
     ${CMAKE_SOURCE_DIR}/driver/utils/OGLApiCodeGen
     ${CMAKE_SOURCE_DIR}/driver/ogl/OGL2
+    ${CMAKE_SOURCE_DIR}/driver/ogl/OGLShaders
     ${CMAKE_SOURCE_DIR}/driver/ogl/OGL14
     ${CMAKE_SOURCE_DIR}/driver/ogl/OGL14/ARBP
     ${CMAKE_SOURCE_DIR}/driver/ogl/OGL14/GLObject

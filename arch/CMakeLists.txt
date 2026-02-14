@@ -50,6 +50,7 @@ set(OGLSRC
 
 
               ${CMAKE_SOURCE_DIR}/driver/utils/TraceDriver/TraceDriverApitrace.cpp
+              ${CMAKE_SOURCE_DIR}/driver/ogl/OGLShaders/OGLShaderEntryPoints.cpp
 )
 
 
@@ -70,6 +71,7 @@ set(OGLINC
               ${CMAKE_SOURCE_DIR}/driver/ogl/OGL2/OGLBaseObject
               ${CMAKE_SOURCE_DIR}/driver/ogl/OGL2/OGLBufferObject 
               ${CMAKE_SOURCE_DIR}/driver/ogl/OGL2/OGLTextureObject 
+              ${CMAKE_SOURCE_DIR}/driver/ogl/OGLShaders
               ${CMAKE_SOURCE_DIR}/driver/gal/GAL/Interface
               ${CMAKE_SOURCE_DIR}/driver/gal/GALx/Interface
 )

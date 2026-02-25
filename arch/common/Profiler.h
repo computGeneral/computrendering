@@ -16,10 +16,10 @@
 #include <filesystem>
 #include <cassert>
 
-using namespace std;
-
 #ifndef _PROFILER_
 #define _PROFILER_
+
+using namespace std;
 
 // Macros for use within code so it gets compiled out
 

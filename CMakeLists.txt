@@ -13,7 +13,9 @@ set(CG1_ROOT ${CMAKE_SOURCE_DIR})
 # Ensure all targets use position-independent code, required for linking static libs into shared libs.
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
-set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -Wl,-as-needed" CACHE STRING "" FORCE)
+if(NOT MSVC)
+    set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -Wl,-as-needed" CACHE STRING "" FORCE)
+endif()
 if(${CMAKE_SOURCE_DIR} STREQUAL ${CMAKE_BINARY_DIR})
     message(FATAL_ERROR "[FATAL] Cmake binary must be different to the source dir")
 endif()
@@ -102,8 +104,9 @@ add_subdirectory(driver/utils/ApitraceParser)
 add_subdirectory(driver/ogl/OGL2)
 # FIXME
 #add_dependencies(driver/gal/GALx driver/utils/OGLApiCodeGen)
-# D3D9
-if(MSVC)
+# D3D9 (opt-in, disabled by default)
+option(BUILD_D3D "Build D3D9 targets" OFF)
+if(MSVC AND BUILD_D3D)
 add_subdirectory(driver/utils/D3DApiCodeGen)
 add_subdirectory(driver/d3d/trace/D3DTraceCore)
 add_subdirectory(driver/d3d/D3D9)
@@ -123,3 +126,13 @@ add_subdirectory(arch)
 
 ##### misc
 ##
+
+# Build icmp_diff image comparison tool (for regression tests)
+add_executable(icmp_diff tools/script/regression/icmp_diff.c)
+target_link_libraries(icmp_diff PRIVATE ${CMAKE_DL_LIBS})
+if(MSVC)
+    target_compile_options(icmp_diff PRIVATE /wd4996)
+else()
+    target_link_libraries(icmp_diff PRIVATE m)
+endif()
+set_target_properties(icmp_diff PROPERTIES FOLDER "tools")

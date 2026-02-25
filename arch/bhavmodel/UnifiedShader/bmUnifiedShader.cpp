@@ -77,10 +77,12 @@ bmoUnifiedShader::bmoUnifiedShader(char *shaderName,
 
             //  Temporary register bank.
             temporaryBank = new U08[numThreads * UNIFIED_TEMPORARY_NUM_REGS * UNIFIED_TEMP_REG_SIZE] ;
+            memset(temporaryBank, 0, numThreads * UNIFIED_TEMPORARY_NUM_REGS * UNIFIED_TEMP_REG_SIZE);
             numTemporaryRegs = UNIFIED_TEMPORARY_NUM_REGS;
 
             //  Constant register bank.
             constantBank = new U08[2 * UNIFIED_CONSTANT_NUM_REGS * UNIFIED_CONST_REG_SIZE];
+            memset(constantBank, 0, 2 * UNIFIED_CONSTANT_NUM_REGS * UNIFIED_CONST_REG_SIZE);
 
             //  Check memory allocation.
             numConstantRegs = 2 * UNIFIED_CONSTANT_NUM_REGS;
@@ -94,7 +96,10 @@ bmoUnifiedShader::bmoUnifiedShader(char *shaderName,
             //  Predicate Register bank.
             predicateBank = new bool*[numThreads];
             for(U32 t = 0; t < numThreads; t++)
+            {
                 predicateBank[t] = new bool[UNIFIED_PREDICATE_NUM_REGS];
+                memset(predicateBank[t], 0, UNIFIED_PREDICATE_NUM_REGS * sizeof(bool));
+            }
             numPredicateRegs = UNIFIED_PREDICATE_NUM_REGS;
             break;
 
@@ -145,10 +150,12 @@ bmoUnifiedShader::bmoUnifiedShader(char *shaderName,
 
             //  Temporary register bank.
             temporaryBank = new U08[numThreads * UNIFIED_TEMPORARY_NUM_REGS * UNIFIED_TEMP_REG_SIZE] ;
+            memset(temporaryBank, 0, numThreads * UNIFIED_TEMPORARY_NUM_REGS * UNIFIED_TEMP_REG_SIZE);
             numTemporaryRegs = UNIFIED_TEMPORARY_NUM_REGS;
 
             //  Constant register bank.
             constantBank = new U08[2 * UNIFIED_CONSTANT_NUM_REGS * UNIFIED_CONST_REG_SIZE];
+            memset(constantBank, 0, 2 * UNIFIED_CONSTANT_NUM_REGS * UNIFIED_CONST_REG_SIZE);
             numConstantRegs = 2 * UNIFIED_CONSTANT_NUM_REGS;
 
             //  Address Register bank.
@@ -174,6 +181,7 @@ bmoUnifiedShader::bmoUnifiedShader(char *shaderName,
             for(U32 t = 0; t < numThreads; t++)
             {
                 predicateBank[t] = new bool[UNIFIED_PREDICATE_NUM_REGS];
+                memset(predicateBank[t], 0, UNIFIED_PREDICATE_NUM_REGS * sizeof(bool));
             }
             
             numPredicateRegs = UNIFIED_PREDICATE_NUM_REGS;

@@ -15,7 +15,8 @@ if(NOT COMPILER_DEFINE_SET)
                     /D"USE_VS_PRAGMAS"
                     /D"VC_EXTRALEAN"
                     /D"HAVE_STRUCT_TIMESPEC"
-                    /D"HAVE_SNPRINTF")
+                    /D"HAVE_SNPRINTF"
+                    /D"_HAS_STD_BYTE=0")
     add_definitions(/wd4221 /wd4005 /wd4996 /wd4351 /wd4748 /wd4267 /wd4800 /wd4403 /vmg)
     #add_definitions(/wd4530)
 

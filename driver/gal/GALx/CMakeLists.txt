@@ -41,8 +41,10 @@ execute_process(
                         -t -8 ${CMAKE_CURRENT_SOURCE_DIR}/Implementation/ARBCompilers/VertexProgram/GALxVP1Lexic.l
                    OUTPUT_FILE ${CMAKE_CURRENT_SOURCE_DIR}/Implementation/ARBCompilers/VertexProgram/GALxVP1Flex.gen
 )
-execute_process( COMMAND sed -i "42i #ifndef WIN32" ${CMAKE_CURRENT_SOURCE_DIR}/Implementation/ARBCompilers/VertexProgram/GALxVP1Flex.gen)
-execute_process( COMMAND sed -i "44i #endif" ${CMAKE_CURRENT_SOURCE_DIR}/Implementation/ARBCompilers/VertexProgram/GALxVP1Flex.gen)
+# Cross-platform replacement for sed: guard #include <unistd.h> with #ifndef _WIN32
+file(READ ${CMAKE_CURRENT_SOURCE_DIR}/Implementation/ARBCompilers/VertexProgram/GALxVP1Flex.gen _FLEX_CONTENT)
+string(REPLACE "#include <unistd.h>" "#ifndef _WIN32\n#include <unistd.h>\n#endif" _FLEX_CONTENT "${_FLEX_CONTENT}")
+file(WRITE ${CMAKE_CURRENT_SOURCE_DIR}/Implementation/ARBCompilers/VertexProgram/GALxVP1Flex.gen "${_FLEX_CONTENT}")
 
 execute_process(
                    COMMAND 
@@ -50,8 +52,9 @@ execute_process(
                         -t -8 ${CMAKE_CURRENT_SOURCE_DIR}/Implementation/ARBCompilers/FragmentProgram/GALxFP1Lexic.l
                    OUTPUT_FILE ${CMAKE_CURRENT_SOURCE_DIR}/Implementation/ARBCompilers/FragmentProgram/GALxFP1Flex.gen
 )
-execute_process( COMMAND sed -i "42i #ifndef WIN32" ${CMAKE_CURRENT_SOURCE_DIR}/Implementation/ARBCompilers/FragmentProgram/GALxFP1Flex.gen)
-execute_process( COMMAND sed -i "44i #endif" ${CMAKE_CURRENT_SOURCE_DIR}/Implementation/ARBCompilers/FragmentProgram/GALxFP1Flex.gen)
+file(READ ${CMAKE_CURRENT_SOURCE_DIR}/Implementation/ARBCompilers/FragmentProgram/GALxFP1Flex.gen _FLEX_CONTENT)
+string(REPLACE "#include <unistd.h>" "#ifndef _WIN32\n#include <unistd.h>\n#endif" _FLEX_CONTENT "${_FLEX_CONTENT}")
+file(WRITE ${CMAKE_CURRENT_SOURCE_DIR}/Implementation/ARBCompilers/FragmentProgram/GALxFP1Flex.gen "${_FLEX_CONTENT}")
 
 execute_process(
                    COMMAND

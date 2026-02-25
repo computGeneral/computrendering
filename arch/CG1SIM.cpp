@@ -21,14 +21,20 @@
 #include "TraceDriverMeta.h"
 //#include "TraceDriverOGL.h"
 #include "TraceDriverApitrace.h"
-#ifdef _WIN32
+#ifdef BUILD_D3D
 #include "TraceDriverD3D.h"
 #endif
 
 #include <ctime>
 #include <new>
 #include <signal.h>
+#ifdef _WIN32
+#include <io.h>
+#define access _access
+#define F_OK 0
+#else
 #include <unistd.h>
+#endif
 
 #ifdef WIN32
 #define PARSE_CYCLES(a) _atoi64(a)
@@ -420,7 +426,7 @@ int main(int argc, char *argv[])
                                  ArchConf.sim.bucketSize2);
 
     gzifstream ProfilingFile;    //  Create and initialize the Trace Driver.
-#ifdef _WIN32
+#ifdef BUILD_D3D
     if (fileExtensionTester(ArchConf.sim.inputFile, "pixrun" ) ||
         fileExtensionTester(ArchConf.sim.inputFile, "pixrunz") ||
         fileExtensionTester(ArchConf.sim.inputFile, "wpix"   ))

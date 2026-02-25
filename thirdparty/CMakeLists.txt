@@ -89,5 +89,8 @@ endif()
 if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/${SNAPPY_DEP}")
     set(SNAPPY_BUILD_TESTS OFF CACHE BOOL "Build Snappy tests" FORCE)
     set(SNAPPY_BUILD_BENCHMARKS OFF CACHE BOOL "Build Snappy benchmarks" FORCE)
+    # Disable BMI2/SSSE3 intrinsics that crash on Win32 x86 builds
+    set(SNAPPY_HAVE_BMI2 0 CACHE STRING "Disable BMI2 for Win32" FORCE)
+    set(SNAPPY_HAVE_SSSE3 0 CACHE STRING "Disable SSSE3 for Win32" FORCE)
     add_subdirectory(snappy-1.1.10 EXCLUDE_FROM_ALL)
 endif()

@@ -86,10 +86,11 @@ set(D3DINC
 )
 
 # Generate CG1 GPU CModel 
-if(MSVC)
+if(MSVC AND BUILD_D3D)
     set(EXTSRC ${OGLSRC} ${D3DSRC})
     set(EXTINC ${OGLINC} ${D3DINC})
     set(DRVLIB GAL GALx OGL2 D3D9 D3DTraceCore)
+    add_definitions(-DBUILD_D3D)
     #HAL #FIXME HAL should be decoupled from funcmodel and add here.
 else()
     set(EXTSRC ${OGLSRC})

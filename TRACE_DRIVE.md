@@ -3,32 +3,31 @@
 ## Overview
 
 The CG1 GPU simulator is **trace-driven**: it replays API call sequences captured from real
-applications. Four trace driver paths exist, all converging at the same MetaStream interface
+applications. Three trace driver paths exist, all converging at the same MetaStream interface
 consumed by the simulation models.
 
 ```
     ┌───────────────────────────────────────────────────────────────┐
     │                       Input Traces                           │
     │                                                               │
-    │  .txt / .txt.gz / .ogl.txt.gz     .PIXRun / .PIXRunz        │
-    │  (GLInterceptor format)           (D3D9 PIX format)          │
+    │  .trace (apitrace binary, Snappy-compressed)                  │
+    │  └─ Auto-detected: OpenGL or D3D9                             │
     │                                                               │
-    │  .trace (apitrace binary)         .metaStream.txt.gz          │
-    │  (Snappy-compressed)              (Pre-compiled MetaStreams)  │
+    │  .metaStream.txt.gz (Pre-compiled MetaStreams)                │
     └──────────────┬────────────────────────────┬──────────────────┘
                    │                            │
     ┌──────────────▼────────────────────────────▼──────────────────┐
     │                     CG1SIM main()                            │
     │                   (arch/CG1SIM.cpp)                          │
     │                                                               │
-    │  Extension detection → TraceDriver instantiation              │
-    └──────┬──────────┬──────────┬──────────┬──────────────────────┘
-           │          │          │          │
-    ┌──────▼───┐ ┌────▼────┐ ┌──▼───┐ ┌────▼──────┐
-    │   OGL    │ │   D3D   │ │ Meta │ │ Apitrace  │
-    │  Driver  │ │  Driver │ │Driver│ │  Driver   │
-    └──────┬───┘ └────┬────┘ └──┬───┘ └────┬──────┘
-           │          │         │           │
+    │  .trace → API auto-detect → TraceDriver instantiation        │
+    └──────┬──────────┬──────────┬────────────────────────────────────┘
+           │          │          │
+    ┌──────▼───┐ ┌────▼────┐ ┌──▼───┐
+    │ Apitrace │ │Apitrace │ │ Meta │
+    │   OGL   │ │  D3D9   │ │Driver│
+    └──────┬───┘ └────┬────┘ └──┬───┘
+           │          │         │
     ┌──────▼──────────▼─────────│───────────│───────────────────────┐
     │                           │           │                       │
     │   OGL/GAL/HAL Pipeline    │           │  (future)             │
@@ -56,11 +55,15 @@ consumed by the simulation models.
 
 ---
 
-## 1. OpenGL Trace Path (GLInterceptor)
+## 1. OpenGL Trace Path (Legacy GLInterceptor — Removed)
 
 **Extensions**: `.txt`, `.txt.gz`, `.ogl.txt.gz`
 **Platform**: Cross-platform (capture: Windows only)
-**Status**: ✅ Full support
+**Status**: ❌ Removed — Use Apitrace OGL path (Section 4) instead
+
+> **Note:** The GLInterceptor trace driver (`TraceDriverOGL`) and associated `TraceReader`/`GLExec`
+> infrastructure have been removed. The apitrace path (Section 4) is now the primary OGL trace driver.
+> The call flow below is preserved for historical reference only.
 
 ### Call Flow
 
@@ -160,43 +163,47 @@ wglSwapBuffers(0x00000000) = TRUE               # Frame boundary
 
 ---
 
-## 2. D3D9 PIX Trace Path
+## 2. D3D9 Apitrace Path
 
-**Extensions**: `.PIXRun`, `.PIXRunz`, `.wpix`
-**Platform**: Windows only
-**Status**: ✅ Full support (Windows build)
+**Extensions**: `.trace` (auto-detected as D3D9 from trace content)
+**Platform**: Cross-platform
+**Status**: ✅ Full support
 
 ### Call Flow
 
 ```
 CG1SIM::main()
   │
-  ├─ fileExtensionTester("pixrun" | "pixrunz" | "wpix")
+  ├─ fileExtensionTester("trace") + detectApiType() == "d3d9"
   │
   ▼
-TraceDriverD3D(inputFile, startFrame)
+TraceDriverApitraceD3D(inputFile, HAL, startFrame)
   │
   │  Constructor:
-  │  ├─ createD3D9Trace()  // creates D3D9PixRunPlayer
-  │  └─ D3D9::initialize(trace)
+  │  ├─ ApitraceParser::open(traceFile)
+  │  │   ├─ SnappyStream::open()           // verify 'at' header, init chunk reader
+  │  │   └─ readVarUInt(version)            // trace format version (typically 4-6)
+  │  │
+  │  ├─ D3D9::initialize()             // init D3D9/GAL subsystem
+  │  └─ D3DApitraceCallDispatcher setup
   │
   │  nxtMetaStream():
-  │  ├─ HAL::nextMetaStream()  → if MetaStream available, return it
+  │  ├─ HAL::nextMetaStream()  →  if MetaStream available, return it
   │  │
-  │  ├─ (no MetaStream pending) → execute next D3D call:
-  │  │   ├─ trace->next()    // D3D9PixRunPlayer reads next PIX event
-  │  │   │   │
-  │  │   │   ▼
-  │  │   │  D3D9PixRunPlayer::execute()
-  │  │   │   ├─ Parse PIX binary event
-  │  │   │   ├─ D3DInterface::SetRenderState(...)
-  │  │   │   │   │
-  │  │   │   │   ▼
-  │  │   │   │  D3D9 → GAL → HAL → MetaStream
-  │  │   │   │  (same GAL/HAL path as OGL)
-  │  │   │   │
-  │  │   │   └─ D3DInterface::DrawPrimitive(...)
-  │  │   │       └─ GAL::draw() → HAL::sendCommand() → MetaStream
+  │  ├─ (no MetaStream pending) → read and dispatch next call:
+  │  │   ├─ ApitraceParser::readEvent(evt)
+  │  │   │   ├─ Read event type (CALL_ENTER / CALL_LEAVE)
+  │  │   │   ├─ Read/cache call signature
+  │  │   │   └─ Read typed arguments (uint/float/blob/enum/array/opaque)
+  │  │   │
+  │  │   ├─ D3DApitraceCallDispatcher::dispatchCall(evt, state)
+  │  │   │   ├─ Extract typed args via MA() macro (skips COM 'this' ptr)
+  │  │   │   ├─ Map opaque pointers via OpaquePointerTracker
+  │  │   │   └─ Call D3D9 interface: dev->SetRenderState(...), dev->DrawPrimitive(...)
+  │  │   │       │
+  │  │   │       ▼  (same D3D9 → GAL → HAL path)
+  │  │   │   D3D9 → GALDeviceImp → HAL::writeGPURegister()
+  │  │   │       └─ RegisterWriteBuffer::flush() → MetaStream enqueued
   │  │   │
   │  │   └─ Present() → end-of-frame event
   │  │
@@ -210,8 +217,9 @@ Simulation (same as OGL path)
 
 | File | Role |
 |------|------|
-| `driver/utils/TraceDriver/TraceDriverD3D.h/cpp` | D3D trace driver |
-| `driver/d3d/trace/D3DTraceCore/` | PIX trace reader library |
+| `driver/utils/TraceDriver/TraceDriverApitraceD3D.h/cpp` | D3D9 apitrace trace driver |
+| `driver/utils/ApitraceParser/D3DApitraceCallDispatcher.h/cpp` | D3D9 call dispatcher (80+ API calls) |
+| `driver/utils/ApitraceParser/ApitraceParser.h/cpp` | Shared apitrace binary format parser |
 | `driver/d3d/D3D9/` | D3D9→GAL translation |
 | `driver/gal/GAL/Implementation/` | GAL→HAL (shared with OGL) |
 
@@ -258,7 +266,7 @@ Simulation (same consumption path)
 ### Key Advantage
 
 **No API overhead**: MetaStream traces bypass the entire OGL/D3D/GAL/HAL stack.
-Pre-compiled by `traceTranslator` tool from GLInterceptor traces.
+Pre-compiled from GLInterceptor traces (legacy `traceTranslator` tool has been removed).
 
 ### Key Files
 
@@ -266,15 +274,15 @@ Pre-compiled by `traceTranslator` tool from GLInterceptor traces.
 |------|------|
 | `driver/utils/TraceDriver/TraceDriverMeta.h/cpp` | MetaStream trace driver |
 | `arch/funcmodel/CommandProcessor/MetaStream.h` | MetaStream format definition |
-| `driver/utils/MetaTraceGenerator/traceTranslator/` | GLI→MetaStream converter tool |
+| ~~`driver/utils/MetaTraceGenerator/traceTranslator/`~~ | Removed (depended on removed TraceReader) |
 
 ---
 
-## 4. Apitrace Path
+## 4. Apitrace OGL Path
 
-**Extensions**: `.trace`
+**Extensions**: `.trace` (auto-detected as OGL from trace content)
 **Platform**: Cross-platform
-**Status**: ✅ Functional (111 GL calls, verified byte-identical output)
+**Status**: ✅ Full support (111 GL calls, verified byte-identical output)
 
 ### Call Flow
 
@@ -358,9 +366,11 @@ value = 0x00         // null
 |------|------|
 | `driver/utils/ApitraceParser/ApitraceParser.h/cpp` | Binary format parser (Snappy, varuint, Values) |
 | `driver/utils/ApitraceParser/ApitraceCallDispatcher.h/cpp` | 111 GL calls → OGL_gl* entry point dispatch |
-| `driver/utils/TraceDriver/TraceDriverApitrace.h/cpp` | Trace driver (HAL drain → dispatch → repeat) |
-| `common/thirdparty/snappy-1.1.10/` | Snappy decompression library |
-| `tests/ogl/trace/apitrace_triangle/triangle.trace` | Test trace (verified byte-identical output) |
+| `driver/utils/ApitraceParser/D3DApitraceCallDispatcher.h/cpp` | 80+ D3D9 calls → AIDeviceImp9 dispatch |
+| `driver/utils/TraceDriver/TraceDriverApitrace.h/cpp` | OGL apitrace trace driver |
+| `driver/utils/TraceDriver/TraceDriverApitraceD3D.h/cpp` | D3D9 apitrace trace driver |
+| `thirdparty/snappy-1.1.10/` | Snappy decompression library |
+| `tests/ogl/trace/glxgears/glxgears.trace` | OGL test trace (verified byte-identical output) |
 
 ---
 
@@ -448,17 +458,17 @@ struct cgoMetaStream {
 
 ## 7. Format Comparison
 
-| Feature | GLInterceptor | D3D PIX | MetaStream | Apitrace |
-|---------|--------------|---------|------------|----------|
-| **Format** | Text | Binary | Binary | Binary (Snappy) |
-| **Compression** | gzip | None/LZMA | gzip | Snappy/Brotli |
-| **Buffer data** | External `.dat` | Embedded | Embedded | Embedded blobs |
-| **API level** | OpenGL calls | D3D9 calls | GPU commands | OpenGL calls |
-| **Translation** | Full stack | Full stack | None (direct) | Full stack (planned) |
-| **Speed** | Slow (text parse) | Medium | Fast (no translation) | Medium (planned) |
-| **Portability** | Windows capture | Windows only | Cross-platform | Cross-platform |
-| **Standard** | CG1-specific | Microsoft | CG1-specific | Community standard |
-| **Tools** | GLTracePlayer | PIX | traceTranslator | apitrace CLI |
+| Feature | MetaStream | Apitrace (OGL) | Apitrace (D3D9) |
+|---------|------------|----------------|------------------|
+| **Format** | Binary | Binary (Snappy) | Binary (Snappy) |
+| **Compression** | gzip | Snappy | Snappy |
+| **Buffer data** | Embedded | Embedded blobs | Embedded blobs |
+| **API level** | GPU commands | OpenGL calls | D3D9 calls |
+| **Translation** | None (direct) | Full stack | Full stack |
+| **Speed** | Fast (no translation) | Medium | Medium |
+| **Portability** | Cross-platform | Cross-platform | Cross-platform |
+| **Standard** | CG1-specific | Community standard | Community standard |
+| **Tools** | (removed) | apitrace CLI | apitrace CLI |
 
 ---
 

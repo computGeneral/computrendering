@@ -107,9 +107,7 @@ add_subdirectory(driver/ogl/OGL2)
 # D3D9 (opt-in, disabled by default)
 option(BUILD_D3D "Build D3D9 targets" OFF)
 if(MSVC AND BUILD_D3D)
-add_subdirectory(driver/utils/D3DApiCodeGen)
 add_subdirectory(driver/d3d/D3D9)
-# FIXME
 endif()
 
 # arch

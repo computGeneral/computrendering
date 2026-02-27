@@ -1,19 +1,32 @@
 # Apitrace Support — Status & Remaining Work
 
-## Current Status (2026-02-09)
+## Current Status (2026-02-27)
 
-✅ **Phase 1 Complete**: Binary parser, Snappy decompression, call dispatcher, full simulation  
-✅ **Verified**: apitrace triangle.trace → byte-identical PPM output vs GLInterceptor reference  
-📝 **Documented**: See `driver/ogl/trace/README_APITRACE.md`, `TRACE_DRIVE.md`
+✅ **OGL Support Complete**: Binary parser, Snappy decompression, 111 GL call dispatcher, full simulation  
+✅ **D3D9 Support Complete**: 80+ D3D9 API calls dispatched via D3DApitraceCallDispatcher  
+✅ **Legacy PIX Removed**: TraceDriverD3D, D3DTraceCore, D3DTracePlayer all removed  
+✅ **Legacy GLInterceptor Removed**: TraceDriverOGL, TraceReader, GLExec all removed  
+✅ **Verified**: glxgears.trace → byte-identical PPM output vs reference  
+✅ **D3D9 Verified**: FruitNinja.trace → functional rendering  
+📝 **Documented**: See `README_APITRACE.md`, `TRACE_DRIVE.md`, `APITRACE_DEV_SKILL.md`
 
-### What Works
+### Completed Milestones
 
 - ✅ Apitrace binary format parsing (Snappy, varuint, typed Values, signature caching)
 - ✅ 111 GL calls dispatched directly to OGL_gl* entry points
+- ✅ 80+ D3D9 calls dispatched to AIDeviceImp9 via D3DApitraceCallDispatcher
 - ✅ Full OGL→GAL→HAL→MetaStream pipeline from .trace files
+- ✅ Full D3D9→GAL→HAL→MetaStream pipeline from .trace files
+- ✅ API auto-detection (OGL vs D3D9) from trace header
 - ✅ Both bhavmodel and funcmodel simulation from .trace input
-- ✅ Frame boundary detection (SwapBuffers variants)
-- ✅ Simple geometry rendering (triangle test — byte-identical output)
+- ✅ Frame boundary detection (SwapBuffers / Present variants)
+- ✅ Frame limiting (`--frames N`) in all trace drivers (base class)
+- ✅ VALUE_REPR parsing for D3D9 shader bytecode
+- ✅ Lock/Unlock data transfer (memcpy handler)
+- ✅ OpaquePointerTracker for COM object mapping
+- ✅ CreateVertexDeclaration VALUE_ARRAY parsing
+- ✅ Regression test infrastructure (regression.ps1, regression.sh, regression_list)
+- ✅ Debug diagnostics cleaned, code review issues fixed
 
 ### Implemented GL Call Categories
 
@@ -33,144 +46,36 @@
 | ARB Programs | 5 | glBindProgramARB, glProgramStringARB, glProgramEnvParameter* |
 | Push/Pop | 2 | glPushAttrib, glPopAttrib |
 | Misc | 2 | glFlush, glGetString |
+| Display Lists | 3 | glNewList, glEndList, glCallList |
 | **Total** | **111** | |
 
 ---
 
-## Phase 2: Extended Trace Support (Estimated: 3-5 days)
+## Remaining Work
 
-### 2.1 Complex Trace Testing
+### Rendering Improvements (Deferred)
 
-Test with traces beyond simple triangles:
+- [ ] Fix `bytesPixel` for `GPU_RGBA32F` in bhavmodel `dumpFrame()` — D3D frames render black
+- [ ] Multiple simultaneous Lock/Unlock support (current memcpy uses first-pending heuristic)
+- [ ] Image quality validation for D3D9 traces (pixel correctness, format handling)
 
-```bash
-# Capture with apitrace (requires apitrace installed + GL app)
-apitrace trace --api gl glxgears
-apitrace trace --api gl <your_opengl_app>
+### Coverage Expansion
 
-# Simulate
-cd _BUILD_/arch
-./CG1SIM --trace /path/to/app.trace --frames 5
+- [ ] Additional D3D9 calls: GetFunction, GetDevice, BeginStateBlock, EndStateBlock, Capture, Apply
+- [ ] Additional GL calls for complex traces (GL 2.0 GLSL shaders, FBO, MRT)
+- [ ] Enum signature name preservation from apitrace (currently numeric-only)
 
-# Compare output
-apitrace dump-images app.trace  # generates reference PNGs
-```
+### Regression Tests
 
-**Expected issues with complex traces:**
-- Missing GL calls (check `[ApitraceDispatch] Unhandled GL call:` warnings)
-- Blob data for textures/VBOs may need BufferManager integration
-- Enum resolution: apitrace uses enum_sig which we currently skip
+- [ ] Add D3D9 regression test entries to regression_list
+- [ ] Convert more legacy GLInterceptor test traces to apitrace format
+- [ ] Add tolerance-based image comparison for D3D9 tests
 
-### 2.2 Enum Signature Handling
+### Performance & Robustness
 
-Currently `VALUE_ENUM` just reads the inner value. Full implementation:
-
-```cpp
-case VALUE_ENUM: {
-    uint64_t sigId;
-    readVarUInt(sigId);
-    // First occurrence: read enum name/value pairs
-    // Follow-on: use cached enum_sig
-    // Then read the actual value
-    return readValue(val);  // current: works but loses enum name info
-}
-```
-
-### 2.3 Bitmask Signature Handling
-
-Similar to enums — `VALUE_BITMASK` currently falls through. Needs:
-```cpp
-case VALUE_BITMASK: {
-    uint64_t sigId;
-    readVarUInt(sigId);
-    // Read bitmask signature on first occurrence
-    return readValue(val);
-}
-```
-
-### 2.4 Struct Value Handling
-
-`VALUE_STRUCT` for complex parameters (e.g., pixel format descriptors):
-```cpp
-case VALUE_STRUCT: {
-    uint64_t sigId;
-    readVarUInt(sigId);
-    // Read struct signature on first occurrence
-    // Read member values
-}
-```
-
----
-
-## Phase 3: Buffer/Blob Integration (Estimated: 2-3 days)
-
-### Current State
-
-Blob data (textures, vertex buffers) is passed directly via pointer from
-`Value::blobVal.data()`. This works for immediate-mode data that's consumed
-in the same call (e.g., glTexImage2D pixel data).
-
-### Remaining Work
-
-For VBO/buffer object data that persists:
-```cpp
-// In ApitraceCallDispatcher, when handling glBufferData:
-if (fn == "glBufferData") {
-    // A(2) is the blob data — passed directly as void*
-    // Works because OGL_glBufferDataARB copies the data internally
-    OGL_glBufferDataARB(asEnum(A(0)), A(1).uintVal, asVoidPtr(A(2)), asEnum(A(3)));
-}
-```
-
-**Already handled** — `asVoidPtr()` returns `blobVal.data()` directly, and OGL
-functions copy the data internally. No explicit BufferManager needed for basic cases.
-
----
-
-## Phase 4: Regression Test Integration (Estimated: 1 day)
-
-### Add apitrace triangle to regression suite
-
-Update `tools/script/regression/regression_list`:
-```
-ogl/apitrace_triangle, CG1GPU.ini, triangle.trace, 1, 0, 90
-```
-
-Update `tools/script/regression/regression.sh`:
-- Detect `.trace` extension in trace file column
-- No need to copy BufferDescriptors.dat (not used by apitrace path)
-
-### Generate more test traces
-
-Create Python script to generate test traces:
-```bash
-python3 tools/script/gen_apitrace.py --scene textured_quad -o tests/ogl/trace/apitrace_texquad/texquad.trace
-python3 tools/script/gen_apitrace.py --scene lit_sphere -o tests/ogl/trace/apitrace_sphere/sphere.trace
-```
-
----
-
-## Phase 5: Documentation & Polish (Estimated: 1 day)
-
-- [x] `driver/ogl/trace/README_APITRACE.md` — architecture and usage
-- [x] `TRACE_DRIVE.md` — complete call flow documentation
-- [x] `README.md` — supported trace formats table
-- [ ] Update `CLAUDE.md` with apitrace section
-- [ ] Add `tools/script/gen_apitrace.py` — trace generator for testing
-- [ ] Document known GL call coverage gaps
-
----
-
-## Known Limitations
-
-| Limitation | Impact | Mitigation |
-|-----------|--------|------------|
-| OpenGL version | CG1 supports GL 1.4-2.0 subset | Traces using GL 3.0+ features will fail |
-| 111/1874 calls mapped | Complex traces may have unmapped calls | Warnings printed, calls skipped |
-| Platform calls skipped | wgl/glX/egl context management ignored | OGL subsystem pre-initialized |
-| No GLSL shaders | Only ARB vertex/fragment programs | Limit to ARB shader traces |
-| Enum signatures | Enum names not preserved from apitrace | Numeric values used directly |
-| Thread support | Single-threaded only | Multi-threaded traces may misbehave |
+- [ ] 64-bit build support for large traces
+- [ ] Performance tuning for large trace files
+- [ ] Better error reporting for unsupported API calls
 
 ---
 
@@ -181,12 +86,13 @@ python3 tools/script/gen_apitrace.py --scene lit_sphere -o tests/ogl/trace/apitr
         ↓
 ApitraceParser::readEvent() → CallEvent{functionName, arguments[Value]}
         ↓
-ApitraceCallDispatcher::dispatchCall(evt)
-        ↓
-    ┌─ asUInt/asFloat/asEnum/asVoidPtr... (type extraction)
-    └─ OGL_gl*(args...)  (direct entry point call)
-        ↓
+    ┌── OGL ──────────────────────────┐   ┌── D3D9 ──────────────────────────┐
+    │ ApitraceCallDispatcher          │   │ D3DApitraceCallDispatcher        │
+    │   asUInt/asFloat/asVoidPtr...   │   │   MA()/asOpaquePtr/asDWORD...   │
+    │   OGL_gl*(args...)              │   │   dev->Method(args...)           │
+    └────────────┬────────────────────┘   └────────────┬──────────────────────┘
+                 ↓                                      ↓
     GALDeviceImp → HAL::writeGPURegister() → RegisterWriteBuffer::flush()
-        ↓
+                 ↓
     MetaStream → CG1BMDL/CG1CMDL simulation
 ```

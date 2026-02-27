@@ -15,13 +15,13 @@ CG1 (computGeneral 1) is a cycle-accurate GPU simulator capable of replaying Ope
 ```
 ┌─────────────────────────────────────────────────────────────┐
 │                     Trace Input Layer                        │
-│  OpenGL Traces (.txt/.gz)  │  D3D9 PIX Traces (.PIXRun)    │
+│  Apitrace (.trace) — OpenGL & D3D9 traces                   │
 │  MetaStream Traces (.tracefile.gz)                          │
 └─────────────────────┬───────────────────────────────────────┘
                       │
 ┌─────────────────────▼───────────────────────────────────────┐
 │                     Driver Layer                             │
-│  TraceDriverOGL / TraceDriverD3D / TraceDriverMeta          │
+│  TraceDriverApitrace / TraceDriverApitraceD3D / TraceDriverMeta │
 │  ┌─────────┐  ┌─────────┐  ┌─────────┐  ┌───────────┐     │
 │  │  OGL2   │  │  D3D9   │  │   GAL   │  │    HAL    │     │
 │  │(OpenGL) │  │(Direct3D)│  │(Abstrac)│  │(HW Driver)│     │
@@ -142,41 +142,32 @@ computrendering/
 │   ├── ogl/                     # OpenGL
 │   │   ├── OGL2/                # OpenGL 2.0 implementation (GAL-based)
 │   │   ├── OGL14/               # Legacy OpenGL 1.4 (deprecated)
-│   │   ├── trace/
-│   │   │   ├── GLInterceptor/   # OpenGL call interceptor (creates DLL)
-│   │   │   ├── GLTracePlayer/   # OpenGL trace replayer
-│   │   │   └── GLInstrument*/   # Trace instrumentation
 │   │   └── inc/                 # OpenGL headers
-│   ├── d3d/                     # Direct3D 9 (Windows only)
+│   ├── d3d/                     # Direct3D 9
 │   │   ├── D3D9/                # D3D9 implementation (GAL-based)
 │   │   │   ├── D3DInterface/    # Interface wrappers
 │   │   │   ├── D3DImplement/    # Concrete implementation
 │   │   │   ├── D3DState/        # State management
 │   │   │   └── ShaderTranslator/# D3D→CG1 shader translation
-│   │   ├── trace/
-│   │   │   ├── D3DTraceCore/    # Core PIX trace player library
-│   │   │   ├── D3DTracePlayer/  # D3D9 PIX trace player app
-│   │   │   └── D3DTraceStat/    # Trace statistics tool
 │   │   └── inc/                 # D3D9 headers
 │   └── utils/                   # Driver utilities
-│       ├── TraceReader/         # Trace file reader
-│       ├── OGLApiCodeGen/       # ★ OpenGL API code generator (flex/bison)
-│       └── D3DApiCodeGen/       # ★ D3D API code generator
+│       ├── ApitraceParser/      # ★ Apitrace binary format parser & call dispatchers
+│       ├── TraceDriver/         # ★ Trace drivers (Apitrace OGL/D3D, MetaStream)
+│       └── OGLApiCodeGen/       # OpenGL API code generator (flex/bison)
 │
 ├── tests/                       # Test suites
 │   ├── arch/                    # Architecture unit tests
 │   ├── ogl/trace/               # OpenGL test traces with reference outputs
-│   ├── d3d/                     # D3D9 PIX test traces
+│   ├── d3d/trace/               # D3D9 apitrace test traces
 │   ├── ocl/                     # OpenCL compute shader tests
-│   └── regression/              # Regression scripts (Perl-based)
+│   └── regression/              # Regression scripts
 │
 ├── tools/                       # Standalone tools
-│   ├── PIXparser/               # PIXRun file parser
+│   ├── apitrace/                # Apitrace integration tools
 │   ├── PPMConvertor/            # PPM image color mapping
 │   ├── SnapshotExplainer/       # GPU state snapshot dumper
 │   ├── TraceViewer/             # Signal trace visualizer (Qt GUI)
-│   ├── DXInterceptor/           # D3D9 trace capturer (Detours-based)
-│   └── script/                  # Build scripts (CompilerGcc.cmake, etc.)
+│   └── script/                  # Build & regression scripts
 │
 └── thirdparty/           # External dependencies
     ├── zlib-1.2.13/             # Compression
@@ -211,11 +202,10 @@ The communication protocol between the driver (HAL) and the simulator. MetaStrea
 
 ### Trace-Driven Simulation
 The simulator is driven by API traces:
-1. **OpenGL traces** (`.txt` / `.txt.gz`): Captured by `GLInterceptor`
-2. **D3D9 PIX traces** (`.PIXRun` / `.PIXRunz`): Captured by PIX or DXInterceptor
-3. **MetaStream traces** (`.tracefile.gz`): Pre-translated binary GPU command stream
+1. **Apitrace traces** (`.trace`): Captured by apitrace — supports both OpenGL and D3D9
+2. **MetaStream traces** (`.tracefile.gz`): Pre-translated binary GPU command stream
 
-The trace flow: `API Trace → TraceDriver → HAL → MetaStream → Simulator`
+The trace flow: `API Trace → ApitraceParser → TraceDriver → HAL → MetaStream → Simulator`
 
 ### DynamicObject
 Fast dynamic allocation system for simulation objects (MetaStreams, fragments, etc.). Uses bucket-based memory pools for performance.
@@ -244,6 +234,7 @@ Build targets:
 - `CG1BMDL` — Behavior model library
 - `CG1CMDL` — Functional model library
 - `HAL`, `GAL`, `GALx`, `OGL2` — Driver libraries
+- `ApitraceParser` — Apitrace binary format parser library
 
 ### Windows Build
 Open `CG1.sln` in Visual Studio 2022+. Select configuration (Debug/Optimized/Profile) and architecture (Win32/x64). Build the desired project.
@@ -289,14 +280,17 @@ JSON configs (`CG1.0.json`, `CG1.1.json`) define architecture parameter schemas.
 # Basic usage (reads CG1GPU.ini from current directory)
 ./CG1SIM
 
-# With trace file
-./CG1SIM tracefile.txt
+# With apitrace file (OGL or D3D9 — auto-detected)
+./CG1SIM --trace app.trace --frames 5
+
+# With MetaStream trace file
+./CG1SIM tracefile.gz
 
 # With frame count (n < 10000) or cycle count (n >= 10000)
-./CG1SIM tracefile.txt 5
+./CG1SIM tracefile.gz 5
 
 # With start frame offset
-./CG1SIM tracefile.txt 5 2    # Simulate 5 frames, starting from frame 2
+./CG1SIM tracefile.gz 5 2    # Simulate 5 frames, starting from frame 2
 ```
 
 ### Simulation Output
@@ -309,20 +303,26 @@ JSON configs (`CG1.0.json`, `CG1.1.json`) define architecture parameter schemas.
 ## Testing
 
 ### Regression Tests
+
+**Windows:**
+```powershell
+& .\tools\script\regression\regression.ps1
+```
+
+**Linux:**
 ```bash
-cd tests/regression
-perl regression.pl
+bash tools/script/regression/regression.sh
 ```
 
 ### Test Traces
-- `tests/ogl/trace/` — OpenGL traces with reference PPMs and statistics
-- `tests/d3d/` — D3D9 PIX traces
+- `tests/ogl/trace/` — OpenGL apitrace traces with reference PPMs
+- `tests/d3d/trace/` — D3D9 apitrace traces
 - `tests/ocl/` — OpenCL compute shader tests
 
 Each test trace directory typically contains:
-- `tracefile.txt.gz` — The trace input
-- `BufferDescriptors.dat`, `MemoryRegions.dat` — Memory layout
-- `reference/` — Expected output (PPM images, statistics)
+- `*.trace` — Apitrace binary trace file
+- `*.ppm` — Reference rendered output image
+- `BufferDescriptors.dat`, `MemoryRegions.dat` — Memory layout (for legacy traces)
 
 ## Coding Conventions
 
@@ -387,6 +387,8 @@ All third-party libraries are auto-downloaded and built via CMake (`thirdparty/`
 | `arch/bhavmodel/CG1BMDL.h` | Behavior model top-level |
 | `arch/funcmodel/CG1CMDL.h` | Functional model top-level |
 | `driver/hal/HAL.h` | Hardware abstraction layer |
-| `driver/gal/GAL/Interface/` | GAL abstract interfaces |
-| `arch/common/params/CG1GPU.ini` | Primary configuration file |
+| `driver/gal/GAL/Interface/` | GAL abstract interfaces || `driver/utils/ApitraceParser/ApitraceParser.h` | Apitrace binary format parser |
+| `driver/utils/ApitraceParser/D3DApitraceCallDispatcher.h` | D3D9 apitrace call dispatcher |
+| `driver/utils/TraceDriver/TraceDriverApitrace.h` | OGL apitrace trace driver |
+| `driver/utils/TraceDriver/TraceDriverApitraceD3D.h` | D3D9 apitrace trace driver || `arch/common/params/CG1GPU.ini` | Primary configuration file |
 | `arch/utils/ConfigLoader.h` | Configuration file parser |

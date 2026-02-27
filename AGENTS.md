@@ -47,13 +47,13 @@ The primary way to verify the simulator is by running trace files (captured from
 
 **Example:**
 ```bash
-# Run the 'triangle' trace
-./arch/CG1SIM ../tests/ogl/trace/triangle/triangle.txt
+# Run the glxgears apitrace
+./arch/CG1SIM --trace ../tests/ogl/trace/glxgears/glxgears.trace --frames 1
 ```
 
 **Trace Locations:**
-- `tests/ogl/trace/` - OpenGL traces
-- `tests/d3d/` - Direct3D traces
+- `tests/ogl/trace/` - OpenGL apitrace traces
+- `tests/d3d/trace/` - Direct3D apitrace traces
 
 ### Unit Tests
 Unit tests are located in `tests/arch/`.
@@ -142,7 +142,7 @@ Use the project-specific types defined in `arch/common/GPUType.h`:
 2.  **Locate:** Find the relevant MDU (Module Design Unit) in `arch/funcmodel` or `arch/bhavmodel`.
 3.  **Modify:** Apply changes following the coding style.
 4.  **Verify:**
-    -   Run the standard trace (`tests/ogl/trace/triangle/triangle.txt`) to ensure no regression.
+    -   Run the standard trace (`tests/ogl/trace/glxgears/glxgears.trace`) to ensure no regression.
     -   If modifying a specific unit (e.g., Math), run the relevant unit test in `tests/arch/`.
 
 ## 5. Directory Structure Key

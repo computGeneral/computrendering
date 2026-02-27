@@ -1,7 +1,6 @@
 1. project dependences not resolved automatically on windows:
     GALx depends on driver/utils/OGLApiCodeGen
-    D3DTraceCore depends on driver/utils/D3DApiCodeGen
-    and both ApiCodeGen depends on flex and bison. (need to be installed on windows)
+    and OGLApiCodeGen depends on flex and bison. (need to be installed on windows)
 
     *solution*
     hand install these tools (flex, bison)

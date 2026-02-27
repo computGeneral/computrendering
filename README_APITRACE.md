@@ -61,7 +61,7 @@ cd _BUILD_/arch/Debug    # or Release
 | `driver/utils/ApitraceParser/ApitraceParser.h/cpp` | Binary format parser (Snappy, varuint, typed Values) |
 | `driver/utils/ApitraceParser/ApitraceCallDispatcherOGL.h/cpp` | OGL call dispatcher (111 GL calls) |
 | `driver/utils/ApitraceParser/ApitraceCallDispatcherD3D.h/cpp` | D3D9 call dispatcher (80+ calls) |
-| `driver/utils/TraceDriver/TraceDriverApitrace.h/cpp` | OGL trace driver |
+| `driver/utils/TraceDriver/TraceDriverApitraceOGL.h/cpp` | OGL trace driver |
 | `driver/utils/TraceDriver/TraceDriverApitraceD3D.h/cpp` | D3D9 trace driver |
 | `driver/utils/TraceDriver/TraceDriverBase.h` | Base class (frame limiting, virtual destructor) |
 | `thirdparty/snappy-1.1.10/` | Snappy decompression library |

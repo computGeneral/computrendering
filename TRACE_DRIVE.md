@@ -292,7 +292,7 @@ CG1SIM::main()
   ├─ fileExtensionTester("trace")
   │
   ▼
-TraceDriverApitrace(inputFile, HAL, startFrame)
+TraceDriverApitraceOGL(inputFile, HAL, startFrame)
   │
   │  Constructor:
   │  ├─ ApitraceParser::open(traceFile)
@@ -367,7 +367,7 @@ value = 0x00         // null
 | `driver/utils/ApitraceParser/ApitraceParser.h/cpp` | Binary format parser (Snappy, varuint, Values) |
 | `driver/utils/ApitraceParser/ApitraceCallDispatcherOGL.h/cpp` | 111 GL calls → OGL_gl* entry point dispatch |
 | `driver/utils/ApitraceParser/ApitraceCallDispatcherD3D.h/cpp` | 80+ D3D9 calls → AIDeviceImp9 dispatch |
-| `driver/utils/TraceDriver/TraceDriverApitrace.h/cpp` | OGL apitrace trace driver |
+| `driver/utils/TraceDriver/TraceDriverApitraceOGL.h/cpp` | OGL apitrace trace driver |
 | `driver/utils/TraceDriver/TraceDriverApitraceD3D.h/cpp` | D3D9 apitrace trace driver |
 | `thirdparty/snappy-1.1.10/` | Snappy decompression library |
 | `tests/ogl/trace/glxgears/glxgears.trace` | OGL test trace (verified byte-identical output) |

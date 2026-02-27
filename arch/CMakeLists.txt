@@ -49,7 +49,7 @@ set(OGLSRC
               ${CMAKE_SOURCE_DIR}/driver/utils/GLJumpTable.cpp
 
 
-              ${CMAKE_SOURCE_DIR}/driver/utils/TraceDriver/TraceDriverApitrace.cpp
+              ${CMAKE_SOURCE_DIR}/driver/utils/TraceDriver/TraceDriverApitraceOGL.cpp
               ${CMAKE_SOURCE_DIR}/driver/ogl/OGLShaders/OGLShaderEntryPoints.cpp
 )
 

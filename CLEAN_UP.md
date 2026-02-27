@@ -24,7 +24,7 @@ The following legacy modules have been successfully removed from the codebase:
 *   **`driver/utils/TraceReader` & `driver/utils/TraceDriver/TraceDriverOGL`**
     *   **Description:** Reader and driver for `.ogl.txt.gz` GLInterceptor traces.
     *   **Status:** **Removed**.
-    *   **Resolution:** Replaced by `ApitraceParser` and `TraceDriverApitrace`.
+    *   **Resolution:** Replaced by `ApitraceParser` and `TraceDriverApitraceOGL`.
 
 *   **`driver/d3d/trace/` (D3DTraceCore, D3DTracePlayer, D3DTraceStat)**
     *   **Description:** Legacy Microsoft PIX trace reader library, player, and statistics tool.
@@ -62,7 +62,7 @@ All trace playback now uses the apitrace-based pipeline:
 
 | Path | Driver | Dispatcher | Format |
 |------|--------|------------|--------|
-| OpenGL | `TraceDriverApitrace` | `ApitraceCallDispatcherOGL` | `.trace` (apitrace) |
+| OpenGL | `TraceDriverApitraceOGL` | `ApitraceCallDispatcherOGL` | `.trace` (apitrace) |
 | D3D9 | `TraceDriverApitraceD3D` | `ApitraceCallDispatcherD3D` | `.trace` (apitrace) |
 | MetaStream | `TraceDriverMeta` | N/A (direct) | `.tracefile.gz` |
 

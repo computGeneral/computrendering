@@ -285,7 +285,7 @@ bool executeCall(const CallEvent& evt) {
     // ---- Platform / swap (silently skip or handle) ----
     if (fn == "wglSwapBuffers" || fn == "glXSwapBuffers" || fn == "eglSwapBuffers" ||
         fn == "wglSwapLayerBuffers" || fn == "SwapBuffers") {
-        // Handled by TraceDriverApitrace directly
+        // Handled by TraceDriverApitraceOGL directly
         return true;
     }
 

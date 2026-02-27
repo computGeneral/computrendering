@@ -1,10 +1,10 @@
 /**************************************************************************
- * TraceDriverApitrace.cpp
+ * TraceDriverApitraceOGL.cpp
  * 
  * Implementation of apitrace trace driver.
  */
 
-#include "TraceDriverApitrace.h"
+#include "TraceDriverApitraceOGL.h"
 #include "ApitraceCallDispatcherOGL.h"
 #include "OGL.h"
 #include "OGLEntryPoints.h"
@@ -14,7 +14,7 @@ using namespace arch;
 #include "support.h"
 #include <iostream>
 
-TraceDriverApitrace::TraceDriverApitrace(const char* traceFile, HAL* driver, U32 startFrame, U32 maxFrames)
+TraceDriverApitraceOGL::TraceDriverApitraceOGL(const char* traceFile, HAL* driver, U32 startFrame, U32 maxFrames)
     : driver_(driver), startFrame_(startFrame), currentFrame_(0), 
       initialized_(false)
 {
@@ -43,15 +43,15 @@ TraceDriverApitrace::TraceDriverApitrace(const char* traceFile, HAL* driver, U32
     initialized_ = true;
 }
 
-TraceDriverApitrace::~TraceDriverApitrace() {
+TraceDriverApitraceOGL::~TraceDriverApitraceOGL() {
     parser_.close();
 }
 
-int TraceDriverApitrace::startTrace() {
+int TraceDriverApitraceOGL::startTrace() {
     return initialized_ ? 0 : -1;
 }
 
-arch::cgoMetaStream* TraceDriverApitrace::nxtMetaStream() {
+arch::cgoMetaStream* TraceDriverApitraceOGL::nxtMetaStream() {
     if (!initialized_ || parser_.eof()) 
         return nullptr;
     

@@ -1,12 +1,12 @@
 /**************************************************************************
- * TraceDriverApitrace.h
+ * TraceDriverApitraceOGL.h
  * 
  * Trace driver for apitrace binary format (.trace files).
  * Converts apitrace call events to MetaStream transactions.
  */
 
-#ifndef TRACEDRIVERAPITRACE_H
-#define TRACEDRIVERAPITRACE_H
+#ifndef TRACEDRIVERAPITRACEOGL_H
+#define TRACEDRIVERAPITRACEOGL_H
 
 #include "GPUType.h"
 #include "MetaStream.h"
@@ -14,7 +14,7 @@
 #include "ApitraceParser.h"
 #include "HAL.h"
 
-class TraceDriverApitrace : public cgoTraceDriverBase {
+class TraceDriverApitraceOGL : public cgoTraceDriverBase {
 public:
     /**
      * Constructor.
@@ -22,8 +22,8 @@ public:
      * @param driver HAL driver instance
      * @param startFrame Frame to start simulation from
      */
-    TraceDriverApitrace(const char* traceFile, HAL* driver, U32 startFrame = 0, U32 maxFrames = 0);
-    ~TraceDriverApitrace();
+    TraceDriverApitraceOGL(const char* traceFile, HAL* driver, U32 startFrame = 0, U32 maxFrames = 0);
+    ~TraceDriverApitraceOGL();
     
     int startTrace() override;
     arch::cgoMetaStream* nxtMetaStream() override;
@@ -37,4 +37,4 @@ private:
     bool initialized_;
 };
 
-#endif // TRACEDRIVERAPITRACE_H
+#endif // TRACEDRIVERAPITRACEOGL_H

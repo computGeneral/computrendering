@@ -21,7 +21,7 @@ CG1 (computGeneral 1) is a cycle-accurate GPU simulator capable of replaying Ope
                       │
 ┌─────────────────────▼───────────────────────────────────────┐
 │                     Driver Layer                             │
-│  TraceDriverApitrace / TraceDriverApitraceD3D / TraceDriverMeta │
+│  TraceDriverApitraceOGL / TraceDriverApitraceD3D / TraceDriverMeta │
 │  ┌─────────┐  ┌─────────┐  ┌─────────┐  ┌───────────┐     │
 │  │  OGL2   │  │  D3D9   │  │   GAL   │  │    HAL    │     │
 │  │(OpenGL) │  │(Direct3D)│  │(Abstrac)│  │(HW Driver)│     │
@@ -389,6 +389,6 @@ All third-party libraries are auto-downloaded and built via CMake (`thirdparty/`
 | `driver/hal/HAL.h` | Hardware abstraction layer |
 | `driver/gal/GAL/Interface/` | GAL abstract interfaces || `driver/utils/ApitraceParser/ApitraceParser.h` | Apitrace binary format parser |
 | `driver/utils/ApitraceParser/ApitraceCallDispatcherD3D.h` | D3D9 apitrace call dispatcher |
-| `driver/utils/TraceDriver/TraceDriverApitrace.h` | OGL apitrace trace driver |
+| `driver/utils/TraceDriver/TraceDriverApitraceOGL.h` | OGL apitrace trace driver |
 | `driver/utils/TraceDriver/TraceDriverApitraceD3D.h` | D3D9 apitrace trace driver || `arch/common/params/CG1GPU.ini` | Primary configuration file |
 | `arch/utils/ConfigLoader.h` | Configuration file parser |

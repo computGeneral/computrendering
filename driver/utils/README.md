@@ -37,7 +37,7 @@ Provides the abstract base class `cgoTraceDriverBase` and concrete implementatio
 | File | Description |
 |------|-------------|
 | `TraceDriverBase.h` | Abstract base class defining the `startTrace()`, `nxtMetaStream()`, `getTracePosition()` interface. All trace drivers inherit from this. |
-| `TraceDriverApitrace.h/cpp` | Drives simulation from **apitrace** `.trace` files containing OpenGL calls. Parses binary format via `ApitraceParser` and dispatches calls through the OGL driver stack. |
+| `TraceDriverApitraceOGL.h/cpp` | Drives simulation from **apitrace** `.trace` files containing OpenGL calls. Parses binary format via `ApitraceParser` and dispatches calls through the OGL driver stack. |
 | `TraceDriverApitraceD3D.h/cpp` | Drives simulation from **apitrace** `.trace` files containing D3D9 calls. Routes calls through `ApitraceCallDispatcherD3D` into the D3D9 GAL layer. |
 | `TraceDriverMeta.h/cpp` | Drives simulation from pre-translated **MetaStream** trace files (`.tracefile.gz`). Bypasses the API driver entirely — reads binary GPU command streams directly. Handles frame skipping, register caching, and shader program preloading. |
 
@@ -232,7 +232,7 @@ Contains a single `GALTest.vcxproj` (legacy Visual Studio project) referencing `
      ApitraceParser/ ──→ GL/ headers
          │        │
          ▼        ▼
-  TraceDriverApitrace  TraceDriverApitraceD3D
+  TraceDriverApitraceOGL  TraceDriverApitraceD3D
          │                    │
          ▼                    ▼
     TraceDriverBase ←── TraceDriverMeta
@@ -262,7 +262,7 @@ Components are integrated into the main build via two mechanisms:
    - `BufferDescriptor.cpp`, `MemoryRegion.cpp`, `DArray.cpp`
    - `GLJumpTable.cpp`, `GLResolver.cpp`
    - `IncludeLog.cpp`, `LogObject.cpp`
-   - `TraceDriverApitrace.cpp`, `TraceDriverApitraceD3D.cpp`
+   - `TraceDriverApitraceOGL.cpp`, `TraceDriverApitraceD3D.cpp`
    - `ApitraceCallDispatcherD3D.cpp`
    - `zfstream.cpp` (in `arch/funcmodel/CMakeLists.txt`)
    - `TraceDriverMeta.cpp`, `RegisterWriteBufferMeta.cpp` (in `arch/funcmodel/CMakeLists.txt`)

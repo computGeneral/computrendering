@@ -20,7 +20,7 @@
 
 #include "TraceDriverMeta.h"
 //#include "TraceDriverOGL.h"
-#include "TraceDriverApitrace.h"
+#include "TraceDriverApitraceOGL.h"
 #include "ApitraceParser.h"
 #ifdef BUILD_D3D
 #include "TraceDriverApitraceD3D.h"
@@ -549,7 +549,7 @@ int main(int argc, char *argv[])
         else
 #endif
         if (apiType == "gl" || apiType.empty()) {
-            TraceDriver = new TraceDriverApitrace(ArchConf.sim.inputFile,
+            TraceDriver = new TraceDriverApitraceOGL(ArchConf.sim.inputFile,
                                                   HAL::getHAL(),
                                                   ArchConf.sim.startFrame,
                                                   ArchConf.sim.simFrames);

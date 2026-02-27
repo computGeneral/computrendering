@@ -3,7 +3,7 @@
 ## Current Status (2026-02-27)
 
 ✅ **OGL Support Complete**: Binary parser, Snappy decompression, 111 GL call dispatcher, full simulation  
-✅ **D3D9 Support Complete**: 80+ D3D9 API calls dispatched via D3DApitraceCallDispatcher  
+✅ **D3D9 Support Complete**: 80+ D3D9 API calls dispatched via ApitraceCallDispatcherD3D  
 ✅ **Legacy PIX Removed**: TraceDriverD3D, D3DTraceCore, D3DTracePlayer all removed  
 ✅ **Legacy GLInterceptor Removed**: TraceDriverOGL, TraceReader, GLExec all removed  
 ✅ **Verified**: glxgears.trace → byte-identical PPM output vs reference  
@@ -14,7 +14,7 @@
 
 - ✅ Apitrace binary format parsing (Snappy, varuint, typed Values, signature caching)
 - ✅ 111 GL calls dispatched directly to OGL_gl* entry points
-- ✅ 80+ D3D9 calls dispatched to AIDeviceImp9 via D3DApitraceCallDispatcher
+- ✅ 80+ D3D9 calls dispatched to AIDeviceImp9 via ApitraceCallDispatcherD3D
 - ✅ Full OGL→GAL→HAL→MetaStream pipeline from .trace files
 - ✅ Full D3D9→GAL→HAL→MetaStream pipeline from .trace files
 - ✅ API auto-detection (OGL vs D3D9) from trace header
@@ -87,7 +87,7 @@
 ApitraceParser::readEvent() → CallEvent{functionName, arguments[Value]}
         ↓
     ┌── OGL ──────────────────────────┐   ┌── D3D9 ──────────────────────────┐
-    │ ApitraceCallDispatcher          │   │ D3DApitraceCallDispatcher        │
+    │ ApitraceCallDispatcherOGL        │   │ ApitraceCallDispatcherD3D        │
     │   asUInt/asFloat/asVoidPtr...   │   │   MA()/asOpaquePtr/asDWORD...   │
     │   OGL_gl*(args...)              │   │   dev->Method(args...)           │
     └────────────┬────────────────────┘   └────────────┬──────────────────────┘

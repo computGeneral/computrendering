@@ -1,13 +1,13 @@
 /**************************************************************************
- * ApitraceCallDispatcher.h
+ * ApitraceCallDispatcherOGL.h
  * 
  * Dispatches apitrace CallEvents to CG1 OGL entry point functions.
  * Extracts typed arguments from apitrace::Value objects and calls
  * the appropriate OGL_gl* functions directly.
  */
 
-#ifndef APITRACECALLDISPATCHER_H
-#define APITRACECALLDISPATCHER_H
+#ifndef APITRACECALLDISPATCHEROGL_H
+#define APITRACECALLDISPATCHEROGL_H
 
 #include "ApitraceParser.h"
 #include "GLResolver.h"
@@ -81,4 +81,4 @@ bool dispatchCall(const CallEvent& evt);
 
 }  // namespace apitrace
 
-#endif // APITRACECALLDISPATCHER_H
+#endif // APITRACECALLDISPATCHEROGL_H

@@ -185,7 +185,7 @@ TraceDriverApitraceD3D(inputFile, HAL, startFrame)
   │  │   └─ readVarUInt(version)            // trace format version (typically 4-6)
   │  │
   │  ├─ D3D9::initialize()             // init D3D9/GAL subsystem
-  │  └─ D3DApitraceCallDispatcher setup
+  │  └─ ApitraceCallDispatcherD3D setup
   │
   │  nxtMetaStream():
   │  ├─ HAL::nextMetaStream()  →  if MetaStream available, return it
@@ -196,7 +196,7 @@ TraceDriverApitraceD3D(inputFile, HAL, startFrame)
   │  │   │   ├─ Read/cache call signature
   │  │   │   └─ Read typed arguments (uint/float/blob/enum/array/opaque)
   │  │   │
-  │  │   ├─ D3DApitraceCallDispatcher::dispatchCall(evt, state)
+  │  │   ├─ ApitraceCallDispatcherD3D::dispatchCall(evt, state)
   │  │   │   ├─ Extract typed args via MA() macro (skips COM 'this' ptr)
   │  │   │   ├─ Map opaque pointers via OpaquePointerTracker
   │  │   │   └─ Call D3D9 interface: dev->SetRenderState(...), dev->DrawPrimitive(...)
@@ -218,7 +218,7 @@ Simulation (same as OGL path)
 | File | Role |
 |------|------|
 | `driver/utils/TraceDriver/TraceDriverApitraceD3D.h/cpp` | D3D9 apitrace trace driver |
-| `driver/utils/ApitraceParser/D3DApitraceCallDispatcher.h/cpp` | D3D9 call dispatcher (80+ API calls) |
+| `driver/utils/ApitraceParser/ApitraceCallDispatcherD3D.h/cpp` | D3D9 call dispatcher (80+ API calls) |
 | `driver/utils/ApitraceParser/ApitraceParser.h/cpp` | Shared apitrace binary format parser |
 | `driver/d3d/D3D9/` | D3D9→GAL translation |
 | `driver/gal/GAL/Implementation/` | GAL→HAL (shared with OGL) |
@@ -313,7 +313,7 @@ TraceDriverApitrace(inputFile, HAL, startFrame)
   │  │   │   ├─ Read/cache call signature (function name + arg names)
   │  │   │   └─ Read call details: typed arguments (uint/float/blob/enum/array)
   │  │   │
-  │  │   ├─ ApitraceCallDispatcher::dispatchCall(evt)
+  │  │   ├─ ApitraceCallDispatcherOGL::dispatchCall(evt)
   │  │   │   ├─ Extract typed args: asUInt(A(0)), asFloat(A(1)), asVoidPtr(A(2))...
   │  │   │   └─ Call OGL entry point: OGL_glClear(mask), OGL_glVertex3f(x,y,z), etc.
   │  │   │       │
@@ -365,8 +365,8 @@ value = 0x00         // null
 | File | Role |
 |------|------|
 | `driver/utils/ApitraceParser/ApitraceParser.h/cpp` | Binary format parser (Snappy, varuint, Values) |
-| `driver/utils/ApitraceParser/ApitraceCallDispatcher.h/cpp` | 111 GL calls → OGL_gl* entry point dispatch |
-| `driver/utils/ApitraceParser/D3DApitraceCallDispatcher.h/cpp` | 80+ D3D9 calls → AIDeviceImp9 dispatch |
+| `driver/utils/ApitraceParser/ApitraceCallDispatcherOGL.h/cpp` | 111 GL calls → OGL_gl* entry point dispatch |
+| `driver/utils/ApitraceParser/ApitraceCallDispatcherD3D.h/cpp` | 80+ D3D9 calls → AIDeviceImp9 dispatch |
 | `driver/utils/TraceDriver/TraceDriverApitrace.h/cpp` | OGL apitrace trace driver |
 | `driver/utils/TraceDriver/TraceDriverApitraceD3D.h/cpp` | D3D9 apitrace trace driver |
 | `thirdparty/snappy-1.1.10/` | Snappy decompression library |

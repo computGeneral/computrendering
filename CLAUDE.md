@@ -388,7 +388,7 @@ All third-party libraries are auto-downloaded and built via CMake (`thirdparty/`
 | `arch/funcmodel/CG1CMDL.h` | Functional model top-level |
 | `driver/hal/HAL.h` | Hardware abstraction layer |
 | `driver/gal/GAL/Interface/` | GAL abstract interfaces || `driver/utils/ApitraceParser/ApitraceParser.h` | Apitrace binary format parser |
-| `driver/utils/ApitraceParser/D3DApitraceCallDispatcher.h` | D3D9 apitrace call dispatcher |
+| `driver/utils/ApitraceParser/ApitraceCallDispatcherD3D.h` | D3D9 apitrace call dispatcher |
 | `driver/utils/TraceDriver/TraceDriverApitrace.h` | OGL apitrace trace driver |
 | `driver/utils/TraceDriver/TraceDriverApitraceD3D.h` | D3D9 apitrace trace driver || `arch/common/params/CG1GPU.ini` | Primary configuration file |
 | `arch/utils/ConfigLoader.h` | Configuration file parser |

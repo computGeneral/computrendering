@@ -59,8 +59,8 @@ cd _BUILD_/arch/Debug    # or Release
 | File | Purpose |
 |------|---------|
 | `driver/utils/ApitraceParser/ApitraceParser.h/cpp` | Binary format parser (Snappy, varuint, typed Values) |
-| `driver/utils/ApitraceParser/ApitraceCallDispatcher.h/cpp` | OGL call dispatcher (111 GL calls) |
-| `driver/utils/ApitraceParser/D3DApitraceCallDispatcher.h/cpp` | D3D9 call dispatcher (80+ calls) |
+| `driver/utils/ApitraceParser/ApitraceCallDispatcherOGL.h/cpp` | OGL call dispatcher (111 GL calls) |
+| `driver/utils/ApitraceParser/ApitraceCallDispatcherD3D.h/cpp` | D3D9 call dispatcher (80+ calls) |
 | `driver/utils/TraceDriver/TraceDriverApitrace.h/cpp` | OGL trace driver |
 | `driver/utils/TraceDriver/TraceDriverApitraceD3D.h/cpp` | D3D9 trace driver |
 | `driver/utils/TraceDriver/TraceDriverBase.h` | Base class (frame limiting, virtual destructor) |
@@ -89,7 +89,7 @@ cd _BUILD_/arch/Debug    # or Release
 
 ### Adding Support for New API Calls
 
-**OGL:** Edit `driver/utils/ApitraceParser/ApitraceCallDispatcher.cpp`, add a handler using `A()` for argument access.
+**OGL:** Edit `driver/utils/ApitraceParser/ApitraceCallDispatcherOGL.cpp`, add a handler using `A()` for argument access.
 
-**D3D9:** Edit `driver/utils/ApitraceParser/D3DApitraceCallDispatcher.cpp`, add a handler using `MA()` for method argument access (skips COM `this` pointer). See `APITRACE_DEV_SKILL.md` for detailed patterns.
+**D3D9:** Edit `driver/utils/ApitraceParser/ApitraceCallDispatcherD3D.cpp`, add a handler using `MA()` for method argument access (skips COM `this` pointer). See `APITRACE_DEV_SKILL.md` for detailed patterns.
 

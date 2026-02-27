@@ -8,7 +8,7 @@
  */
 
 #include "TraceDriverApitraceD3D.h"
-#include "D3DApitraceCallDispatcher.h"
+#include "ApitraceCallDispatcherD3D.h"
 #include "D3D9.h"
 #include "D3DInterface.h"
 #include "Profiler.h"

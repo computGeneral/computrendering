@@ -1,8 +1,8 @@
 add_library(ApitraceParser
     ApitraceParser.h
     ApitraceParser.cpp
-    ApitraceCallDispatcher.h
-    ApitraceCallDispatcher.cpp
+    ApitraceCallDispatcherOGL.h
+    ApitraceCallDispatcherOGL.cpp
 )
 
 target_include_directories(ApitraceParser PUBLIC

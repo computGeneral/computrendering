@@ -38,7 +38,7 @@ Provides the abstract base class `cgoTraceDriverBase` and concrete implementatio
 |------|-------------|
 | `TraceDriverBase.h` | Abstract base class defining the `startTrace()`, `nxtMetaStream()`, `getTracePosition()` interface. All trace drivers inherit from this. |
 | `TraceDriverApitrace.h/cpp` | Drives simulation from **apitrace** `.trace` files containing OpenGL calls. Parses binary format via `ApitraceParser` and dispatches calls through the OGL driver stack. |
-| `TraceDriverApitraceD3D.h/cpp` | Drives simulation from **apitrace** `.trace` files containing D3D9 calls. Routes calls through `D3DApitraceCallDispatcher` into the D3D9 GAL layer. |
+| `TraceDriverApitraceD3D.h/cpp` | Drives simulation from **apitrace** `.trace` files containing D3D9 calls. Routes calls through `ApitraceCallDispatcherD3D` into the D3D9 GAL layer. |
 | `TraceDriverMeta.h/cpp` | Drives simulation from pre-translated **MetaStream** trace files (`.tracefile.gz`). Bypasses the API driver entirely — reads binary GPU command streams directly. Handles frame skipping, register caching, and shader program preloading. |
 
 **Used by:** `arch/CG1SIM.cpp` (main entry), `arch/funcmodel/CG1CMDL`, `arch/bhavmodel/CG1BMDL`, `cmCommandProcessor`, `cmUnifiedShader`.
@@ -53,8 +53,8 @@ Parses the apitrace binary trace format (`.trace` files) with Snappy decompressi
 | File | Description |
 |------|-------------|
 | `ApitraceParser.h/cpp` | Core parser. Reads apitrace binary format: signatures (call/enum/bitmask/struct), events (enter/leave), and typed `Value` objects (int, float, blob, array, struct, opaque pointers). Uses Snappy decompression. |
-| `ApitraceCallDispatcher.h/cpp` | Dispatches `CallEvent` objects to CG1 **OpenGL** entry points (`OGL_gl*`). Includes type-safe helpers (`asUInt`, `asFloat`, `asVoidPtr`, etc.) for extracting GL types from apitrace `Value` objects. |
-| `D3DApitraceCallDispatcher.h/cpp` | Dispatches `CallEvent` objects to CG1 **D3D9** interface methods (`AIDeviceImp9`). Includes `D3D9ObjectTracker` for mapping apitrace opaque pointers to live COM objects, and `D3D9DispatcherState` for maintaining session state. |
+| `ApitraceCallDispatcherOGL.h/cpp` | Dispatches `CallEvent` objects to CG1 **OpenGL** entry points (`OGL_gl*`). Includes type-safe helpers (`asUInt`, `asFloat`, `asVoidPtr`, etc.) for extracting GL types from apitrace `Value` objects. |
+| `ApitraceCallDispatcherD3D.h/cpp` | Dispatches `CallEvent` objects to CG1 **D3D9** interface methods (`AIDeviceImp9`). Includes `D3D9ObjectTracker` for mapping apitrace opaque pointers to live COM objects, and `D3D9DispatcherState` for maintaining session state. |
 | `ApitraceToGLI.h` | Utility to convert apitrace `CallEvent` to GLI text format strings (for compatibility with legacy `TraceDriverOGL`/`GLExec` infrastructure). |
 
 **Dependencies:** Snappy (thirdparty), GLResolver, GL headers.
@@ -116,7 +116,7 @@ Parses the OpenGL function declarations in `GL/OGL_functions_supported_by_CG1GPU
 | `GLIOthers.h` | Additional GLI-related declarations. |
 | `OGL_functions_supported_by_CG1GPU.h` | **Input file for OGLApiCodeGen** — authoritative list of OpenGL functions the simulator supports. |
 
-**Used by:** `GLJumpTable.h`, `UserCallTable.h`, `ApitraceCallDispatcher.h`, OGLApiCodeGen, OGL driver, GALx, `ComputeGeneralLanguage`.
+**Used by:** `GLJumpTable.h`, `UserCallTable.h`, `ApitraceCallDispatcherOGL.h`, OGLApiCodeGen, OGL driver, GALx, `ComputeGeneralLanguage`.
 
 ---
 
@@ -180,7 +180,7 @@ Defines `GLJumpTable` struct containing function pointers for all supported Open
 
 Maps OpenGL function **names** to `APICall` enum IDs and vice versa. Also maps OpenGL constant names to integer values. Used by the trace replay system to identify which API function is being called. Supports wildcard pattern matching on function names.
 
-**Used by:** OGL14 driver (`BaseObject.cpp`, `GLContext.cpp`), `ApitraceCallDispatcher`.
+**Used by:** OGL14 driver (`BaseObject.cpp`, `GLContext.cpp`), `ApitraceCallDispatcherOGL`.
 
 #### zfstream.h/cpp + zlib.h + zconf.h
 **Status: ACTIVELY USED** — Compiled into `CG1CMDL`.
@@ -263,7 +263,7 @@ Components are integrated into the main build via two mechanisms:
    - `GLJumpTable.cpp`, `GLResolver.cpp`
    - `IncludeLog.cpp`, `LogObject.cpp`
    - `TraceDriverApitrace.cpp`, `TraceDriverApitraceD3D.cpp`
-   - `D3DApitraceCallDispatcher.cpp`
+   - `ApitraceCallDispatcherD3D.cpp`
    - `zfstream.cpp` (in `arch/funcmodel/CMakeLists.txt`)
    - `TraceDriverMeta.cpp`, `RegisterWriteBufferMeta.cpp` (in `arch/funcmodel/CMakeLists.txt`)
 

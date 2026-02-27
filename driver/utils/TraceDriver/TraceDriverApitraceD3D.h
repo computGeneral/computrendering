@@ -13,7 +13,7 @@
 #include "MetaStream.h"
 #include "TraceDriverBase.h"
 #include "ApitraceParser.h"
-#include "D3DApitraceCallDispatcher.h"
+#include "ApitraceCallDispatcherD3D.h"
 #include "HAL.h"
 
 class AIRoot9;

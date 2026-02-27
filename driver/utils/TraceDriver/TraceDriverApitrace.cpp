@@ -5,7 +5,7 @@
  */
 
 #include "TraceDriverApitrace.h"
-#include "ApitraceCallDispatcher.h"
+#include "ApitraceCallDispatcherOGL.h"
 #include "OGL.h"
 #include "OGLEntryPoints.h"
 #include "Profiler.h"

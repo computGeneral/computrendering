@@ -1,5 +1,5 @@
 /**************************************************************************
- * D3DApitraceCallDispatcher.h
+ * ApitraceCallDispatcherD3D.h
  * 
  * Dispatches apitrace CallEvents containing D3D9 API calls to the CG1
  * D3D9 GAL implementation (AIDeviceImp9 etc.).
@@ -7,8 +7,8 @@
  * appropriate D3D9 interface methods.
  */
 
-#ifndef D3DAPITRACECALLDISPATCHER_H
-#define D3DAPITRACECALLDISPATCHER_H
+#ifndef APITRACECALLDISPATCHERD3D_H
+#define APITRACECALLDISPATCHERD3D_H
 
 #include "ApitraceParser.h"
 #include "d3d9_port.h"
@@ -193,4 +193,4 @@ bool isFrameBoundary(const std::string& functionName);
 
 }}  // namespace apitrace::d3d9
 
-#endif // D3DAPITRACECALLDISPATCHER_H
+#endif // APITRACECALLDISPATCHERD3D_H

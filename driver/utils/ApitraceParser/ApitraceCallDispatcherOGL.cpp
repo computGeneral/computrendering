@@ -1,10 +1,10 @@
 /**************************************************************************
- * ApitraceCallDispatcher.cpp
+ * ApitraceCallDispatcherOGL.cpp
  * 
  * Maps apitrace CallEvents to CG1 OGL_gl* entry point functions.
  */
 
-#include "ApitraceCallDispatcher.h"
+#include "ApitraceCallDispatcherOGL.h"
 #include "OGLEntryPoints.h"
 #include "../../ogl/OGLShaders/OGLShaderEntryPoints.h"
 #include "OGL.h"

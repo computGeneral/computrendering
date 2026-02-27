@@ -1,11 +1,11 @@
 /**************************************************************************
- * D3DApitraceCallDispatcher.cpp
+ * ApitraceCallDispatcherD3D.cpp
  * 
  * Dispatches apitrace CallEvents containing D3D9 API calls to the CG1
  * D3D9 GAL implementation.
  */
 
-#include "D3DApitraceCallDispatcher.h"
+#include "ApitraceCallDispatcherD3D.h"
 #include "D3D9State.h"
 #include "AIRoot_9.h"
 #include "AIDirect3DImp_9.h"

@@ -62,8 +62,8 @@ All trace playback now uses the apitrace-based pipeline:
 
 | Path | Driver | Dispatcher | Format |
 |------|--------|------------|--------|
-| OpenGL | `TraceDriverApitrace` | `ApitraceCallDispatcher` | `.trace` (apitrace) |
-| D3D9 | `TraceDriverApitraceD3D` | `D3DApitraceCallDispatcher` | `.trace` (apitrace) |
+| OpenGL | `TraceDriverApitrace` | `ApitraceCallDispatcherOGL` | `.trace` (apitrace) |
+| D3D9 | `TraceDriverApitraceD3D` | `ApitraceCallDispatcherD3D` | `.trace` (apitrace) |
 | MetaStream | `TraceDriverMeta` | N/A (direct) | `.tracefile.gz` |
 
 ## 3. Future Removal Candidates

@@ -78,7 +78,7 @@ set(OGLINC
 
 set(D3DSRC
               ${CMAKE_SOURCE_DIR}/driver/utils/TraceDriver/TraceDriverApitraceD3D.cpp
-              ${CMAKE_SOURCE_DIR}/driver/utils/ApitraceParser/D3DApitraceCallDispatcher.cpp
+              ${CMAKE_SOURCE_DIR}/driver/utils/ApitraceParser/ApitraceCallDispatcherD3D.cpp
 )
 
 set(D3DINC

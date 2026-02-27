@@ -108,10 +108,8 @@ add_subdirectory(driver/ogl/OGL2)
 option(BUILD_D3D "Build D3D9 targets" OFF)
 if(MSVC AND BUILD_D3D)
 add_subdirectory(driver/utils/D3DApiCodeGen)
-add_subdirectory(driver/d3d/trace/D3DTraceCore)
 add_subdirectory(driver/d3d/D3D9)
 # FIXME
-#add_dependencies(driver/d3d/trace/D3DTraceCore driver/utils/D3DApiCodeGen)
 endif()
 
 # arch

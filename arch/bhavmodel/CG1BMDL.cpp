@@ -33,6 +33,7 @@ void CG1BMDL::simulationLoop(cgeModelAbstractLevel MAL)
     traceEnd = false;
     TraceDriver->startTrace(); //  Start the trace driver.
     GpuBMdl.resetState();
+    U32 metaStreamCount = 0;
     while(!traceEnd && (GpuBMdl.getFrameCounter() < (ArchParams::get<uint32_t>("SIMULATOR_StartFrame") + ArchParams::get<uint32_t>("SIMULATOR_SimFrames"))) && !AbortSim)
     {
         cgoMetaStream *CurMetaStream;
@@ -41,6 +42,7 @@ void CG1BMDL::simulationLoop(cgeModelAbstractLevel MAL)
         TRACING_EXIT_REGION()
         if (CurMetaStream != NULL)
         {
+            metaStreamCount++;
             GpuBMdl.emulateCommandProcessor(CurMetaStream);
         }
         else

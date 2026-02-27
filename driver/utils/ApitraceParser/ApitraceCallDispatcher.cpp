@@ -9,7 +9,6 @@
 #include "../../ogl/OGLShaders/OGLShaderEntryPoints.h"
 #include "OGL.h"
 #include <iostream>
-#include <set>
 #include <vector>
 #include <map>
 
@@ -56,7 +55,7 @@ bool apitrace::dispatchCall(const CallEvent& evt) {
                 executeCall(recordedEvt);
             }
         } else {
-            std::cerr << "[ApitraceDispatch] Warning: glCallList called for unknown list " << listId << std::endl;
+            std::cerr << "Warning: glCallList called for unknown list " << listId << std::endl;
         }
         return true;
     }
@@ -160,7 +159,7 @@ bool executeCall(const CallEvent& evt) {
         OGL_glViewport(x, y, w, h); 
         return true; 
     }
-    // Added specific check for "lScissor" corruption seen in logs, just in case
+    // ---- Scissor ----
     if (fn == "glScissor")          { OGL_glScissor(asInt(A(0)), asInt(A(1)), asInt(A(2)), asInt(A(3))); return true; }
     if (fn == "glDepthRange")       { OGL_glDepthRange(asClampd(A(0)), asClampd(A(1))); return true; }
 
@@ -301,11 +300,6 @@ bool executeCall(const CallEvent& evt) {
     }
 
     // ---- Unmapped call ----
-    static std::set<std::string> warned;
-    if (warned.find(fn) == warned.end()) {
-        std::cerr << "[ApitraceDispatch] Unhandled GL call: " << fn << std::endl;
-        warned.insert(fn);
-    }
     return false;
 }
 

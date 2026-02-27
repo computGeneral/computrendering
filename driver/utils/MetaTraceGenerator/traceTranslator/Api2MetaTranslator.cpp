@@ -21,8 +21,8 @@
 #include "zfstream.h"
 #include "ConfigLoader.h"
 #include "DynamicMemoryOpt.h"
-#include "TraceDriverOGL.h"
-#include "TraceDriverD3D.h"
+//#include "TraceDriverOGL.h"  // Legacy OGL trace driver removed
+//#include "TraceDriverD3D.h"  // Legacy PIX trace driver removed
 
 #include "MetaStreamTrace.h"
 #include "ShaderArchParam.h"

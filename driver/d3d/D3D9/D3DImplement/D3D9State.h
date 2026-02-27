@@ -13,7 +13,6 @@
 #include <vector>
 #include "ShaderTranslator.h"
 #include "FFShaderGenerator.h"
-#include "D3DTrace.h"
 
 class AIVertexBufferImp9;
 class AIIndexBufferImp9;
@@ -50,7 +49,6 @@ public:
     void initialize(AIDeviceImp9 *device, UINT width, UINT height);
     void destroy();
     
-    void setD3DTrace(D3DTrace *trace);
     bool isPreloadCall();
 
     //libGAL::GALDevice* getGALDevice();
@@ -155,8 +153,6 @@ private:
     UINT batchCount;
     
     D3D9State();
-    
-    D3DTrace *d3dTrace;
 
     libGAL::gal_uint getElementLength(D3DDECLTYPE Type);
     void getTypeAndComponents(D3DDECLTYPE Type, libGAL::gal_uint* components, libGAL::GAL_STREAM_DATA* GalType);

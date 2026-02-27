@@ -3170,7 +3170,8 @@ void CG1CMDL::simulationLoop(cgeModelAbstractLevel MAL)
    
     for(cycle = 0, end = false, dotCount = 0; !end; cycle++) //  Simulation loop.
     {
-        CG_WARN("Cycle %ld ----------------------------\n", cycle);
+        if (cycle == 0) { fprintf(stderr, "[CMDL] Entering simulation loop\n"); fflush(stderr); }
+        //CG_WARN("Cycle %ld ----------------------------\n", cycle);  // Disabled: too verbose for normal simulation runs.
         if (ArchConf.sim.dumpSignalTrace && (cycle >= ArchConf.sim.startDump) && (cycle <= (ArchConf.sim.startDump + ArchConf.sim.dumpCycles)))  //  Dump the signals.
             sigBinder.dumpSignalTrace(cycle);
         cyclesCounter->inc(); //  Update cycle counter statistic.
@@ -3214,6 +3215,8 @@ void CG1CMDL::simulationLoop(cgeModelAbstractLevel MAL)
             dotCount = 0;
             putchar('.');
             fflush(stdout);
+            fprintf(stderr, "[CMDL] cycle=%lld frame=%d batch=%d\n", (long long)cycle, frameCounter, batchCounter);
+            fflush(stderr);
 //DynamicMemoryOpt::usage();
             end = end || GpuCMdl.CP->isEndOfTrace(); //  Check if trace has finished.
         }

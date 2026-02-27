@@ -6,15 +6,12 @@ set(EXTRACTOR ${CMAKE_SOURCE_DIR}/traceTranslator/Api2MetaTranslator.cpp
               ${CMAKE_SOURCE_DIR}/traceTranslator/Api2MetaTranslator.h
               ${CMAKE_SOURCE_DIR}/../../../arch/utils/ConfigLoader.cpp
               ${CMAKE_SOURCE_DIR}/../../../arch/utils/ConfigLoader.h
-              ${CMAKE_SOURCE_DIR}/../TraceDriver/TraceDriverD3D.cpp
-              ${CMAKE_SOURCE_DIR}/../TraceDriver/TraceDriverD3D.h
               ${CMAKE_SOURCE_DIR}/MetaStreamTrace.h
     )
 
 add_executable(MetaTranslator ${EXTRACTOR})
 
 target_link_libraries(MetaTranslator PUBLIC d3d9
-                                            D3DTraceCore
                                             CG1BMDL
                                             ogl
                                             CG1CMDL

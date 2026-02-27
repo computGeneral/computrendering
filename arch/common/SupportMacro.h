@@ -1,9 +1,9 @@
 #ifndef _SUPPORTMACRO_H__ 
 #define _SUPPORTMACRO_H__ 
 
-#define CG_INFOEN            1 
+#define CG_INFOEN            0
 #define CG_WARNEN            1
-#define CG_DEBGEN            1
+#define CG_DEBGEN            0
 
 
 #define CG_INFO(Msg, ...) \

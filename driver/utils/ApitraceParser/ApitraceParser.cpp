@@ -100,7 +100,8 @@ bool SnappyStream::read(void* buffer, size_t count) {
 // ============ ApitraceParser Implementation ============
 
 ApitraceParser::ApitraceParser() 
-    : stream_(nullptr), version_(0), semanticVersion_(0), nextCallNo_(0) {}
+    : stream_(nullptr), version_(0), semanticVersion_(0), nextCallNo_(0),
+      apiTypeDetected_(false), hasFirstEvent_(false) {}
 
 ApitraceParser::~ApitraceParser() {
     close();
@@ -271,9 +272,14 @@ bool ApitraceParser::readValue(Value& val) {
         }
 
         case VALUE_REPR: {
-            if (!readValue(val)) return false; // Original value
+            if (!readValue(val)) return false; // First sub-value
             Value repr;
-            if (!readValue(repr)) return false; // Representation
+            if (!readValue(repr)) return false; // Second sub-value
+            // If first is text (human-readable repr) and second is blob (original),
+            // prefer the blob.  Some apitrace versions write repr first.
+            if (repr.type == VALUE_BLOB && !repr.blobVal.empty()) {
+                val = std::move(repr);
+            }
             return true;
         }
         
@@ -336,7 +342,6 @@ bool ApitraceParser::readEnumSignature(uint32_t sigId, EnumSignature& sig) {
     if (!readVarUInt(num_values)) return false;
     
     if (num_values > 10000) {
-        // std::cerr << "  Warning: suspiciously large enum value count: " << num_values << std::endl;
         return false;
     }
 
@@ -364,7 +369,6 @@ bool ApitraceParser::readBitmaskSignature(uint32_t sigId, BitmaskSignature& sig)
     if (!readVarUInt(count)) return false;
     
     if (count > 10000) {
-         // std::cerr << "  Warning: suspiciously large bitmask flag count: " << count << std::endl;
          return false;
     }
 
@@ -447,34 +451,162 @@ bool ApitraceParser::readCallDetails(CallEvent& event) {
 }
 
 bool ApitraceParser::readEvent(CallEvent& event) {
-    uint8_t eventType;
-    if (!readByte(eventType)) return false;
+    // If we have a cached first event from detectApiType(), return it first
+    if (hasFirstEvent_) {
+        event = firstEvent_;
+        hasFirstEvent_ = false;
+        return true;
+    }
     
-    if (eventType == EVENT_CALL_ENTER) {
-        event.callNo = nextCallNo_++;
-        
-        // Read thread number (version >= 4)
-        if (version_ >= 4) {
-            uint64_t threadNo;
-            if (!readVarUInt(threadNo)) return false;
-            event.threadNo = threadNo;
+    // Read events, merging ENTER+LEAVE pairs automatically.
+    // ENTER events are pushed to a stack. When a matching LEAVE
+    // arrives, we merge its args/return into the ENTER and return.
+    while (true) {
+        uint8_t eventType;
+        if (!readByte(eventType)) {
+            // EOF — flush any remaining ENTER events from the stack
+            if (!pendingEnterStack_.empty()) {
+                event = pendingEnterStack_.top();
+                pendingEnterStack_.pop();
+                return true;
+            }
+            return false;
         }
         
-        // Read call signature
-        uint64_t sigId;
-        if (!readVarUInt(sigId)) return false;
-        if (!readCallSignature(sigId, event.signature)) return false;
-        
-        // Read call details
-        return readCallDetails(event);
+        if (eventType == EVENT_CALL_ENTER) {
+            CallEvent enterEvt;
+            enterEvt.callNo = nextCallNo_++;
+            
+            // Read thread number (version >= 4)
+            if (version_ >= 4) {
+                uint64_t threadNo;
+                if (!readVarUInt(threadNo)) return false;
+                enterEvt.threadNo = threadNo;
+            }
+            
+            // Read call signature
+            uint64_t sigId;
+            if (!readVarUInt(sigId)) return false;
+            if (!readCallSignature(sigId, enterEvt.signature)) return false;
+            
+            // Read call details (input args)
+            if (!readCallDetails(enterEvt)) return false;
+            
+            // Push to stack and continue reading for matching LEAVE
+            pendingEnterStack_.push(enterEvt);
+        }
+        else if (eventType == EVENT_CALL_LEAVE) {
+            // Read LEAVE call number and details
+            uint64_t callNo;
+            if (!readVarUInt(callNo)) return false;
+            
+            CallEvent leaveEvt;
+            if (!readCallDetails(leaveEvt)) return false;
+            
+            if (!pendingEnterStack_.empty()) {
+                // Merge LEAVE data into the matching ENTER event
+                event = pendingEnterStack_.top();
+                pendingEnterStack_.pop();
+                
+                // Merge arguments: LEAVE args override/supplement ENTER args
+                for (auto& kv : leaveEvt.arguments) {
+                    event.arguments[kv.first] = kv.second;
+                }
+                
+                // Merge return value
+                if (leaveEvt.hasReturn) {
+                    event.returnValue = leaveEvt.returnValue;
+                    event.hasReturn = true;
+                }
+                
+                return true;
+            }
+            // No matching ENTER — skip orphan LEAVE
+        }
+        else {
+            // Unknown event type — try to continue
+            return false;
+        }
     }
-    else if (eventType == EVENT_CALL_LEAVE) {
-        // For LEAVE events, just read call_no and any details
-        uint64_t callNo;
-        if (!readVarUInt(callNo)) return false;
-        event.callNo = callNo;
-        return readCallDetails(event);
+}
+
+std::string ApitraceParser::detectApiType() {
+    if (apiTypeDetected_) return detectedApiType_;
+    apiTypeDetected_ = true;
+    
+    // Try to determine API from trace properties first
+    auto it = properties_.find("API");
+    if (it != properties_.end()) {
+        std::string api = it->second;
+        // Normalize specific API strings
+        if (api.find("GL") != std::string::npos || api.find("gl") != std::string::npos) {
+            detectedApiType_ = "gl";
+            return detectedApiType_;
+        }
+        else if (api.find("D3D9") != std::string::npos || api.find("d3d9") != std::string::npos ||
+                 api == "Direct3D 9") {
+            detectedApiType_ = "d3d9";
+            return detectedApiType_;
+        }
+        else if (api.find("D3D11") != std::string::npos || api.find("d3d11") != std::string::npos ||
+                 api == "Direct3D 11") {
+            detectedApiType_ = "d3d11";
+            return detectedApiType_;
+        }
+        else if (api.find("D3D12") != std::string::npos || api.find("d3d12") != std::string::npos) {
+            detectedApiType_ = "d3d12";
+            return detectedApiType_;
+        }
+        // "DirectX" or other generic D3D strings — need to check first call
+        // to determine the exact D3D version. Fall through below.
     }
     
-    return false;
+    // Peek at the first call event to determine API type from the function names
+    CallEvent evt;
+    // Read events until we find a CALL_ENTER with a non-empty function name
+    while (readEvent(evt)) {
+        const std::string& fn = evt.signature.functionName;
+        if (fn.empty()) continue;
+        
+        // Cache this event to be returned by next readEvent() call
+        firstEvent_ = evt;
+        hasFirstEvent_ = true;
+        
+        // Check for D3D9 patterns
+        if (fn.find("IDirect3D") != std::string::npos ||
+            fn.find("Direct3DCreate9") != std::string::npos ||
+            fn.find("DirectDraw") != std::string::npos ||
+            fn.find("D3DPERF_") != std::string::npos) {
+            detectedApiType_ = "d3d9";
+        }
+        // Check for D3D11 patterns
+        else if (fn.find("ID3D11") != std::string::npos ||
+                 fn.find("IDXGIFactory") != std::string::npos ||
+                 fn.find("IDXGISwapChain") != std::string::npos ||
+                 fn.find("D3D11CreateDevice") != std::string::npos ||
+                 fn.find("CreateDXGIFactory") != std::string::npos) {
+            detectedApiType_ = "d3d11";
+        }
+        // Check for D3D10/12 patterns
+        else if (fn.find("ID3D10") != std::string::npos ||
+                 fn.find("D3D10CreateDevice") != std::string::npos) {
+            detectedApiType_ = "d3d10";
+        }
+        else if (fn.find("ID3D12") != std::string::npos ||
+                 fn.find("D3D12CreateDevice") != std::string::npos) {
+            detectedApiType_ = "d3d12";
+        }
+        // Check for OGL patterns
+        else if (fn.find("gl") == 0 || fn.find("wgl") == 0 ||
+                 fn.find("glX") == 0 || fn.find("egl") == 0) {
+            detectedApiType_ = "gl";
+        }
+        else {
+            detectedApiType_ = "";
+        }
+        
+        return detectedApiType_;
+    }
+    
+    return detectedApiType_;
 }

@@ -5,6 +5,8 @@
 
 
 #include <iostream>
+#include <cstdio>
+#include <cstdarg>
 #include "support.h"
 //#include "Log.h"
 #ifdef WIN32
@@ -117,20 +119,24 @@ int getCurrentDirectory(char *dirName, int arraySize)
 
 void ModelPrint(const char* dbgLvl, const char* mdlTyp, const char* file, const char* func, const int line, const char *msg, ...)
 {
-// need update for cross platform    va_list args;
-// need update for cross platform    va_start(args, msg);
-// need update for cross platform
-// need update for cross platform    char bufMsgAlign[8] = " "; // used to align [MSG] with Arch Model Trace
-// need update for cross platform    char bufMsg[256]    = "0";
-// need update for cross platform    vsprintf_s(bufMsg, msg, args);
-// need update for cross platform
-// need update for cross platform    char bufTotal[1024] = "0";
-// need update for cross platform    int n = sprintf_s(bufTotal, 1024, "[%s|%s]%-2s[MSG]:%-48s", dbgLvl, mdlTyp, bufMsgAlign, bufMsg);
-// need update for cross platform    n += sprintf_s(bufTotal+n, 1024-n, " [FILE]:%s [FUNC]:%s [LINE]:%05d\n", file, func, line);
-// need update for cross platform//    n += sprintf_s(bufTotal+n, 1024, " [CG1_ISA_OPCODE_EXP]:%s\n", #Exp);
-// need update for cross platform//    n += vsprintf_s(bufTotal+n, 1024-n, msg, args);
-// need update for cross platform    OutputDebugStringA(bufTotal);
-// need update for cross platform    va_end(args);
+    va_list args;
+    va_start(args, msg);
+
+    char bufMsg[256]   = {0};
+    char bufTotal[1024] = {0};
+
+    vsnprintf(bufMsg, sizeof(bufMsg), msg, args);
+    va_end(args);
+
+    int n = snprintf(bufTotal, sizeof(bufTotal),
+                     "[%s|%s] [MSG]:%-48s [FILE]:%s [FUNC]:%s [LINE]:%05d\n",
+                     dbgLvl, mdlTyp, bufMsg, file, func, line);
+    (void)n;
+
+    fputs(bufTotal, stdout);
+#ifdef _WIN32
+    OutputDebugStringA(bufTotal);
+#endif
 }
 
 

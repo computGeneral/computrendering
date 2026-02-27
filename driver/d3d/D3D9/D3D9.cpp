@@ -5,9 +5,9 @@
 #include "D3D9.h"
 #include "D3DInterface.h"
 
-void D3D9::initialize(D3DTrace *trace)
+void D3D9::initialize()
 {
-    D3DInterface::initialize(trace);
+    D3DInterface::initialize();
 }
 
 void D3D9::finalize()

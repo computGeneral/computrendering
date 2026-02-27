@@ -77,7 +77,8 @@ set(OGLINC
 )
 
 set(D3DSRC
-              ${CMAKE_SOURCE_DIR}/driver/utils/TraceDriver/TraceDriverD3D.cpp
+              ${CMAKE_SOURCE_DIR}/driver/utils/TraceDriver/TraceDriverApitraceD3D.cpp
+              ${CMAKE_SOURCE_DIR}/driver/utils/ApitraceParser/D3DApitraceCallDispatcher.cpp
 )
 
 set(D3DINC
@@ -89,7 +90,7 @@ set(D3DINC
 if(MSVC AND BUILD_D3D)
     set(EXTSRC ${OGLSRC} ${D3DSRC})
     set(EXTINC ${OGLINC} ${D3DINC})
-    set(DRVLIB GAL GALx OGL2 D3D9 D3DTraceCore)
+    set(DRVLIB GAL GALx OGL2 D3D9)
     add_definitions(-DBUILD_D3D)
     #HAL #FIXME HAL should be decoupled from funcmodel and add here.
 else()
@@ -109,6 +110,11 @@ source_group(main       FILES ${MAINSRC})
 add_executable(CG1SIM  ${MAINSRC}
                        ${EXTSRC}
                        )
+
+# Enable large address space for 32-bit builds (up to 4GB with /3GB boot)
+if(MSVC AND NOT MSVC_64BIT)
+    set_target_properties(CG1SIM PROPERTIES LINK_FLAGS "/LARGEADDRESSAWARE")
+endif()
 
 # following is a demo argument line for the debugger
 set_target_properties(CG1SIM PROPERTIES VS_DEBUGGER_COMMAND_ARGUMENTS 

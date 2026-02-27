@@ -12,7 +12,7 @@
 using namespace arch;
 using namespace std;
 
-TraceDriverMeta::TraceDriverMeta(gzifstream *ProfilingFile, U32 startFrame_, U32 traceFirstFrame_) :
+TraceDriverMeta::TraceDriverMeta(gzifstream *ProfilingFile, U32 startFrame_, U32 traceFirstFrame_, U32 maxFrames) :
     startFrame(startFrame_), currentFrame(0), traceFirstFrame(traceFirstFrame_),
     startTransaction(0),
     fragmentProgramPC(0), fragmentProgramAddress(0), fragmentProgramSize(0),
@@ -20,6 +20,7 @@ TraceDriverMeta::TraceDriverMeta(gzifstream *ProfilingFile, U32 startFrame_, U32
     lastProgramUpload(NULL), agpTransCount(0), shaderProgramLoadPhase(0)
 {
     traceTyp = TraceTypCgp;
+    maxFrames_ = maxFrames;
     MetaTraceFile = ProfilingFile;
 
     //  Clear the shader program data caches
@@ -44,6 +45,10 @@ int TraceDriverMeta::startTrace()
 // new version to allow hotStart with identical memory footprint
 cgoMetaStream* TraceDriverMeta::nxtMetaStream()
 {
+    // If frame limit was reached, stop producing MetaStreams
+    if (frameLimitReached_)
+        return NULL;
+    
     cgoMetaStream* metaStream = NULL;
     //  Check for the MetaStream trace file
     if (MetaTraceFile != NULL)
@@ -559,6 +564,11 @@ cgoMetaStream* TraceDriverMeta::nxtMetaStream()
                     {
                         cout << "Dumping frame " << (traceFirstFrame + currentFrame) << endl;
                         currentFrame++;
+                        
+                        // Check if we've reached the frame limit
+                        if (maxFrames_ > 0 && currentFrame >= (startFrame + maxFrames_)) {
+                            frameLimitReached_ = true;
+                        }
                     }
                     
                     break;

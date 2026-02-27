@@ -42,13 +42,12 @@ target_sources(D3D9 PUBLIC ${D3D9SRC}
 
 target_include_directories(D3D9 PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}
                                        ${CMAKE_SOURCE_DIR}/arch/common
-                                       ${CMAKE_SOURCE_DIR}/arch/behvmodel/common/math
-                                       ${CMAKE_SOURCE_DIR}/arch/behvmodel/Rasterizer
-                                       ${CMAKE_SOURCE_DIR}/arch/behvmodel/UnifiedShader
+                                       ${CMAKE_SOURCE_DIR}/arch/bhavmodel/common/math
+                                       ${CMAKE_SOURCE_DIR}/arch/bhavmodel/Rasterizer
+                                       ${CMAKE_SOURCE_DIR}/arch/bhavmodel/UnifiedShader
                                        ${CMAKE_SOURCE_DIR}/arch/funcmodel/CommandProcessor
                                        ${CMAKE_SOURCE_DIR}/arch/funcmodel/MemoryController
                                        ${CMAKE_SOURCE_DIR}/driver/utils
-                                       ${CMAKE_SOURCE_DIR}/driver/d3d/trace/D3DTraceCore
                                        ${CMAKE_SOURCE_DIR}/driver/d3d/inc
                                        ${CMAKE_SOURCE_DIR}/driver/hal
                                        ${CMAKE_SOURCE_DIR}/driver/gal/GAL/Interface

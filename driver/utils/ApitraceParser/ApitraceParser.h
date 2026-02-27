@@ -12,6 +12,7 @@
 #include <string>
 #include <vector>
 #include <map>
+#include <stack>
 #include <fstream>
 #include <cstdint>
 
@@ -94,6 +95,23 @@ public:
     bool readEvent(CallEvent& event);
     bool eof() const;
     uint32_t getVersion() const { return version_; }
+    
+    //! Get all properties from the trace header (version >= 6)
+    const std::map<std::string, std::string>& getProperties() const { return properties_; }
+    
+    //! Get a specific property value, or empty string if not found
+    std::string getProperty(const std::string& key) const {
+        auto it = properties_.find(key);
+        return (it != properties_.end()) ? it->second : "";
+    }
+    
+    /**
+     * Detect the API type by peeking at the first function call.
+     * Returns "gl" for OpenGL, "d3d9" for Direct3D 9, or "" if unknown.
+     * Must be called after open() but before readEvent() for accurate results.
+     * This reads the first event and caches the result.
+     */
+    std::string detectApiType();
 
 private:
     bool readVarUInt(uint64_t& value);
@@ -118,6 +136,15 @@ private:
     std::map<uint32_t, BitmaskSignature> bitmaskSignatureCache_;
     std::map<uint32_t, StructSignature> structSignatureCache_;
     uint32_t nextCallNo_;
+    
+    // ENTER/LEAVE merge: stack of pending ENTER events awaiting LEAVE
+    std::stack<CallEvent> pendingEnterStack_;
+    
+    // Cached API type detection
+    std::string detectedApiType_;
+    bool apiTypeDetected_;
+    CallEvent firstEvent_;
+    bool hasFirstEvent_;
 };
 
 class SnappyStream {

@@ -19,8 +19,15 @@ class cgoTraceDriverBase
 private:
 protected:
     TraceTyp traceTyp;
+    U32 maxFrames_;          //!< Maximum frames to simulate (0 = unlimited)
+    bool frameLimitReached_; //!< Set when frame limit has been reached
 public:
+    cgoTraceDriverBase() : maxFrames_(0), frameLimitReached_(false) {}
+    virtual ~cgoTraceDriverBase() {}
     TraceTyp getTraceTyp() { return traceTyp; }
+    void setMaxFrames(U32 maxFrames) { maxFrames_ = maxFrames; }
+    U32 getMaxFrames() const { return maxFrames_; }
+    bool isFrameLimitReached() const { return frameLimitReached_; }
     /**
      * Starts the trace driver.
      * Verifies if a TraceDriver object is correctly created and available for use

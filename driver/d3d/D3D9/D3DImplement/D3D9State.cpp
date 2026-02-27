@@ -220,14 +220,9 @@ void D3D9State::destroy() {
 
 }
 
-void D3D9State::setD3DTrace(D3DTrace *trace)
-{
-    d3dTrace = trace;
-}
-
 bool D3D9State::isPreloadCall()
 {
-    return d3dTrace->isPreloadCall();
+    return false;
 }
 
 /*libGAL::GALDevice* D3D9State::getGALDevice() {
@@ -1176,8 +1171,10 @@ void D3D9State::setVertexDeclaration(AIVertexDeclarationImp9* vd) {
         
     //  Set the vertex declaration for the fixed function generator.    
     fixedFunctionState.vertexDeclaration.clear();
-    for(U32 d = 0; d < vd->getVertexElements().size(); d++)
-        fixedFunctionState.vertexDeclaration.push_back(vd->getVertexElements()[d]);
+    if (vd) {
+        for(U32 d = 0; d < vd->getVertexElements().size(); d++)
+            fixedFunctionState.vertexDeclaration.push_back(vd->getVertexElements()[d]);
+    }
 }
 
 AIVertexDeclarationImp9* D3D9State::getVertexDeclaration()
@@ -3223,6 +3220,11 @@ libGAL::GAL_FORMAT D3D9State::getGALFormat(D3DFORMAT Format) {
             return libGAL::GAL_FORMAT_QWVU_8888;
             break;
 
+        case D3DFMT_V8U8:
+            // 2-channel signed bump format. Map to QWVU_8888 as closest match.
+            return libGAL::GAL_FORMAT_QWVU_8888;
+            break;
+
         case D3DFMT_DXT1:
             return libGAL::GAL_COMPRESSED_S3TC_DXT1_RGBA;
             break;
@@ -3253,6 +3255,11 @@ libGAL::GAL_FORMAT D3D9State::getGALFormat(D3DFORMAT Format) {
 
         case D3DFMT_G16R16F:
             return libGAL::GAL_FORMAT_RG16F;
+            break;
+
+        case D3DFMT_G32R32F:
+            // Two-component 32-bit float. Map to RGBA32F as closest match.
+            return libGAL::GAL_FORMAT_RGBA32F;
             break;
 
         case D3DFMT_A8:

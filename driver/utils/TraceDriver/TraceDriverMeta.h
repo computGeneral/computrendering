@@ -144,7 +144,7 @@ public:
      *
      */
      
-    TraceDriverMeta(gzifstream *ProfilingFile, U32 startFrame, U32 traceFirstFrame);
+    TraceDriverMeta(gzifstream *ProfilingFile, U32 startFrame, U32 traceFirstFrame, U32 maxFrames = 0);
      
     
     /**

@@ -4462,6 +4462,33 @@ void bmoGpuTop::dumpFrame(char *filename, U32 rt, bool dumpAlpha)
     }
 
     ImageSaver::getInstance().savePNG(filename, state.displayResX, state.displayResY, data);
+    
+    //  Also save PPM for regression test compatibility.
+    {
+        char filenamePPM[256];
+        sprintf(filenamePPM, "%s.ppm", filename);
+        FILE *fout = fopen(filenamePPM, "wb");
+        if (fout != NULL)
+        {
+            fprintf(fout, "P6\n");
+            fprintf(fout, "%d %d\n", state.displayResX, state.displayResY);
+            fprintf(fout, "255\n");
+            for (U32 py = 0; py < state.displayResY; py++)
+            {
+                for (U32 px = 0; px < state.displayResX; px++)
+                {
+                    //  PNG data is BGRA, PPM needs RGB.
+                    U32 idx = (py * state.displayResX + px) * 4;
+                    U08 rgb[3];
+                    rgb[0] = data[idx + 2];  // R (stored at +2 in BGRA)
+                    rgb[1] = data[idx + 1];  // G
+                    rgb[2] = data[idx + 0];  // B
+                    fwrite(rgb, 1, 3, fout);
+                }
+            }
+            fclose(fout);
+        }
+    }
 }
 
 //  Writes the current depth buffer as a ppm file.
@@ -6177,12 +6204,17 @@ void bmoGpuTop::emulateRasterization(ShadedVertex *vertex1, ShadedVertex *vertex
             bool lastFragment = false;
             CG_INFO("Updating recursive algorithm");
             bmRaster->updateRecursiveMultiv2(batchID); //  Update the triangle rasterization algorithm.
+            U32 rasterStampCount = 0;
+            U32 rasterNullCount = 0;
+            U32 rasterCulledCount = 0;
             while(!bmRaster->lastFragment(triangleID)) //  Process all the triangle fragments.
             {
                 U32 currentTriangleID;
                 //  Get the next fragment quad for the triangle.
                 Fragment **stamp = bmRaster->nextStampRecursiveMulti(batchID, currentTriangleID);
                 CG_INFO("Requested next fragment quad. Empty = %s", (stamp == NULL) ? "T" : "F");
+                if (stamp == NULL) rasterNullCount++;
+                else rasterStampCount++;
                 //  Check if fragments were obtained.
                 if (stamp != NULL)
                 {
@@ -6404,6 +6436,7 @@ void bmoGpuTop::emulateRasterization(ShadedVertex *vertex1, ShadedVertex *vertex
                     else // if (notAllFragmentsCulled)
                     {
                         CG_INFO("All fragments in the quad culled");
+                        rasterCulledCount++;
                         for(U32 f = 0; f < STAMP_FRAGMENTS; f++)
                             delete stamp[f];
                     }

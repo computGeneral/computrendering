@@ -164,14 +164,21 @@ The compiled binaries are placed in `_BUILD_/arch/` (CG1SIM simulator).
 
 ### Windows (Visual Studio)
 
+**Quick Build:**
+```bat
+tools\script\build.bat
 ```
-Open CG1.sln in Visual Studio 2022+
+Optional arguments: `build.bat [Debug|Release] [Win32|x64]` (defaults: Debug, Win32).
+
+**Or open the solution directly:**
+```
+Open _BUILD_\CG1.sln in Visual Studio 2022+
 Select architecture: Win32 (32-bit) or x64 (64-bit)
 Select configuration: Debug / Optimized / Profile
 Build target: CG1SIM
 ```
 
-**Or via CMake:**
+**Or via CMake manually:**
 ```powershell
 mkdir _BUILD_; cd _BUILD_
 cmake .. -A Win32
@@ -252,7 +259,7 @@ ApitraceParser (format parsing, event extraction)
 
 ## How to Run
 
-### Quick Start
+### Quick Start (Linux)
 
 ```bash
 # After building
@@ -263,6 +270,20 @@ cp ../../arch/common/params/CG1GPU.ini .
 
 # Run with an OpenGL apitrace
 ./CG1SIM --trace ../../tests/ogl/trace/glxgears/glxgears.trace --frames 1
+```
+
+### Quick Start (Windows)
+
+```bat
+REM Build (from project root)
+tools\script\build.bat
+
+REM Copy configuration file (required at runtime)
+copy arch\common\params\CG1GPU.ini _BUILD_\arch\Debug\
+
+REM Run with an OpenGL apitrace
+cd _BUILD_\arch\Debug
+.\CG1SIM.exe --trace ..\..\..\tests\ogl\trace\glxgears\glxgears.trace --frames 1
 ```
 
 ### General Usage

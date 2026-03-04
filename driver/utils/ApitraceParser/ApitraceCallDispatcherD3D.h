@@ -170,6 +170,15 @@ struct D3D9DispatcherState {
     };
     std::map<uint64_t, LockInfo> pendingLocks;  // tracePtr → lock info
     
+    // Texture Lock: map trace pBits address → {our locked buffer pointer, buffer size}
+    // This is needed because memcpy calls reference the trace-side pBits address
+    struct LockedBuf { void* ptr; size_t size; };
+    std::map<uint64_t, LockedBuf> textureLocksByPBits;
+    
+    // Reverse lookup: (resource trace ptr, level/face key) → trace pBits
+    // Used to clean up textureLocksByPBits in UnlockRect
+    std::map<std::pair<uint64_t, uint64_t>, uint64_t> lockRevMap;
+    
     D3D9DispatcherState() : root(nullptr), d3d9(nullptr), device(nullptr) {}
 };
 

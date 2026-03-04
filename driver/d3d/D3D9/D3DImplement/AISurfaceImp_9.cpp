@@ -21,6 +21,7 @@ AISurfaceImp9::AISurfaceImp9(AIDeviceImp9* _i_parent, UINT _Width, UINT _Height,
     //data = new unsigned char[getSurfaceSize(Width, Height, Format)];
 
     lockedData = NULL;
+    lockedDataSize = 0;
 
     ref_count = 0;
 
@@ -306,6 +307,7 @@ HRESULT D3D_CALL AISurfaceImp9::LockRect(D3DLOCKED_RECT* pLockedRect, CONST RECT
     actual_lock_size = getSurfaceSize(w, h, Format);
 
     lockedData = new unsigned char[actual_lock_size];
+    lockedDataSize = actual_lock_size;
 
     UINT mipPitch;
     

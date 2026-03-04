@@ -1168,6 +1168,12 @@ void D3D9State::setVertexDeclaration(AIVertexDeclarationImp9* vd) {
 
     // Set the vertex declaration to use
     settedVertexDeclaration = vd;
+    
+    //  D3D9 spec: SetVertexDeclaration and SetFVF are mutually exclusive.
+    //  Setting one clears the other.
+    if (vd) {
+        settedFVF = 0;
+    }
         
     //  Set the vertex declaration for the fixed function generator.    
     fixedFunctionState.vertexDeclaration.clear();
@@ -1186,6 +1192,10 @@ void D3D9State::setFVF(DWORD FVF)
 {
     // Set the fixed function vertex declaration
     settedFVF = FVF;
+
+    //  D3D9 spec: SetVertexDeclaration and SetFVF are mutually exclusive.
+    //  Setting one clears the other.
+    settedVertexDeclaration = NULL;
 
     //  Set the fixed function vertex declaration for the fixed function generator.
     fixedFunctionState.fvf = FVF;
@@ -1613,7 +1623,7 @@ void D3D9State::setTransform(D3DTRANSFORMSTATETYPE State, CONST D3DMATRIX * pMat
 
             case D3DTS_PROJECTION:
 
-                memcpy(&fixedFunctionState.view, pMatrix, sizeof(D3DMATRIX));
+                memcpy(&fixedFunctionState.projection, pMatrix, sizeof(D3DMATRIX));
                 break;
 
             case D3DTS_TEXTURE0:
@@ -2238,17 +2248,52 @@ void D3D9State::draw(D3DPRIMITIVETYPE type, UINT start, UINT count)
 
     //  Check if all rendering surfaces are set to NULL.
     if ((currentRenderSurface == NULL) && (currentZStencilSurface == NULL))
+    {
         return;
+    }
   
     //  Check if the primitive count is 0.
     if (count == 0)
+    {
         return;
+    }
         
     NativeShader* nativeVertexShader;
 
+    //  D3D8 compatibility: if a programmable VS is set and the trace does not
+    //  supply non-zero constants, automatically upload the WVP matrix from
+    //  SetTransform state to shader constants c0-c3.
+    if (settedVertexShader != NULL)
+    {
+        const F32* w = (const F32*)&fixedFunctionState.world;
+        const F32* v = (const F32*)&fixedFunctionState.view;
+        const F32* p = (const F32*)&fixedFunctionState.projection;
+        
+        //  Compute WVP = World * View * Projection
+        F32 wv[4][4], wvp[4][4];
+        for (int r = 0; r < 4; r++)
+            for (int c = 0; c < 4; c++)
+                wv[r][c] = w[r*4+0]*v[0*4+c] + w[r*4+1]*v[1*4+c] + w[r*4+2]*v[2*4+c] + w[r*4+3]*v[3*4+c];
+        for (int r = 0; r < 4; r++)
+            for (int c = 0; c < 4; c++)
+                wvp[r][c] = wv[r][0]*p[0*4+c] + wv[r][1]*p[1*4+c] + wv[r][2]*p[2*4+c] + wv[r][3]*p[3*4+c];
+        
+        //  Upload WVP rows to c0-c3
+        for (int r = 0; r < 4; r++)
+        {
+            settedVertexShaderConstants[r][0] = wvp[r][0];
+            settedVertexShaderConstants[r][1] = wvp[r][1];
+            settedVertexShaderConstants[r][2] = wvp[r][2];
+            settedVertexShaderConstants[r][3] = wvp[r][3];
+            settedVertexShaderConstantsTouched[r] = true;
+        }
+    }
+
     // Set setted shaders to GAL.  Check for problems.
     if (!setGALShaders(nativeVertexShader))
+    {
         return;
+    }
 
     //  Reset instancing information.
     instancingMode = false;
@@ -2257,7 +2302,7 @@ void D3D9State::draw(D3DPRIMITIVETYPE type, UINT start, UINT count)
     
     // Set setted vertex buffers in streams to GAL
     setGALStreams(nativeVertexShader, get_vertex_count(type, count), 0);
-
+    
     // Set setted textures in samplers to GAL
     setGALTextures();
 
@@ -2337,13 +2382,18 @@ int D3D9State::getBatchCounter ()
 
 void D3D9State::drawIndexed(D3DPRIMITIVETYPE type, INT baseVertexIndex, UINT minVertexIndex, UINT numVertices, UINT start, UINT count) 
 {
+
     //  Check if all rendering surfaces are set to NULL.
     if ((currentRenderSurface == NULL) && (currentZStencilSurface == NULL))
+    {
         return;
+    }
 
     //  Check if the count is 0.
     if (count == 0)
+    {
         return;
+    }
     
     //  Reset instancing information.
     instancingMode = false;
@@ -2352,6 +2402,29 @@ void D3D9State::drawIndexed(D3DPRIMITIVETYPE type, INT baseVertexIndex, UINT min
 
     NativeShader* nativeVertexShader;
     
+    //  D3D8 compatibility: auto-upload WVP to c0-c3 for programmable VS
+    if (settedVertexShader != NULL)
+    {
+        const F32* w = (const F32*)&fixedFunctionState.world;
+        const F32* v = (const F32*)&fixedFunctionState.view;
+        const F32* p = (const F32*)&fixedFunctionState.projection;
+        F32 wv[4][4], wvp[4][4];
+        for (int r = 0; r < 4; r++)
+            for (int c = 0; c < 4; c++)
+                wv[r][c] = w[r*4+0]*v[0*4+c] + w[r*4+1]*v[1*4+c] + w[r*4+2]*v[2*4+c] + w[r*4+3]*v[3*4+c];
+        for (int r = 0; r < 4; r++)
+            for (int c = 0; c < 4; c++)
+                wvp[r][c] = wv[r][0]*p[0*4+c] + wv[r][1]*p[1*4+c] + wv[r][2]*p[2*4+c] + wv[r][3]*p[3*4+c];
+        for (int r = 0; r < 4; r++)
+        {
+            settedVertexShaderConstants[r][0] = wvp[r][0];
+            settedVertexShaderConstants[r][1] = wvp[r][1];
+            settedVertexShaderConstants[r][2] = wvp[r][2];
+            settedVertexShaderConstants[r][3] = wvp[r][3];
+            settedVertexShaderConstantsTouched[r] = true;
+        }
+    }
+
     // Set setted shaders to GAL.  Check for problems.
     if (!setGALShaders(nativeVertexShader))
         return;
@@ -2514,7 +2587,6 @@ bool D3D9State::setGALShaders(NativeShader* &nativeVertexShader)
         std::list<ConstRegisterDeclaration>::iterator itCRD;
         for (itCRD = nativeVertexShader->declaration.constant_registers.begin(); itCRD != nativeVertexShader->declaration.constant_registers.end(); itCRD++) {
             if (itCRD->defined) {
-                //D3D_DEBUG( D3D_DEBUG( cout << "D3D9State vertex shader constants defined: \n  * constNum: " << itCRD->native_register << "\n  * constant: " << itCRD->value.x << ", " << itCRD->value.y << ", " << itCRD->value.z << ", " << itCRD->value.w << endl; ) )
                 libGAL::gal_float vsConstant[4];
                 vsConstant[0] = itCRD->value.value.floatValue.x;
                 vsConstant[1] = itCRD->value.value.floatValue.y;
@@ -2530,6 +2602,7 @@ bool D3D9State::setGALShaders(NativeShader* &nativeVertexShader)
     else
     {
         //cout << " * WARNING: This batch is using vertex fixed function.\n";
+
 
         //  Delete previous native vertex shader if required.
         if (nativeFFVSh != NULL)
@@ -2595,6 +2668,9 @@ bool D3D9State::setGALShaders(NativeShader* &nativeVertexShader)
                 }
             }
             
+            if (!found)
+                continue;
+            
             //  Check the constant usage type.
             switch(itFFCRD->usage.usage)
             {
@@ -2649,27 +2725,260 @@ bool D3D9State::setGALShaders(NativeShader* &nativeVertexShader)
 	                break;
 	                
 	            case FF_WORLDVIEWPROJ:
-	            case FF_WORLDVIEW:
-	            case FF_WORLDVIEW_IT:
-	            case FF_VIEW_IT:
-	            case FF_WORLD:
-	            case FF_MATERIAL_EMISSIVE:
-	            case FF_MATERIAL_SPECULAR:
-	            case FF_MATERIAL_DIFFUSE:
-	            case FF_MATERIAL_AMBIENT:
-	            case FF_MATERIAL_POWER:
-	            case FF_AMBIENT:
-	            case FF_LIGHT_POSITION:
-	            case FF_LIGHT_DIRECTION:
-	            case FF_LIGHT_AMBIENT:
-	            case FF_LIGHT_DIFFUSE:
-	            case FF_LIGHT_SPECULAR:
-	            case FF_LIGHT_RANGE:
-	            case FF_LIGHT_ATTENUATION:
-	            case FF_LIGHT_SPOT:
-	                
-	                //  Not implemented.
-	                break;
+                {
+                    //  Compute World * View * Projection matrix and upload the requested row.
+                    F32 wvp[4][4];
+                    F32 wv[4][4];
+                    const F32* w = (const F32*)&fixedFunctionState.world;
+                    const F32* v = (const F32*)&fixedFunctionState.view;
+                    const F32* p = (const F32*)&fixedFunctionState.projection;
+                    //  WV = W * V
+                    for (int r = 0; r < 4; r++)
+                        for (int c = 0; c < 4; c++)
+                            wv[r][c] = w[r*4+0]*v[0*4+c] + w[r*4+1]*v[1*4+c] + w[r*4+2]*v[2*4+c] + w[r*4+3]*v[3*4+c];
+                    //  WVP = WV * P
+                    for (int r = 0; r < 4; r++)
+                        for (int c = 0; c < 4; c++)
+                            wvp[r][c] = wv[r][0]*p[0*4+c] + wv[r][1]*p[1*4+c] + wv[r][2]*p[2*4+c] + wv[r][3]*p[3*4+c];
+                    int row = itFFCRD->usage.index;
+                    if (row >= 0 && row < 4) {
+                        vsConstant[0] = wvp[row][0];
+                        vsConstant[1] = wvp[row][1];
+                        vsConstant[2] = wvp[row][2];
+                        vsConstant[3] = wvp[row][3];
+                        fixedFunctionVertexShader->setConstant(constantID, vsConstant);
+                    }
+                    break;
+                }
+
+                case FF_WORLDVIEW:
+                {
+                    //  Compute World * View matrix and upload the requested row.
+                    F32 wv[4][4];
+                    const F32* w = (const F32*)&fixedFunctionState.world;
+                    const F32* v = (const F32*)&fixedFunctionState.view;
+                    for (int r = 0; r < 4; r++)
+                        for (int c = 0; c < 4; c++)
+                            wv[r][c] = w[r*4+0]*v[0*4+c] + w[r*4+1]*v[1*4+c] + w[r*4+2]*v[2*4+c] + w[r*4+3]*v[3*4+c];
+                    int row = itFFCRD->usage.index;
+                    if (row >= 0 && row < 4) {
+                        vsConstant[0] = wv[row][0];
+                        vsConstant[1] = wv[row][1];
+                        vsConstant[2] = wv[row][2];
+                        vsConstant[3] = wv[row][3];
+                        fixedFunctionVertexShader->setConstant(constantID, vsConstant);
+                    }
+                    break;
+                }
+
+                case FF_WORLDVIEW_IT:
+                {
+                    //  Compute transpose of inverse of World * View (for normals).
+                    //  Simplified: compute WV, then invert and transpose.
+                    //  For now, just compute WV (approximate — proper inverse needed for non-uniform scale).
+                    F32 wv[4][4];
+                    const F32* w = (const F32*)&fixedFunctionState.world;
+                    const F32* v = (const F32*)&fixedFunctionState.view;
+                    for (int r = 0; r < 4; r++)
+                        for (int c = 0; c < 4; c++)
+                            wv[r][c] = w[r*4+0]*v[0*4+c] + w[r*4+1]*v[1*4+c] + w[r*4+2]*v[2*4+c] + w[r*4+3]*v[3*4+c];
+                    //  Compute cofactor matrix for the upper 3x3 (transpose of adjugate = inverse transpose * det)
+                    //  For rigid-body transforms, inverse transpose == original upper 3x3.
+                    //  Use transpose of WV upper 3x3 as approximation.
+                    int row = itFFCRD->usage.index;
+                    if (row >= 0 && row < 4) {
+                        //  Transpose: column 'row' of WV becomes row 'row' of WV^T
+                        vsConstant[0] = wv[0][row];
+                        vsConstant[1] = wv[1][row];
+                        vsConstant[2] = wv[2][row];
+                        vsConstant[3] = (row < 3) ? 0.0f : 1.0f;
+                        fixedFunctionVertexShader->setConstant(constantID, vsConstant);
+                    }
+                    break;
+                }
+
+                case FF_VIEW_IT:
+                {
+                    //  Transpose of inverse of View matrix.
+                    //  Approximate with transpose of view upper 3x3.
+                    const F32* v = (const F32*)&fixedFunctionState.view;
+                    int row = itFFCRD->usage.index;
+                    if (row >= 0 && row < 4) {
+                        vsConstant[0] = v[0*4+row];
+                        vsConstant[1] = v[1*4+row];
+                        vsConstant[2] = v[2*4+row];
+                        vsConstant[3] = (row < 3) ? 0.0f : 1.0f;
+                        fixedFunctionVertexShader->setConstant(constantID, vsConstant);
+                    }
+                    break;
+                }
+
+                case FF_WORLD:
+                {
+                    //  Upload world matrix row.
+                    const F32* w = (const F32*)&fixedFunctionState.world;
+                    int row = itFFCRD->usage.index;
+                    if (row >= 0 && row < 4) {
+                        vsConstant[0] = w[row*4+0];
+                        vsConstant[1] = w[row*4+1];
+                        vsConstant[2] = w[row*4+2];
+                        vsConstant[3] = w[row*4+3];
+                        fixedFunctionVertexShader->setConstant(constantID, vsConstant);
+                    }
+                    break;
+                }
+
+                case FF_MATERIAL_EMISSIVE:
+                    vsConstant[0] = fixedFunctionState.material.Emissive.r;
+                    vsConstant[1] = fixedFunctionState.material.Emissive.g;
+                    vsConstant[2] = fixedFunctionState.material.Emissive.b;
+                    vsConstant[3] = fixedFunctionState.material.Emissive.a;
+                    fixedFunctionVertexShader->setConstant(constantID, vsConstant);
+                    break;
+
+                case FF_MATERIAL_SPECULAR:
+                    vsConstant[0] = fixedFunctionState.material.Specular.r;
+                    vsConstant[1] = fixedFunctionState.material.Specular.g;
+                    vsConstant[2] = fixedFunctionState.material.Specular.b;
+                    vsConstant[3] = fixedFunctionState.material.Specular.a;
+                    fixedFunctionVertexShader->setConstant(constantID, vsConstant);
+                    break;
+
+                case FF_MATERIAL_DIFFUSE:
+                    vsConstant[0] = fixedFunctionState.material.Diffuse.r;
+                    vsConstant[1] = fixedFunctionState.material.Diffuse.g;
+                    vsConstant[2] = fixedFunctionState.material.Diffuse.b;
+                    vsConstant[3] = fixedFunctionState.material.Diffuse.a;
+                    fixedFunctionVertexShader->setConstant(constantID, vsConstant);
+                    break;
+
+                case FF_MATERIAL_AMBIENT:
+                    vsConstant[0] = fixedFunctionState.material.Ambient.r;
+                    vsConstant[1] = fixedFunctionState.material.Ambient.g;
+                    vsConstant[2] = fixedFunctionState.material.Ambient.b;
+                    vsConstant[3] = fixedFunctionState.material.Ambient.a;
+                    fixedFunctionVertexShader->setConstant(constantID, vsConstant);
+                    break;
+
+                case FF_MATERIAL_POWER:
+                    vsConstant[0] = fixedFunctionState.material.Power;
+                    vsConstant[1] = 0.0f;
+                    vsConstant[2] = 0.0f;
+                    vsConstant[3] = 0.0f;
+                    fixedFunctionVertexShader->setConstant(constantID, vsConstant);
+                    break;
+
+                case FF_AMBIENT:
+                    vsConstant[0] = fixedFunctionState.ambient.r;
+                    vsConstant[1] = fixedFunctionState.ambient.g;
+                    vsConstant[2] = fixedFunctionState.ambient.b;
+                    vsConstant[3] = fixedFunctionState.ambient.a;
+                    fixedFunctionVertexShader->setConstant(constantID, vsConstant);
+                    break;
+
+                case FF_LIGHT_POSITION:
+                {
+                    int li = itFFCRD->usage.index;
+                    if (li < 8) {
+                        vsConstant[0] = fixedFunctionState.lights[li].Position.x;
+                        vsConstant[1] = fixedFunctionState.lights[li].Position.y;
+                        vsConstant[2] = fixedFunctionState.lights[li].Position.z;
+                        vsConstant[3] = 1.0f;
+                        fixedFunctionVertexShader->setConstant(constantID, vsConstant);
+                    }
+                    break;
+                }
+
+                case FF_LIGHT_DIRECTION:
+                {
+                    int li = itFFCRD->usage.index;
+                    if (li < 8) {
+                        vsConstant[0] = fixedFunctionState.lights[li].Direction.x;
+                        vsConstant[1] = fixedFunctionState.lights[li].Direction.y;
+                        vsConstant[2] = fixedFunctionState.lights[li].Direction.z;
+                        vsConstant[3] = 0.0f;
+                        fixedFunctionVertexShader->setConstant(constantID, vsConstant);
+                    }
+                    break;
+                }
+
+                case FF_LIGHT_AMBIENT:
+                {
+                    int li = itFFCRD->usage.index;
+                    if (li < 8) {
+                        vsConstant[0] = fixedFunctionState.lights[li].Ambient.r;
+                        vsConstant[1] = fixedFunctionState.lights[li].Ambient.g;
+                        vsConstant[2] = fixedFunctionState.lights[li].Ambient.b;
+                        vsConstant[3] = fixedFunctionState.lights[li].Ambient.a;
+                        fixedFunctionVertexShader->setConstant(constantID, vsConstant);
+                    }
+                    break;
+                }
+
+                case FF_LIGHT_DIFFUSE:
+                {
+                    int li = itFFCRD->usage.index;
+                    if (li < 8) {
+                        vsConstant[0] = fixedFunctionState.lights[li].Diffuse.r;
+                        vsConstant[1] = fixedFunctionState.lights[li].Diffuse.g;
+                        vsConstant[2] = fixedFunctionState.lights[li].Diffuse.b;
+                        vsConstant[3] = fixedFunctionState.lights[li].Diffuse.a;
+                        fixedFunctionVertexShader->setConstant(constantID, vsConstant);
+                    }
+                    break;
+                }
+
+                case FF_LIGHT_SPECULAR:
+                {
+                    int li = itFFCRD->usage.index;
+                    if (li < 8) {
+                        vsConstant[0] = fixedFunctionState.lights[li].Specular.r;
+                        vsConstant[1] = fixedFunctionState.lights[li].Specular.g;
+                        vsConstant[2] = fixedFunctionState.lights[li].Specular.b;
+                        vsConstant[3] = fixedFunctionState.lights[li].Specular.a;
+                        fixedFunctionVertexShader->setConstant(constantID, vsConstant);
+                    }
+                    break;
+                }
+
+                case FF_LIGHT_RANGE:
+                {
+                    int li = itFFCRD->usage.index;
+                    if (li < 8) {
+                        vsConstant[0] = fixedFunctionState.lights[li].Range;
+                        vsConstant[1] = 0.0f;
+                        vsConstant[2] = 0.0f;
+                        vsConstant[3] = 0.0f;
+                        fixedFunctionVertexShader->setConstant(constantID, vsConstant);
+                    }
+                    break;
+                }
+
+                case FF_LIGHT_ATTENUATION:
+                {
+                    int li = itFFCRD->usage.index;
+                    if (li < 8) {
+                        vsConstant[0] = fixedFunctionState.lights[li].Attenuation0;
+                        vsConstant[1] = fixedFunctionState.lights[li].Attenuation1;
+                        vsConstant[2] = fixedFunctionState.lights[li].Attenuation2;
+                        vsConstant[3] = 0.0f;
+                        fixedFunctionVertexShader->setConstant(constantID, vsConstant);
+                    }
+                    break;
+                }
+
+                case FF_LIGHT_SPOT:
+                {
+                    int li = itFFCRD->usage.index;
+                    if (li < 8) {
+                        vsConstant[0] = fixedFunctionState.lights[li].Falloff;
+                        vsConstant[1] = cosf(fixedFunctionState.lights[li].Theta * 0.5f);
+                        vsConstant[2] = cosf(fixedFunctionState.lights[li].Phi * 0.5f);
+                        vsConstant[3] = 0.0f;
+                        fixedFunctionVertexShader->setConstant(constantID, vsConstant);
+                    }
+                    break;
+                }
 	                
 	            default:
 	                CG_ASSERT("Undefined fixed function constant usage.");

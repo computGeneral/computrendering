@@ -17,6 +17,7 @@
 #include "AIVolumeTextureImp_9.h"
 #include "AISurfaceImp_9.h"
 #include "AIVertexDeclarationImp_9.h"
+#include "Utils.h"
 #include "AIVertexShaderImp_9.h"
 #include "AIPixelShaderImp_9.h"
 
@@ -135,18 +136,42 @@ static D3DMATRIX extractMatrix(const apitrace::Value& v) {
     D3DMATRIX m;
     memset(&m, 0, sizeof(m));
     
-    if (v.type == apitrace::VALUE_ARRAY && v.arrayVal.size() >= 1)
+    //  Unwrap pointer/array wrappers (size 1)
+    if (v.type == apitrace::VALUE_ARRAY && v.arrayVal.size() == 1)
         return extractMatrix(v.arrayVal[0]);
     
+    //  Unwrap struct with 1 member (e.g., D3DMATRIX wrapping m[4][4])
+    if (v.type == apitrace::VALUE_STRUCT && v.arrayVal.size() == 1)
+        return extractMatrix(v.arrayVal[0]);
+    
+    //  BLOB: direct memcpy
     if (v.type == apitrace::VALUE_BLOB && v.blobVal.size() >= sizeof(D3DMATRIX)) {
         memcpy(&m, v.blobVal.data(), sizeof(D3DMATRIX));
+        return m;
     }
-    else if (v.type == apitrace::VALUE_STRUCT && v.arrayVal.size() >= 16) {
+    
+    //  ARRAY[4] of ARRAY[4] — m[4][4] layout
+    if (v.type == apitrace::VALUE_ARRAY && v.arrayVal.size() == 4 &&
+        v.arrayVal[0].type == apitrace::VALUE_ARRAY && v.arrayVal[0].arrayVal.size() == 4) {
+        float* fp = &m._11;
+        for (int r = 0; r < 4; r++) {
+            const auto& row = v.arrayVal[r];
+            for (int c = 0; c < 4; c++) {
+                fp[r * 4 + c] = (row.arrayVal[c].type == apitrace::VALUE_FLOAT)
+                                  ? row.arrayVal[c].floatVal : (float)row.arrayVal[c].uintVal;
+            }
+        }
+        return m;
+    }
+    
+    //  Flat ARRAY or STRUCT of 16 floats
+    if ((v.type == apitrace::VALUE_STRUCT || v.type == apitrace::VALUE_ARRAY) && v.arrayVal.size() >= 16) {
         float* fp = &m._11;
         for (int i = 0; i < 16; ++i) {
             fp[i] = (v.arrayVal[i].type == apitrace::VALUE_FLOAT)
                      ? v.arrayVal[i].floatVal : (float)v.arrayVal[i].uintVal;
         }
+        return m;
     }
     
     return m;
@@ -157,11 +182,23 @@ static D3DMATERIAL9 extractMaterial(const apitrace::Value& v) {
     D3DMATERIAL9 mat;
     memset(&mat, 0, sizeof(mat));
     
-    if (v.type == apitrace::VALUE_ARRAY && v.arrayVal.size() >= 1)
+    // Unwrap size-1 array/struct wrappers
+    if (v.type == apitrace::VALUE_ARRAY && v.arrayVal.size() == 1)
+        return extractMaterial(v.arrayVal[0]);
+    if (v.type == apitrace::VALUE_STRUCT && v.arrayVal.size() == 1)
         return extractMaterial(v.arrayVal[0]);
     
     if (v.type == apitrace::VALUE_BLOB && v.blobVal.size() >= sizeof(D3DMATERIAL9)) {
         memcpy(&mat, v.blobVal.data(), sizeof(D3DMATERIAL9));
+    }
+    // Flat array/struct of 17 floats (4 D3DCOLORVALUE + Power)
+    else if ((v.type == apitrace::VALUE_STRUCT || v.type == apitrace::VALUE_ARRAY) &&
+             v.arrayVal.size() >= 17) {
+        float* fp = reinterpret_cast<float*>(&mat);
+        for (int i = 0; i < 17; ++i) {
+            fp[i] = (v.arrayVal[i].type == apitrace::VALUE_FLOAT)
+                     ? v.arrayVal[i].floatVal : (float)v.arrayVal[i].uintVal;
+        }
     }
     
     return mat;
@@ -172,11 +209,26 @@ static D3DLIGHT9 extractLight(const apitrace::Value& v) {
     D3DLIGHT9 light;
     memset(&light, 0, sizeof(light));
     
-    if (v.type == apitrace::VALUE_ARRAY && v.arrayVal.size() >= 1)
+    // Unwrap size-1 array/struct wrappers
+    if (v.type == apitrace::VALUE_ARRAY && v.arrayVal.size() == 1)
+        return extractLight(v.arrayVal[0]);
+    if (v.type == apitrace::VALUE_STRUCT && v.arrayVal.size() == 1)
         return extractLight(v.arrayVal[0]);
     
     if (v.type == apitrace::VALUE_BLOB && v.blobVal.size() >= sizeof(D3DLIGHT9)) {
         memcpy(&light, v.blobVal.data(), sizeof(D3DLIGHT9));
+    }
+    // Flat struct/array — D3DLIGHT9 has 26 fields (1 DWORD + 25 floats)
+    else if ((v.type == apitrace::VALUE_STRUCT || v.type == apitrace::VALUE_ARRAY) &&
+             v.arrayVal.size() >= 26) {
+        uint32_t* ip = reinterpret_cast<uint32_t*>(&light);
+        // First field is Type (DWORD)
+        ip[0] = (uint32_t)v.arrayVal[0].uintVal;
+        float* fp = reinterpret_cast<float*>(&light);
+        for (int i = 1; i < 26; ++i) {
+            fp[i] = (v.arrayVal[i].type == apitrace::VALUE_FLOAT)
+                     ? v.arrayVal[i].floatVal : (float)v.arrayVal[i].uintVal;
+        }
     }
     
     return light;
@@ -186,7 +238,10 @@ static D3DLIGHT9 extractLight(const apitrace::Value& v) {
 static RECT extractRect(const apitrace::Value& v) {
     RECT r = {0, 0, 0, 0};
     
-    if (v.type == apitrace::VALUE_ARRAY && v.arrayVal.size() >= 1)
+    // Unwrap size-1 array/struct wrappers
+    if (v.type == apitrace::VALUE_ARRAY && v.arrayVal.size() == 1)
+        return extractRect(v.arrayVal[0]);
+    if (v.type == apitrace::VALUE_STRUCT && v.arrayVal.size() == 1)
         return extractRect(v.arrayVal[0]);
     
     if (v.type == apitrace::VALUE_STRUCT && v.arrayVal.size() >= 4) {
@@ -828,7 +883,11 @@ bool apitrace::d3d9::dispatchCall(D3D9DispatcherState& state, const CallEvent& e
         UINT vtxStride = asUINT(MA(evt, 3));
         
         const void* pData = nullptr;
-        if (vtxData.type == apitrace::VALUE_BLOB) pData = vtxData.blobVal.data();
+        size_t blobSize = 0;
+        const uint8_t* blobData = extractBlob(vtxData, blobSize);
+        if (blobData && blobSize > 0) {
+            pData = blobData;
+        }
         
         dev->DrawPrimitiveUP(primType, primCount, pData, vtxStride);
         return true;
@@ -865,15 +924,46 @@ bool apitrace::d3d9::dispatchCall(D3D9DispatcherState& state, const CallEvent& e
         void* ptr = nullptr;
         vb->Lock(offset, size, &ptr, flags);
         
-        // Copy trace data into the locked buffer.
-        // Data appears in ppbData output (MA(evt, 2)) as a blob.
         if (ptr) {
+            // Extract trace ppbData address for memcpy routing
+            uint64_t tracePBits = 0;
+            const apitrace::Value& ppbDataVal = MA(evt, 2);
+            if (ppbDataVal.type == apitrace::VALUE_OPAQUE) {
+                tracePBits = ppbDataVal.ptrVal;
+            } else if (ppbDataVal.type == apitrace::VALUE_ARRAY && ppbDataVal.arrayVal.size() >= 1) {
+                const auto& arr0vb = ppbDataVal.arrayVal[0];
+                if (arr0vb.ptrVal != 0) {
+                    tracePBits = arr0vb.ptrVal;  // Works for VALUE_OPAQUE and VALUE_BLOB with address
+                }
+            }
+            
+            // Determine actual buffer size
+            UINT actualSize = size;
+            if (actualSize == 0) {
+                D3DVERTEXBUFFER_DESC desc;
+                vb->GetDesc(&desc);
+                actualSize = desc.Size;
+            }
+            
+            // Register pBits mapping for memcpy routing
+            if (tracePBits != 0 && actualSize > 0) {
+                uint64_t resPtr = asOpaquePtr(A(evt, 0));
+                auto revKey = std::make_pair(resPtr, (uint64_t)0);
+                auto prevIt = state.lockRevMap.find(revKey);
+                if (prevIt != state.lockRevMap.end()) {
+                    state.textureLocksByPBits.erase(prevIt->second);
+                }
+                state.textureLocksByPBits[tracePBits] = {ptr, actualSize};
+                state.lockRevMap[revKey] = tracePBits;
+            }
+            
+            // Also try to copy blob data directly (some traces embed data at Lock time)
             size_t blobSize = 0;
             const uint8_t* blob = extractBlob(MA(evt, 2), blobSize);
             if (blob && blobSize > 0) {
-                memcpy(ptr, blob, blobSize);
+                size_t copySize = (blobSize <= actualSize) ? blobSize : actualSize;
+                memcpy(ptr, blob, copySize);
             }
-            // Track this lock for potential memcpy calls
             state.pendingLocks[asOpaquePtr(A(evt, 0))] = {ptr, offset, size};
         }
         return true;
@@ -881,7 +971,17 @@ bool apitrace::d3d9::dispatchCall(D3D9DispatcherState& state, const CallEvent& e
     
     if (fn == "IDirect3DVertexBuffer9::Unlock") {
         AIVertexBufferImp9* vb = state.tracker.lookupAs<AIVertexBufferImp9>(A(evt, 0));
-        if (vb) vb->Unlock();
+        if (vb) {
+            // Clean up pBits mapping before Unlock frees the buffer
+            uint64_t resPtr = asOpaquePtr(A(evt, 0));
+            auto revKey = std::make_pair(resPtr, (uint64_t)0);
+            auto revIt = state.lockRevMap.find(revKey);
+            if (revIt != state.lockRevMap.end()) {
+                state.textureLocksByPBits.erase(revIt->second);
+                state.lockRevMap.erase(revIt);
+            }
+            vb->Unlock();
+        }
         state.pendingLocks.erase(asOpaquePtr(A(evt, 0)));
         return true;
     }
@@ -900,10 +1000,44 @@ bool apitrace::d3d9::dispatchCall(D3D9DispatcherState& state, const CallEvent& e
         ib->Lock(offset, size, &ptr, flags);
         
         if (ptr) {
+            // Extract trace ppbData address for memcpy routing
+            uint64_t tracePBits = 0;
+            const apitrace::Value& ppbDataVal = MA(evt, 2);
+            if (ppbDataVal.type == apitrace::VALUE_OPAQUE) {
+                tracePBits = ppbDataVal.ptrVal;
+            } else if (ppbDataVal.type == apitrace::VALUE_ARRAY && ppbDataVal.arrayVal.size() >= 1) {
+                const auto& arr0ib = ppbDataVal.arrayVal[0];
+                if (arr0ib.ptrVal != 0) {
+                    tracePBits = arr0ib.ptrVal;
+                }
+            }
+            
+            // Determine actual buffer size
+            UINT actualSize = size;
+            if (actualSize == 0) {
+                D3DINDEXBUFFER_DESC desc;
+                ib->GetDesc(&desc);
+                actualSize = desc.Size;
+            }
+            
+            // Register pBits mapping for memcpy routing
+            if (tracePBits != 0 && actualSize > 0) {
+                uint64_t resPtr = asOpaquePtr(A(evt, 0));
+                auto revKey = std::make_pair(resPtr, (uint64_t)0);
+                auto prevIt = state.lockRevMap.find(revKey);
+                if (prevIt != state.lockRevMap.end()) {
+                    state.textureLocksByPBits.erase(prevIt->second);
+                }
+                state.textureLocksByPBits[tracePBits] = {ptr, actualSize};
+                state.lockRevMap[revKey] = tracePBits;
+            }
+            
+            // Also try to copy blob data directly
             size_t blobSize = 0;
             const uint8_t* blob = extractBlob(MA(evt, 2), blobSize);
             if (blob && blobSize > 0) {
-                memcpy(ptr, blob, blobSize);
+                size_t copySize = (blobSize <= actualSize) ? blobSize : actualSize;
+                memcpy(ptr, blob, copySize);
             }
             state.pendingLocks[asOpaquePtr(A(evt, 0))] = {ptr, offset, size};
         }
@@ -912,7 +1046,17 @@ bool apitrace::d3d9::dispatchCall(D3D9DispatcherState& state, const CallEvent& e
     
     if (fn == "IDirect3DIndexBuffer9::Unlock") {
         AIIndexBufferImp9* ib = state.tracker.lookupAs<AIIndexBufferImp9>(A(evt, 0));
-        if (ib) ib->Unlock();
+        if (ib) {
+            // Clean up pBits mapping before Unlock frees the buffer
+            uint64_t resPtr = asOpaquePtr(A(evt, 0));
+            auto revKey = std::make_pair(resPtr, (uint64_t)0);
+            auto revIt = state.lockRevMap.find(revKey);
+            if (revIt != state.lockRevMap.end()) {
+                state.textureLocksByPBits.erase(revIt->second);
+                state.lockRevMap.erase(revIt);
+            }
+            ib->Unlock();
+        }
         state.pendingLocks.erase(asOpaquePtr(A(evt, 0)));
         return true;
     }
@@ -924,11 +1068,8 @@ bool apitrace::d3d9::dispatchCall(D3D9DispatcherState& state, const CallEvent& e
         if (!tex) return true;
         
         UINT level = asUINT(MA(evt, 0));
-        // MA(evt, 1) = pLockedRect (output — contains data blob)
-        // MA(evt, 2) = pRect (may be NULL/empty)
         DWORD flags = asDWORD(MA(evt, 3));
         
-        // Parse pRect if non-null
         const apitrace::Value& rectVal = MA(evt, 2);
         RECT rect = {0};
         RECT* pRect = nullptr;
@@ -941,7 +1082,42 @@ bool apitrace::d3d9::dispatchCall(D3D9DispatcherState& state, const CallEvent& e
         memset(&lockedRect, 0, sizeof(lockedRect));
         tex->LockRect(level, &lockedRect, pRect, flags);
         
-        // Copy data from trace into the locked buffer
+        // Extract pBits trace address for memcpy routing
+        uint64_t tracePBits = 0;
+        {
+            const apitrace::Value& plr = MA(evt, 1);
+            const apitrace::Value* pStruct = &plr;
+            if (pStruct->type == apitrace::VALUE_ARRAY && pStruct->arrayVal.size() == 1)
+                pStruct = &pStruct->arrayVal[0];
+            if (pStruct->type == apitrace::VALUE_STRUCT && pStruct->arrayVal.size() >= 2) {
+                if (pStruct->arrayVal[1].type == apitrace::VALUE_OPAQUE) {
+                    tracePBits = pStruct->arrayVal[1].ptrVal;
+                }
+            }
+        }
+        
+        // Register mapping with buffer size
+        if (lockedRect.pBits && tracePBits != 0) {
+            size_t bufSize = 0;
+            IDirect3DSurface9* tmpSurf = nullptr;
+            tex->GetSurfaceLevel(level, &tmpSurf);
+            if (tmpSurf) {
+                bufSize = static_cast<AISurfaceImp9*>(tmpSurf)->getLockedDataSize();
+                tmpSurf->Release();
+            }
+            
+            if (bufSize > 0) {
+                uint64_t resPtr = asOpaquePtr(A(evt, 0));
+                auto revKey = std::make_pair(resPtr, (uint64_t)level);
+                auto prevIt = state.lockRevMap.find(revKey);
+                if (prevIt != state.lockRevMap.end()) {
+                    state.textureLocksByPBits.erase(prevIt->second);
+                }
+                state.textureLocksByPBits[tracePBits] = {lockedRect.pBits, bufSize};
+                state.lockRevMap[revKey] = tracePBits;
+            }
+        }
+        
         if (lockedRect.pBits) {
             size_t blobSize = 0;
             const uint8_t* blob = extractBlob(MA(evt, 1), blobSize);
@@ -949,6 +1125,7 @@ bool apitrace::d3d9::dispatchCall(D3D9DispatcherState& state, const CallEvent& e
                 memcpy(lockedRect.pBits, blob, blobSize);
             }
         }
+        
         return true;
     }
     
@@ -956,6 +1133,14 @@ bool apitrace::d3d9::dispatchCall(D3D9DispatcherState& state, const CallEvent& e
         AITextureImp9* tex = state.tracker.lookupAs<AITextureImp9>(A(evt, 0));
         if (tex) {
             UINT level = asUINT(MA(evt, 0));
+            // Remove stale pBits mapping before UnlockRect frees the buffer
+            uint64_t resPtr = asOpaquePtr(A(evt, 0));
+            auto revKey = std::make_pair(resPtr, (uint64_t)level);
+            auto revIt = state.lockRevMap.find(revKey);
+            if (revIt != state.lockRevMap.end()) {
+                state.textureLocksByPBits.erase(revIt->second);
+                state.lockRevMap.erase(revIt);
+            }
             tex->UnlockRect(level);
         }
         return true;
@@ -967,8 +1152,6 @@ bool apitrace::d3d9::dispatchCall(D3D9DispatcherState& state, const CallEvent& e
         AISurfaceImp9* surf = state.tracker.lookupAs<AISurfaceImp9>(A(evt, 0));
         if (!surf) return true;
         
-        // MA(evt, 0) = pLockedRect (output)
-        // MA(evt, 1) = pRect
         DWORD flags = asDWORD(MA(evt, 2));
         
         const apitrace::Value& rectVal = MA(evt, 1);
@@ -1007,8 +1190,6 @@ bool apitrace::d3d9::dispatchCall(D3D9DispatcherState& state, const CallEvent& e
         
         D3DCUBEMAP_FACES face = (D3DCUBEMAP_FACES)asUINT(MA(evt, 0));
         UINT level = asUINT(MA(evt, 1));
-        // MA(evt, 2) = pLockedRect (output)
-        // MA(evt, 3) = pRect
         DWORD flags = asDWORD(MA(evt, 4));
         
         const apitrace::Value& rectVal = MA(evt, 3);
@@ -1104,27 +1285,44 @@ bool apitrace::d3d9::dispatchCall(D3D9DispatcherState& state, const CallEvent& e
     // ---- memcpy: apitrace records data writes to locked buffers ----
     
     if (fn == "memcpy") {
-        // memcpy(dest, src, size)
-        // dest = A(evt, 0) — opaque pointer to locked region
-        // src  = A(evt, 1) — blob with actual data
-        // size = A(evt, 2) — byte count
-        // In apitrace, memcpy represents data being written into locked buffers.
-        // We need to find which locked buffer 'dest' refers to and copy the data.
-        
         uint64_t destPtr = asOpaquePtr(A(evt, 0));
         size_t dataSize = 0;
         const uint8_t* data = extractBlob(A(evt, 1), dataSize);
         
         if (data && dataSize > 0) {
-            // Search pending locks for a matching buffer
-            for (auto& kv : state.pendingLocks) {
-                void* lockBase = kv.second.lockedPtr;
-                if (lockBase) {
-                    // We can't match by address (trace vs live differ).
-                    // Instead, just copy into the locked buffer — the data
-                    // will be uploaded on Unlock. Use the most recent lock.
-                    memcpy(lockBase, data, dataSize);
-                    break;
+            const char* route = "DROP";
+            
+            // Check textureLocksByPBits: exact match first
+            auto texIt = state.textureLocksByPBits.find(destPtr);
+            if (texIt != state.textureLocksByPBits.end() && texIt->second.size > 0) {
+                size_t copySize = (dataSize <= texIt->second.size) ? dataSize : texIt->second.size;
+                memcpy(texIt->second.ptr, data, copySize);
+                route = "exact";
+            }
+            
+            // Check textureLocksByPBits: offset match (memcpy to pBits + offset for rows)
+            if (route[0] == 'D') {
+                for (auto& kv : state.textureLocksByPBits) {
+                    uint64_t base = kv.first;
+                    if (destPtr > base && destPtr < base + kv.second.size) {
+                        size_t offset = (size_t)(destPtr - base);
+                        size_t avail = kv.second.size - offset;
+                        size_t copySize = (dataSize <= avail) ? dataSize : avail;
+                        memcpy((uint8_t*)kv.second.ptr + offset, data, copySize);
+                        route = "offset";
+                        break;
+                    }
+                }
+            }
+            
+            if (route[0] == 'D') {
+                for (auto& kv : state.pendingLocks) {
+                    void* lockBase = kv.second.lockedPtr;
+                    if (lockBase) {
+                        memcpy(lockBase, data, dataSize);
+                        route = "pending";
+                        break;
+                    }
                 }
             }
         }
@@ -1317,5 +1515,7 @@ bool apitrace::d3d9::dispatchCall(D3D9DispatcherState& state, const CallEvent& e
     
     // ---- Unhandled call ----
     
+    std::cerr << "[DBG-UNHANDLED] callNo=" << evt.callNo << " fn=" << fn 
+              << " nArgs=" << evt.arguments.size() << std::endl;
     return false;
 }

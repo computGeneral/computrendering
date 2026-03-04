@@ -5378,8 +5378,6 @@ void bmoGpuTop::draw()
             TRACING_EXIT_REGION()
             cleanup();
         }
-        printf("B");
-        fflush(stdout);
     }
 }
 
@@ -5842,6 +5840,7 @@ void bmoGpuTop::emulateVertexShader(ShadedVertex *vertex)
     bmShader->setThreadPC(0, state.vertexProgramStartPC);
     bool programEnd = false;
     U32 pc = state.vertexProgramStartPC;
+    U32 instrCount = 0;
 
     //  Execute all the instructions in the program.
     while (!programEnd)
@@ -5875,6 +5874,7 @@ void bmoGpuTop::emulateVertexShader(ShadedVertex *vertex)
             }
         )
         bmShader->execShaderInstruction(shDecInstr);        //  Execute instruction.
+        instrCount++;
         CG1_BMDL_TRACE(
             if (traceVShader)
             {                        
@@ -6449,8 +6449,8 @@ void bmoGpuTop::emulateRasterization(ShadedVertex *vertex1, ShadedVertex *vertex
                     CG_INFO("Updating recursive algorithm");
                     bmRaster->updateRecursiveMultiv2(batchID); //  Update the triangle rasterization algorithm.
                 }
-            }
-        }
+            } // end while
+        } // end if (!dropTriangle)
         bmRaster->destroyTriangle(triangleID); //  Eliminate triangle.
     }
 
@@ -6726,6 +6726,7 @@ void bmoGpuTop::emulateFragmentShading(ShadedFragment **quad)
                 TRACING_ENTER_REGION("emulateFragmentShading (exec)", "", "emulateFragmentShading")
                 bmShader->execShaderInstruction(shDecInstr); //  Execute instruction.
                 TRACING_EXIT_REGION();
+
                 //  Check for jump instructions (only the first thread in the 4-way vector).
                 if ((p == 0) && shDecInstr->getShaderInstruction()->isAJump())
                 {

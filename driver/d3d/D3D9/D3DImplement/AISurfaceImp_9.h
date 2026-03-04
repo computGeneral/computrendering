@@ -29,6 +29,8 @@ public:
 
     UINT getMipMapLevel();
     
+    // Returns the size of the currently locked data buffer (0 if not locked)
+    size_t getLockedDataSize() const { return lockedDataSize; }
 
 private:
     /// Singleton constructor method
@@ -50,6 +52,7 @@ private:
     LONG bottomLock;
 
     unsigned char* lockedData;
+    size_t lockedDataSize;
     UINT lockedPitch;
 
     ULONG ref_count;

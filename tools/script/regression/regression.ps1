@@ -168,10 +168,11 @@ Get-Content $RegList | ForEach-Object {
         Write-Host "done."
     }
 
-    # Compare output
-    $testPPM = Join-Path $workDir "frame0000.$ModelSuffix.ppm"
+    # Compare output — use startFrame to derive the output frame filename
+    $frameIdx = "{0:D4}" -f [int]$startFrame
+    $testPPM = Join-Path $workDir "frame$frameIdx.$ModelSuffix.ppm"
     if (-not (Test-Path $testPPM)) {
-        Write-Host "  FAILED - output frame0000.$ModelSuffix.ppm not produced" -ForegroundColor Red
+        Write-Host "  FAILED - output frame$frameIdx.$ModelSuffix.ppm not produced" -ForegroundColor Red
         "$rawDir : FAILED, missing output" | Out-File $RegOut -Append
         $Fail++
         return

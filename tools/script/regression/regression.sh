@@ -211,7 +211,8 @@ while IFS= read -r line || [ -n "$line" ]; do
     # Collect reference PPMs and test PPMs
     ref_ppm="${trace_file%.*}.ppm"
     ref_file="$full_test_path/$ref_ppm"
-    test_ppm="frame0000.sim.ppm"
+    frame_idx=$(printf "%04d" "$start_frame")
+    test_ppm="frame${frame_idx}.sim.ppm"
     test_file="$full_test_path/$test_ppm"
 
     if [ ! -f "$test_file" ]; then

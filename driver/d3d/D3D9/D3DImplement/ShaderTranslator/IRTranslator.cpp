@@ -3683,7 +3683,7 @@ void IRTranslator::visit(InstructionIRNode *n)
             default:
             
                 ///@note The intention is to avoid halting simulation, so a NOP is generated.
-                char message[40];
+                char message[128];
                 sprintf(message, "Cannot translate Opcode %d", n->getOpcode());
                 D3D_DEBUG( cout << "IRTranslator: WARNING: " << message << endl; )
                 error = true;

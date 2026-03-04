@@ -1062,6 +1062,13 @@ void D3D9State::setVertexShaderConstant(UINT first, CONST int* data, UINT vector
     // For each constant
     for(UINT c = 0; c < vectorCount; c++)
     {
+        if ((first + c) >= 16)
+        {
+            printf("WARNING!!! D3D9State::setVertexShaderConstant(int) => Constant index out of range.  First = %d Count = %d\n",
+                first, vectorCount);
+            break;
+        }
+
         // Add the new constant setted to the setted constants map
         settedVertexShaderConstantsInt[first + c][0] = data[c * 4 + 0];
         settedVertexShaderConstantsInt[first + c][1] = data[c * 4 + 1];
@@ -1077,6 +1084,13 @@ void D3D9State::setVertexShaderConstantBool(UINT first, CONST BOOL* data, UINT v
     // For each constant
     for(UINT c = 0; c < vectorCount; c++)
     {
+        if ((first + c) >= 16)
+        {
+            printf("WARNING!!! D3D9State::setVertexShaderConstantBool => Constant index out of range.  First = %d Count = %d\n",
+                first, vectorCount);
+            break;
+        }
+
         // Add the new constant setted to the setted constants map
         settedVertexShaderConstantsBool[first + c] = data[c];
         settedVertexShaderConstantsBoolTouched[first + c] = true;
@@ -1112,6 +1126,13 @@ void D3D9State::setPixelShaderConstant(UINT first, CONST int* data, UINT vectorC
     // For each constant
     for(UINT c = 0; c < vectorCount; c++)
     {
+        if ((first + c) >= 16)
+        {
+            printf("WARNING!!! D3D9State::setPixelShaderConstant(int) => Constant index out of range.  First = %d Count = %d\n",
+                first, vectorCount);
+            break;
+        }
+
         // Add the new constant setted to the setted constants map
         settedPixelShaderConstantsInt[first + c][0] = data[c * 4 + 0];
         settedPixelShaderConstantsInt[first + c][1] = data[c * 4 + 1];
@@ -1127,6 +1148,13 @@ void D3D9State::setPixelShaderConstantBool(UINT first, CONST BOOL* data, UINT ve
     // For each constant
     for(UINT c = 0; c < vectorCount; c++)
     {
+        if ((first + c) >= 16)
+        {
+            printf("WARNING!!! D3D9State::setPixelShaderConstantBool => Constant index out of range.  First = %d Count = %d\n",
+                first, vectorCount);
+            break;
+        }
+
         // Add the new constant setted to the setted constants map
         settedPixelShaderConstantsBool[first + c] = data[c];
         settedPixelShaderConstantsBoolTouched[first + c] = true;
@@ -1353,7 +1381,7 @@ void D3D9State::setSamplerState(UINT samp, D3DSAMPLERSTATETYPE type, DWORD value
             default:
                 //D3D_DEBUG( D3D_DEBUG( cout << "D3D9State: WARNING: Sampler state " << samplerstate2string(type) << ", value " << (int)value << " not supported." << endl; ) )
                 {
-                    char message[50];
+                    char message[128];
                     sprintf(message, "Unsupported sampler state identifier with value = %d", type);
                     CG_ASSERT(message);
                 }
@@ -1421,7 +1449,7 @@ void D3D9State::setSamplerState(UINT samp, D3DSAMPLERSTATETYPE type, DWORD value
             default:
                 //D3D_DEBUG( D3D_DEBUG( cout << "D3D9State: WARNING: Sampler state " << samplerstate2string(type) << ", value " << (int)value << " not supported." << endl; ) )
                 {
-                    char message[50];
+                    char message[128];
                     sprintf(message, "Unsupported sampler state identifier with value = %d", type);
                     CG_ASSERT(message);
                 }
@@ -1447,10 +1475,10 @@ void D3D9State::setFixedFunctionState(D3DRENDERSTATETYPE state , DWORD value)
         
         case D3DRS_FOGCOLOR:
         
-            fixedFunctionState.fogColor.r = F32((value >> 16) && 0xff) / 255.0f;
-            fixedFunctionState.fogColor.g = F32((value >> 8) && 0xff) / 255.0f;
-            fixedFunctionState.fogColor.b = F32(value & 0x0ff) / 255.0f;
-            fixedFunctionState.fogColor.a = F32((value >> 24) && 0xff) / 255.0f;
+            fixedFunctionState.fogColor.r = F32((value >> 16) & 0xff) / 255.0f;
+            fixedFunctionState.fogColor.g = F32((value >> 8) & 0xff) / 255.0f;
+            fixedFunctionState.fogColor.b = F32(value & 0xff) / 255.0f;
+            fixedFunctionState.fogColor.a = F32((value >> 24) & 0xff) / 255.0f;
             
             setFogState(state, value);           
             break;
@@ -1517,10 +1545,10 @@ void D3D9State::setFixedFunctionState(D3DRENDERSTATETYPE state , DWORD value)
             
         case D3DRS_AMBIENT:
 
-            fixedFunctionState.ambient.r = F32((value >> 16) && 0xff) / 255.0f;
-            fixedFunctionState.ambient.g = F32((value >> 8) && 0xff) / 255.0f;
-            fixedFunctionState.ambient.b = F32(value & 0x0ff) / 255.0f;
-            fixedFunctionState.ambient.a = F32((value >> 24) && 0xff) / 255.0f;
+            fixedFunctionState.ambient.r = F32((value >> 16) & 0xff) / 255.0f;
+            fixedFunctionState.ambient.g = F32((value >> 8) & 0xff) / 255.0f;
+            fixedFunctionState.ambient.b = F32(value & 0xff) / 255.0f;
+            fixedFunctionState.ambient.a = F32((value >> 24) & 0xff) / 255.0f;
             break;
             
         case D3DRS_COLORVERTEX:
@@ -1575,10 +1603,10 @@ void D3D9State::setFixedFunctionState(D3DRENDERSTATETYPE state , DWORD value)
         
         case D3DRS_TEXTUREFACTOR:
             
-            fixedFunctionState.textureFactor.r = F32((value >> 16) && 0xff) / 255.0f;
-            fixedFunctionState.textureFactor.g = F32((value >> 8) && 0xff) / 255.0f;
-            fixedFunctionState.textureFactor.b = F32(value & 0x0ff) / 255.0f;
-            fixedFunctionState.textureFactor.a = F32((value >> 24) && 0xff) / 255.0f;
+            fixedFunctionState.textureFactor.r = F32((value >> 16) & 0xff) / 255.0f;
+            fixedFunctionState.textureFactor.g = F32((value >> 8) & 0xff) / 255.0f;
+            fixedFunctionState.textureFactor.b = F32(value & 0xff) / 255.0f;
+            fixedFunctionState.textureFactor.a = F32((value >> 24) & 0xff) / 255.0f;
             break;
             
         default:
@@ -1775,10 +1803,10 @@ void D3D9State::setTextureStage(DWORD Stage, D3DTEXTURESTAGESTATETYPE Type, DWOR
             
         case D3DTSS_CONSTANT:
 
-            fixedFunctionState.textureStage[Stage].constant.r = F32((Value >> 16) && 0xff) / 255.0f;
-            fixedFunctionState.textureStage[Stage].constant.g = F32((Value >> 8) && 0xff) / 255.0f;
-            fixedFunctionState.textureStage[Stage].constant.b = F32(Value && 0xff) / 255.0f;
-            fixedFunctionState.textureStage[Stage].constant.a = F32((Value >> 24) && 0xff) / 255.0f;
+            fixedFunctionState.textureStage[Stage].constant.r = F32((Value >> 16) & 0xff) / 255.0f;
+            fixedFunctionState.textureStage[Stage].constant.g = F32((Value >> 8) & 0xff) / 255.0f;
+            fixedFunctionState.textureStage[Stage].constant.b = F32(Value & 0xff) / 255.0f;
+            fixedFunctionState.textureStage[Stage].constant.a = F32((Value >> 24) & 0xff) / 255.0f;
             break;
             
         default:
@@ -3625,7 +3653,7 @@ libGAL::GAL_FORMAT D3D9State::getGALFormat(D3DFORMAT Format) {
 
         default:
             {
-                char message[50];
+                char message[128];
                 sprintf(message, "Unknown format: 0x%X", Format);
                 CG_ASSERT(message);
                 return static_cast<libGAL::GAL_FORMAT>(0);

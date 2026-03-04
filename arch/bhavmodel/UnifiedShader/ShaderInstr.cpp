@@ -1157,7 +1157,12 @@ void cgoShaderInstr::disassemble(char* dis, int size)
         sprintf_s(dis, size, "(%sp%d) ", (negatePredFlag ? "!" : ""), predicateReg);
     
     //  Write the instruction name.
-    sprintf_s(dis, size, "%s%s", dis, getOpcodeString(opcode));
+    {
+        char temp[512];
+        snprintf(temp, sizeof(temp), "%s%s", dis, getOpcodeString(opcode));
+        strncpy(dis, temp, size - 1);
+        dis[size - 1] = '\0';
+    }
 
     //  Disassemble the instruction based on the specific instruction type/opcode.
     switch(opcode)

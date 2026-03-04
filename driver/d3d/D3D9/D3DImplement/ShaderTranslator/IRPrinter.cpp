@@ -36,8 +36,8 @@ void IRPrinter::visit(CommentIRNode *n)
 
     const vector<IRNode*> commentData = n->getChilds();
     
-    char buffer[256];
-    char auxBuffer[256];   
+    char buffer[1024];
+    char auxBuffer[1024];   
     unsigned char c[16];
 
     int lineElements = 0;

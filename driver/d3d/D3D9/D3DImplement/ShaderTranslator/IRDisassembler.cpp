@@ -30,8 +30,8 @@ void IRDisassembler::visit(IRNode *n) {}
 
 void IRDisassembler::visit(CommentIRNode *n)
 {
-    char buffer[256];
-    char auxBuffer[256];
+    char buffer[1024];
+    char auxBuffer[1024];
     sprintf(buffer, "%06x: Comment Block.", n->getOffset());
     *out << endl;
     *out << buffer;

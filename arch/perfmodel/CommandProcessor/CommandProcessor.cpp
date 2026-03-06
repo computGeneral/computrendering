@@ -86,7 +86,7 @@ forcedCommand(false)
     CG_ASSERT_COND((numFShaders > 0), "Invalid number of Fragment Shaders (must be >0).");
     CG_ASSERT_COND((TotalTextureUnits > 0), "Invalid number of Texture Units (must be >0).");
     CG_ASSERT_COND((numStampUnits > 0), "Invalid number of Stamp Units (must be >0).");
-    if (CurMdlTyp == CG_FUNC_MODEL) 
+    if (CurMdlTyp == CG_PERF_MODEL) 
     PortBinding();
     //  Allocate arrays for storing the state of the stamp units.  
     zStencilState = new RasterizerState[numStampUnits];

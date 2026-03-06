@@ -286,7 +286,7 @@ public:
         cgsArchConfig* ArchConf,
         cgoTraceDriverBase* driver,
         char* name,
-        cgeModelAbstractLevel  MdlTyp = CG_FUNC_MODEL,
+        cgeModelAbstractLevel  MdlTyp = CG_PERF_MODEL,
         cmoMduBase *parent = NULL
         );
 

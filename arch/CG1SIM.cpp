@@ -360,7 +360,7 @@ int main(int argc, char *argv[])
 
     while (argIndex < argCount) {
         if (strcmp(argList[argIndex], "--pm") == 0)
-            MAL = CG_FUNC_MODEL;
+            MAL = CG_PERF_MODEL;
         else if (strcmp(argList[argIndex], "--am") == 0)
             MAL = CG_ARCH_MODEL;
         else if (strcmp(argList[argIndex], "--debug") == 0)
@@ -579,7 +579,7 @@ int main(int argc, char *argv[])
             CG1GPUSIM = new CG1BMDL(ArchConf, TraceDriver);
             CG_INFO("CG1 MAL5 BMDL Enabled for Simulation");
             break;
-        case CG_FUNC_MODEL: 
+        case CG_PERF_MODEL: 
             CG1GPUSIM = new perfmodel(ArchConf, TraceDriver); 
             panicCallback = &panicSnapshotWrapper;    //  Define the call back for the panic function to save a snapshot on simulator errors.
             CG_INFO("CG1 MAL3 perfmodel Enabled for Simulation");

@@ -276,7 +276,7 @@ typedef enum {
 enum cgeModelAbstractLevel
 {
     CG_BEHV_MODEL, // CG1 Gpu Behavior Model 
-    CG_FUNC_MODEL, // CG1 Gpu Function Model 
+    CG_PERF_MODEL, // CG1 Gpu Function Model 
     CG_ARCH_MODEL, // CG1 Gpu Archtecture Model 
     CG_PERF_MODEL, // CG1 Gpu Performance Model
     CG_ENGY_MODEL, // CG1 Gpu Energy Model

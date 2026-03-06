@@ -125,7 +125,7 @@ public:
     /**
      *  Fire-and-forget simulation loop for a single clock domain architecture.
      */
-    void simulationLoop(cgeModelAbstractLevel MAL = CG_FUNC_MODEL);
+    void simulationLoop(cgeModelAbstractLevel MAL = CG_PERF_MODEL);
 
     /**
      *  Fire-and-forget simulation loop for a multi-clock domain architecture.

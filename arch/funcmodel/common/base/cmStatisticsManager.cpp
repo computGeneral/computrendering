@@ -14,7 +14,7 @@ using namespace std;
 
 StatisticsManager::StatisticsManager():
 startCycle(0), nCycles(1000), nextDump(999), lastCycle(-1), autoReset(true),
-osCycle(NULL), osFrame(NULL), osBatch(NULL), cyclesFlagNamesDumped(false)
+osCycle(NULL), osFrame(NULL), osBatch(NULL)
 {
 }
 
@@ -34,7 +34,6 @@ Statistic* StatisticsManager::find(std::string name)
 
 void StatisticsManager::clock(U64 cycle)
 {
-    // static bool flag = false;
     lastCycle = cycle;
 
     if ( cycle >= startCycle )
@@ -44,16 +43,13 @@ void StatisticsManager::clock(U64 cycle)
 
     if ( cycle >= nextDump )
     {
-        if ( !cyclesFlagNamesDumped )
-        {
-            cyclesFlagNamesDumped = true;
-            
-            if (osCycle != NULL)
-                dumpNames(*osCycle);
-        }
-
         if (osCycle != NULL)
-            dumpValues(*osCycle);
+        {
+            //  Buffer column for transposed output.
+            ostringstream hdr;
+            hdr << startCycle << ".." << lastCycle;
+            bufferColumn(transCycle, hdr.str(), FREQ_CYCLES);
+        }
 
         if ( autoReset )
         {
@@ -66,18 +62,12 @@ void StatisticsManager::clock(U64 cycle)
 
 void StatisticsManager::frame(U32 frame)
 {
-    static bool namesOut = false;
-
     //  Check if output stream for per frame statistics is defined.
     if (osFrame != NULL)
     {
-        if (namesOut == false)
-        {
-            namesOut = true;
-            dumpNames("Frame", *osFrame);
-        }
-
-        dumpValues(frame, FREQ_FRAME, *osFrame);
+        ostringstream hdr;
+        hdr << frame;
+        bufferColumn(transFrame, hdr.str(), FREQ_FRAME);
 
         reset(FREQ_FRAME);
     }
@@ -85,19 +75,14 @@ void StatisticsManager::frame(U32 frame)
 
 void StatisticsManager::batch()
 {
-    static bool namesOut = false;
     static U32 batch = 0;
 
     //  Check if the output stream for per batch statistics is defined
     if (osBatch != NULL)
     {
-        if (namesOut == false)
-        {
-            namesOut = true;
-            dumpNames("Batch", *osBatch);
-        }
-
-        dumpValues(batch, FREQ_BATCH, *osBatch);
+        ostringstream hdr;
+        hdr << batch;
+        bufferColumn(transBatch, hdr.str(), FREQ_BATCH);
 
         batch++;
 
@@ -141,54 +126,6 @@ void StatisticsManager::reset(U32 freq)
         (it->second)->clear(freq);
 }
 
-void StatisticsManager::dumpValues(ostream& os)
-{
-    map<string,Statistic*>::iterator it = stats.begin();
-
-    os << startCycle << ".." << lastCycle;
-    for ( ; it != stats.end(); it++ )
-    {
-        (*(it->second)).setCurrentFreq(FREQ_CYCLES);
-        os << "," << *(it->second);
-    }
-    os << endl;
-}
-
-void StatisticsManager::dumpValues(U32 n, U32 freq, ostream& os)
-{
-    map<string,Statistic*>::iterator it = stats.begin();
-
-    os << n;
-    for ( ; it != stats.end(); it++ )
-    {
-        (*(it->second)).setCurrentFreq(freq);
-        os << "," << *(it->second);
-    }
-
-    os << endl;
-}
-
-
-void StatisticsManager::dumpNames(ostream& os)
-{
-    map<string,Statistic*>::iterator it = stats.begin();
-
-    os << "Cycles";
-    for ( ; it != stats.end(); it++ )
-        os << "," << it->first;
-    os << endl;
-}
-
-void StatisticsManager::dumpNames(char *str, ostream& os)
-{
-    map<string,Statistic*>::iterator it = stats.begin();
-
-    os << str;
-    for ( ; it != stats.end(); it++ )
-        os << "," << it->first;
-    os << endl;
-}
-
 void StatisticsManager::dump(ostream& os)
 {
     map<string,Statistic*>::iterator it = stats.begin();
@@ -215,9 +152,62 @@ void StatisticsManager::finish()
     U64 prevDump = nextDump + 1 - nCycles;
     if ( lastCycle > prevDump ) {
         if ( osCycle ) {
-            if ( !cyclesFlagNamesDumped )
-                dumpNames(*osCycle);
-            dumpValues(*osCycle);
+            ostringstream hdr;
+            hdr << startCycle << ".." << lastCycle;
+            bufferColumn(transCycle, hdr.str(), FREQ_CYCLES);
         }    
+    }
+
+    //  Flush transposed buffers.
+    if (osCycle && !transCycle.colHeaders.empty())
+        flushTransposed(transCycle, "Cycles", *osCycle);
+    if (osFrame && !transFrame.colHeaders.empty())
+        flushTransposed(transFrame, "Frame", *osFrame);
+    if (osBatch && !transBatch.colHeaders.empty())
+        flushTransposed(transBatch, "Batch", *osBatch);
+}
+
+void StatisticsManager::bufferColumn(TransposedData& buf, const string& header,
+                                     U32 freq)
+{
+    buf.colHeaders.push_back(header);
+
+    vector<string> col;
+    col.reserve(stats.size());
+
+    map<string,Statistic*>::iterator it = stats.begin();
+    for ( ; it != stats.end(); it++ )
+    {
+        (*(it->second)).setCurrentFreq(freq);
+        ostringstream ss;
+        ss << *(it->second);
+        col.push_back(ss.str());
+    }
+    buf.colValues.push_back(col);
+}
+
+void StatisticsManager::flushTransposed(TransposedData& buf,
+                                        const string& rowLabel,
+                                        ostream& os)
+{
+    //  Header row: rowLabel, col1, col2, ...
+    os << rowLabel;
+    for (size_t c = 0; c < buf.colHeaders.size(); c++)
+        os << "," << buf.colHeaders[c];
+    os << endl;
+
+    //  One row per statistic.
+    size_t statIdx = 0;
+    map<string,Statistic*>::iterator it = stats.begin();
+    for ( ; it != stats.end(); it++, statIdx++ )
+    {
+        os << it->first;
+        for (size_t c = 0; c < buf.colValues.size(); c++)
+        {
+            os << ",";
+            if (statIdx < buf.colValues[c].size())
+                os << buf.colValues[c][statIdx];
+        }
+        os << endl;
     }
 }

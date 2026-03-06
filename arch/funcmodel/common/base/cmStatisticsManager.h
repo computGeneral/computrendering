@@ -10,6 +10,7 @@
 #include <vector>
 #include <string>
 #include <iostream>
+#include <sstream>
 #include <stdio.h>
 #include "support.h"
 #include "GPUType.h"
@@ -27,8 +28,6 @@ static const U32 FREQ_BATCH = 2;
 class StatisticsManager
 {
 private:
-
-    bool cyclesFlagNamesDumped;
 
     // list of current stats 
     std::map<std::string,gpuStatistics::Statistic*> stats;
@@ -49,6 +48,23 @@ private:
     //  output streams for per batch and per frame statistics.  
     std::ostream* osFrame;
     std::ostream* osBatch;
+
+    //! Buffer for transposed output: column headers and per-column values.
+    struct TransposedData {
+        std::vector<std::string> colHeaders;
+        std::vector<std::vector<std::string>> colValues; // [colIdx][statIdx]
+    };
+
+    TransposedData transCycle;
+    TransposedData transFrame;
+    TransposedData transBatch;
+
+    //! Buffer one column of values into a TransposedData struct.
+    void bufferColumn(TransposedData& buf, const std::string& header, U32 freq);
+
+    //! Write the transposed table to an output stream.
+    void flushTransposed(TransposedData& buf, const std::string& rowLabel,
+                         std::ostream& os);
 
     // singleton instance 
     // static StatisticsManager* sm;
@@ -114,14 +130,6 @@ public:
     void setPerBatchStream(std::ostream& os);
 
     void reset(U32 freq);
-
-    void dumpNames(std::ostream& os = std::cout);
-
-    void dumpValues(std::ostream& os = std::cout);
-
-    void dumpNames(char *str, std::ostream& os = std::cout);
-
-    void dumpValues(U32 n, U32 freq, std::ostream& os = std::cout);
 
     void dump(std::ostream& os = std::cout);
 

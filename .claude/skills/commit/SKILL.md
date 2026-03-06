@@ -9,7 +9,33 @@ You are a git commit assistant. When the user asks you to create a commit, follo
 2. Run `git diff` to see both staged and unstaged changes
 3. Run `git log -5 --oneline` to understand the commit message style in this repository
 
-4. **IMPORTANT - Before committing:**
+4. **Code Review — read every changed/new file and check for:**
+
+   **Safety & Correctness:**
+   - Memory leaks: every `new` must have a matching `delete` (or use RAII/smart pointers); every `malloc`/`calloc` must have a `free`
+   - Null/dangling pointer dereference: check pointers before use, especially after `dynamic_cast`, `find()`, or allocation
+   - Buffer overflows: array indices must be bounds-checked; `strcpy`/`sprintf` should use safe alternatives or verify sizes
+   - Uninitialized variables: all variables must be initialized before first use
+   - Resource leaks: open files/streams must be closed on all code paths (including error paths)
+   - Use-after-free: no access to memory after it has been deleted/freed
+   - Integer overflow/truncation: watch for narrowing conversions (e.g., U64 → U32)
+   - Thread safety: shared mutable state must be protected if concurrency is possible
+
+   **Coding Style (per CLAUDE.md conventions):**
+   - Indentation: 4 spaces, no tabs
+   - Naming: PascalCase classes, camelCase methods/variables, UPPER_CASE constants/macros
+   - Use project types (`U32`, `S32`, `F32`, `U64`, etc.) instead of raw C++ types
+   - Include guards: `#ifndef __HEADER_NAME__` / `#define __HEADER_NAME__` (no `#pragma once`)
+   - Braces on same line as function/control statement
+   - Space after keywords (`if`, `for`, `while`)
+   - Prefixes: `cm`/`cmo` for funcmodel, `bm`/`bmo` for bhavmodel, `cgo` for common
+   - Doxygen-style comments for classes and public methods (`//!` or `/*! */`)
+
+   **If issues are found:**
+   - Fix all issues automatically before proceeding to commit
+   - Briefly list what was fixed in the commit message
+
+5. **IMPORTANT - Before committing:**
    - Run `git stash` to save uncommitted changes
    - Run `git pull --rebase` to update from remote
    - If there are merge conflicts, STOP and inform the user:
@@ -18,14 +44,14 @@ You are a git commit assistant. When the user asks you to create a commit, follo
      * Exit the skill immediately
    - If no conflicts, run `git stash pop` to restore your changes
 
-5. After successful rebase and stash pop, analyze all staged and newly added changes and draft a commit message that:
+6. After successful rebase and stash pop, analyze all staged and newly added changes and draft a commit message that:
    - Summarizes the nature of the changes (e.g., new feature, enhancement, bug fix, refactoring, test, docs)
    - Accurately reflects what was changed and why
    - Is concise (1-2 sentences)
 
-6. Add relevant untracked files to the staging area and create the commit with the message, ending with:
+7. Add relevant untracked files to the staging area and create the commit with the message.
 
-7. Finally, run `git status` to verify the commit was created successfully.
+8. Finally, run `git status` to verify the commit was created successfully.
 
 IMPORTANT:
 - NEVER update git config

@@ -87,9 +87,16 @@ set(D3DINC
 )
 
 # Generate CG1 GPU CModel
-set(EXTSRC ${OGLSRC} ${D3DSRC})
-set(EXTINC ${OGLINC} ${D3DINC})
-set(DRVLIB GAL GALx OGL2 D3D9)
+if(MSVC)
+    set(EXTSRC ${OGLSRC} ${D3DSRC})
+    set(EXTINC ${OGLINC} ${D3DINC})
+    set(DRVLIB GAL GALx OGL2 D3D9)
+    add_definitions(-DBUILD_D3D)
+else()
+    set(EXTSRC ${OGLSRC})
+    set(EXTINC ${OGLINC})
+    set(DRVLIB GAL GALx OGL2)
+endif()
 
 set( MAINSRC
             "CG1SIM.cpp"

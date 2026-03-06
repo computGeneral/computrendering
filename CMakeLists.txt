@@ -104,8 +104,10 @@ add_subdirectory(driver/utils/ApitraceParser)
 add_subdirectory(driver/ogl/OGL2)
 # FIXME
 #add_dependencies(driver/gal/GALx driver/utils/OGLApiCodeGen)
-# D3D9
-add_subdirectory(driver/d3d/D3D9)
+# D3D9 (Windows/MSVC only)
+if(MSVC)
+    add_subdirectory(driver/d3d/D3D9)
+endif()
 
 # arch
 add_subdirectory(arch)

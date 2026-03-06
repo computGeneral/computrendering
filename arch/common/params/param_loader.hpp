@@ -52,9 +52,9 @@ static inline std::vector<std::string> split(const std::string& s, char delimite
  *   ArchParams::init("path/to/CG1GPU.csv", "CG1GPU.ini");
  *
  *   // Then anywhere in the code:
- *   uint32_t frames = ArchParams::get<uint32_t>("SIMULATOR_SimFrames");
- *   bool     msaa   = ArchParams::get<bool>("SIMULATOR_ForceMSAA");
- *   std::string file = ArchParams::get<std::string>("SIMULATOR_InputFile");
+ *   uint32_t frames = ArchParams::get<uint32_t>("SIMULATOR_SIM_FRAMES");
+ *   bool     msaa   = ArchParams::get<bool>("SIMULATOR_FORCE_MSAA");
+ *   std::string file = ArchParams::get<std::string>("SIMULATOR_INPUT_FILE");
  */
 class ArchParams {
 public:

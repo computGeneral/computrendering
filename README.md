@@ -79,11 +79,11 @@ computrendering/
 │   │   ├── TextureProcessor/    # Texture sampling
 │   │   └── FragmentOperator/    # Fragment operations (Z, blend, write)
 │   │
-│   ├── funcmodel/               # Functional model (cycle-accurate)
-│   │   ├── CG1CMDL.h/cpp       # Top-level functional model
+│   ├── perfmodel/               # Functional model (cycle-accurate)
+│   │   ├── perfmodel.h/cpp       # Top-level functional model
 │   │   ├── common/base/         # ★ Base simulation classes
-│   │   │   ├── cmMduBase.h      # Module base class (all MDUs inherit)
-│   │   │   └── cmGPUSignal.h    # Signal class for inter-module comm
+│   │   │   ├── MduBase.h      # Module base class (all MDUs inherit)
+│   │   │   └── GPUSignal.h    # Signal class for inter-module comm
 │   │   ├── CommandProcessor/    # Command processor & MetaStream handling
 │   │   ├── StreamController/    # Vertex fetch & post-shading cache
 │   │   ├── PrimitiveAssembler/  # Primitive assembly
@@ -252,7 +252,7 @@ ApitraceParser (format parsing, event extraction)
                               ▼
                     GAL → HAL → MetaStream
                               ▼
-                CG1 Simulator (bhavmodel / funcmodel)
+                CG1 Simulator (bhavmodel / perfmodel)
 ```
 
 ---
@@ -310,7 +310,7 @@ CG1SIM <filename> <n> <m>           # n frames, starting from frame m
 | Output | Description |
 |--------|-------------|
 | Standard output | Progress dots (10K cycles), 'B' per draw call, frame timing |
-| `frame0000.cm.ppm` | Rendered frame (funcmodel, cycle-accurate) |
+| `frame0000.cm.ppm` | Rendered frame (perfmodel, cycle-accurate) |
 | `frame0000.bm.png` | Rendered frame (bhavmodel, fast emulation) |
 | `stats.frames.csv.gz` | Per-frame statistics |
 | `stats.batches.csv.gz` | Per-batch (draw call) statistics |
@@ -403,7 +403,7 @@ cmp frame0000.cm.ppm ../../tests/ogl/trace/glxgears/glxgears.ppm && echo "PASS" 
     ┌─────────────────────────────▼────────────────────────────────┐
     │                    Simulation Models                         │
     │                                                               │
-    │  CG1BMDL (bhavmodel)          CG1CMDL (funcmodel)           │
+    │  CG1BMDL (bhavmodel)          CG1CMDL (perfmodel)           │
     │  - Fast emulation              - Cycle-accurate simulation   │
     │  - emulateCommandProcessor()   - clock() all MDUs per cycle  │
     │                                                               │
@@ -527,7 +527,7 @@ CG1BMDL::simulationLoop()
       └─ Decode MetaStream → update GPU state → emulate pipeline on DRAW
 ```
 
-**Funcmodel (Cycle-Accurate):**
+**Perfmodel (Cycle-Accurate):**
 ```
 CG1CMDL::simulationLoop()
   └─ Cycle loop: clock all MDUs per cycle
@@ -604,10 +604,10 @@ value = 0x00         // null
 | File | Purpose |
 |------|---------|
 | `arch/bhavmodel/CG1BMDL.h` | Behavior model top-level |
-| `arch/funcmodel/CG1CMDL.h` | Functional model top-level |
-| `arch/funcmodel/common/base/cmMduBase.h` | Funcmodel module base class |
-| `arch/funcmodel/common/base/cmGPUSignal.h` | Signal class for inter-module comm |
-| `arch/funcmodel/CommandProcessor/MetaStream.h` | MetaStream protocol definition |
+| `arch/perfmodel/perfmodel.h` | Functional model top-level |
+| `arch/perfmodel/common/base/MduBase.h` | Perfmodel module base class |
+| `arch/perfmodel/common/base/GPUSignal.h` | Signal class for inter-module comm |
+| `arch/perfmodel/CommandProcessor/MetaStream.h` | MetaStream protocol definition |
 
 ### Driver Stack
 

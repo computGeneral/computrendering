@@ -29,8 +29,8 @@ add_subdirectory(common)
 #target_link_libraries(CG1Common PUBLIC ${3RDPARTYLIB})
 add_subdirectory(bhavmodel)
 target_link_libraries(CG1BMDL PUBLIC zlibstatic CG1Common)
-add_subdirectory(funcmodel)
-target_link_libraries(CG1CMDL PUBLIC zlibstatic HAL CG1Common)
+add_subdirectory(perfmodel)
+target_link_libraries(perfmodel PUBLIC zlibstatic HAL CG1Common)
 
 
 set(OGLSRC 
@@ -92,7 +92,7 @@ if(MSVC AND BUILD_D3D)
     set(EXTINC ${OGLINC} ${D3DINC})
     set(DRVLIB GAL GALx OGL2 D3D9)
     add_definitions(-DBUILD_D3D)
-    #HAL #FIXME HAL should be decoupled from funcmodel and add here.
+    #HAL #FIXME HAL should be decoupled from perfmodel and add here.
 else()
     set(EXTSRC ${OGLSRC})
     set(EXTINC ${OGLINC})
@@ -125,7 +125,7 @@ set_target_properties(CG1SIM PROPERTIES VS_DEBUGGER_COMMAND_ARGUMENTS
 
 target_include_directories(CG1SIM PUBLIC
                           ${CMAKE_SOURCE_DIR}/arch/common/params
-                          ${CMAKE_SOURCE_DIR}/arch/funcmodel
+                          ${CMAKE_SOURCE_DIR}/arch/perfmodel
                           ${CMAKE_SOURCE_DIR}/arch/utils
 
                           ${CMAKE_SOURCE_DIR}/driver/utils/ApitraceParser
@@ -138,7 +138,7 @@ target_link_libraries(CG1SIM PUBLIC
                       
                       CG1Common
                       CG1BMDL
-                      CG1CMDL
+                      perfmodel
                       ${DRVLIB}
                      )
 

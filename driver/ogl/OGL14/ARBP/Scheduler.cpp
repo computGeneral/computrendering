@@ -8,7 +8,7 @@
 #include <sstream>
 #include <queue>
 
-#include "cmShaderArchParam.h"
+#include "ShaderArchParam.h"
 
 using namespace std;
 using namespace libgl;

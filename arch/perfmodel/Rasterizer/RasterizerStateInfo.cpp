@@ -1,0 +1,25 @@
+/**************************************************************************
+ *
+ * Rasterizer State Info implementation file.
+ *
+ */
+
+#include "RasterizerStateInfo.h"
+
+using namespace arch;
+
+//  Creates a new RasterizerStateInfo object.  
+RasterizerStateInfo::RasterizerStateInfo(RasterizerState newState) : state(newState)
+{
+    //  Set color for tracing.  
+    setColor(state);
+
+    setTag("RasStIn");
+}
+
+
+//  Returns the rasterizer state carried by the object.  
+RasterizerState RasterizerStateInfo::getState()
+{
+    return state;
+}

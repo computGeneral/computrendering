@@ -31,8 +31,8 @@ target_include_directories(ApitraceParser PUBLIC
     ${CMAKE_SOURCE_DIR}/arch/bhavmodel/UnifiedShader
     ${CMAKE_SOURCE_DIR}/arch/bhavmodel/common/base
     ${CMAKE_SOURCE_DIR}/arch/bhavmodel/common/math
-    ${CMAKE_SOURCE_DIR}/arch/funcmodel/CommandProcessor
-    ${CMAKE_SOURCE_DIR}/arch/funcmodel/MemoryController
+    ${CMAKE_SOURCE_DIR}/arch/perfmodel/CommandProcessor
+    ${CMAKE_SOURCE_DIR}/arch/perfmodel/MemoryController
 )
 
 target_link_libraries(ApitraceParser PUBLIC snappy)

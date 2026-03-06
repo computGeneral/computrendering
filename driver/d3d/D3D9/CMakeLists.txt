@@ -45,8 +45,8 @@ target_include_directories(D3D9 PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}
                                        ${CMAKE_SOURCE_DIR}/arch/bhavmodel/common/math
                                        ${CMAKE_SOURCE_DIR}/arch/bhavmodel/Rasterizer
                                        ${CMAKE_SOURCE_DIR}/arch/bhavmodel/UnifiedShader
-                                       ${CMAKE_SOURCE_DIR}/arch/funcmodel/CommandProcessor
-                                       ${CMAKE_SOURCE_DIR}/arch/funcmodel/MemoryController
+                                       ${CMAKE_SOURCE_DIR}/arch/perfmodel/CommandProcessor
+                                       ${CMAKE_SOURCE_DIR}/arch/perfmodel/MemoryController
                                        ${CMAKE_SOURCE_DIR}/driver/utils
                                        ${CMAKE_SOURCE_DIR}/driver/d3d/inc
                                        ${CMAKE_SOURCE_DIR}/driver/hal

@@ -1,14 +1,14 @@
 /**************************************************************************
  *
  *  CG1 GPU implementation file 
- *  This file implements the simulator(funcmodel) main loop and support functions 
+ *  This file implements the simulator(perfmodel) main loop and support functions 
  *
  */
 
 //  CG1 GPU definitions and declarations.  
 #include "CG1SIM.h"
 
-#include "CG1CMDL.h"
+#include "perfmodel.h"
 
 #if CG_ARCH_MODEL_DEVEL
 #include "CG1AMDL.h"
@@ -359,7 +359,7 @@ int main(int argc, char *argv[])
     argPos = 0;
 
     while (argIndex < argCount) {
-        if (strcmp(argList[argIndex], "--fm") == 0)
+        if (strcmp(argList[argIndex], "--pm") == 0)
             MAL = CG_FUNC_MODEL;
         else if (strcmp(argList[argIndex], "--am") == 0)
             MAL = CG_ARCH_MODEL;
@@ -580,9 +580,9 @@ int main(int argc, char *argv[])
             CG_INFO("CG1 MAL5 BMDL Enabled for Simulation");
             break;
         case CG_FUNC_MODEL: 
-            CG1GPUSIM = new CG1CMDL(ArchConf, TraceDriver); 
+            CG1GPUSIM = new perfmodel(ArchConf, TraceDriver); 
             panicCallback = &panicSnapshotWrapper;    //  Define the call back for the panic function to save a snapshot on simulator errors.
-            CG_INFO("CG1 MAL3 CMDL Enabled for Simulation");
+            CG_INFO("CG1 MAL3 perfmodel Enabled for Simulation");
             break;
 #if CG_ARCH_MODEL_DEVEL
         case CG_ARCH_MODEL:

@@ -12,7 +12,7 @@
 
 param(
     [string]$Config = "Debug",
-    [switch]$FuncModel
+    [switch]$PerfModel
 )
 
 $ErrorActionPreference = "Stop"
@@ -37,8 +37,8 @@ if (-not (Test-Path $RegList)) {
 }
 
 # ---- Model suffix ----
-$ModelSuffix = if ($FuncModel) { "cm" } else { "bm" }
-$ModelFlag   = if ($FuncModel) { "--fm" } else { "" }
+$ModelSuffix = if ($PerfModel) { "cm" } else { "bm" }
+$ModelFlag   = if ($PerfModel) { "--pm" } else { "" }
 
 # ---- Helper: resolve test directory ----
 function Resolve-TestPath($listDir) {

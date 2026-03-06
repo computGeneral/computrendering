@@ -60,14 +60,14 @@ set(SYSTEMC_PROFILER_ENABLED     No      CACHE BOOL   "If set, Generates and bui
 list(APPEND CMAKE_MODULE_PATH
     ${CMAKE_SOURCE_DIR}/arch/common
     ${CMAKE_SOURCE_DIR}/arch/bhavmodel
-    ${CMAKE_SOURCE_DIR}/arch/funcmodel
+    ${CMAKE_SOURCE_DIR}/arch/perfmodel
     ${CMAKE_SOURCE_DIR}/arch/archmodel
     )
 
 
 #include_directories(
 #    ${CMAKE_SOURCE_DIR}/arch/common
-#    ${CMAKE_SOURCE_DIR}/arch/funcmodel
+#    ${CMAKE_SOURCE_DIR}/arch/perfmodel
 #    ${CMAKE_SOURCE_DIR}/arch/bhavmodel
 #    )
 

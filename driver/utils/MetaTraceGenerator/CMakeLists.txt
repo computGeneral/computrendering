@@ -50,7 +50,7 @@ set(SYSTEMC_PROFILER_ENABLED     No      CACHE BOOL   "If set, Generates and bui
 
 #include_directories(
 #    ${CMAKE_SOURCE_DIR}/arch/common
-#    ${CMAKE_SOURCE_DIR}/arch/funcmodel
+#    ${CMAKE_SOURCE_DIR}/arch/perfmodel
 #    ${CMAKE_SOURCE_DIR}/arch/behvmodel
 #    )
 

@@ -15,8 +15,8 @@ target_include_directories(HAL PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}
                                       ${CMAKE_SOURCE_DIR}/arch/bhavmodel
                                       ${CMAKE_SOURCE_DIR}/arch/bhavmodel/TextureProcessor
                                       ${CMAKE_SOURCE_DIR}/arch/bhavmodel/UnifiedShader
-                                      ${CMAKE_SOURCE_DIR}/arch/funcmodel/base
-                                      ${CMAKE_SOURCE_DIR}/arch/funcmodel/CommandProcessor
-                                      ${CMAKE_SOURCE_DIR}/arch/funcmodel/MemoryController
+                                      ${CMAKE_SOURCE_DIR}/arch/perfmodel/base
+                                      ${CMAKE_SOURCE_DIR}/arch/perfmodel/CommandProcessor
+                                      ${CMAKE_SOURCE_DIR}/arch/perfmodel/MemoryController
                                       ${CMAKE_SOURCE_DIR}/driver/utils
                           )

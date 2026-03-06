@@ -29,9 +29,9 @@ target_include_directories(GAL PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/Interface
                                       ${CMAKE_SOURCE_DIR}/arch/bhavmodel/UnifiedShader
                                       ${CMAKE_SOURCE_DIR}/arch/bhavmodel/common/base
                                       ${CMAKE_SOURCE_DIR}/arch/bhavmodel/common/math
-                                      ${CMAKE_SOURCE_DIR}/arch/funcmodel/CommandProcessor
-                                      ${CMAKE_SOURCE_DIR}/arch/funcmodel/MemoryController
-                                      ${CMAKE_SOURCE_DIR}/arch/funcmodel/UnifiedShader
-                                      ${CMAKE_SOURCE_DIR}/arch/funcmodel/Shader
-                                      ${CMAKE_SOURCE_DIR}/arch/funcmodel/common/base
+                                      ${CMAKE_SOURCE_DIR}/arch/perfmodel/CommandProcessor
+                                      ${CMAKE_SOURCE_DIR}/arch/perfmodel/MemoryController
+                                      ${CMAKE_SOURCE_DIR}/arch/perfmodel/UnifiedShader
+                                      ${CMAKE_SOURCE_DIR}/arch/perfmodel/Shader
+                                      ${CMAKE_SOURCE_DIR}/arch/perfmodel/common/base
                           )

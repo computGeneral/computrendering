@@ -4,7 +4,7 @@
 
 #include "GPUReg.h"
 #include "MetaStream.h"
-#include "cmMemorySpace.h"
+#include "MemorySpace.h"
 #include <vector>
 #include "RegisterWriteBuffer.h"
 #include "ShaderProgramSched.h"

@@ -30,11 +30,11 @@
 │                    Simulator Core                            │
 │  ┌──────────────────────────────────────────────────────┐   │
 │  │ bhavmodel (CG1BMDL) — Fast behavior-level emulation  │   │
-│  │ funcmodel (CG1CMDL) — Cycle-accurate simulation      │   │
+│  │ perfmodel (CG1CMDL) — Cycle-accurate simulation      │   │
 │  │ archmodel           — SystemC-based (experimental)    │   │
 │  └──────────────────────────────────────────────────────┘   │
 │                                                              │
-│  GPU Pipeline Modules (funcmodel MDUs):                      │
+│  GPU Pipeline Modules (perfmodel MDUs):                      │
 │  CommandProcessor → Streamer → PrimitiveAssembler →          │
 │  Clipper → Rasterizer → UnifiedShader ↔ TextureProcessor →  │
 │  ZStencilTest → ColorWrite → DisplayController               │
@@ -49,14 +49,14 @@
 | Layer | Class | Purpose | Speed |
 |-------|-------|---------|-------|
 | **bhavmodel** | `CG1BMDL` / `bmoGpuTop` | Behavior-level functional emulation, no cycle timing | Fast |
-| **funcmodel** | `CG1CMDL` / `cmoGpuTop` | Cycle-accurate simulation with Signal-based inter-module communication | Slow (accurate) |
+| **perfmodel** | `CG1CMDL` / `cmoGpuTop` | Cycle-accurate simulation with Signal-based inter-module communication | Slow (accurate) |
 | **archmodel** | (experimental) | SystemC-based cycle-accurate model | N/A |
 
 ---
 
 ## Key Concepts
 
-### Signal-Based Communication (funcmodel)
+### Signal-Based Communication (perfmodel)
 
 Modules in the functional model communicate through **Signal** objects (`cmGPUSignal`). Each Signal has:
 - **Bandwidth**: max data items per cycle
@@ -66,7 +66,7 @@ Signals provide a cycle-accurate model of inter-module data transfer.
 
 ### MDU (Module Design Unit)
 
-All simulator modules inherit from `cmoMduBase` (funcmodel) or `bmoMduBase` (bhavmodel). MDUs provide:
+All simulator modules inherit from `cmoMduBase` (perfmodel) or `bmoMduBase` (bhavmodel). MDUs provide:
 - Signal registration and management
 - Statistics collection
 - Debug/stall detection
@@ -124,7 +124,7 @@ Adhere strictly to the existing style to maintain consistency.
 
 | Prefix | Layer | Location |
 |--------|-------|----------|
-| `cm` / `cmo` | Functional model | `arch/funcmodel` |
+| `cm` / `cmo` | Functional model | `arch/perfmodel` |
 | `bm` / `bmo` | Behavioral model | `arch/bhavmodel` |
 | `cgo` | Common objects | `arch/common` |
 
@@ -183,14 +183,14 @@ void MyClass::myMethod(S32 value) {
 
 ## Common Development Tasks
 
-### Adding a New Funcmodel Module
+### Adding a New Perfmodel Module
 
-1. Create `arch/funcmodel/YourModule/cmYourModule.h/cpp`
+1. Create `arch/perfmodel/YourModule/cmYourModule.h/cpp`
 2. Inherit from `cmoMduBase`
 3. Implement `clock()` method for per-cycle logic
 4. Register Signals in constructor
 5. Add to `cmoGpuTop` instantiation and wiring
-6. Update `arch/funcmodel/CMakeLists.txt`
+6. Update `arch/perfmodel/CMakeLists.txt`
 
 ### Adding a New Bhavmodel Module
 
@@ -219,7 +219,7 @@ void MyClass::myMethod(S32 value) {
 ## Development Workflow
 
 1. **Understand:** Read this file for architecture and conventions; read `README.md` for build/run/test
-2. **Locate:** Find the relevant MDU in `arch/funcmodel` or `arch/bhavmodel`
+2. **Locate:** Find the relevant MDU in `arch/perfmodel` or `arch/bhavmodel`
 3. **Modify:** Apply changes following the coding style above
 4. **Verify:**
     - Build: `cmake --build _BUILD_ --config Debug --target CG1SIM`

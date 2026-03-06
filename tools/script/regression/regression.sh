@@ -2,7 +2,7 @@
 #
 # CG1 GPU Simulator — Regression Test Script
 #
-# Parses tools/script/regression/regression_list and runs CG1SIM (funcmodel)
+# Parses tools/script/regression/regression_list and runs CG1SIM (perfmodel)
 # for each OGL test trace. Compares output PPMs against reference/ using
 # icmp_diff (PSNR tolerance) and execution cycles via helper scripts.
 # Results are written to tools/script/regression/regression.out.
@@ -169,7 +169,7 @@ while IFS= read -r line || [ -n "$line" ]; do
 
     # ---- Build simulator command ----
     # --param points to the CSV param file, --arch selects the ARCH_VERSION column
-    sim_cmd="$SIMULATOR --fm --param $PARAM_CSV --arch $arch_version --trace $trace_file --frames $frames"
+    sim_cmd="$SIMULATOR --pm --param $PARAM_CSV --arch $arch_version --trace $trace_file --frames $frames"
     if [ "$start_frame" -gt 0 ] 2>/dev/null; then
         sim_cmd="$sim_cmd --start $start_frame"
     fi

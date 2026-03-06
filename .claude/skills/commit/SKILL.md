@@ -28,7 +28,7 @@ You are a git commit assistant. When the user asks you to create a commit, follo
    - Include guards: `#ifndef __HEADER_NAME__` / `#define __HEADER_NAME__` (no `#pragma once`)
    - Braces on same line as function/control statement
    - Space after keywords (`if`, `for`, `while`)
-   - Prefixes: `cm`/`cmo` for funcmodel, `bm`/`bmo` for bhavmodel, `cgo` for common
+   - Prefixes: `cm`/`cmo` for perfmodel, `bm`/`bmo` for bhavmodel, `cgo` for common
    - Doxygen-style comments for classes and public methods (`//!` or `/*! */`)
 
    **If issues are found:**

@@ -6,8 +6,8 @@ set(EXTRACTOR ${CMAKE_SOURCE_DIR}/traceExtractor/traceExtractor.cpp
               #${CMAKE_SOURCE_DIR}/traceExtractor/extraceTraceRegion.h
               ${CMAKE_SOURCE_DIR}/traceExtractor/RegisterWriteBufferMeta.cpp
               ${CMAKE_SOURCE_DIR}/traceExtractor/RegisterWriteBufferMeta.h
-              ${CMAKE_SOURCE_DIR}/../../../arch/funcmodel/CommandProcessor/MetaStream.cpp
-              ${CMAKE_SOURCE_DIR}/../../../arch/funcmodel/CommandProcessor/MetaStream.h
+              ${CMAKE_SOURCE_DIR}/../../../arch/perfmodel/CommandProcessor/MetaStream.cpp
+              ${CMAKE_SOURCE_DIR}/../../../arch/perfmodel/CommandProcessor/MetaStream.h
               ${CMAKE_SOURCE_DIR}/../../../arch/common/DynamicObject.cpp
               ${CMAKE_SOURCE_DIR}/../../../arch/common/DynamicMemoryOpt.cpp
               ${CMAKE_SOURCE_DIR}/../../../arch/common/Vec4FP32.cpp
@@ -32,19 +32,19 @@ target_include_directories(MetaExtractor PUBLIC
         ${CMAKE_SOURCE_DIR}
         ${CMAKE_SOURCE_DIR}/../../../arch/common
         ${CMAKE_SOURCE_DIR}/../../../arch/bhavmodel
-        ${CMAKE_SOURCE_DIR}/../../../arch/funcmodel
-        ${CMAKE_SOURCE_DIR}/../../../arch/funcmodel/common/base
-        ${CMAKE_SOURCE_DIR}/../../../arch/funcmodel/CommandProcessor
-        ${CMAKE_SOURCE_DIR}/../../../arch/funcmodel/UnifiedShader
-        ${CMAKE_SOURCE_DIR}/../../../arch/funcmodel/StreamController
-        ${CMAKE_SOURCE_DIR}/../../../arch/funcmodel/MemoryController
-        ${CMAKE_SOURCE_DIR}/../../../arch/funcmodel/MemoryControllerV2
-        ${CMAKE_SOURCE_DIR}/../../../arch/funcmodel/Rasterizer
-        ${CMAKE_SOURCE_DIR}/../../../arch/funcmodel/CacheSystem
-        ${CMAKE_SOURCE_DIR}/../../../arch/funcmodel/FragmentOperator
-        ${CMAKE_SOURCE_DIR}/../../../arch/funcmodel/PrimitiveAssembler
-        ${CMAKE_SOURCE_DIR}/../../../arch/funcmodel/DisplayController
-        ${CMAKE_SOURCE_DIR}/../../../arch/funcmodel/Clipper
+        ${CMAKE_SOURCE_DIR}/../../../arch/perfmodel
+        ${CMAKE_SOURCE_DIR}/../../../arch/perfmodel/common/base
+        ${CMAKE_SOURCE_DIR}/../../../arch/perfmodel/CommandProcessor
+        ${CMAKE_SOURCE_DIR}/../../../arch/perfmodel/UnifiedShader
+        ${CMAKE_SOURCE_DIR}/../../../arch/perfmodel/StreamController
+        ${CMAKE_SOURCE_DIR}/../../../arch/perfmodel/MemoryController
+        ${CMAKE_SOURCE_DIR}/../../../arch/perfmodel/MemoryControllerV2
+        ${CMAKE_SOURCE_DIR}/../../../arch/perfmodel/Rasterizer
+        ${CMAKE_SOURCE_DIR}/../../../arch/perfmodel/CacheSystem
+        ${CMAKE_SOURCE_DIR}/../../../arch/perfmodel/FragmentOperator
+        ${CMAKE_SOURCE_DIR}/../../../arch/perfmodel/PrimitiveAssembler
+        ${CMAKE_SOURCE_DIR}/../../../arch/perfmodel/DisplayController
+        ${CMAKE_SOURCE_DIR}/../../../arch/perfmodel/Clipper
         ${CMAKE_SOURCE_DIR}/../../hal
         ${CMAKE_SOURCE_DIR}/../../ogl/OGL14
         ${CMAKE_SOURCE_DIR}/../../ogl/OGL14/ARBP

@@ -86,7 +86,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(CG1TOP)\arch\CG1Gpu;$(CG1TOP)\arch\funcmodel;$(CG1TOP)\arch\common;$(CG1TOP)\arch\behvmodel;$(CG1TOP)\arch\funcmodel\base;$(CG1TOP)\arch\win32patches;$(CG1TOP)\arch\funcmodel\CommandProcessor;$(CG1TOP)\arch\funcmodel\Shader;$(CG1TOP)\arch\funcmodel\Streamer;$(CG1TOP)\arch\funcmodel\MemoryController;$(CG1TOP)\arch\funcmodel\MemoryControllerV2;$(CG1TOP)\arch\funcmodel\Rasterizer;$(CG1TOP)\arch\funcmodel\Cache;$(CG1TOP)\arch\funcmodel\FragmentOperations;$(CG1TOP)\arch\funcmodel\PrimitiveAssembly;$(CG1TOP)\arch\funcmodel\DisplayController;$(CG1TOP)\arch\funcmodel\Clipper;$(CG1TOP)\driver\trace;$(CG1TOP)\driver\hal;$(CG1TOP)\driver\utils;$(CG1TOP)\driver\utils\TraceReader;$(CG1TOP)\driver\utils\Gen;$(CG1TOP)\driver\utils\GL;$(CG1TOP)\driver\ogl\OGL14;$(CG1TOP)\driver\ogl\OGL14\ARBP;$(CG1TOP)\driver\ogl\OGL14\ARBP\FragmentProgram;$(CG1TOP)\driver\ogl\OGL14\ARBP\VertexProgram;$(CG1TOP)\driver\ogl\OGL14\GLObject;$(CG1TOP)\driver\ogl\OGL14\BufferObject;$(CG1TOP)\driver\ogl\OGL14\Texture;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(CG1TOP)\arch\CG1Gpu;$(CG1TOP)\arch\perfmodel;$(CG1TOP)\arch\common;$(CG1TOP)\arch\behvmodel;$(CG1TOP)\arch\perfmodel\base;$(CG1TOP)\arch\win32patches;$(CG1TOP)\arch\perfmodel\CommandProcessor;$(CG1TOP)\arch\perfmodel\Shader;$(CG1TOP)\arch\perfmodel\Streamer;$(CG1TOP)\arch\perfmodel\MemoryController;$(CG1TOP)\arch\perfmodel\MemoryControllerV2;$(CG1TOP)\arch\perfmodel\Rasterizer;$(CG1TOP)\arch\perfmodel\Cache;$(CG1TOP)\arch\perfmodel\FragmentOperations;$(CG1TOP)\arch\perfmodel\PrimitiveAssembly;$(CG1TOP)\arch\perfmodel\DisplayController;$(CG1TOP)\arch\perfmodel\Clipper;$(CG1TOP)\driver\trace;$(CG1TOP)\driver\hal;$(CG1TOP)\driver\utils;$(CG1TOP)\driver\utils\TraceReader;$(CG1TOP)\driver\utils\Gen;$(CG1TOP)\driver\utils\GL;$(CG1TOP)\driver\ogl\OGL14;$(CG1TOP)\driver\ogl\OGL14\ARBP;$(CG1TOP)\driver\ogl\OGL14\ARBP\FragmentProgram;$(CG1TOP)\driver\ogl\OGL14\ARBP\VertexProgram;$(CG1TOP)\driver\ogl\OGL14\GLObject;$(CG1TOP)\driver\ogl\OGL14\BufferObject;$(CG1TOP)\driver\ogl\OGL14\Texture;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -96,7 +96,7 @@
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Lib>
-      <AdditionalDependencies>zlibstat.lib;CG1Common.lib;CG1BMDL.lib;CG1CMDL.lib;OGL2.lib;HAL.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>zlibstat.lib;CG1Common.lib;CG1BMDL.lib;perfmodel.lib;OGL2.lib;HAL.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(CG1SDK)\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Lib>
   </ItemDefinitionGroup>
@@ -106,7 +106,7 @@
     </Midl>
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(CG1TOP)\arch\CG1Gpu;$(CG1TOP)\arch\funcmodel;$(CG1TOP)\arch\common;$(CG1TOP)\arch\behvmodel;$(CG1TOP)\arch\funcmodel\base;$(CG1TOP)\arch\win32patches;$(CG1TOP)\arch\funcmodel\CommandProcessor;$(CG1TOP)\arch\funcmodel\Shader;$(CG1TOP)\arch\funcmodel\Streamer;$(CG1TOP)\arch\funcmodel\MemoryController;$(CG1TOP)\arch\funcmodel\MemoryControllerV2;$(CG1TOP)\arch\funcmodel\Rasterizer;$(CG1TOP)\arch\funcmodel\Cache;$(CG1TOP)\arch\funcmodel\FragmentOperations;$(CG1TOP)\arch\funcmodel\PrimitiveAssembly;$(CG1TOP)\arch\funcmodel\DisplayController;$(CG1TOP)\arch\funcmodel\Clipper;$(CG1TOP)\driver\trace;$(CG1TOP)\driver\hal;$(CG1TOP)\driver\utils;$(CG1TOP)\driver\utils\TraceReader;$(CG1TOP)\driver\utils\Gen;$(CG1TOP)\driver\utils\GL;$(CG1TOP)\driver\ogl\OGL14;$(CG1TOP)\driver\ogl\OGL14\ARBP;$(CG1TOP)\driver\ogl\OGL14\ARBP\FragmentProgram;$(CG1TOP)\driver\ogl\OGL14\ARBP\VertexProgram;$(CG1TOP)\driver\ogl\OGL14\GLObject;$(CG1TOP)\driver\ogl\OGL14\BufferObject;$(CG1TOP)\driver\ogl\OGL14\Texture;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(CG1TOP)\arch\CG1Gpu;$(CG1TOP)\arch\perfmodel;$(CG1TOP)\arch\common;$(CG1TOP)\arch\behvmodel;$(CG1TOP)\arch\perfmodel\base;$(CG1TOP)\arch\win32patches;$(CG1TOP)\arch\perfmodel\CommandProcessor;$(CG1TOP)\arch\perfmodel\Shader;$(CG1TOP)\arch\perfmodel\Streamer;$(CG1TOP)\arch\perfmodel\MemoryController;$(CG1TOP)\arch\perfmodel\MemoryControllerV2;$(CG1TOP)\arch\perfmodel\Rasterizer;$(CG1TOP)\arch\perfmodel\Cache;$(CG1TOP)\arch\perfmodel\FragmentOperations;$(CG1TOP)\arch\perfmodel\PrimitiveAssembly;$(CG1TOP)\arch\perfmodel\DisplayController;$(CG1TOP)\arch\perfmodel\Clipper;$(CG1TOP)\driver\trace;$(CG1TOP)\driver\hal;$(CG1TOP)\driver\utils;$(CG1TOP)\driver\utils\TraceReader;$(CG1TOP)\driver\utils\Gen;$(CG1TOP)\driver\utils\GL;$(CG1TOP)\driver\ogl\OGL14;$(CG1TOP)\driver\ogl\OGL14\ARBP;$(CG1TOP)\driver\ogl\OGL14\ARBP\FragmentProgram;$(CG1TOP)\driver\ogl\OGL14\ARBP\VertexProgram;$(CG1TOP)\driver\ogl\OGL14\GLObject;$(CG1TOP)\driver\ogl\OGL14\BufferObject;$(CG1TOP)\driver\ogl\OGL14\Texture;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -116,13 +116,13 @@
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Lib>
-      <AdditionalDependencies>zlibstat.lib;CG1Common.lib;CG1BMDL.lib;CG1CMDL.lib;OGL2.lib;HAL.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>zlibstat.lib;CG1Common.lib;CG1BMDL.lib;perfmodel.lib;OGL2.lib;HAL.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(CG1SDK)\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>$(CG1TOP)\arch\CG1Gpu;$(CG1TOP)\arch\funcmodel;$(CG1TOP)\arch\common;$(CG1TOP)\arch\behvmodel;$(CG1TOP)\arch\funcmodel\base;$(CG1TOP)\arch\win32patches;$(CG1TOP)\arch\funcmodel\CommandProcessor;$(CG1TOP)\arch\funcmodel\Shader;$(CG1TOP)\arch\funcmodel\Streamer;$(CG1TOP)\arch\funcmodel\MemoryController;$(CG1TOP)\arch\funcmodel\MemoryControllerV2;$(CG1TOP)\arch\funcmodel\Rasterizer;$(CG1TOP)\arch\funcmodel\Cache;$(CG1TOP)\arch\funcmodel\FragmentOperations;$(CG1TOP)\arch\funcmodel\PrimitiveAssembly;$(CG1TOP)\arch\funcmodel\DisplayController;$(CG1TOP)\arch\funcmodel\Clipper;$(CG1TOP)\driver\trace;$(CG1TOP)\driver\hal;$(CG1TOP)\driver\utils;$(CG1TOP)\driver\utils\TraceReader;$(CG1TOP)\driver\utils\Gen;$(CG1TOP)\driver\utils\GL;$(CG1TOP)\driver\ogl\OGL14;$(CG1TOP)\driver\ogl\OGL14\ARBP;$(CG1TOP)\driver\ogl\OGL14\ARBP\FragmentProgram;$(CG1TOP)\driver\ogl\OGL14\ARBP\VertexProgram;$(CG1TOP)\driver\ogl\OGL14\GLObject;$(CG1TOP)\driver\ogl\OGL14\BufferObject;$(CG1TOP)\driver\ogl\OGL14\Texture;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(CG1TOP)\arch\CG1Gpu;$(CG1TOP)\arch\perfmodel;$(CG1TOP)\arch\common;$(CG1TOP)\arch\behvmodel;$(CG1TOP)\arch\perfmodel\base;$(CG1TOP)\arch\win32patches;$(CG1TOP)\arch\perfmodel\CommandProcessor;$(CG1TOP)\arch\perfmodel\Shader;$(CG1TOP)\arch\perfmodel\Streamer;$(CG1TOP)\arch\perfmodel\MemoryController;$(CG1TOP)\arch\perfmodel\MemoryControllerV2;$(CG1TOP)\arch\perfmodel\Rasterizer;$(CG1TOP)\arch\perfmodel\Cache;$(CG1TOP)\arch\perfmodel\FragmentOperations;$(CG1TOP)\arch\perfmodel\PrimitiveAssembly;$(CG1TOP)\arch\perfmodel\DisplayController;$(CG1TOP)\arch\perfmodel\Clipper;$(CG1TOP)\driver\trace;$(CG1TOP)\driver\hal;$(CG1TOP)\driver\utils;$(CG1TOP)\driver\utils\TraceReader;$(CG1TOP)\driver\utils\Gen;$(CG1TOP)\driver\utils\GL;$(CG1TOP)\driver\ogl\OGL14;$(CG1TOP)\driver\ogl\OGL14\ARBP;$(CG1TOP)\driver\ogl\OGL14\ARBP\FragmentProgram;$(CG1TOP)\driver\ogl\OGL14\ARBP\VertexProgram;$(CG1TOP)\driver\ogl\OGL14\GLObject;$(CG1TOP)\driver\ogl\OGL14\BufferObject;$(CG1TOP)\driver\ogl\OGL14\Texture;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <PrecompiledHeader />
@@ -130,7 +130,7 @@
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Lib>
-      <AdditionalDependencies>zlibstat.lib;CG1Common.lib;CG1BMDL.lib;CG1CMDL.lib;OGL2.lib;HAL.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>zlibstat.lib;CG1Common.lib;CG1BMDL.lib;perfmodel.lib;OGL2.lib;HAL.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(CG1SDK)\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Lib>
   </ItemDefinitionGroup>
@@ -139,7 +139,7 @@
       <TargetEnvironment>X64</TargetEnvironment>
     </Midl>
     <ClCompile>
-      <AdditionalIncludeDirectories>$(CG1TOP)\arch\CG1Gpu;$(CG1TOP)\arch\funcmodel;$(CG1TOP)\arch\common;$(CG1TOP)\arch\behvmodel;$(CG1TOP)\arch\funcmodel\base;$(CG1TOP)\arch\win32patches;$(CG1TOP)\arch\funcmodel\CommandProcessor;$(CG1TOP)\arch\funcmodel\Shader;$(CG1TOP)\arch\funcmodel\Streamer;$(CG1TOP)\arch\funcmodel\MemoryController;$(CG1TOP)\arch\funcmodel\MemoryControllerV2;$(CG1TOP)\arch\funcmodel\Rasterizer;$(CG1TOP)\arch\funcmodel\Cache;$(CG1TOP)\arch\funcmodel\FragmentOperations;$(CG1TOP)\arch\funcmodel\PrimitiveAssembly;$(CG1TOP)\arch\funcmodel\DisplayController;$(CG1TOP)\arch\funcmodel\Clipper;$(CG1TOP)\driver\trace;$(CG1TOP)\driver\hal;$(CG1TOP)\driver\utils;$(CG1TOP)\driver\utils\TraceReader;$(CG1TOP)\driver\utils\Gen;$(CG1TOP)\driver\utils\GL;$(CG1TOP)\driver\ogl\OGL14;$(CG1TOP)\driver\ogl\OGL14\ARBP;$(CG1TOP)\driver\ogl\OGL14\ARBP\FragmentProgram;$(CG1TOP)\driver\ogl\OGL14\ARBP\VertexProgram;$(CG1TOP)\driver\ogl\OGL14\GLObject;$(CG1TOP)\driver\ogl\OGL14\BufferObject;$(CG1TOP)\driver\ogl\OGL14\Texture;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(CG1TOP)\arch\CG1Gpu;$(CG1TOP)\arch\perfmodel;$(CG1TOP)\arch\common;$(CG1TOP)\arch\behvmodel;$(CG1TOP)\arch\perfmodel\base;$(CG1TOP)\arch\win32patches;$(CG1TOP)\arch\perfmodel\CommandProcessor;$(CG1TOP)\arch\perfmodel\Shader;$(CG1TOP)\arch\perfmodel\Streamer;$(CG1TOP)\arch\perfmodel\MemoryController;$(CG1TOP)\arch\perfmodel\MemoryControllerV2;$(CG1TOP)\arch\perfmodel\Rasterizer;$(CG1TOP)\arch\perfmodel\Cache;$(CG1TOP)\arch\perfmodel\FragmentOperations;$(CG1TOP)\arch\perfmodel\PrimitiveAssembly;$(CG1TOP)\arch\perfmodel\DisplayController;$(CG1TOP)\arch\perfmodel\Clipper;$(CG1TOP)\driver\trace;$(CG1TOP)\driver\hal;$(CG1TOP)\driver\utils;$(CG1TOP)\driver\utils\TraceReader;$(CG1TOP)\driver\utils\Gen;$(CG1TOP)\driver\utils\GL;$(CG1TOP)\driver\ogl\OGL14;$(CG1TOP)\driver\ogl\OGL14\ARBP;$(CG1TOP)\driver\ogl\OGL14\ARBP\FragmentProgram;$(CG1TOP)\driver\ogl\OGL14\ARBP\VertexProgram;$(CG1TOP)\driver\ogl\OGL14\GLObject;$(CG1TOP)\driver\ogl\OGL14\BufferObject;$(CG1TOP)\driver\ogl\OGL14\Texture;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <PrecompiledHeader />
@@ -147,7 +147,7 @@
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Lib>
-      <AdditionalDependencies>zlibstat.lib;CG1Common.lib;CG1BMDL.lib;CG1CMDL.lib;OGL2.lib;HAL.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>zlibstat.lib;CG1Common.lib;CG1BMDL.lib;perfmodel.lib;OGL2.lib;HAL.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(CG1SDK)\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Lib>
   </ItemDefinitionGroup>
@@ -172,7 +172,7 @@
       <Project>{dc596c38-f5c4-4596-a961-0fe0d32c655b}</Project>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
-    <ProjectReference Include="$(CG1TOP)\arch\funcmodel\CG1CMDL.vcxproj">
+    <ProjectReference Include="$(CG1TOP)\arch\perfmodel\perfmodel.vcxproj">
       <Project>{4fdfd9dd-4472-424f-9aeb-088e01da6489}</Project>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>

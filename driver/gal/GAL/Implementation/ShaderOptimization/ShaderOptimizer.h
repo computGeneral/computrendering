@@ -9,7 +9,7 @@
 #include <vector>
 #include <list>
 #include "ShaderInstr.h"
-#include "cmShaderArchParam.h"
+#include "ShaderArchParam.h"
 #include "OptimizationDataStructures.h"
 
 namespace libGAL

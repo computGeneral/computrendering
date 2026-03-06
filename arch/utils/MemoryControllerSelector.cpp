@@ -3,10 +3,10 @@
  */
 
 #include "MemoryControllerSelector.h"
-#include "cmMemoryController.h"
-#include "cmMemoryControllerV2.h"
+#include "MemoryController.h"
+#include "MemoryControllerV2.h"
 #include <iostream>
-#include "cmGPUMemorySpecs.h"
+#include "GPUMemorySpecs.h"
 
 
 using namespace arch;

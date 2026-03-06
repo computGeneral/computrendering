@@ -104,11 +104,8 @@ add_subdirectory(driver/utils/ApitraceParser)
 add_subdirectory(driver/ogl/OGL2)
 # FIXME
 #add_dependencies(driver/gal/GALx driver/utils/OGLApiCodeGen)
-# D3D9 (opt-in, disabled by default)
-option(BUILD_D3D "Build D3D9 targets" OFF)
-if(MSVC AND BUILD_D3D)
+# D3D9
 add_subdirectory(driver/d3d/D3D9)
-endif()
 
 # arch
 add_subdirectory(arch)

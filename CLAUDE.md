@@ -6,6 +6,10 @@
 
 ---
 
+## Key Develop Rules
+1. use tools/script/build.bat or tools/script/build.sh to build the project
+2. use tools/script/regression/regression.ps1 or tools/script/regression/regression.sh to run test 
+
 ## Architecture Overview
 
 ```

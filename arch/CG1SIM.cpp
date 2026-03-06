@@ -21,10 +21,8 @@
 #include "TraceDriverMeta.h"
 //#include "TraceDriverOGL.h"
 #include "TraceDriverApitraceOGL.h"
-#include "ApitraceParser.h"
-#ifdef BUILD_D3D
 #include "TraceDriverApitraceD3D.h"
-#endif
+#include "ApitraceParser.h"
 
 #include <ctime>
 #include <new>
@@ -535,7 +533,6 @@ int main(int argc, char *argv[])
             detector.close();
         }
         
-#ifdef BUILD_D3D
         if (apiType == "d3d9") {
             TraceDriver = new TraceDriverApitraceD3D(ArchConf.sim.inputFile,
                                                       HAL::getHAL(),
@@ -546,9 +543,7 @@ int main(int argc, char *argv[])
             cerr << "ERROR: " << apiType << " traces are not supported yet. Only D3D9 and OpenGL traces are supported." << endl;
             exit(1);
         }
-        else
-#endif
-        if (apiType == "gl" || apiType.empty()) {
+        else if (apiType == "gl" || apiType.empty()) {
             TraceDriver = new TraceDriverApitraceOGL(ArchConf.sim.inputFile,
                                                   HAL::getHAL(),
                                                   ArchConf.sim.startFrame,

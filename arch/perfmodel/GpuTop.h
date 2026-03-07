@@ -24,7 +24,7 @@
 #include "bmFragmentOperator.h"
 #include "ColorCompressor.h"
 #include "DepthCompressor.h"
-#include "CG1BMDL.h" //TODO to be replaced by bmGpuTop.h
+#include "bhavmodel.hpp" //TODO to be replaced by bmGpuTop.h
 
 //  c model.
 //#include "ShaderFetch.h"

@@ -4,8 +4,8 @@
  *  This file contains definitions and includes for the CG1 GPU behaviorModel.
  *
  */
-#ifndef __CG1_BMDL_H__
-#define __CG1_BMDL_H__
+#ifndef __CG1_BHAVMODEL_HPP__
+#define __CG1_BHAVMODEL_HPP__
 
 //  Configuration file definitions.
 #include "ArchConfig.h"

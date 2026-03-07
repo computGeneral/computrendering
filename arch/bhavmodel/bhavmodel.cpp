@@ -4,7 +4,7 @@
  *  This file contains the implementation of functions for the CG1 GPU behaviorModel.
  *
  */
-#include "CG1BMDL.h"
+#include "bhavmodel.hpp"
 #include "Profiler.h"
 #include "ImageSaver.h"
 #include "bmClipper.h"

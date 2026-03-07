@@ -71,7 +71,7 @@ computrendering/
 │   │       └── CG1.1.json       # Architecture v1.1 params
 │   │
 │   ├── bhavmodel/               # Behavior model (fast emulation)
-│   │   ├── CG1BMDL.h/cpp       # Top-level behavior model
+│   │   ├── bhavmodel.hpp/cpp    # Top-level behavior model
 │   │   ├── bmGpuTop.h/cpp       # GPU top-level behavior model
 │   │   ├── UnifiedShader/       # Shader ISA execution
 │   │   ├── Rasterizer/          # Triangle setup, fragment generation
@@ -603,7 +603,7 @@ value = 0x00         // null
 
 | File | Purpose |
 |------|---------|
-| `arch/bhavmodel/CG1BMDL.h` | Behavior model top-level |
+| `arch/bhavmodel/bhavmodel.hpp` | Behavior model top-level |
 | `arch/perfmodel/perfmodel.h` | Functional model top-level |
 | `arch/perfmodel/common/base/MduBase.h` | Perfmodel module base class |
 | `arch/perfmodel/common/base/GPUSignal.h` | Signal class for inter-module comm |

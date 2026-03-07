@@ -12,7 +12,7 @@
 #include "GPUType.h"
 
 //  Configuration file definitions.
-#include "ArchConfig.h"
+#include "archParams.h"
 
 //  cgoTraceDriverBase definition.
 #include "TraceDriverBase.h"
@@ -28,7 +28,7 @@
 #include "PixelMapper.h"
 #include "ValidationInfo.h"
 
-//#include "CG1MDLBASE.h"
+//#include "ModelBase.h"
 
 #include <vector>
 #include <map>
@@ -53,7 +53,7 @@ namespace arch
  *  The class defines structures and attributes to implement a GPU behaviorModel.
  */
 
-class bmoGpuTop //: public CG1MDLBASE
+class bmoGpuTop //: public ModelBase
 {
 private:
     /**
@@ -272,7 +272,7 @@ public:
      *  Implements a fire and forget emulation main loop.
      */
 //    void simulationLoop();
-//    // dummy function to share the CG1MDLBASE class
+//    // dummy function to share the ModelBase class
 //    virtual void simulationLoopMultiClock() {};
 //    virtual void debugLoop(bool validate) {};
 //    void createSnapshot() {};

@@ -9,7 +9,7 @@
 #define __CG1_PERFMODEL_H__
 #include "modelbase.h"
 
-#include "ArchConfig.h"
+#include "archParams.h"
 #include "param_loader.hpp"
 #include "TraceDriverBase.h"
 #include "GPUReg.h"
@@ -34,7 +34,7 @@ namespace arch
  *
  */
 
-class perfmodel : public CG1TIMEMDLBASE
+class PerfModel : public ModelBaseTiming
 {
 private:
     cgsArchConfig ArchConf;            //  Structure storing the simulator configuration parameters.  */
@@ -72,7 +72,7 @@ private:
     gzofstream sigTraceFile;   //  Compressed stream output file for signal dump trace.  */
 
 
-    static perfmodel* current;      //  Stores the pointer to the currently executing GPU simulator instance.  */
+    static PerfModel* current;      //  Stores the pointer to the currently executing GPU simulator instance.  */
     
     bool pendingSaveSnapshot;  //  Flag that stores if there is pending snapshot in process. */
     bool autoSnapshotEnable;   //  Flag that stores if auto snapshot is enabled.  */
@@ -82,7 +82,7 @@ private:
     //  Debug/Validation.
     bool validationMode;       //  Stores if the validation mode is enabled.  */
     bool skipValidation;       //  Used to skip validation when loading a snapshot.  */
-    CG1BMDL *GpuBehavMdl;  //  Pointer to the associated GPU behaviorModel for validation purposes.  */
+    BhavModel *GpuBehavMdl;  //  Pointer to the associated GPU behaviorModel for validation purposes.  */
     
     /**
      *  Saves the simulator state to the 'state.snapshot' file.
@@ -100,7 +100,7 @@ public:
 
     /**
      *
-     *  perfmodel constructor.
+     *  PerfModel constructor.
      *  Creates and initializes the objects and state required to simulate a GPU.
      *
      *  The emulation objects and and simulation modules are created.
@@ -115,12 +115,12 @@ public:
      *  @param MetaTrace Boolean value that defines if the input trace is an MetaStream trace.
      *
      */
-    perfmodel(cgsArchConfig ArchConf, cgoTraceDriverBase *TraceDriver);
+    PerfModel(cgsArchConfig ArchConf, cgoTraceDriverBase *TraceDriver);
 
     /**
-     *  perfmodel destructor.
+     *  PerfModel destructor.
      */
-    ~perfmodel();
+    ~PerfModel();
     
     /**
      *  Fire-and-forget simulation loop for a single clock domain architecture.
@@ -380,7 +380,7 @@ public:
      *  @return A 32-bit RGBA color.
      */
     U32 applyColorKey(U32 p);
-};  // class perfmodel
+};  // class PerfModel
 
 };  //  namespace arch
 

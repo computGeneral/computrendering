@@ -1,5 +1,5 @@
 #include "param_loader.hpp"
-#include "ArchConfig.h"   // for cgsArchConfig and nested structs
+#include "archParams.h"   // for cgsArchConfig and nested structs
 #include <filesystem>
 #include <cstring>
 #include <iostream>

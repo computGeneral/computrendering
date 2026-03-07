@@ -16,7 +16,7 @@ include_directories(
 #    ${ZLIB_INCLUDE_DIRS}
 )
 
-#set(CG1GPUSIM_REQUIRED_LIBRARIES
+#set(COMPUTRENDER_REQUIRED_LIBRARIES
 #    ${ZLIB_LIBRARY}
 #    ${SYSTEMC_LIBRARY}
 #    )
@@ -55,11 +55,11 @@ if(MSVC)
                        COMMAND 
                        ${CMAKE_BINARY_DIR}/driver/utils/OGLApiCodeGen/Debug/OGLApiCodeGen.exe 
                        ${CMAKE_CURRENT_SOURCE_DIR}/OGLApiCodeGen.cfg
-                       COMMENT "Generate OGL API related code for CG1GPUSIM project")
+                       COMMENT "Generate OGL API related code for computrender project")
 else()
     add_custom_command(TARGET OGLApiCodeGen POST_BUILD
                        COMMAND 
                        OGLApiCodeGen
                        ${CMAKE_CURRENT_SOURCE_DIR}/OGLApiCodeGen.cfg
-                       COMMENT "Generate OGL API related code for CG1GPUSIM project")
+                       COMMENT "Generate OGL API related code for computrender project")
 endif()

@@ -1,4 +1,4 @@
-project(CG1SIM)
+project(computrender)
 # we require a number of libraries and defines for this project and all subprojects
 # set these things up before adding subdirectories
 
@@ -26,15 +26,15 @@ endif()
 
 
 add_subdirectory(common)
-#target_link_libraries(CG1Common PUBLIC ${3RDPARTYLIB})
+#target_link_libraries(archcommon PUBLIC ${3RDPARTYLIB})
 add_subdirectory(bhavmodel)
-target_link_libraries(CG1BMDL PUBLIC zlibstatic CG1Common)
+target_link_libraries(BhavModel PUBLIC zlibstatic archcommon)
 add_subdirectory(perfmodel)
-target_link_libraries(perfmodel PUBLIC zlibstatic HAL CG1Common)
+target_link_libraries(perfmodel PUBLIC zlibstatic HAL archcommon)
 
 
 set(OGLSRC 
-              ${CMAKE_SOURCE_DIR}/arch/common/ArchConfig.h
+              ${CMAKE_SOURCE_DIR}/arch/common/params/archParams.h
               ${CMAKE_SOURCE_DIR}/arch/utils/CommandLineReader.cpp
               ${CMAKE_SOURCE_DIR}/arch/utils/CommandLineReader.h
 
@@ -106,23 +106,23 @@ set( MAINSRC
 source_group(external   FILES ${EXTSRC})
 source_group(main       FILES ${MAINSRC})
 
-add_executable(CG1SIM  ${MAINSRC}
+add_executable(computrender  ${MAINSRC}
                        ${EXTSRC}
                        )
 
 # Enable large address space for 32-bit builds (up to 4GB with /3GB boot)
 if(MSVC AND NOT MSVC_64BIT)
-    set_target_properties(CG1SIM PROPERTIES LINK_FLAGS "/LARGEADDRESSAWARE")
+    set_target_properties(computrender PROPERTIES LINK_FLAGS "/LARGEADDRESSAWARE")
 endif()
 
 # following is a demo argument line for the debugger
-set_target_properties(CG1SIM PROPERTIES VS_DEBUGGER_COMMAND_ARGUMENTS 
-                                        "--param ../../../arch/common/params/CG1GPU.csv --arch CG1GPU.ini
+set_target_properties(computrender PROPERTIES VS_DEBUGGER_COMMAND_ARGUMENTS 
+                                        "--param ../../../arch/common/params/archParams.csv --arch CG1GPU.ini
                                          --trace ${CMAKE_SOURCE_DIR}/tests/ogl/trace/simplefog/tracefile.ogl.txt.gz"
                                         VS_DEBUGGER_WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/_BUILD_/arch/Debug
                     )
 
-target_include_directories(CG1SIM PUBLIC
+target_include_directories(computrender PUBLIC
                           ${CMAKE_SOURCE_DIR}/arch/common/params
                           ${CMAKE_SOURCE_DIR}/arch/perfmodel
                           ${CMAKE_SOURCE_DIR}/arch/utils
@@ -131,12 +131,12 @@ target_include_directories(CG1SIM PUBLIC
                           ${EXTINC}
                           )
 
-target_link_libraries(CG1SIM PUBLIC
+target_link_libraries(computrender PUBLIC
                       ApitraceParser
                       snappy
                       
-                      CG1Common
-                      CG1BMDL
+                      archcommon
+                      BhavModel
                       perfmodel
                       ${DRVLIB}
                      )
@@ -144,7 +144,7 @@ target_link_libraries(CG1SIM PUBLIC
 if(CG_ARCH_MODEL_DEVEL)
     add_definitions(-DCG_ARCH_MODEL_DEVEL=1)
     add_subdirectory(archmodel)
-    target_link_libraries(CG1SIM PUBLIC CG1AMDL)
+    target_link_libraries(computrender PUBLIC CG1AMDL)
     target_link_libraries(CG1AMDL PUBLIC systemc)
-    target_include_directories(CG1SIM PUBLIC ${CMAKE_SOURCE_DIR}/arch/archmodel)
+    target_include_directories(computrender PUBLIC ${CMAKE_SOURCE_DIR}/arch/archmodel)
 endif()

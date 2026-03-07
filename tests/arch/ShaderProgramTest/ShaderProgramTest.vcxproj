@@ -116,7 +116,7 @@
       <Project>{bc559856-085a-4495-95be-04ea27b162db}</Project>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
-    <ProjectReference Include="$(CG1TOP)\arch\behvmodel\CG1BMDL.vcxproj">
+    <ProjectReference Include="$(CG1TOP)\arch\behvmodel\BhavModel.vcxproj">
       <Project>{d6ed08ba-9650-4513-a4f4-e81d2e24c9a8}</Project>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
@@ -124,7 +124,7 @@
       <Project>{4fdfd9dd-4472-424f-9aeb-088e01da6489}</Project>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
-    <ProjectReference Include="$(CG1TOP)\arch\common\CG1Common.vcxproj">
+    <ProjectReference Include="$(CG1TOP)\arch\common\archcommon.vcxproj">
       <Project>{969b33ca-c16c-4a1d-a164-97911bf64839}</Project>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>

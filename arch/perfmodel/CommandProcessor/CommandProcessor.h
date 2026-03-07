@@ -18,7 +18,7 @@
 #include "Streamer.h"
 #include "TraceDriverBase.h"
 #include "RasterizerStateInfo.h"
-#include "ArchConfig.h"
+#include "archParams.h"
 
 namespace arch
 {

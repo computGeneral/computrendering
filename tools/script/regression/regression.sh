@@ -2,7 +2,7 @@
 #
 # CG1 GPU Simulator — Regression Test Script
 #
-# Parses tools/script/regression/regression_list and runs CG1SIM (perfmodel)
+# Parses tools/script/regression/regression_list and runs computrender (perfmodel)
 # for each OGL test trace. Compares output PPMs against reference/ using
 # icmp_diff (PSNR tolerance) and execution cycles via helper scripts.
 # Results are written to tools/script/regression/regression.out.
@@ -16,8 +16,8 @@ SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 PROJECT_ROOT="$(cd "$SCRIPT_DIR/../../.." && pwd)"
 cd "$PROJECT_ROOT"
 
-SIMULATOR="$PROJECT_ROOT/_BUILD_/arch/CG1SIM"
-PARAM_CSV="$PROJECT_ROOT/arch/common/params/CG1GPU.csv"
+SIMULATOR="$PROJECT_ROOT/_BUILD_/arch/computrender"
+PARAM_CSV="$PROJECT_ROOT/arch/common/params/archParams.csv"
 TRACE_BASE="$PROJECT_ROOT/tests"
 REG_DIR="$SCRIPT_DIR"
 REG_LIST="$REG_DIR/regression_list"

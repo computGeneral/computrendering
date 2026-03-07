@@ -1,6 +1,6 @@
 # driver/utils — Driver Utilities
 
-Shared utilities and infrastructure used by the CG1 driver layer. Provides trace parsing, API code generation, memory management, logging, and OpenGL/D3D header support.
+Shared utilities and infrastructure used by the computrender driver layer. Provides trace parsing, API code generation, memory management, logging, and OpenGL/D3D header support.
 
 ## Directory Structure
 
@@ -41,20 +41,20 @@ Provides the abstract base class `cgoTraceDriverBase` and concrete implementatio
 | `TraceDriverApitraceD3D.h/cpp` | Drives simulation from **apitrace** `.trace` files containing D3D9 calls. Routes calls through `ApitraceCallDispatcherD3D` into the D3D9 GAL layer. |
 | `TraceDriverMeta.h/cpp` | Drives simulation from pre-translated **MetaStream** trace files (`.tracefile.gz`). Bypasses the API driver entirely — reads binary GPU command streams directly. Handles frame skipping, register caching, and shader program preloading. |
 
-**Used by:** `arch/computrender.cpp` (main entry), `arch/perfmodel/CG1CMDL`, `arch/bhavmodel/CG1BMDL`, `cmCommandProcessor`, `cmUnifiedShader`.
+**Used by:** `arch/computrender.cpp` (main entry), `arch/perfmodel/PerfModel`, `arch/bhavmodel/BhavModel`, `cmCommandProcessor`, `cmUnifiedShader`.
 
 ---
 
 ### ApitraceParser/ — Apitrace Binary Format Parser
-**Status: ACTIVELY USED** — Built as the `ApitraceParser` CMake library, linked into `CG1SIM`.
+**Status: ACTIVELY USED** — Built as the `ApitraceParser` CMake library, linked into `computrender`.
 
-Parses the apitrace binary trace format (`.trace` files) with Snappy decompression, and dispatches parsed calls into the CG1 driver layers.
+Parses the apitrace binary trace format (`.trace` files) with Snappy decompression, and dispatches parsed calls into the computrender driver layers.
 
 | File | Description |
 |------|-------------|
 | `ApitraceParser.h/cpp` | Core parser. Reads apitrace binary format: signatures (call/enum/bitmask/struct), events (enter/leave), and typed `Value` objects (int, float, blob, array, struct, opaque pointers). Uses Snappy decompression. |
-| `ApitraceCallDispatcherOGL.h/cpp` | Dispatches `CallEvent` objects to CG1 **OpenGL** entry points (`OGL_gl*`). Includes type-safe helpers (`asUInt`, `asFloat`, `asVoidPtr`, etc.) for extracting GL types from apitrace `Value` objects. |
-| `ApitraceCallDispatcherD3D.h/cpp` | Dispatches `CallEvent` objects to CG1 **D3D9** interface methods (`AIDeviceImp9`). Includes `D3D9ObjectTracker` for mapping apitrace opaque pointers to live COM objects, and `D3D9DispatcherState` for maintaining session state. |
+| `ApitraceCallDispatcherOGL.h/cpp` | Dispatches `CallEvent` objects to computrender **OpenGL** entry points (`OGL_gl*`). Includes type-safe helpers (`asUInt`, `asFloat`, `asVoidPtr`, etc.) for extracting GL types from apitrace `Value` objects. |
+| `ApitraceCallDispatcherD3D.h/cpp` | Dispatches `CallEvent` objects to computrender **D3D9** interface methods (`AIDeviceImp9`). Includes `D3D9ObjectTracker` for mapping apitrace opaque pointers to live COM objects, and `D3D9DispatcherState` for maintaining session state. |
 | `ApitraceToGLI.h` | Utility to convert apitrace `CallEvent` to GLI text format strings (for compatibility with legacy `TraceDriverOGL`/`GLExec` infrastructure). |
 
 **Dependencies:** Snappy (thirdparty), GLResolver, GL headers.
@@ -62,7 +62,7 @@ Parses the apitrace binary trace format (`.trace` files) with Snappy decompressi
 ---
 
 ### MetaTraceGenerator/ — MetaStream Trace Format & Tools
-**Status: ACTIVELY USED** — Headers and sources compiled into `CG1SIM` and `CG1CMDL`.
+**Status: ACTIVELY USED** — Headers and sources compiled into `computrender` and `PerfModel`.
 
 Defines the binary MetaStream trace file format and provides tools for generating/extracting MetaStream traces.
 
@@ -132,7 +132,7 @@ Library for parsing OpenGL C function declarations from header files. Extracts f
 | `ParamDescription.h/cpp` | Represents a single function parameter. |
 | `ConstExtractor.h/cpp` | Extracts `#define` constants from GL headers. |
 | `ConstDescription.h/cpp` | Represents a parsed constant definition. |
-| `SpecificExtractor.h/cpp` | Extracts CG1-specific annotations. |
+| `SpecificExtractor.h/cpp` | Extracts computrender-specific annotations. |
 | `StringToFuncDescription.h/cpp` | Converts string representations to `FuncDescription` objects. |
 | `StringTokenizer.h/cpp` | General-purpose string tokenizer utility. |
 | `NameModifiers.h/cpp` | Name transformation utilities. |
@@ -142,7 +142,7 @@ Library for parsing OpenGL C function declarations from header files. Extracts f
 ---
 
 ### log/ — Logging Facility
-**Status: ACTIVELY USED** — Compiled into `CG1SIM`.
+**Status: ACTIVELY USED** — Compiled into `computrender`.
 
 | File | Description |
 |------|-------------|
@@ -156,34 +156,34 @@ Library for parsing OpenGL C function declarations from header files. Extracts f
 ### Root-Level Files
 
 #### BufferDescriptor.h/cpp
-**Status: ACTIVELY USED** — Compiled into `CG1SIM`.
+**Status: ACTIVELY USED** — Compiled into `computrender`.
 
 Manages GPU memory buffer descriptors. Each `BufferDescriptor` represents a contiguous region of GPU-addressable memory with an ID, start address, size, and optional deferred allocation. Supports data comparison (via checksum) and dump/show debugging. Works with `BufferManager` (factory/registry) and `MemoryRegion`.
 
 #### MemoryRegion.h/cpp
-**Status: ACTIVELY USED** — Compiled into `CG1SIM`.
+**Status: ACTIVELY USED** — Compiled into `computrender`.
 
 Manages raw memory regions for the simulated GPU memory system. `MemoryRegion` provides resizable, cluster-allocated storage via `DArray`. `MemoryManager` handles creation, serialization (store/restore to file), and lifecycle management of regions. Supports two modes: `MM_NORMAL` (in-memory) and `MM_VIRTUAL` (file-backed for large traces).
 
 #### DArray.h/cpp
-**Status: ACTIVELY USED** — Compiled into `CG1SIM`.
+**Status: ACTIVELY USED** — Compiled into `computrender`.
 
 Custom cluster-based dynamic array allocator using pre-allocated memory pools. Designed for high-frequency allocation scenarios (trace replay, buffer management). Provides `init()` for pool setup, and supports both object-level and data-level arena allocation with a bitmap allocator.
 
 #### GLJumpTable.h/cpp
-**Status: ACTIVELY USED** — Compiled into `CG1SIM`.
+**Status: ACTIVELY USED** — Compiled into `computrender`.
 
 Defines `GLJumpTable` struct containing function pointers for all supported OpenGL calls (fields from generated `GLJumpTableFields.gen`). Provides `loadGLJumpTable()` to populate the table from a DLL at runtime.
 
 #### GLResolver.h/cpp
-**Status: ACTIVELY USED** — Compiled into `CG1SIM`.
+**Status: ACTIVELY USED** — Compiled into `computrender`.
 
 Maps OpenGL function **names** to `APICall` enum IDs and vice versa. Also maps OpenGL constant names to integer values. Used by the trace replay system to identify which API function is being called. Supports wildcard pattern matching on function names.
 
 **Used by:** OGL14 driver (`BaseObject.cpp`, `GLContext.cpp`), `ApitraceCallDispatcherOGL`.
 
 #### zfstream.h/cpp + zlib.h + zconf.h
-**Status: ACTIVELY USED** — Compiled into `CG1CMDL`.
+**Status: ACTIVELY USED** — Compiled into `PerfModel`.
 
 C++ iostream-compatible wrapper around zlib for reading/writing gzip-compressed files. Provides `gzifstream` (input) and `gzofstream` (output) classes. Critical for reading compressed trace files (`.txt.gz`, `.tracefile.gz`).
 
@@ -238,7 +238,7 @@ Contains a single `GALTest.vcxproj` (legacy Visual Studio project) referencing `
     TraceDriverBase ←── TraceDriverMeta
          │                    │
          ▼                    ▼
-      CG1SIM            MetaTraceGenerator/
+      computrender            MetaTraceGenerator/
                               │
                          MetaStreamTrace.h
                               │
@@ -268,7 +268,7 @@ Components are integrated into the main build via two mechanisms:
    - `TraceDriverMeta.cpp`, `RegisterWriteBufferMeta.cpp` (in `arch/perfmodel/CMakeLists.txt`)
 
 2. **CMake library targets**:
-   - `ApitraceParser` — built from `ApitraceParser/CMakeLists.txt`, linked into `CG1SIM`
+   - `ApitraceParser` — built from `ApitraceParser/CMakeLists.txt`, linked into `computrender`
    - `OGLApiCodeGen` — build tool executable
 
 3. **Standalone projects** (not part of main build):

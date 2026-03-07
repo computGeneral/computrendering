@@ -14,11 +14,11 @@
 namespace arch
 {
 
-    class CG1MDLBASE
+    class ModelBase
     {
     public:
-        CG1MDLBASE() {};
-        virtual ~CG1MDLBASE() {};
+        ModelBase() {};
+        virtual ~ModelBase() {};
         /**
          *  Fire-and-forget simulation loop for a single clock domain architecture.
          */
@@ -54,7 +54,7 @@ namespace arch
 
     };
 
-    class CG1TIMEMDLBASE : public CG1MDLBASE
+    class ModelBaseTiming : public ModelBase
     {
     private:
         /**
@@ -73,7 +73,7 @@ namespace arch
     
         /**
          *
-         *  CG1MDLBASE constructor.
+         *  ModelBase constructor.
          *  Creates and initializes the objects and state required to simulate a GPU.
          *
          *  The emulation objects and and simulation modules are created.
@@ -88,13 +88,13 @@ namespace arch
          *  @param MetaTrace Boolean value that defines if the input trace is an MetaStream trace.
          *
          */
-        //CG1MDLBASE(cgsArchConfig arch, cgoTraceDriverBase *TraceDriver);
-        CG1TIMEMDLBASE() {};
+        //ModelBase(cgsArchConfig arch, cgoTraceDriverBase *TraceDriver);
+        ModelBaseTiming() {};
     
         /**
-         *  CG1MDLBASE destructor.
+         *  ModelBase destructor.
          */
-        ~CG1TIMEMDLBASE() {};
+        ~ModelBaseTiming() {};
         
     
         /**
@@ -326,7 +326,7 @@ namespace arch
          *  @return A 32-bit RGBA color.
          */
         virtual U32 applyColorKey(U32 p) = 0;
-    };  // class CG1MDLBASE
+    };  // class ModelBase
 
 };  //  namespace arch
 

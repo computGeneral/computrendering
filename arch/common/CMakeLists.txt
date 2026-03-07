@@ -1,8 +1,8 @@
-add_library(CG1Common)
+add_library(archcommon)
 
-set_target_properties(CG1Common PROPERTIES FOLDER arch)
+set_target_properties(archcommon PROPERTIES FOLDER arch)
 
-target_sources( CG1Common
+target_sources( archcommon
 PUBLIC
     BitStream.cpp
     BitStream.h
@@ -35,14 +35,14 @@ PUBLIC
     params/param_loader.hpp
 )
 
-target_include_directories(CG1Common PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}
+target_include_directories(archcommon PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}
                                             ${CMAKE_CURRENT_SOURCE_DIR}/params
                                             ${CMAKE_SOURCE_DIR}/arch/utils)
 
 if(NOT WIN32)
     find_package(PNG)
     if(PNG_FOUND)
-        target_include_directories(CG1Common PRIVATE ${PNG_INCLUDE_DIRS})
-        target_link_libraries(CG1Common PUBLIC ${PNG_LIBRARIES})
+        target_include_directories(archcommon PRIVATE ${PNG_INCLUDE_DIRS})
+        target_link_libraries(archcommon PUBLIC ${PNG_LIBRARIES})
     endif()
 endif()

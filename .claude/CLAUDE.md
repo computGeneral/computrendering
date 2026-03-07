@@ -1,7 +1,7 @@
-# CLAUDE.md — CG1 GPU Simulator Developer Guide
+# CLAUDE.md — computrender GPU Simulator Developer Guide
 
 > This file supplements `README.md` with architecture internals, coding conventions,
-> and development how-tos for AI coding agents and developers working on CG1.
+> and development how-tos for AI coding agents and developers working on computrender.
 > For build instructions, running, testing, and trace driver details see `README.md`.
 
 ---
@@ -33,8 +33,8 @@
 ┌────────────────────────────────────────────────▼────────────┐
 │                    Simulator Core                            │
 │  ┌──────────────────────────────────────────────────────┐   │
-│  │ bhavmodel (CG1BMDL) — Fast behavior-level emulation  │   │
-│  │ perfmodel (CG1CMDL) — Cycle-accurate simulation      │   │
+│  │ bhavmodel (BhavModel) — Fast behavior-level emulation  │   │
+│  │ perfmodel (PerfModel) — Cycle-accurate simulation      │   │
 │  │ archmodel           — SystemC-based (experimental)    │   │
 │  └──────────────────────────────────────────────────────┘   │
 │                                                              │
@@ -52,8 +52,8 @@
 
 | Layer | Class | Purpose | Speed |
 |-------|-------|---------|-------|
-| **bhavmodel** | `CG1BMDL` / `bmoGpuTop` | Behavior-level functional emulation, no cycle timing | Fast |
-| **perfmodel** | `CG1CMDL` / `cmoGpuTop` | Cycle-accurate simulation with Signal-based inter-module communication | Slow (accurate) |
+| **bhavmodel** | `BhavModel` / `bmoGpuTop` | Behavior-level functional emulation, no cycle timing | Fast |
+| **perfmodel** | `PerfModel` / `cmoGpuTop` | Cycle-accurate simulation with Signal-based inter-module communication | Slow (accurate) |
 | **archmodel** | (experimental) | SystemC-based cycle-accurate model | N/A |
 
 ---
@@ -226,7 +226,7 @@ void MyClass::myMethod(S32 value) {
 2. **Locate:** Find the relevant MDU in `arch/perfmodel` or `arch/bhavmodel`
 3. **Modify:** Apply changes following the coding style above
 4. **Verify:**
-    - Build: `cmake --build _BUILD_ --config Debug --target CG1SIM`
-    - Run the standard trace: `./CG1SIM --trace tests/ogl/trace/glxgears/glxgears.trace --frames 1`
+    - Build: `cmake --build _BUILD_ --config Debug --target computrender`
+    - Run the standard trace: `./computrender --trace tests/ogl/trace/glxgears/glxgears.trace --frames 1`
     - Run regression: `bash tools/script/regression/regression.sh` (or `.ps1` on Windows)
     - If modifying a specific unit (e.g., Math), run the relevant unit test in `tests/arch/`

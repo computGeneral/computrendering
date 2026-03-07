@@ -16,18 +16,18 @@ using namespace std;
 namespace arch
 {
 
-CG1BMDL::CG1BMDL(cgsArchConfig ArchConf, cgoTraceDriverBase *TraceDriver) :
+BhavModel::BhavModel(cgsArchConfig ArchConf, cgoTraceDriverBase *TraceDriver) :
     GpuBMdl(ArchConf, TraceDriver),
     ArchConf(ArchConf), 
     TraceDriver(TraceDriver),
     AbortSim(false)
 {
-    // Note: ArchParams singleton is already initialized in CG1SIM.cpp main().
+    // Note: ArchParams singleton is already initialized in computrender.cpp main().
     // Sub-modules (bmoGpuTop etc.) still receive cgsArchConfig for backward compat.
     // New code should prefer ArchParams::get<T>("MODULE_PARAM") over ArchConf.xxx.yyy.
 }
 
-void CG1BMDL::simulationLoop(cgeModelAbstractLevel MAL)
+void BhavModel::simulationLoop(cgeModelAbstractLevel MAL)
 {
     TRACING_ENTER_REGION("simulationLoop", "", "")
     traceEnd = false;
@@ -55,13 +55,13 @@ void CG1BMDL::simulationLoop(cgeModelAbstractLevel MAL)
     TRACING_EXIT_REGION()
 }
 
-void CG1BMDL::abortSimulation()
+void BhavModel::abortSimulation()
 {
     AbortSim = true;
 }
 
 //  Save a snapshot of the current behaviorModel state.
-void CG1BMDL::saveSnapshot()
+void BhavModel::saveSnapshot()
 {
     ofstream out;
 
@@ -93,7 +93,7 @@ void CG1BMDL::saveSnapshot()
 }
 
 //  Load an behaviorModel state snapshot.
-void CG1BMDL::loadSnapshot()
+void BhavModel::loadSnapshot()
 {
     ifstream input;
 

@@ -108,11 +108,11 @@ U32  gpuClockPeriod;      //  Period of the GPU clock in picoseconds (ps).
 U32  shaderClockPeriod;   //  Period of the shader clock in picoseconds (ps):
 U32  memoryClockPeriod;   //  Period of the memory clock in picoseconds (ps):
 
-CG1MDLBASE* CG1GPUSIM = nullptr;
+ModelBase* GpuModel = nullptr;
 
 //  Static wrapper for panicCallback to invoke createSnapshot through virtual dispatch.
 static void panicSnapshotWrapper() {
-    if (CG1GPUSIM) CG1GPUSIM->createSnapshot();
+    if (GpuModel) GpuModel->createSnapshot();
 }
 
 // from emulation
@@ -122,7 +122,7 @@ static void panicSnapshotWrapper() {
 //     if (s == CTRL_C_EVENT)
 //     {
 //         CG_INFO("SignalHandler => CTRL+C received.");
-//         CG1GPUSIM->abortSimulation();
+//         GpuModel->abortSimulation();
 //         
 //     }
 //     return 1;
@@ -135,7 +135,7 @@ static void panicSnapshotWrapper() {
 //     if (s == SIGINT)
 //     {
 //         CG_INFO("SignalHandler => CTRL+C received.");
-//         CG1GPUSIM->abortSimulation();
+//         GpuModel->abortSimulation();
 //     }
 // }
 // 
@@ -144,7 +144,7 @@ static void panicSnapshotWrapper() {
 //  Signal handler for abort signal in debug mode
 void arch::abortSignalHandler(int s)
 {
-    CG1GPUSIM->abortSimulation();
+    GpuModel->abortSimulation();
     signal(SIGINT, &abortSignalHandler);        
 }
 
@@ -196,13 +196,13 @@ void arch::segFaultSignalHandler(int s)
             U32 frameBatch = 0;
             U32 batchCounter = 0;
             
-            CG1GPUSIM->getCounters(frameCounter, frameBatch, batchCounter);
+            GpuModel->getCounters(frameCounter, frameBatch, batchCounter);
             
             U64 gpuCycle = 0;
             U64 shaderCycle = 0;
             U64 memCycle = 0;
             
-            CG1GPUSIM->getCycles(gpuCycle, shaderCycle, memCycle);
+            GpuModel->getCycles(gpuCycle, shaderCycle, memCycle);
             
             fprintf(stderr, " Frame = %u Batch = %u Total Batches = %u\n", frameCounter, frameBatch, batchCounter);
             if (multiClock)
@@ -216,7 +216,7 @@ void arch::segFaultSignalHandler(int s)
             else
                 fprintf(stderr, " Cycle = %llu\n", (unsigned long long)gpuCycle);
             
-            CG1GPUSIM->createSnapshot();
+            GpuModel->createSnapshot();
                                     
             fprintf(stderr, "***!        END OF REPORT        !***\n");
             fflush(stderr);
@@ -311,13 +311,13 @@ int main(int argc, char *argv[])
     int    argPos = 0;
     int    argCount = 0;
     char **argList = new char*[argc];
-    const char *paramFile = nullptr;             // path to CG1GPU.csv (optional)
+    const char *paramFile = nullptr;             // path to archParams.csv (optional)
     const char *archName = "1.0";                // ARCH_VERSION column to use
 
     // First pass: extract --arch (ARCH_VERSION column) and --param (CSV path) options.
     while (argIndex < argc) {
         if (strcmp(argv[argIndex], "--arch") == 0) {
-            // --arch selects which ARCH_VERSION column of CG1GPU.csv to use.
+            // --arch selects which ARCH_VERSION column of archParams.csv to use.
             if (++argIndex < argc)
                 archName = argv[argIndex];
         }
@@ -331,18 +331,18 @@ int main(int argc, char *argv[])
     }
 
     // Load parameters from CSV via ArchParams singleton.
-    // Default: search CG1GPU.csv in cwd, then fall back to relative path from build dir.
+    // Default: search archParams.csv in cwd, then fall back to relative path from build dir.
     if (!paramFile) {
-        if (access("CG1GPU.csv", F_OK) == 0)
-            paramFile = "CG1GPU.csv";
-        else if (access("../../../arch/common/params/CG1GPU.csv", F_OK) == 0)
-            paramFile = "../../../arch/common/params/CG1GPU.csv";
-        else if (access("../../arch/common/params/CG1GPU.csv", F_OK) == 0)
-            paramFile = "../../arch/common/params/CG1GPU.csv";
-        else if (access("arch/common/params/CG1GPU.csv", F_OK) == 0)
-            paramFile = "arch/common/params/CG1GPU.csv";
+        if (access("archParams.csv", F_OK) == 0)
+            paramFile = "archParams.csv";
+        else if (access("../../../arch/common/params/archParams.csv", F_OK) == 0)
+            paramFile = "../../../arch/common/params/archParams.csv";
+        else if (access("../../arch/common/params/archParams.csv", F_OK) == 0)
+            paramFile = "../../arch/common/params/archParams.csv";
+        else if (access("arch/common/params/archParams.csv", F_OK) == 0)
+            paramFile = "arch/common/params/archParams.csv";
         else {
-            cerr << "ERROR: CG1GPU.csv not found. Use --param <path> to specify." << endl;
+            cerr << "ERROR: archParams.csv not found. Use --param <path> to specify." << endl;
             exit(1);
         }
     }
@@ -576,11 +576,11 @@ int main(int argc, char *argv[])
     switch(MAL)
     {
         case CG_BEHV_MODEL: 
-            CG1GPUSIM = new CG1BMDL(ArchConf, TraceDriver);
+            GpuModel = new BhavModel(ArchConf, TraceDriver);
             CG_INFO("CG1 MAL5 BMDL Enabled for Simulation");
             break;
         case CG_PERF_MODEL: 
-            CG1GPUSIM = new perfmodel(ArchConf, TraceDriver); 
+            GpuModel = new PerfModel(ArchConf, TraceDriver); 
             panicCallback = &panicSnapshotWrapper;    //  Define the call back for the panic function to save a snapshot on simulator errors.
             CG_INFO("CG1 MAL3 perfmodel Enabled for Simulation");
             break;
@@ -591,7 +591,7 @@ int main(int argc, char *argv[])
             sc_core::sc_report_handler::set_actions(SC_WARNING, SC_LOG);
             //sc_report_handler::set_actions(SC_ID_INSTANCE_EXISTS_, SC_DO_NOTHING);
             sc_core::sc_report_handler::set_actions(SC_ID_INSTANCE_EXISTS_, SC_WARNING, SC_DO_NOTHING);
-            CG1GPUSIM = new CG1AMDL(ArchConf, TraceDriver);
+            GpuModel = new CG1AMDL(ArchConf, TraceDriver);
             panicCallback = &panicSnapshotWrapper;    //  Define the call back for the panic function to save a snapshot on simulator errors.
             CG_INFO("CG1 MAL1 AMDL Enabled for Simulation");
             break;
@@ -626,7 +626,7 @@ int main(int argc, char *argv[])
     {
         signal(SIGINT, &abortSignalHandler);        
         cout << "CG1>> Starting simulator debug mode ---- " << endl << endl;
-        CG1GPUSIM->debugLoop(validMode);
+        GpuModel->debugLoop(validMode);
         cout << "CG1>> Exiting simulator debug mode ---- " << endl;
     }
     else
@@ -639,9 +639,9 @@ int main(int argc, char *argv[])
         time_t startTime = time(NULL);
         try {
             if (multiClock) //  Call the simulation main loop.
-                CG1GPUSIM->simulationLoopMultiClock();
+                GpuModel->simulationLoopMultiClock();
             else
-                CG1GPUSIM->simulationLoop(CG_BEHV_MODEL);
+                GpuModel->simulationLoop(CG_BEHV_MODEL);
         } catch (bool b) {
             fprintf(stderr, "\n*** CG_ASSERT thrown during simulation loop ***\n");
             fflush(stderr);
@@ -658,7 +658,7 @@ int main(int argc, char *argv[])
 
         if (ProfilingFile.is_open())        //  Close input file
             ProfilingFile.close();
-        delete CG1GPUSIM;
+        delete GpuModel;
     }
     
     TRACING_EXIT_REGION()

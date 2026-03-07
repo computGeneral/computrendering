@@ -2,7 +2,7 @@
 #
 # CG1 GPU Simulator — Regression Test Script (Windows PowerShell)
 #
-# Parses regression_list and runs CG1SIM (bhavmodel) for each test trace.
+# Parses regression_list and runs computrender (bhavmodel) for each test trace.
 # Compares output PPMs against reference using pixel-level comparison.
 #
 # Usage:
@@ -22,13 +22,13 @@ $ScriptDir  = Split-Path -Parent $MyInvocation.MyCommand.Path
 $ProjectRoot = (Resolve-Path "$ScriptDir/../../..").Path
 $RegList    = Join-Path $ScriptDir "regression_list"
 $RegOut     = Join-Path $ScriptDir "regression.out"
-$Simulator  = Join-Path $ProjectRoot "_BUILD_/arch/$Config/CG1SIM.exe"
-$ParamCSV   = Join-Path $ProjectRoot "arch/common/params/CG1GPU.csv"
+$Simulator  = Join-Path $ProjectRoot "_BUILD_/arch/$Config/computrender.exe"
+$ParamCSV   = Join-Path $ProjectRoot "arch/common/params/archParams.csv"
 $TraceBase  = Join-Path $ProjectRoot "tests"
 
 if (-not (Test-Path $Simulator)) {
     Write-Host "ERROR: Simulator not found at $Simulator" -ForegroundColor Red
-    Write-Host "       Build first: cd _BUILD_; cmake --build . --config $Config --target CG1SIM"
+    Write-Host "       Build first: cd _BUILD_; cmake --build . --config $Config --target computrender"
     exit 1
 }
 if (-not (Test-Path $RegList)) {

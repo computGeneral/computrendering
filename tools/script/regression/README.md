@@ -1,6 +1,6 @@
 # Regression Test Suite
 
-This directory contains scripts and configuration for running regression tests on the CG1 GPU Simulator.
+This directory contains scripts and configuration for running regression tests on the computrender GPU Simulator.
 
 ## regression_list Format
 
@@ -12,7 +12,7 @@ The `regression_list` file defines the test cases to run. Each line represents a
     *   The script attempts to find the directory in `tests/<api>/trace/<name>` first, then `tests/<api>/<name>`.
 
 2.  **Architecture Version (`arch_version`)**:
-    The architecture configuration column to use from `arch/common/params/CG1GPU.csv`.
+    The architecture configuration column to use from `arch/common/params/archParams.csv`.
     *   Example: `1.0`
 
 3.  **Trace File (`trace_file`)**:

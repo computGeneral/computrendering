@@ -56,8 +56,8 @@ if errorlevel 1 (
 
 :: --- CMake build ---
 echo.
-echo [2/2] Building CG1SIM (%CONFIG%) ...
-cmake --build "%PROJECT_ROOT%\_BUILD_" --config %CONFIG% --target CG1SIM -- /m /v:m
+echo [2/2] Building computrender (%CONFIG%) ...
+cmake --build "%PROJECT_ROOT%\_BUILD_" --config %CONFIG% --target computrender -- /m /v:m
 if errorlevel 1 (
     echo [ERROR] Build failed.
     exit /b 1
@@ -66,7 +66,7 @@ if errorlevel 1 (
 echo.
 echo ============================================================
 echo  Build succeeded!
-echo  Binary: _BUILD_\arch\%CONFIG%\CG1SIM.exe
+echo  Binary: _BUILD_\arch\%CONFIG%\computrender.exe
 echo ============================================================
 
 endlocal

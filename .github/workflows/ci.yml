@@ -36,7 +36,7 @@ jobs:
         run: |
           bash tools/script/build.sh
           # Verify the simulator binary was built
-          test -x _BUILD_/arch/CG1SIM || { echo "ERROR: CG1SIM not built"; exit 1; }
+          test -x _BUILD_/arch/computrender || { echo "ERROR: computrender not built"; exit 1; }
 
       - name: Run Regression Tests
         run: bash ./tools/script/regression/regression.sh

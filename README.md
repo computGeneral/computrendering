@@ -1,9 +1,9 @@
-# CG1 GPU Simulator
+# computrender GPU Simulator
 ===============
 
 ## Introduction
 
-CG1 (computGeneral 1) is a GPU simulator with OpenGL and D3D9 API implementations
+computrender (computGeneral 1) is a GPU simulator with OpenGL and D3D9 API implementations
 that can be used to simulate PC Windows game traces. It replays API call sequences
 captured from real applications via **apitrace**, modeling a complete GPU pipeline —
 from command processing through rasterization to display output — at multiple
@@ -160,7 +160,7 @@ cmake ..
 make -j$(nproc)
 ```
 
-The compiled binaries are placed in `_BUILD_/arch/` (CG1SIM simulator).
+The compiled binaries are placed in `_BUILD_/arch/` (computrender simulator).
 
 ### Windows (Visual Studio)
 
@@ -175,24 +175,24 @@ Optional arguments: `build.bat [Debug|Release] [Win32|x64]` (defaults: Debug, Wi
 Open _BUILD_\CG1.sln in Visual Studio 2022+
 Select architecture: Win32 (32-bit) or x64 (64-bit)
 Select configuration: Debug / Optimized / Profile
-Build target: CG1SIM
+Build target: computrender
 ```
 
 **Or via CMake manually:**
 ```powershell
 mkdir _BUILD_; cd _BUILD_
 cmake .. -A Win32
-cmake --build . --config Debug --target CG1SIM -- /m /v:m
+cmake --build . --config Debug --target computrender -- /m /v:m
 ```
 
 ### Build Targets
 
 | Target | Description |
 |--------|-------------|
-| `CG1SIM` | Main simulator executable |
-| `CG1Common` | Common utilities library |
-| `CG1BMDL` | Behavior model library |
-| `CG1CMDL` | Functional model library |
+| `computrender` | Main simulator executable |
+| `archcommon` | Common utilities library |
+| `BhavModel` | Behavior model library |
+| `PerfModel` | Functional model library |
 | `HAL`, `GAL`, `GALx`, `OGL2` | Driver libraries |
 | `ApitraceParser` | Apitrace binary format parser library |
 
@@ -209,7 +209,7 @@ cmake --build . --config Debug --target CG1SIM -- /m /v:m
 
 ## Supported Trace Formats
 
-CG1 is **trace-driven**: it replays API call sequences captured from real applications.
+computrender is **trace-driven**: it replays API call sequences captured from real applications.
 Three trace driver paths exist, all converging at the same MetaStream interface consumed
 by the simulation models.
 
@@ -252,7 +252,7 @@ ApitraceParser (format parsing, event extraction)
                               ▼
                     GAL → HAL → MetaStream
                               ▼
-                CG1 Simulator (bhavmodel / perfmodel)
+                computrender Simulator (bhavmodel / perfmodel)
 ```
 
 ---
@@ -269,7 +269,7 @@ cd _BUILD_/arch
 cp ../../arch/common/params/CG1GPU.ini .
 
 # Run with an OpenGL apitrace
-./CG1SIM --trace ../../tests/ogl/trace/glxgears/glxgears.trace --frames 1
+./computrender --trace ../../tests/ogl/trace/glxgears/glxgears.trace --frames 1
 ```
 
 ### Quick Start (Windows)
@@ -283,26 +283,26 @@ copy arch\common\params\CG1GPU.ini _BUILD_\arch\Debug\
 
 REM Run with an OpenGL apitrace
 cd _BUILD_\arch\Debug
-.\CG1SIM.exe --trace ..\..\..\tests\ogl\trace\glxgears\glxgears.trace --frames 1
+.\computrender.exe --trace ..\..\..\tests\ogl\trace\glxgears\glxgears.trace --frames 1
 ```
 
 ### General Usage
 
 ```
-CG1SIM                              # Config file (CG1GPU.ini) provides all params
-CG1SIM --trace <file> --frames N    # Apitrace file with frame limit
-CG1SIM <filename>                   # MetaStream trace file
-CG1SIM <filename> <n>               # n < 10K → frames; n >= 10K → cycles
-CG1SIM <filename> <n> <m>           # n frames, starting from frame m
+computrender                              # Config file (CG1GPU.ini) provides all params
+computrender --trace <file> --frames N    # Apitrace file with frame limit
+computrender <filename>                   # MetaStream trace file
+computrender <filename> <n>               # n < 10K → frames; n >= 10K → cycles
+computrender <filename> <n> <m>           # n frames, starting from frame m
 ```
 
 **Apitrace examples:**
 ```bash
 # OpenGL trace
-./CG1SIM --trace tests/ogl/trace/glxgears/glxgears.trace --frames 1
+./computrender --trace tests/ogl/trace/glxgears/glxgears.trace --frames 1
 
 # D3D9 trace (Windows)
-.\CG1SIM.exe --trace tests\d3d\trace\fruitNinja\FruitNinja.trace --frames 2
+.\computrender.exe --trace tests\d3d\trace\fruitNinja\FruitNinja.trace --frames 2
 ```
 
 ### Simulation Output
@@ -340,7 +340,7 @@ See `tools/script/regression/regression_list` for the list of test cases.
 ```bash
 cd _BUILD_/arch
 cp ../../arch/common/params/CG1GPU.ini .
-./CG1SIM --trace ../../tests/ogl/trace/glxgears/glxgears.trace --frames 1
+./computrender --trace ../../tests/ogl/trace/glxgears/glxgears.trace --frames 1
 
 # Byte-for-byte comparison against reference
 cmp frame0000.cm.ppm ../../tests/ogl/trace/glxgears/glxgears.ppm && echo "PASS" || echo "FAIL"
@@ -376,7 +376,7 @@ cmp frame0000.cm.ppm ../../tests/ogl/trace/glxgears/glxgears.ppm && echo "PASS" 
     └──────────────┬────────────────────────────┬──────────────────┘
                    │                            │
     ┌──────────────▼────────────────────────────▼──────────────────┐
-    │                     CG1SIM main()                            │
+    │                     computrender main()                            │
     │                   (arch/computrender.cpp)                  │
     │                                                               │
     │  .trace → API auto-detect → TraceDriver instantiation        │
@@ -403,7 +403,7 @@ cmp frame0000.cm.ppm ../../tests/ogl/trace/glxgears/glxgears.ppm && echo "PASS" 
     ┌─────────────────────────────▼────────────────────────────────┐
     │                    Simulation Models                         │
     │                                                               │
-    │  CG1BMDL (bhavmodel)          CG1CMDL (perfmodel)           │
+    │  BhavModel (bhavmodel)        PerfModel (perfmodel)         │
     │  - Fast emulation              - Cycle-accurate simulation   │
     │  - emulateCommandProcessor()   - clock() all MDUs per cycle  │
     │                                                               │
@@ -415,7 +415,7 @@ cmp frame0000.cm.ppm ../../tests/ogl/trace/glxgears/glxgears.ppm && echo "PASS" 
 ### Apitrace OGL Call Flow
 
 ```
-CG1SIM::main()
+computrender::main()
   │
   ├─ fileExtensionTester("trace") + detectApiType() == "gl"
   │
@@ -457,7 +457,7 @@ TraceDriverApitraceOGL(inputFile, HAL, startFrame)
 ### Apitrace D3D9 Call Flow
 
 ```
-CG1SIM::main()
+computrender::main()
   │
   ├─ fileExtensionTester("trace") + detectApiType() == "d3d9"
   │
@@ -498,7 +498,7 @@ TraceDriverApitraceD3D(inputFile, HAL, startFrame)
 ### MetaStream Trace Call Flow
 
 ```
-CG1SIM::main()
+computrender::main()
   │
   ├─ (else clause — not apitrace extension)
   │
@@ -522,14 +522,14 @@ All trace drivers produce `cgoMetaStream` objects consumed by the simulation mod
 
 **Bhavmodel (Fast Emulation):**
 ```
-CG1BMDL::simulationLoop()
+BhavModel::simulationLoop()
   └─ Loop: TraceDriver->nxtMetaStream() → GpuBMdl.emulateCommandProcessor(ms)
       └─ Decode MetaStream → update GPU state → emulate pipeline on DRAW
 ```
 
 **Perfmodel (Cycle-Accurate):**
 ```
-CG1CMDL::simulationLoop()
+PerfModel::simulationLoop()
   └─ Cycle loop: clock all MDUs per cycle
       └─ CommandProcessor.clock() → TraceDriver->nxtMetaStream() → process
 ```
@@ -653,7 +653,7 @@ struct cgoMetaStream {
 | **API level** | GPU commands | OpenGL calls | D3D9 calls |
 | **Translation** | None (direct) | Full stack | Full stack |
 | **Speed** | Fast (no translation) | Medium | Medium |
-| **Standard** | CG1-specific | Community standard | Community standard |
+| **Standard** | computrender-specific | Community standard | Community standard |
 | **Tools** | (removed) | apitrace CLI | apitrace CLI |
 
 ---
@@ -709,7 +709,7 @@ struct cgoMetaStream {
 
 | Limitation | Impact |
 |-----------|--------|
-| OpenGL version | CG1 supports GL 1.4-2.0 subset; traces using GL 3.0+ features will fail |
+| OpenGL version | computrender supports GL 1.4-2.0 subset; traces using GL 3.0+ features will fail |
 | No GLSL shaders | Only ARB vertex/fragment programs supported |
 | D3D9 only | D3D10/11/12 traces detected but not supported |
 | 32-bit build | Win32 platform has 2GB address space limit; large traces may OOM |

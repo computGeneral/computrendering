@@ -21,7 +21,7 @@
 #include "TextureCacheL2.h"
 #include "TextureRequest.h"
 #include "TextureResult.h"
-#include "ArchConfig.h"
+#include "archParams.h"
 
 //#include <fstream>
 #include "zfstream.h"

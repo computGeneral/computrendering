@@ -1,6 +1,6 @@
-add_library(CG1BMDL)
+add_library(BhavModel)
 
-set_target_properties(CG1BMDL PROPERTIES FOLDER arch)
+set_target_properties(BhavModel PROPERTIES FOLDER arch)
 
 set(BASE
     ${CMAKE_SOURCE_DIR}/arch/bhavmodel/common/base/bmMduBase.h
@@ -62,7 +62,7 @@ source_group(rasterizer FILES ${RASTER})
 source_group(unifiedShader FILES ${SHADER})
 source_group(textureProcessor FILES ${TEXTURE})
 
-target_sources(CG1BMDL PUBLIC ${BASE}
+target_sources(BhavModel PUBLIC ${BASE}
                               ${MATH}
                               ${CLIPPER}
                               ${FRAGOP}
@@ -72,7 +72,7 @@ target_sources(CG1BMDL PUBLIC ${BASE}
                               ${TOP}
 )
 
-target_include_directories(CG1BMDL PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}
+target_include_directories(BhavModel PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}
                                           ${CMAKE_CURRENT_SOURCE_DIR}/common/base
                                           ${CMAKE_CURRENT_SOURCE_DIR}/common/math
                                           ${CMAKE_CURRENT_SOURCE_DIR}/Clipper

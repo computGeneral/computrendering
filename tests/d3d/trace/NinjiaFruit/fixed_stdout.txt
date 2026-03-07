@@ -1,0 +1,16 @@
+[ArchParams] Loaded 303 params from c:\Users\GENE.LI\workspace\computrendering\arch\common\params\CG1GPU.csv (arch=1.0)
+Using Apitrace Binary Trace File as simulation input.
+Using CG1 Graphics Abstraction Layer (GAL) Library.
+GALDeviceImp::swapBuffers() - OK
+GALDeviceImp::swapBuffers() - OK
+[WARN| ] [MSG]:Note: The first frame producing output (start frame) is frame 2 [FILE]:C:\Users\GENE.LI\workspace\computrendering\arch\computrender.cpp [FUNC]:main [LINE]:00615
+Warning: Clear Z implemented as Clear Z and Stencil (optimization)
+GALDeviceImp::swapBuffers() - OK
+HAL => Memory usage : GPU 7407 blocks | System 0 blocks
+Warning: Clear Z implemented as Clear Z and Stencil (optimization)
+GALDeviceImp::swapBuffers() - OK
+HAL => Memory usage : GPU 7416 blocks | System 0 blocks
+Warning: Clear Z implemented as Clear Z and Stencil (optimization)
+GALDeviceImp::swapBuffers() - OK
+HAL => Memory usage : GPU 7425 blocks | System 0 blocks
+Simulation clock time = 105 seconds

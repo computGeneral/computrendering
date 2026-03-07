@@ -15,8 +15,8 @@
 
 using namespace std;
 
-//  Static pointer to the active perfmodel instance, used by the panic snapshot callback.
-static arch::CG1MDLBASE* s_panicSnapshotInstance = nullptr;
+//  Static pointer to the active PerfModel instance, used by the panic snapshot callback.
+static arch::ModelBase* s_panicSnapshotInstance = nullptr;
 static void panicSnapshotCallback() { if (s_panicSnapshotInstance) s_panicSnapshotInstance->createSnapshot(); }
 
 namespace arch
@@ -29,17 +29,17 @@ bool NaN(F32 f)
     return ((fr & 0x7F800000) == 0x7F800000) && ((fr & 0x007FFFFF) != 0);
 };
 
-perfmodel *perfmodel::current = NULL;
+PerfModel *PerfModel::current = NULL;
 
 //  Constructor.
-perfmodel::perfmodel(cgsArchConfig ArchConf, cgoTraceDriverBase *TraceDriver) :
+PerfModel::PerfModel(cgsArchConfig ArchConf, cgoTraceDriverBase *TraceDriver) :
     GpuPerfModel(ArchConf, TraceDriver),
     ArchConf(ArchConf),
     TraceDriver(TraceDriver),
     sigBinder(cmoSignalBinder::getBinder()),
     simulationStarted(false)
 {
-    // Note: ArchParams singleton is already initialized in CG1SIM.cpp main().
+    // Note: ArchParams singleton is already initialized in computrender.cpp main().
     // Sub-modules (cmoGpuTop etc.) still receive cgsArchConfig for backward compat.
     // New code should prefer ArchParams::get<T>("MODULE_PARAM") over ArchConf.xxx.yyy.
 
@@ -119,7 +119,7 @@ perfmodel::perfmodel(cgsArchConfig ArchConf, cgoTraceDriverBase *TraceDriver) :
     snapshotFrequency = 1;
 }
 
-perfmodel::~perfmodel()
+PerfModel::~PerfModel()
 {
     //   Close all output files.
     if (sigTraceFile.is_open())
@@ -133,7 +133,7 @@ perfmodel::~perfmodel()
 
 }
 
-void perfmodel::createSnapshot()
+void PerfModel::createSnapshot()
 {
     // Check if the simulation started.
     if (current->simulationStarted)
@@ -223,7 +223,7 @@ void perfmodel::createSnapshot()
     }
 }
 
-void perfmodel::saveSimState()
+void PerfModel::saveSimState()
 {
     ofstream out;
     
@@ -269,7 +269,7 @@ void perfmodel::saveSimState()
     out.close();    
 }
 
-void perfmodel::saveSimConfig()
+void PerfModel::saveSimConfig()
 {
     ofstream out;
     
@@ -284,14 +284,14 @@ void perfmodel::saveSimConfig()
 
 
 // Simulator debug loop.
-void perfmodel::debugLoop(bool validate)
+void PerfModel::debugLoop(bool validate)
 {
     //  Check if validation mode is enabled.
     if (validate)
     {
         validationMode = true;
         skipValidation = false;
-        GpuBehavMdl = new CG1BMDL(ArchConf, TraceDriver); //  Create the GPU behaviorModel.
+        GpuBehavMdl = new BhavModel(ArchConf, TraceDriver); //  Create the GPU behaviorModel.
         GpuBehavMdl->GpuBMdl.resetState(); //  Reset the GPU behaviorModel.
         GpuBehavMdl->GpuBMdl.setValidationMode(true); //  Enable validation mode.
         GpuPerfModel.CP->setValidationMode(true); //  Enable the validation mode in the simulator Command Processor.
@@ -402,7 +402,7 @@ void perfmodel::debugLoop(bool validate)
 }
 
 //  Displays the simulator debug inline help
-void perfmodel::helpCommand(stringstream &comStream)
+void PerfModel::helpCommand(stringstream &comStream)
 {
     cout << "Supported commands: " << endl << endl;
 
@@ -435,14 +435,14 @@ void perfmodel::helpCommand(stringstream &comStream)
     cout << endl;
 }
 
-void perfmodel::listMdusCommand(stringstream &comStream)
+void PerfModel::listMdusCommand(stringstream &comStream)
 {
     cmoMduBase::dumpMduName();
     cout << endl;
 }
 
 //  Simulator debug run command function.  Simulates n cycles
-void perfmodel::runCommand(stringstream &comStream)
+void PerfModel::runCommand(stringstream &comStream)
 {
     bool endOfBatch = false;
     bool endOfFrame = false;
@@ -501,7 +501,7 @@ void perfmodel::runCommand(stringstream &comStream)
 }
 
 //  Simulator debug runframe command function.  Simulates n frames
-void perfmodel::runFrameCommand(stringstream &comStream)
+void PerfModel::runFrameCommand(stringstream &comStream)
 {
     bool endOfBatch = false;
     bool endOfFrame = false;
@@ -567,7 +567,7 @@ void perfmodel::runFrameCommand(stringstream &comStream)
 
 
 //  Simulator debug runbatch command function.  Simulates n batches
-void perfmodel::runBatchCommand(stringstream &comStream)
+void PerfModel::runBatchCommand(stringstream &comStream)
 {
     bool endOfBatch = false;
     bool endOfFrame = false;
@@ -632,7 +632,7 @@ void perfmodel::runBatchCommand(stringstream &comStream)
 }
 
 //  Simulator debug runcom command function.  Simulates n MetaStream commands.
-void perfmodel::runComCommand(stringstream &comStream)
+void PerfModel::runComCommand(stringstream &comStream)
 {
     bool endOfBatch = false;
     bool endOfFrame = false;
@@ -695,7 +695,7 @@ void perfmodel::runComCommand(stringstream &comStream)
 
 
 //  Simulator debug skipframe command function.  Skips n frames
-void perfmodel::skipFrameCommand(stringstream &comStream)
+void PerfModel::skipFrameCommand(stringstream &comStream)
 {
     bool endOfBatch = false;
     bool endOfFrame = false;
@@ -766,7 +766,7 @@ void perfmodel::skipFrameCommand(stringstream &comStream)
 }
 
 //  Simulator debug skipbatch command function.  Skips the simulation of n batches
-void perfmodel::skipBatchCommand(stringstream &comStream)
+void PerfModel::skipBatchCommand(stringstream &comStream)
 {
     bool endOfBatch = false;
     bool endOfFrame = false;
@@ -840,7 +840,7 @@ void perfmodel::skipBatchCommand(stringstream &comStream)
 
 //  Simulator debug state command function.  Returns the state of the simulator and
 //  the simulator boxes.
-void perfmodel::stateCommand(stringstream &comStream)
+void PerfModel::stateCommand(stringstream &comStream)
 {
     string mduName;
     cmoMduBase *stateBox;
@@ -906,7 +906,7 @@ void perfmodel::stateCommand(stringstream &comStream)
 }
 
 //  Simulator debug mode command function.  Sets the debug mode flag in a mdu.
-void perfmodel::debugModeCommand(stringstream &comStream)
+void PerfModel::debugModeCommand(stringstream &comStream)
 {
     string mduName;
     string modeS;
@@ -989,7 +989,7 @@ void perfmodel::debugModeCommand(stringstream &comStream)
 }
 
 //  Simultor debug mode execute mdu command command.  Executes a mdu command.
-void perfmodel::execMduCmdCommand(stringstream &comStream)
+void PerfModel::execMduCmdCommand(stringstream &comStream)
 {
     string mduName;
     cmoMduBase *mdu;
@@ -1025,7 +1025,7 @@ void perfmodel::execMduCmdCommand(stringstream &comStream)
 }
 
 //  Simulator debug mode list mdu commands command.  Lists the commands available for a given mdu.
-void perfmodel::listMduCmdCommand(stringstream &comStream)
+void PerfModel::listMduCmdCommand(stringstream &comStream)
 {
     string mduName;
     string commandList;
@@ -1062,7 +1062,7 @@ void perfmodel::listMduCmdCommand(stringstream &comStream)
 }
 
 //  Simulator behaviorModel trace command function.  Enable/disable behaviorModel trace logs in validation mode.
-void perfmodel::emulatorTraceCommand(stringstream &comStream)
+void PerfModel::emulatorTraceCommand(stringstream &comStream)
 {
     string traceMode;
     string traceEnableS;
@@ -1228,7 +1228,7 @@ void perfmodel::emulatorTraceCommand(stringstream &comStream)
 }
 
 //  Simulator simulator vertex trace command function.  Enable/disable simulator vertex trace logs in validation mode.
-void perfmodel::traceVertexCommand(stringstream &comStream)
+void PerfModel::traceVertexCommand(stringstream &comStream)
 {
     string enableParam;
     bool traceEnable;
@@ -1308,7 +1308,7 @@ void perfmodel::traceVertexCommand(stringstream &comStream)
 }
 
 //  Simulator simulator fragment trace command function.  Enable/disable simulator fragment trace logs in validation mode.
-void perfmodel::traceFragmentCommand(stringstream &comStream)
+void PerfModel::traceFragmentCommand(stringstream &comStream)
 {
     string enableParam;
     bool traceEnable;
@@ -1412,7 +1412,7 @@ void perfmodel::traceFragmentCommand(stringstream &comStream)
     }
 }
 
-void perfmodel::driverMemoryUsageCommand(stringstream &comStream)
+void PerfModel::driverMemoryUsageCommand(stringstream &comStream)
 {
     // Skip white spaces.
     comStream >> ws;
@@ -1430,7 +1430,7 @@ void perfmodel::driverMemoryUsageCommand(stringstream &comStream)
     }
 }
 
-void perfmodel::driverListMDsCommand(stringstream &comStream)
+void PerfModel::driverListMDsCommand(stringstream &comStream)
 {
     // Skip white spaces.
     comStream >> ws;
@@ -1448,7 +1448,7 @@ void perfmodel::driverListMDsCommand(stringstream &comStream)
     }
 }
 
-void perfmodel::driverInfoMDCommand(stringstream &comStream)
+void PerfModel::driverInfoMDCommand(stringstream &comStream)
 {
     U32 md;
 
@@ -1479,7 +1479,7 @@ void perfmodel::driverInfoMDCommand(stringstream &comStream)
     }
 }
 
-void perfmodel::driverDumpMetaStreamBufferCommand(stringstream &comStream)
+void PerfModel::driverDumpMetaStreamBufferCommand(stringstream &comStream)
 {
     // Skip white spaces.
     comStream >> ws;
@@ -1497,7 +1497,7 @@ void perfmodel::driverDumpMetaStreamBufferCommand(stringstream &comStream)
     }
 }
 
-void perfmodel::driverMemAllocCommand(stringstream &comStream)
+void PerfModel::driverMemAllocCommand(stringstream &comStream)
 {
     string boolParam;
     bool dumpContent;
@@ -1544,7 +1544,7 @@ void perfmodel::driverMemAllocCommand(stringstream &comStream)
 /*
   DEPRECATED
   
-void perfmodel::libraryGLContextCommand(stringstream &comStream)
+void PerfModel::libraryGLContextCommand(stringstream &comStream)
 {
     libgl::GLContext *ctx;
 
@@ -1565,7 +1565,7 @@ void perfmodel::libraryGLContextCommand(stringstream &comStream)
     }
 }
 
-void perfmodel::libraryDumpStencilCommand(stringstream &comStream)
+void PerfModel::libraryDumpStencilCommand(stringstream &comStream)
 {
     libgl::GLContext *ctx;
 
@@ -1586,7 +1586,7 @@ void perfmodel::libraryDumpStencilCommand(stringstream &comStream)
 }*/
 
 //  Simulate until a force command finishes.
-bool perfmodel::simForcedCommand()
+bool PerfModel::simForcedCommand()
 {
     bool endOfBatch = false;
     bool endOfFrame = false;    
@@ -1607,7 +1607,7 @@ bool perfmodel::simForcedCommand()
     return !endOfTrace;
 }
 
-void perfmodel::saveSnapshotCommand()
+void PerfModel::saveSnapshotCommand()
 {
     pendingSaveSnapshot = true;
     
@@ -1738,7 +1738,7 @@ void perfmodel::saveSnapshotCommand()
     pendingSaveSnapshot = false;    
 }
 
-void perfmodel::loadSnapshotCommand(stringstream &comStream)
+void PerfModel::loadSnapshotCommand(stringstream &comStream)
 {
     U32 snapshotID;
 
@@ -1930,7 +1930,7 @@ void perfmodel::loadSnapshotCommand(stringstream &comStream)
     }
 }
 
-void perfmodel::autoSnapshotCommand(stringstream &comStream)
+void PerfModel::autoSnapshotCommand(stringstream &comStream)
 {
     bool errorInParsing = false;
     
@@ -2001,7 +2001,7 @@ void perfmodel::autoSnapshotCommand(stringstream &comStream)
     }
 }
 
-void perfmodel::advanceTime(bool &endOfBatch, bool &endOfFrame, bool &endOfTrace, bool &gpuStalled, bool &validationError)
+void PerfModel::advanceTime(bool &endOfBatch, bool &endOfFrame, bool &endOfTrace, bool &gpuStalled, bool &validationError)
 {
     current = this;
 
@@ -3161,7 +3161,7 @@ itVertexInput->second.timesRead, itVertexInput->second.differencesBetweenReads ?
 }
 
 
-void perfmodel::simulationLoop(cgeModelAbstractLevel MAL)
+void PerfModel::simulationLoop(cgeModelAbstractLevel MAL)
 {
     U32 width, height;
     U32 i;
@@ -3171,7 +3171,7 @@ void perfmodel::simulationLoop(cgeModelAbstractLevel MAL)
    
     for(cycle = 0, end = false, dotCount = 0; !end; cycle++) //  Simulation loop.
     {
-        if (cycle == 0) { fprintf(stderr, "[perfmodel] Entering simulation loop\n"); fflush(stderr); }
+        if (cycle == 0) { fprintf(stderr, "[PerfModel] Entering simulation loop\n"); fflush(stderr); }
         //CG_WARN("Cycle %ld ----------------------------\n", cycle);  // Disabled: too verbose for normal simulation runs.
         if (ArchConf.sim.dumpSignalTrace && (cycle >= ArchConf.sim.startDump) && (cycle <= (ArchConf.sim.startDump + ArchConf.sim.dumpCycles)))  //  Dump the signals.
             sigBinder.dumpSignalTrace(cycle);
@@ -3216,7 +3216,7 @@ void perfmodel::simulationLoop(cgeModelAbstractLevel MAL)
             dotCount = 0;
             putchar('.');
             fflush(stdout);
-            fprintf(stderr, "[perfmodel] cycle=%lld frame=%d batch=%d\n", (long long)cycle, frameCounter, batchCounter);
+            fprintf(stderr, "[PerfModel] cycle=%lld frame=%d batch=%d\n", (long long)cycle, frameCounter, batchCounter);
             fflush(stderr);
 //DynamicMemoryOpt::usage();
             end = end || GpuPerfModel.CP->isEndOfTrace(); //  Check if trace has finished.
@@ -3276,7 +3276,7 @@ void perfmodel::simulationLoop(cgeModelAbstractLevel MAL)
     //DynamicMemoryOpt::dumpDynamicMemoryState(FALSE, FALSE);
 }
 
-void perfmodel::simulationLoopMultiClock()
+void PerfModel::simulationLoopMultiClock()
 {
     U32 width, height;
     U32 i;
@@ -3561,14 +3561,14 @@ void perfmodel::simulationLoopMultiClock()
     //DynamicMemoryOpt::dumpDynamicMemoryState(FALSE, FALSE);
 }
 
-void perfmodel::getCounters(U32 &frame, U32 &batch, U32 &totalBatches)
+void PerfModel::getCounters(U32 &frame, U32 &batch, U32 &totalBatches)
 {
     frame = frameCounter;
     batch = frameBatch;
     totalBatches = batchCounter;
 }
 
-void perfmodel::getCycles(U64 &_gpuCycle, U64 &_shaderCycle, U64 &_memCycle)
+void PerfModel::getCycles(U64 &_gpuCycle, U64 &_shaderCycle, U64 &_memCycle)
 {
     if (GpuPerfModel.multiClock)
     {
@@ -3590,14 +3590,14 @@ void perfmodel::getCycles(U64 &_gpuCycle, U64 &_shaderCycle, U64 &_memCycle)
     }
 }
 
-void perfmodel::abortSimulation()
+void PerfModel::abortSimulation()
 {
     abortDebug = true;
 }
 
 
 //  Dumps the latency maps.  
-void perfmodel::dumpLatencyMap(U32 w, U32 h)
+void PerfModel::dumpLatencyMap(U32 w, U32 h)
 {
     FILE *fout;
     char filename[30];
@@ -3650,7 +3650,7 @@ void perfmodel::dumpLatencyMap(U32 w, U32 h)
     fclose(fout);
 }
 
-U32 perfmodel::applyColorKey(U32 p)
+U32 PerfModel::applyColorKey(U32 p)
 {
     if (p == 0)
         return 0x00000000;

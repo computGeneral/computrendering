@@ -45,11 +45,11 @@ static inline std::vector<std::string> split(const std::string& s, char delimite
 }
 
 /**
- * @brief Singleton ArchParams — reads CG1GPU.csv and provides typed parameter access.
+ * @brief Singleton ArchParams — reads archParams.csv and provides typed parameter access.
  *
  * Usage:
- *   // Initialize once (e.g. in main / CG1SIM.cpp):
- *   ArchParams::init("path/to/CG1GPU.csv", "CG1GPU.ini");
+ *   // Initialize once (e.g. in main / computrender.cpp):
+ *   ArchParams::init("path/to/archParams.csv", "CG1GPU.ini");
  *
  *   // Then anywhere in the code:
  *   uint32_t frames = ArchParams::get<uint32_t>("SIMULATOR_SIM_FRAMES");

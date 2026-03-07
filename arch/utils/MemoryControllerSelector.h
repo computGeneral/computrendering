@@ -6,7 +6,7 @@
     #define MEMORYCONTROLLERSELECTOR_H
 
 #include "MduBase.h"
-#include "ArchConfig.h"
+#include "archParams.h"
 
 namespace arch
 {

@@ -60,82 +60,82 @@ enum cgeOperandType
 enum ShOpcode
 {
     //  Opcodes 00h - 07h
-    CG1_ISA_OPCODE_NOP = 0x00,
-    CG1_ISA_OPCODE_ADD = 0x01,
-    CG1_ISA_OPCODE_ADDI = 0x02,
-    CG1_ISA_OPCODE_ARL = 0x03,
-    CG1_ISA_OPCODE_ANDP = 0x04,
-    //CG1_ISA_OPCODE_BRA     = 0x05
-    //CG1_ISA_OPCODE_CAL     = 0x06
-    CG1_ISA_OPCODE_COS = 0x07,
+    CG_ISA_OPCODE_NOP = 0x00,
+    CG_ISA_OPCODE_ADD = 0x01,
+    CG_ISA_OPCODE_ADDI = 0x02,
+    CG_ISA_OPCODE_ARL = 0x03,
+    CG_ISA_OPCODE_ANDP = 0x04,
+    //CG_ISA_OPCODE_BRA     = 0x05
+    //CG_ISA_OPCODE_CAL     = 0x06
+    CG_ISA_OPCODE_COS = 0x07,
 
     //  Opcodes 08h - 0Fh
-    CG1_ISA_OPCODE_DP3 = 0x08,
-    CG1_ISA_OPCODE_DP4 = 0x09,
-    CG1_ISA_OPCODE_DPH = 0x0A,
-    CG1_ISA_OPCODE_DST = 0x0B,
-    CG1_ISA_OPCODE_EX2 = 0x0C,
-    CG1_ISA_OPCODE_EXP = 0x0D,
-    CG1_ISA_OPCODE_FLR = 0x0E,
-    CG1_ISA_OPCODE_FRC = 0x0F,
+    CG_ISA_OPCODE_DP3 = 0x08,
+    CG_ISA_OPCODE_DP4 = 0x09,
+    CG_ISA_OPCODE_DPH = 0x0A,
+    CG_ISA_OPCODE_DST = 0x0B,
+    CG_ISA_OPCODE_EX2 = 0x0C,
+    CG_ISA_OPCODE_EXP = 0x0D,
+    CG_ISA_OPCODE_FLR = 0x0E,
+    CG_ISA_OPCODE_FRC = 0x0F,
 
     //  Opcodes 10h - 17h
-    CG1_ISA_OPCODE_LG2 = 0x10,
-    CG1_ISA_OPCODE_LIT = 0x11,
-    CG1_ISA_OPCODE_LOG = 0x12,
-    CG1_ISA_OPCODE_MAD = 0x13,
-    CG1_ISA_OPCODE_MAX = 0x14,
-    CG1_ISA_OPCODE_MIN = 0x15,
-    CG1_ISA_OPCODE_MOV = 0x16,
-    CG1_ISA_OPCODE_MUL = 0x17,
+    CG_ISA_OPCODE_LG2 = 0x10,
+    CG_ISA_OPCODE_LIT = 0x11,
+    CG_ISA_OPCODE_LOG = 0x12,
+    CG_ISA_OPCODE_MAD = 0x13,
+    CG_ISA_OPCODE_MAX = 0x14,
+    CG_ISA_OPCODE_MIN = 0x15,
+    CG_ISA_OPCODE_MOV = 0x16,
+    CG_ISA_OPCODE_MUL = 0x17,
 
     //  Opcodes 18h - 1Fh    
-    CG1_ISA_OPCODE_MULI = 0x18,
-    CG1_ISA_OPCODE_RCP = 0x19,
-    //CG1_ISA_OPCODE_RET     = 0x1A,
-    CG1_ISA_OPCODE_RSQ = 0x1B,
-    CG1_ISA_OPCODE_SETPEQ = 0x1C,
-    CG1_ISA_OPCODE_SETPGT = 0x1D,
-    CG1_ISA_OPCODE_SGE = 0x1E,
-    CG1_ISA_OPCODE_SETPLT = 0x1F,
+    CG_ISA_OPCODE_MULI = 0x18,
+    CG_ISA_OPCODE_RCP = 0x19,
+    //CG_ISA_OPCODE_RET     = 0x1A,
+    CG_ISA_OPCODE_RSQ = 0x1B,
+    CG_ISA_OPCODE_SETPEQ = 0x1C,
+    CG_ISA_OPCODE_SETPGT = 0x1D,
+    CG_ISA_OPCODE_SGE = 0x1E,
+    CG_ISA_OPCODE_SETPLT = 0x1F,
 
     //  Opcodes 20h - 27h
-    CG1_ISA_OPCODE_SIN = 0x20,
-    CG1_ISA_OPCODE_STPEQI = 0x21,
-    CG1_ISA_OPCODE_SLT = 0x22,
-    CG1_ISA_OPCODE_STPGTI = 0x23,
-    CG1_ISA_OPCODE_STPLTI = 0x24,
-    CG1_ISA_OPCODE_TXL = 0x25,
-    CG1_ISA_OPCODE_TEX = 0x26,
-    CG1_ISA_OPCODE_TXB = 0x27,
+    CG_ISA_OPCODE_SIN = 0x20,
+    CG_ISA_OPCODE_STPEQI = 0x21,
+    CG_ISA_OPCODE_SLT = 0x22,
+    CG_ISA_OPCODE_STPGTI = 0x23,
+    CG_ISA_OPCODE_STPLTI = 0x24,
+    CG_ISA_OPCODE_TXL = 0x25,
+    CG_ISA_OPCODE_TEX = 0x26,
+    CG_ISA_OPCODE_TXB = 0x27,
 
     //  Opcodes 28h - 30h
-    CG1_ISA_OPCODE_TXP = 0x28,
-    CG1_ISA_OPCODE_KIL = 0x29,
-    CG1_ISA_OPCODE_KLS = 0x2A,
-    CG1_ISA_OPCODE_ZXP = 0x2B,
-    CG1_ISA_OPCODE_ZXS = 0x2C,
-    CG1_ISA_OPCODE_CMP = 0x2D,
-    CG1_ISA_OPCODE_CMPKIL = 0x2E,
-    CG1_ISA_OPCODE_CHS = 0x2F,
+    CG_ISA_OPCODE_TXP = 0x28,
+    CG_ISA_OPCODE_KIL = 0x29,
+    CG_ISA_OPCODE_KLS = 0x2A,
+    CG_ISA_OPCODE_ZXP = 0x2B,
+    CG_ISA_OPCODE_ZXS = 0x2C,
+    CG_ISA_OPCODE_CMP = 0x2D,
+    CG_ISA_OPCODE_CMPKIL = 0x2E,
+    CG_ISA_OPCODE_CHS = 0x2F,
 
     //  Opcodes 30h - 36h
-    CG1_ISA_OPCODE_LDA = 0x30,
-    CG1_ISA_OPCODE_FXMUL = 0x31,
-    CG1_ISA_OPCODE_FXMAD = 0x32,
-    CG1_ISA_OPCODE_FXMAD2 = 0x33,
-    CG1_ISA_OPCODE_DDX = 0x34,
-    CG1_ISA_OPCODE_DDY = 0x35,
-    CG1_ISA_OPCODE_JMP = 0x36,
-    CG1_ISA_OPCODE_END = 0x37,
+    CG_ISA_OPCODE_LDA = 0x30,
+    CG_ISA_OPCODE_FXMUL = 0x31,
+    CG_ISA_OPCODE_FXMAD = 0x32,
+    CG_ISA_OPCODE_FXMAD2 = 0x33,
+    CG_ISA_OPCODE_DDX = 0x34,
+    CG_ISA_OPCODE_DDY = 0x35,
+    CG_ISA_OPCODE_JMP = 0x36,
+    CG_ISA_OPCODE_END = 0x37,
     //  Unused opcodes 38h - FFh
 
     //  Last valid opcode.
     LASTOPC = 0x38,
 
-    CG1_ISA_OPCODE_BAR = 0x39,
-    CG1_ISA_OPCODE_STG = 0x40,
-    CG1_ISA_OPCODE_ATOM_XOR = 0x50,
+    CG_ISA_OPCODE_BAR = 0x39,
+    CG_ISA_OPCODE_STG = 0x40,
+    CG_ISA_OPCODE_ATOM_XOR = 0x50,
     //  Maximum number of opcodes supported.    
     MAXOPC  = 0xFF,
     INVOPC  = 0x100
@@ -306,10 +306,10 @@ class cgoShaderInstr : public DynamicMemoryOpt
 {
 public:
     //  Define constants.
-    static const U32 CG1_ISA_INSTR_SIZE = 16;
-    static const U32 CG1_ISA_INSTR_SIZE_LOG = 4;
-    static const U32 CG1_ISA_INSTR_SIZE_MASK = 0x0f;
-    static const U32 CG1_ISA_OPCODE_LENGTH_MAX = 6;
+    static const U32 CG_ISA_INSTR_SIZE = 16;
+    static const U32 CG_ISA_INSTR_SIZE_LOG = 4;
+    static const U32 CG_ISA_INSTR_SIZE_MASK = 0x0f;
+    static const U32 CG_ISA_OPCODE_LENGTH_MAX = 6;
 
 private:
     /*
@@ -524,10 +524,10 @@ private:
     {
         union
         {
-            U08 code8[CG1_ISA_INSTR_SIZE];
-            U16 code16[CG1_ISA_INSTR_SIZE / 8];
-            U32 code32[CG1_ISA_INSTR_SIZE / 4];
-            U64 code64[CG1_ISA_INSTR_SIZE / 8];
+            U08 code8[CG_ISA_INSTR_SIZE];
+            U16 code16[CG_ISA_INSTR_SIZE / 8];
+            U32 code32[CG_ISA_INSTR_SIZE / 4];
+            U64 code64[CG_ISA_INSTR_SIZE / 8];
             cgsInstrFields fields;
         };
     };
@@ -536,7 +536,7 @@ private:
     //  Information about the instruction.
 
     ShOpcode    opcode;             //  Which operation realices the instruction.  
-    //U08       code[CG1_ISA_INSTR_SIZE];  //  Instruction code.  
+    //U08       code[CG_ISA_INSTR_SIZE];  //  Instruction code.  
     cgsInstrWord code;           //  Instruction code.  
     U32      numOperands;        //  Number of input operands in the instruction.  
     U32      op1;                //  First operand.  Register Pointer.  
@@ -1090,7 +1090,7 @@ public:
      *
      *  Creates a Shader Instruction using as defined by the parameters.
      *  Encodes the instruction word using the information defined in the
-     *  parameters.  For instructions without parameters (CG1_ISA_OPCODE_END, CG1_ISA_OPCODE_NOP).
+     *  parameters.  For instructions without parameters (CG_ISA_OPCODE_END, CG_ISA_OPCODE_NOP).
      *
      *  @param opc The shader instruction opcode.
      *

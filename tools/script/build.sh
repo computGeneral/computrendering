@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# CG1 GPU Simulator — Top-level build script
+# computrendering GPU Simulator — Top-level build script
 # This script configures and builds the project into the _BUILD_ directory.
 #
 # Usage (from anywhere):

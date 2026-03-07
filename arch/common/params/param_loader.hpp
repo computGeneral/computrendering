@@ -49,7 +49,7 @@ static inline std::vector<std::string> split(const std::string& s, char delimite
  *
  * Usage:
  *   // Initialize once (e.g. in main / computrender.cpp):
- *   ArchParams::init("path/to/archParams.csv", "CG1GPU.ini");
+ *   ArchParams::init("path/to/archParams.csv", "archParams.csv");
  *
  *   // Then anywhere in the code:
  *   uint32_t frames = ArchParams::get<uint32_t>("SIMULATOR_SIM_FRAMES");
@@ -62,7 +62,7 @@ public:
     static ArchParams& instance();
 
     // ---- Explicit initializer (call once before any get()) ----
-    static void init(const std::string& csv_path, const std::string& arch_name = "CG1GPU.ini");
+    static void init(const std::string& csv_path, const std::string& arch_name = "archParams.csv");
 
     // ---- Typed parameter accessor ----
     template<typename T>

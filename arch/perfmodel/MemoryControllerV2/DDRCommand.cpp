@@ -86,8 +86,8 @@ string DDRCommand::whichStr() const
         case Deselect:
             ss << "Deselect";
             break;
-        case CG1_ISA_OPCODE_NOP:
-            ss << "CG1_ISA_OPCODE_NOP";
+        case CG_ISA_OPCODE_NOP:
+            ss << "CG_ISA_OPCODE_NOP";
             break;
         case Active:
             ss << "Active bank=" << bank << " row=" << row;
@@ -253,7 +253,7 @@ void DDRCommand::dump() const
             
         // Predefined cases for unsupported commands
         CASEUNSUPPORTED(Deselect)
-        CASEUNSUPPORTED(CG1_ISA_OPCODE_NOP)
+        CASEUNSUPPORTED(CG_ISA_OPCODE_NOP)
         CASEUNSUPPORTED(AutoRefresh)
         CASEUNSUPPORTED(Unknown)
         default:

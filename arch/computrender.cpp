@@ -1,17 +1,17 @@
 /**************************************************************************
  *
- *  CG1 GPU implementation file 
+ *  computrendering GPU implementation file 
  *  This file implements the simulator(perfmodel) main loop and support functions 
  *
  */
 
-//  CG1 GPU definitions and declarations.  
+//  computrendering GPU definitions and declarations.  
 #include "computrender.hpp"
 
 #include "perfmodel.h"
 
 #if CG_ARCH_MODEL_DEVEL
-#include "CG1AMDL.h"
+#include "archmodel.h"
 #endif
 
 #include "param_loader.hpp"
@@ -229,7 +229,7 @@ void arch::segFaultSignalHandler(int s)
 
 void out_of_memory()
 {
-    cerr << "CG1GpuSim::out_of_memory -> Memory exhausted. Aborting" << endl;
+    cerr << "Computrendering::out_of_memory -> Memory exhausted. Aborting" << endl;
     exit(-1);
 }
 
@@ -434,7 +434,7 @@ int main(int argc, char *argv[])
     }
 
     //  Print loaded parameters.
-    CG_INFO("CG1 GPU Simulation Parameters.");
+    CG_INFO("computrendering GPU Simulation Parameters.");
     CG_INFO("Input File = %s", ArchConf.sim.inputFile);
     CG_INFO("Signal Trace File = %s", ArchConf.sim.signalDumpFile);
     CG_INFO("Statistics File = %s", ArchConf.sim.statsFile);
@@ -514,7 +514,7 @@ int main(int argc, char *argv[])
         fileExtensionTester(ArchConf.sim.inputFile, "txt"))
     {
         cout << "Using OpenGL Trace File as simulation input." << endl;
-        cout << "Using CG1 Graphics Abstraction Layer (GAL) Library." << endl;
+        cout << "Using ComputGeneral Graphics Abstraction Layer (GAL) Library." << endl;
         //  Initialize a trace for an OpenGL trace file
         //TraceDriver = new TraceDriverOGL(ArchConf.sim.inputFile,
         //                              HAL::getHAL(),
@@ -525,7 +525,7 @@ int main(int argc, char *argv[])
     if (fileExtensionTester(ArchConf.sim.inputFile, "trace"))
     {
         cout << "Using Apitrace Binary Trace File as simulation input." << endl;
-        cout << "Using CG1 Graphics Abstraction Layer (GAL) Library." << endl;
+        cout << "Using ComputGeneral Graphics Abstraction Layer (GAL) Library." << endl;
         
         // Detect whether trace contains GL or D3D calls
         apitrace::ApitraceParser detector;
@@ -577,12 +577,12 @@ int main(int argc, char *argv[])
     {
         case CG_BEHV_MODEL: 
             GpuModel = new BhavModel(ArchConf, TraceDriver);
-            CG_INFO("CG1 MAL5 BMDL Enabled for Simulation");
+            CG_INFO("ComputGeneral MAL5 bhavmodel Enabled for Simulation");
             break;
         case CG_PERF_MODEL: 
             GpuModel = new PerfModel(ArchConf, TraceDriver); 
             panicCallback = &panicSnapshotWrapper;    //  Define the call back for the panic function to save a snapshot on simulator errors.
-            CG_INFO("CG1 MAL3 perfmodel Enabled for Simulation");
+            CG_INFO("ComputGeneral MAL3 perfmodel Enabled for Simulation");
             break;
 #if CG_ARCH_MODEL_DEVEL
         case CG_ARCH_MODEL:
@@ -591,9 +591,9 @@ int main(int argc, char *argv[])
             sc_core::sc_report_handler::set_actions(SC_WARNING, SC_LOG);
             //sc_report_handler::set_actions(SC_ID_INSTANCE_EXISTS_, SC_DO_NOTHING);
             sc_core::sc_report_handler::set_actions(SC_ID_INSTANCE_EXISTS_, SC_WARNING, SC_DO_NOTHING);
-            GpuModel = new CG1AMDL(ArchConf, TraceDriver);
+            GpuModel = new ArchModel(ArchConf, TraceDriver);
             panicCallback = &panicSnapshotWrapper;    //  Define the call back for the panic function to save a snapshot on simulator errors.
-            CG_INFO("CG1 MAL1 AMDL Enabled for Simulation");
+            CG_INFO("computrendering MAL1 AMDL Enabled for Simulation");
             break;
 #endif
         default: CG_ASSERT("UNDEFINED/UNIMPLEMENTED MAL Detected!");
@@ -625,9 +625,9 @@ int main(int argc, char *argv[])
     if (debugMode || validMode)    //  Check for debug mode to enable the interactive debug loop.
     {
         signal(SIGINT, &abortSignalHandler);        
-        cout << "CG1>> Starting simulator debug mode ---- " << endl << endl;
+        cout << "computrendering>> Starting simulator debug mode ---- " << endl << endl;
         GpuModel->debugLoop(validMode);
-        cout << "CG1>> Exiting simulator debug mode ---- " << endl;
+        cout << "computrendering>> Exiting simulator debug mode ---- " << endl;
     }
     else
     {

@@ -120,7 +120,7 @@ Adhere strictly to the existing style to maintain consistency.
 | Methods | camelCase | `setComponents`, `getVector` |
 | Variables | camelCase | `component`, `index`, `vertexCount` |
 | Member Variables | camelCase (no prefix) | `parser_`, `driver_` |
-| Constants/Macros | UPPER_CASE | `GPU_ERROR_CHECK`, `CG1_ISA_OPCODE_DP4` |
+| Constants/Macros | UPPER_CASE | `GPU_ERROR_CHECK`, `CG_ISA_OPCODE_DP4` |
 | Namespaces | lowercase | `arch`, `apitrace` |
 | Files | PascalCase, matching class | `Vec4FP32.cpp`, `Vec4FP32.h` |
 
@@ -206,7 +206,7 @@ void MyClass::myMethod(S32 value) {
 
 ### Modifying GPU Configuration
 
-1. Edit `arch/common/params/CG1GPU.ini` or create a new variant
+1. Edit `arch/common/params/archParams.csv` or create a new variant
 2. Ensure `ConfigLoader` (`arch/utils/ConfigLoader.h`) supports new parameters
 3. Wire new params through to the appropriate MDU constructors
 

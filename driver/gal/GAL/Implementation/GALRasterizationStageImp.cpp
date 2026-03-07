@@ -131,7 +131,7 @@ void GALRasterizationStageImp::sync()
 {
     arch::GPURegData data;
     
-    // Fill mode not sync. CG1 GPU doesn�t support wireframe mode
+    // Fill mode not sync. computrendering GPU doesn�t support wireframe mode
     if ( _fillMode.changed() || _syncRequired ) {
         if (_fillMode == GAL_FILL_WIREFRAME)
             CG_ASSERT("Wireframe mode not supported natively");

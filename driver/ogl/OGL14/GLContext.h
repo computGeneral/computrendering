@@ -727,7 +727,7 @@ public:
      *  Returns if the triangle setup shader program is updated.
      *
      *  @return The triangle setup shader program update state.
-     *  @note This method returns always true if TriangleSetupOnShader option is FALSE in CG1GPU.ini
+     *  @note This method returns always true if TriangleSetupOnShader option is FALSE in archParams.csv
      *
      */
 
@@ -738,7 +738,7 @@ public:
      *  Returns if the triangle setup shader constants are updated.
      *
      *  @return The state of the triangle setup shader constants, if they are update.
-     *  @note This method returns always true if TriangleSetupOnShader option is FALSE in CG1GPU.ini
+     *  @note This method returns always true if TriangleSetupOnShader option is FALSE in archParams.csv
      */
 
     bool areSetupShaderConstantsUpdated() const;

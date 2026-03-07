@@ -12,7 +12,7 @@ int main() {
 	F32 v2[] = { 2.0, 3.0, 2.0, 9.0 };
 	
 
-	cout << "CG1_ISA_OPCODE_DP3 de : ";
+	cout << "CG_ISA_OPCODE_DP3 de : ";
 	print_vector( v1 );
 	cout << " con ";
 	print_vector( v2 );
@@ -20,8 +20,8 @@ int main() {
 	
 	F32 vOut[4];
 
-	GPUMath::CG1_ISA_OPCODE_DP4( v1, v2, vOut );
-	//F32 result = GPUMath::CG1_ISA_OPCODE_DP3( v1[0], v1[1], v1[2], v2[0], v2[1], v2[2] );
+	GPUMath::CG_ISA_OPCODE_DP4( v1, v2, vOut );
+	//F32 result = GPUMath::CG_ISA_OPCODE_DP3( v1[0], v1[1], v1[2], v2[0], v2[1], v2[2] );
 
 	cout << "El resultado es: ";
 	//print_replicate( result );

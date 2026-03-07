@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# CG1 GPU Simulator — Regression Test Script
+# computrendering GPU Simulator — Regression Test Script
 #
 # Parses tools/script/regression/regression_list and runs computrender (perfmodel)
 # for each OGL test trace. Compares output PPMs against reference/ using
@@ -93,7 +93,7 @@ TOTAL=0
 > "$REG_OUT"
 
 echo "========================================"
-echo " CG1 GPU Regression Test"
+echo " computrendering GPU Regression Test"
 echo " List: $REG_LIST"
 echo "========================================"
 echo ""

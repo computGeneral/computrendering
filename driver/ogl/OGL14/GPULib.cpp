@@ -1445,7 +1445,7 @@ GLAPI const GLubyte* GLAPIENTRY glGetString( GLenum name )
     PRINT_CALL("glGetString(" << name << ");" << endl; )
 
     static GLubyte vendor[] = "DisplayController";
-    static GLubyte renderer[] = "CG1 GPU";
+    static GLubyte renderer[] = "computrendering GPU";
     static GLubyte ver[] = "1.0";
     static GLubyte extensions[] = "Why do you want to check extensions ? We support ALL";
     switch ( name )

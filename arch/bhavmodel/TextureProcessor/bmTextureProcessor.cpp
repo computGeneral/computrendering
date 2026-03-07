@@ -1835,10 +1835,10 @@ F32 bmoTextureProcessor::anisoExperimentalAngle(F32 dudx, F32 dudy, F32 dvdx, F3
     pxy = (F32) GPU_SQRT((dudx + dudy) * (dudx + dudy) * 0.5 + (dvdx + dvdy) * (dvdx + dvdy) * 0.5);
     pyx = (F32) GPU_SQRT((dudx - dudy) * (dudx - dudy) * 0.5 + (dvdx - dvdy) * (dvdx - dvdy) * 0.5);
 
-//printf("CG1_ISA_OPCODE_EXP-Angle >> (dudx, dvdx) = (%f, %f) | (dudy, dvdy) = (%f, %f)\n", dudx, dvdx, dudy, dvdy);
-//printf("CG1_ISA_OPCODE_EXP-Angle >> (dX + dY) = (%f, %f) | (dX - dY) = (%f, %f)\n",
+//printf("CG_ISA_OPCODE_EXP-Angle >> (dudx, dvdx) = (%f, %f) | (dudy, dvdy) = (%f, %f)\n", dudx, dvdx, dudy, dvdy);
+//printf("CG_ISA_OPCODE_EXP-Angle >> (dX + dY) = (%f, %f) | (dX - dY) = (%f, %f)\n",
 //dudx + dudy, dvdx + dvdy, dudx - dudy, dvdx - dvdy);
-//printf("CG1_ISA_OPCODE_EXP-Angle >> px = %f | py = %f | pxy = %f | pyx = %f\n", px, py, pxy, pyx);
+//printf("CG_ISA_OPCODE_EXP-Angle >> px = %f | py = %f | pxy = %f | pyx = %f\n", px, py, pxy, pyx);
 
     //  Calculate the minimum and maximum for both axis.  */
     pMin = GPU_MIN(px, py);
@@ -1854,7 +1854,7 @@ F32 bmoTextureProcessor::anisoExperimentalAngle(F32 dudx, F32 dudy, F32 dvdx, F3
     //  Calculate ratio for XY/YX axis.
     N2 = GPU_MIN(pMax2/pMin2, F32(maxAniso));
 
-//printf("CG1_ISA_OPCODE_EXP-Angle >>> areaA = %f | areaB = %f | NA = %f | NB = %f\n",
+//printf("CG_ISA_OPCODE_EXP-Angle >>> areaA = %f | areaB = %f | NA = %f | NB = %f\n",
 //pMax * pMin, pMax2 * pMin2, N, N2);
 
     //  Set vectors
@@ -1870,12 +1870,12 @@ F32 bmoTextureProcessor::anisoExperimentalAngle(F32 dudx, F32 dudy, F32 dvdx, F3
     adjustedMajorLength1 = GPU_ABS(factor) / pMax + pMax;
     adjustedMinorLength1 = pMin * GPU_ABS( (F32) GPU_SQRT(1 - (factor / (pMin * pMax) * (factor / (pMin * pMax)))));
 
-//printf("CG1_ISA_OPCODE_EXP-Angle >> (X/Y) original ratio %f factor %f angle %f\n", N, factor, acos(factor / (pMax * pMin)));
+//printf("CG_ISA_OPCODE_EXP-Angle >> (X/Y) original ratio %f factor %f angle %f\n", N, factor, acos(factor / (pMax * pMin)));
 
     //  Recompute anisotropy ratio.
     newN1 = GPU_MIN(adjustedMajorLength1 / adjustedMinorLength1, F32(maxAniso));
 
-//printf("CG1_ISA_OPCODE_EXP-Angle >> (X/Y) adj Major %f adj Minor %f new ratio %f\n", adjustedMajorLength1, adjustedMinorLength1, N);
+//printf("CG_ISA_OPCODE_EXP-Angle >> (X/Y) adj Major %f adj Minor %f new ratio %f\n", adjustedMajorLength1, adjustedMinorLength1, N);
 
     //  Set vectors
     vectorA[0] = (dudx + dudy) / (F32) GPU_SQRT(2.0f);
@@ -1890,12 +1890,12 @@ F32 bmoTextureProcessor::anisoExperimentalAngle(F32 dudx, F32 dudy, F32 dvdx, F3
     adjustedMajorLength2 = GPU_ABS(factor) / pMax2 + pMax2;
     adjustedMinorLength2 = pMin2 * GPU_ABS((F32) GPU_SQRT(1 - (factor / (pMin2 * pMax2) * (factor / (pMin2 * pMax2)))));
 
-//printf("CG1_ISA_OPCODE_EXP-Angle >> (X+Y/X-Y) original ratio %f factor %f angle %f\n", N2, factor, acos(factor / (pMax2 * pMin2)));
+//printf("CG_ISA_OPCODE_EXP-Angle >> (X+Y/X-Y) original ratio %f factor %f angle %f\n", N2, factor, acos(factor / (pMax2 * pMin2)));
 
     //  Recompute anisotropy ratio.
     newN2 = GPU_MIN(adjustedMajorLength2 / adjustedMinorLength2, F32(maxAniso));
 
-//printf("CG1_ISA_OPCODE_EXP-Angle >> (X+Y/X-Y) adj Major %f adj Minor %f new ratio %f\n", adjustedMajorLength2, adjustedMinorLength2, N2);
+//printf("CG_ISA_OPCODE_EXP-Angle >> (X+Y/X-Y) adj Major %f adj Minor %f new ratio %f\n", adjustedMajorLength2, adjustedMinorLength2, N2);
 
     //  Calculate the texture scale for each sample.
     scale1 = adjustedMajorLength1 / N;
@@ -1936,7 +1936,7 @@ F32 bmoTextureProcessor::anisoExperimentalAngle(F32 dudx, F32 dudy, F32 dvdx, F3
         scale = pMax2 / newN2;
     }
 
-//printf("CG1_ISA_OPCODE_EXP-Angle >> samples = %d | scale = %f | axis = ", samples, scale);
+//printf("CG_ISA_OPCODE_EXP-Angle >> samples = %d | scale = %f | axis = ", samples, scale);
 
     //  Calculate the per anisotropic sample offsets in s,t space.  
     switch(axis)

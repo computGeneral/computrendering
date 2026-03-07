@@ -51,7 +51,7 @@ void panic(const char* className, const char* fnName, const char* message)
 
 /*void panic_func(const char *className, const char *fnName, const char *message, const char* file, int line)
 //{
-    //CG1_ISA_OPCODE_LOG(0, Log::log() << "PANIC: " << "class: " << className << " method: " << fnName << " Msg: " << message; )
+    //CG_ISA_OPCODE_LOG(0, Log::log() << "PANIC: " << "class: " << className << " method: " << fnName << " Msg: " << message; )
     cout << "File: " << file << "  Line: " << line << "\n ";
     cout << className << ":" << fnName << " => " << message << endl;
     exit(-1);

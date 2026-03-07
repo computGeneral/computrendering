@@ -1998,7 +1998,7 @@ GLAPI const GLubyte* GLAPIENTRY OGL_glGetString( GLenum name )
     OGL_PRINTCALL_1(name);
 
     static GLubyte vendor[] = "DisplayController";
-    static GLubyte renderer[] = "CG1 GPU";
+    static GLubyte renderer[] = "computrendering GPU";
     static GLubyte ver[] = "1.0";
     static GLubyte slver[] = "1.10";
     static GLubyte extensions[] = "Why do you want to check extensions ? We support ALL";

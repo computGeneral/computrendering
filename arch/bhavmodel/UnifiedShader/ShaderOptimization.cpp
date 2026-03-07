@@ -72,54 +72,54 @@ U32 ShaderOptimization::mappingTableComp3[] =
 //
 //  Instruction classification.
 //
-//   Scalar result (broadcast): CG1_ISA_OPCODE_DP3, CG1_ISA_OPCODE_DP4, CG1_ISA_OPCODE_DPH, CG1_ISA_OPCODE_EX2, CG1_ISA_OPCODE_FRC, CG1_ISA_OPCODE_LG2, CG1_ISA_OPCODE_RCP, CG1_ISA_OPCODE_RSQ
-//   Vector operation : CG1_ISA_OPCODE_ADD, CG1_ISA_OPCODE_CMP, CG1_ISA_OPCODE_CMP_CG1_ISA_OPCODE_KIL, CG1_ISA_OPCODE_MAD, CG1_ISA_OPCODE_FXMAD, CG1_ISA_OPCODE_FXMAD2, CG1_ISA_OPCODE_MAX, CG1_ISA_OPCODE_MIN, CG1_ISA_OPCODE_MOV, CG1_ISA_OPCODE_MUL, CG1_ISA_OPCODE_FXMUL, CG1_ISA_OPCODE_SGE, CG1_ISA_OPCODE_SLT
-//   SIMD4 result : CG1_ISA_OPCODE_DST, CG1_ISA_OPCODE_EXP, CG1_ISA_OPCODE_LDA, CG1_ISA_OPCODE_LIT, CG1_ISA_OPCODE_LOG, CG1_ISA_OPCODE_TEX, CG1_ISA_OPCODE_TXB, CG1_ISA_OPCODE_TXL, CG1_ISA_OPCODE_TXP
-//   No result : CG1_ISA_OPCODE_KIL, CG1_ISA_OPCODE_KLS, CG1_ISA_OPCODE_ZXP, CG1_ISA_OPCODE_ZXS, CG1_ISA_OPCODE_NOP, CG1_ISA_OPCODE_CHS
-//   Address register result: CG1_ISA_OPCODE_ARL
-//   Not implemented : CG1_ISA_OPCODE_FLR
+//   Scalar result (broadcast): CG_ISA_OPCODE_DP3, CG_ISA_OPCODE_DP4, CG_ISA_OPCODE_DPH, CG_ISA_OPCODE_EX2, CG_ISA_OPCODE_FRC, CG_ISA_OPCODE_LG2, CG_ISA_OPCODE_RCP, CG_ISA_OPCODE_RSQ
+//   Vector operation : CG_ISA_OPCODE_ADD, CG_ISA_OPCODE_CMP, CG_ISA_OPCODE_CMP_CG_ISA_OPCODE_KIL, CG_ISA_OPCODE_MAD, CG_ISA_OPCODE_FXMAD, CG_ISA_OPCODE_FXMAD2, CG_ISA_OPCODE_MAX, CG_ISA_OPCODE_MIN, CG_ISA_OPCODE_MOV, CG_ISA_OPCODE_MUL, CG_ISA_OPCODE_FXMUL, CG_ISA_OPCODE_SGE, CG_ISA_OPCODE_SLT
+//   SIMD4 result : CG_ISA_OPCODE_DST, CG_ISA_OPCODE_EXP, CG_ISA_OPCODE_LDA, CG_ISA_OPCODE_LIT, CG_ISA_OPCODE_LOG, CG_ISA_OPCODE_TEX, CG_ISA_OPCODE_TXB, CG_ISA_OPCODE_TXL, CG_ISA_OPCODE_TXP
+//   No result : CG_ISA_OPCODE_KIL, CG_ISA_OPCODE_KLS, CG_ISA_OPCODE_ZXP, CG_ISA_OPCODE_ZXS, CG_ISA_OPCODE_NOP, CG_ISA_OPCODE_CHS
+//   Address register result: CG_ISA_OPCODE_ARL
+//   Not implemented : CG_ISA_OPCODE_FLR
 //
 
 bool ShaderOptimization::hasScalarResult(ShOpcode opc)
 {
-    return (opc == CG1_ISA_OPCODE_DP3) || (opc == CG1_ISA_OPCODE_DP4) || (opc == CG1_ISA_OPCODE_DPH) || (opc == CG1_ISA_OPCODE_EX2) ||
-           (opc == CG1_ISA_OPCODE_FRC) || (opc == CG1_ISA_OPCODE_LG2) || (opc == CG1_ISA_OPCODE_RCP) || (opc == CG1_ISA_OPCODE_RSQ) ||
-           (opc == CG1_ISA_OPCODE_COS) || (opc == CG1_ISA_OPCODE_SIN);
+    return (opc == CG_ISA_OPCODE_DP3) || (opc == CG_ISA_OPCODE_DP4) || (opc == CG_ISA_OPCODE_DPH) || (opc == CG_ISA_OPCODE_EX2) ||
+           (opc == CG_ISA_OPCODE_FRC) || (opc == CG_ISA_OPCODE_LG2) || (opc == CG_ISA_OPCODE_RCP) || (opc == CG_ISA_OPCODE_RSQ) ||
+           (opc == CG_ISA_OPCODE_COS) || (opc == CG_ISA_OPCODE_SIN);
 }
 
 bool ShaderOptimization::isVectorOperation(ShOpcode opc)
 {
-    return (opc == CG1_ISA_OPCODE_ADD)    || (opc == CG1_ISA_OPCODE_CMP) || (opc == CG1_ISA_OPCODE_CMPKIL)  || (opc == CG1_ISA_OPCODE_MAD) || (opc == CG1_ISA_OPCODE_FXMAD) ||
-           (opc == CG1_ISA_OPCODE_FXMAD2) || (opc == CG1_ISA_OPCODE_MAX) || (opc == CG1_ISA_OPCODE_MIN)     || (opc == CG1_ISA_OPCODE_MOV) || (opc == CG1_ISA_OPCODE_MUL)   ||
-           (opc == CG1_ISA_OPCODE_FXMUL)  || (opc == CG1_ISA_OPCODE_SGE) || (opc == CG1_ISA_OPCODE_SLT)     || (opc == CG1_ISA_OPCODE_DDX) || (opc == CG1_ISA_OPCODE_DDY) ||
-           (opc == CG1_ISA_OPCODE_ADDI) || (opc == CG1_ISA_OPCODE_MULI);
+    return (opc == CG_ISA_OPCODE_ADD)    || (opc == CG_ISA_OPCODE_CMP) || (opc == CG_ISA_OPCODE_CMPKIL)  || (opc == CG_ISA_OPCODE_MAD) || (opc == CG_ISA_OPCODE_FXMAD) ||
+           (opc == CG_ISA_OPCODE_FXMAD2) || (opc == CG_ISA_OPCODE_MAX) || (opc == CG_ISA_OPCODE_MIN)     || (opc == CG_ISA_OPCODE_MOV) || (opc == CG_ISA_OPCODE_MUL)   ||
+           (opc == CG_ISA_OPCODE_FXMUL)  || (opc == CG_ISA_OPCODE_SGE) || (opc == CG_ISA_OPCODE_SLT)     || (opc == CG_ISA_OPCODE_DDX) || (opc == CG_ISA_OPCODE_DDY) ||
+           (opc == CG_ISA_OPCODE_ADDI) || (opc == CG_ISA_OPCODE_MULI);
 }
 
 bool ShaderOptimization::hasSIMD4Result(ShOpcode opc)
 {
-    return (opc == CG1_ISA_OPCODE_DST) || (opc == CG1_ISA_OPCODE_EXP) || (opc == CG1_ISA_OPCODE_LDA) || (opc == CG1_ISA_OPCODE_LIT) ||
-           (opc == CG1_ISA_OPCODE_LOG) || (opc == CG1_ISA_OPCODE_TEX) || (opc == CG1_ISA_OPCODE_TXB) || (opc == CG1_ISA_OPCODE_TXL) ||
-           (opc == CG1_ISA_OPCODE_TXP);
+    return (opc == CG_ISA_OPCODE_DST) || (opc == CG_ISA_OPCODE_EXP) || (opc == CG_ISA_OPCODE_LDA) || (opc == CG_ISA_OPCODE_LIT) ||
+           (opc == CG_ISA_OPCODE_LOG) || (opc == CG_ISA_OPCODE_TEX) || (opc == CG_ISA_OPCODE_TXB) || (opc == CG_ISA_OPCODE_TXL) ||
+           (opc == CG_ISA_OPCODE_TXP);
 }
 
 bool ShaderOptimization::hasNoResult(ShOpcode opc)
 {
-    return (opc == CG1_ISA_OPCODE_KIL) || (opc == CG1_ISA_OPCODE_KLS) || (opc == CG1_ISA_OPCODE_ZXP) || (opc == CG1_ISA_OPCODE_ZXS) || (opc == CG1_ISA_OPCODE_NOP) || (opc == CG1_ISA_OPCODE_CHS) || (opc == CG1_ISA_OPCODE_JMP);
+    return (opc == CG_ISA_OPCODE_KIL) || (opc == CG_ISA_OPCODE_KLS) || (opc == CG_ISA_OPCODE_ZXP) || (opc == CG_ISA_OPCODE_ZXS) || (opc == CG_ISA_OPCODE_NOP) || (opc == CG_ISA_OPCODE_CHS) || (opc == CG_ISA_OPCODE_JMP);
 }
 
 bool ShaderOptimization::hasAddrRegResult(ShOpcode opc)
 {
-    return (opc == CG1_ISA_OPCODE_ARL);
+    return (opc == CG_ISA_OPCODE_ARL);
 }
 
 bool ShaderOptimization::notImplemented(ShOpcode opc)
 {
-    return (opc == CG1_ISA_OPCODE_FLR);
+    return (opc == CG_ISA_OPCODE_FLR);
 }
 
 bool ShaderOptimization::mustDisableEarlyZ(ShOpcode opc)
 {
-    return (opc == CG1_ISA_OPCODE_KIL) || (opc == CG1_ISA_OPCODE_KLS) || (opc == CG1_ISA_OPCODE_ZXP) || (opc == CG1_ISA_OPCODE_ZXS);
+    return (opc == CG_ISA_OPCODE_KIL) || (opc == CG_ISA_OPCODE_KLS) || (opc == CG_ISA_OPCODE_ZXP) || (opc == CG_ISA_OPCODE_ZXS);
 }
 
 
@@ -325,25 +325,25 @@ void ShaderOptimization::updateTempRegsUsed(cgoShaderInstr *instr, bool *tempInU
 {
     switch(instr->getOpcode())
     {
-        case CG1_ISA_OPCODE_NOP:
-        case CG1_ISA_OPCODE_END:
-        case CG1_ISA_OPCODE_CHS:
+        case CG_ISA_OPCODE_NOP:
+        case CG_ISA_OPCODE_END:
+        case CG_ISA_OPCODE_CHS:
 
             //  Don't use any register.
 
             break;
 
-        case CG1_ISA_OPCODE_FLR:
+        case CG_ISA_OPCODE_FLR:
 
             //  Unimplemented.
 
             break;
 
-        case CG1_ISA_OPCODE_KIL:
-        case CG1_ISA_OPCODE_KLS:
-        case CG1_ISA_OPCODE_ZXP:
-        case CG1_ISA_OPCODE_ZXS:
-        case CG1_ISA_OPCODE_JMP:
+        case CG_ISA_OPCODE_KIL:
+        case CG_ISA_OPCODE_KLS:
+        case CG_ISA_OPCODE_ZXP:
+        case CG_ISA_OPCODE_ZXS:
+        case CG_ISA_OPCODE_JMP:
 
             //  Does not use the result register.
 
@@ -407,73 +407,73 @@ void ShaderOptimization::updateInstructionType(cgoShaderInstr *instr, unsigned i
 {
     switch(instr->getOpcode())
     {
-        case CG1_ISA_OPCODE_FLR:
+        case CG_ISA_OPCODE_FLR:
 
             //  Unimplemented.
 
             break;
 
-        case CG1_ISA_OPCODE_LDA:
-        case CG1_ISA_OPCODE_TEX:
-        case CG1_ISA_OPCODE_TXB:
-        case CG1_ISA_OPCODE_TXL:
-        case CG1_ISA_OPCODE_TXP:
+        case CG_ISA_OPCODE_LDA:
+        case CG_ISA_OPCODE_TEX:
+        case CG_ISA_OPCODE_TXB:
+        case CG_ISA_OPCODE_TXL:
+        case CG_ISA_OPCODE_TXP:
 
             // Texture/Load instructions.
             instrType[TEX_INSTR_TYPE]++;
 
             break;
 
-        case CG1_ISA_OPCODE_ARL:
-        case CG1_ISA_OPCODE_DPH:
-        case CG1_ISA_OPCODE_DP3:
-        case CG1_ISA_OPCODE_DP4:
-        case CG1_ISA_OPCODE_DST:
-        case CG1_ISA_OPCODE_LIT:
-        case CG1_ISA_OPCODE_EX2:
-        case CG1_ISA_OPCODE_EXP:
-        case CG1_ISA_OPCODE_FRC:
-        case CG1_ISA_OPCODE_LG2:
-        case CG1_ISA_OPCODE_LOG:
-        case CG1_ISA_OPCODE_RCP:
-        case CG1_ISA_OPCODE_RSQ:
-        case CG1_ISA_OPCODE_MUL:
-        case CG1_ISA_OPCODE_FXMUL:
-        case CG1_ISA_OPCODE_MAD:
-        case CG1_ISA_OPCODE_FXMAD:
-        case CG1_ISA_OPCODE_FXMAD2:
-        case CG1_ISA_OPCODE_MAX:
-        case CG1_ISA_OPCODE_MIN:
-        case CG1_ISA_OPCODE_MOV:
-        case CG1_ISA_OPCODE_SGE:
-        case CG1_ISA_OPCODE_SLT:
-        case CG1_ISA_OPCODE_CMP:
-        case CG1_ISA_OPCODE_ADD:
-        case CG1_ISA_OPCODE_SETPEQ:
-        case CG1_ISA_OPCODE_SETPGT:
-        case CG1_ISA_OPCODE_SETPLT:
-        case CG1_ISA_OPCODE_ANDP:
-        case CG1_ISA_OPCODE_DDX:
-        case CG1_ISA_OPCODE_DDY:
-        case CG1_ISA_OPCODE_ADDI:
-        case CG1_ISA_OPCODE_MULI:
-        case CG1_ISA_OPCODE_STPEQI:
-        case CG1_ISA_OPCODE_STPGTI:
-        case CG1_ISA_OPCODE_STPLTI:
+        case CG_ISA_OPCODE_ARL:
+        case CG_ISA_OPCODE_DPH:
+        case CG_ISA_OPCODE_DP3:
+        case CG_ISA_OPCODE_DP4:
+        case CG_ISA_OPCODE_DST:
+        case CG_ISA_OPCODE_LIT:
+        case CG_ISA_OPCODE_EX2:
+        case CG_ISA_OPCODE_EXP:
+        case CG_ISA_OPCODE_FRC:
+        case CG_ISA_OPCODE_LG2:
+        case CG_ISA_OPCODE_LOG:
+        case CG_ISA_OPCODE_RCP:
+        case CG_ISA_OPCODE_RSQ:
+        case CG_ISA_OPCODE_MUL:
+        case CG_ISA_OPCODE_FXMUL:
+        case CG_ISA_OPCODE_MAD:
+        case CG_ISA_OPCODE_FXMAD:
+        case CG_ISA_OPCODE_FXMAD2:
+        case CG_ISA_OPCODE_MAX:
+        case CG_ISA_OPCODE_MIN:
+        case CG_ISA_OPCODE_MOV:
+        case CG_ISA_OPCODE_SGE:
+        case CG_ISA_OPCODE_SLT:
+        case CG_ISA_OPCODE_CMP:
+        case CG_ISA_OPCODE_ADD:
+        case CG_ISA_OPCODE_SETPEQ:
+        case CG_ISA_OPCODE_SETPGT:
+        case CG_ISA_OPCODE_SETPLT:
+        case CG_ISA_OPCODE_ANDP:
+        case CG_ISA_OPCODE_DDX:
+        case CG_ISA_OPCODE_DDY:
+        case CG_ISA_OPCODE_ADDI:
+        case CG_ISA_OPCODE_MULI:
+        case CG_ISA_OPCODE_STPEQI:
+        case CG_ISA_OPCODE_STPGTI:
+        case CG_ISA_OPCODE_STPLTI:
 
             // ALU instructions.
             instrType[ALU_INSTR_TYPE]++;
 
             break;
 
-        case CG1_ISA_OPCODE_NOP:
-        case CG1_ISA_OPCODE_END:
-        case CG1_ISA_OPCODE_KIL:
-        case CG1_ISA_OPCODE_KLS:
-        case CG1_ISA_OPCODE_ZXP:
-        case CG1_ISA_OPCODE_ZXS:
-        case CG1_ISA_OPCODE_CHS:
-        case CG1_ISA_OPCODE_JMP:
+        case CG_ISA_OPCODE_NOP:
+        case CG_ISA_OPCODE_END:
+        case CG_ISA_OPCODE_KIL:
+        case CG_ISA_OPCODE_KLS:
+        case CG_ISA_OPCODE_ZXP:
+        case CG_ISA_OPCODE_ZXS:
+        case CG_ISA_OPCODE_CHS:
+        case CG_ISA_OPCODE_JMP:
 
             // Control instructions.
             instrType[CTRL_INSTR_TYPE]++;
@@ -706,32 +706,32 @@ void ShaderOptimization::getReadOperandComponents(cgoShaderInstr *instr, vector<
     //  and the components read so we need to create a special list of components.
     switch(instr->getOpcode())
     {
-        case CG1_ISA_OPCODE_NOP:
-        case CG1_ISA_OPCODE_END:
-        case CG1_ISA_OPCODE_CHS:
+        case CG_ISA_OPCODE_NOP:
+        case CG_ISA_OPCODE_END:
+        case CG_ISA_OPCODE_CHS:
 
             //  These instructions don't set or use any register.
 
             break;
 
-        case CG1_ISA_OPCODE_FLR:
+        case CG_ISA_OPCODE_FLR:
 
             //  Unimplemented.
 
             break;
 
-        case CG1_ISA_OPCODE_JMP:
+        case CG_ISA_OPCODE_JMP:
         
             //  A single component is read.
             readComponentsOp1.clear();
             readComponentsOp1.push_back(0);
             break;
             
-        case CG1_ISA_OPCODE_DP4:
-        case CG1_ISA_OPCODE_KIL:
-        case CG1_ISA_OPCODE_KLS:
-        case CG1_ISA_OPCODE_ZXP:
-        case CG1_ISA_OPCODE_ZXS:
+        case CG_ISA_OPCODE_DP4:
+        case CG_ISA_OPCODE_KIL:
+        case CG_ISA_OPCODE_KLS:
+        case CG_ISA_OPCODE_ZXP:
+        case CG_ISA_OPCODE_ZXS:
 
             //  For those instructions all the operand components are read.
             readComponentsOp1.clear();
@@ -748,9 +748,9 @@ void ShaderOptimization::getReadOperandComponents(cgoShaderInstr *instr, vector<
 
             break;
 
-        case CG1_ISA_OPCODE_TXB:
-        case CG1_ISA_OPCODE_TXL:
-        case CG1_ISA_OPCODE_TXP:
+        case CG_ISA_OPCODE_TXB:
+        case CG_ISA_OPCODE_TXL:
+        case CG_ISA_OPCODE_TXP:
 
             //  For those instructions all the operand components are read.
             readComponentsOp1.clear();
@@ -768,9 +768,9 @@ void ShaderOptimization::getReadOperandComponents(cgoShaderInstr *instr, vector<
 
             break;
 
-        case CG1_ISA_OPCODE_DPH:
+        case CG_ISA_OPCODE_DPH:
 
-            //  CG1_ISA_OPCODE_DPH is a very special case.  From the first operand the three first components are read.
+            //  CG_ISA_OPCODE_DPH is a very special case.  From the first operand the three first components are read.
             //  But for the second operand all four components are read.
 
             readComponentsOp1.clear();
@@ -786,7 +786,7 @@ void ShaderOptimization::getReadOperandComponents(cgoShaderInstr *instr, vector<
 
             break;
 
-        case CG1_ISA_OPCODE_DP3:
+        case CG_ISA_OPCODE_DP3:
 
             //  The three first components are read.  Not affected by the result components.
             readComponentsOp1.clear();
@@ -801,7 +801,7 @@ void ShaderOptimization::getReadOperandComponents(cgoShaderInstr *instr, vector<
 
             break;
 
-        case CG1_ISA_OPCODE_TEX:
+        case CG_ISA_OPCODE_TEX:
 
             //  The three first components are read.  Not affected by the result components.
             readComponentsOp1.clear();
@@ -816,9 +816,9 @@ void ShaderOptimization::getReadOperandComponents(cgoShaderInstr *instr, vector<
 
             break;
 
-        case CG1_ISA_OPCODE_LDA:
+        case CG_ISA_OPCODE_LDA:
 
-            //  CG1_ISA_OPCODE_LDA only reads the index from the first component.
+            //  CG_ISA_OPCODE_LDA only reads the index from the first component.
             //  Only the first operand is actually read.
             readComponentsOp1.clear();
             readComponentsOp1.push_back(0);
@@ -828,9 +828,9 @@ void ShaderOptimization::getReadOperandComponents(cgoShaderInstr *instr, vector<
 
             break;
 
-        case CG1_ISA_OPCODE_DST:
+        case CG_ISA_OPCODE_DST:
 
-            //  CG1_ISA_OPCODE_DST is a very special case.
+            //  CG_ISA_OPCODE_DST is a very special case.
             //
             //  For the first operand:
             //
@@ -859,11 +859,11 @@ void ShaderOptimization::getReadOperandComponents(cgoShaderInstr *instr, vector<
 
             break;
 
-        case CG1_ISA_OPCODE_LIT:
+        case CG_ISA_OPCODE_LIT:
 
-            //  CG1_ISA_OPCODE_LIT is a special case.
+            //  CG_ISA_OPCODE_LIT is a special case.
             //
-            //  CG1_ISA_OPCODE_LIT has a single operand:
+            //  CG_ISA_OPCODE_LIT has a single operand:
             //
             //    1st component is read if 2nd or 3rd result components are written
             //    2nd component is read if 3rd result component is written
@@ -898,20 +898,20 @@ void ShaderOptimization::getReadOperandComponents(cgoShaderInstr *instr, vector<
 
             break;
 
-        case CG1_ISA_OPCODE_EX2:
-        case CG1_ISA_OPCODE_EXP:
-        case CG1_ISA_OPCODE_FRC:
-        case CG1_ISA_OPCODE_LG2:
-        case CG1_ISA_OPCODE_LOG:
-        case CG1_ISA_OPCODE_RCP:
-        case CG1_ISA_OPCODE_RSQ:
-        case CG1_ISA_OPCODE_SETPEQ:
-        case CG1_ISA_OPCODE_SETPGT:
-        case CG1_ISA_OPCODE_SETPLT:
-        case CG1_ISA_OPCODE_ANDP:
-        case CG1_ISA_OPCODE_STPEQI:
-        case CG1_ISA_OPCODE_STPGTI:
-        case CG1_ISA_OPCODE_STPLTI:
+        case CG_ISA_OPCODE_EX2:
+        case CG_ISA_OPCODE_EXP:
+        case CG_ISA_OPCODE_FRC:
+        case CG_ISA_OPCODE_LG2:
+        case CG_ISA_OPCODE_LOG:
+        case CG_ISA_OPCODE_RCP:
+        case CG_ISA_OPCODE_RSQ:
+        case CG_ISA_OPCODE_SETPEQ:
+        case CG_ISA_OPCODE_SETPGT:
+        case CG_ISA_OPCODE_SETPLT:
+        case CG_ISA_OPCODE_ANDP:
+        case CG_ISA_OPCODE_STPEQI:
+        case CG_ISA_OPCODE_STPGTI:
+        case CG_ISA_OPCODE_STPLTI:
 
             //  Scalar operations but with result broadcast (result mask may not be a single component).
             //  For scalar instructions the swizzle mask for the only existing operand should always
@@ -1111,11 +1111,11 @@ void ShaderOptimization::attribute2lda(vector<cgoShaderInstr *> inProgram, vecto
     for(U32 attr = 0; attr < MAX_INPUT_ATTRIBUTES; attr++)
         input2temp[attr] = MAX_TEMPORAL_REGISTERS;
 
-    //  Now convert input attribute registers into temporal registers loaded using CG1_ISA_OPCODE_LDA.
+    //  Now convert input attribute registers into temporal registers loaded using CG_ISA_OPCODE_LDA.
     for(U32 instr = 0; instr < inProgram.size(); instr++)
     {
-        //  Check CG1_ISA_OPCODE_MOV instructions.
-        if ((inProgram[instr]->getOpcode() == CG1_ISA_OPCODE_MOV) && (inProgram[instr]->getBankOp1() == IN))
+        //  Check CG_ISA_OPCODE_MOV instructions.
+        if ((inProgram[instr]->getOpcode() == CG_ISA_OPCODE_MOV) && (inProgram[instr]->getBankOp1() == IN))
         {
             //  Check if the attribute was already loaded into a temporal register.
             if (input2temp[inProgram[instr]->getOp1()] == MAX_TEMPORAL_REGISTERS)
@@ -1125,7 +1125,7 @@ void ShaderOptimization::attribute2lda(vector<cgoShaderInstr *> inProgram, vecto
                 if (inProgram[instr]->getOp1AbsoluteFlag() || inProgram[instr]->getOp1NegateFlag() ||
                     inProgram[instr]->getOp1SwizzleMode() != XYZW)
                 {
-                    //  Add CG1_ISA_OPCODE_LDA instruction to load attribute into a temporal register.
+                    //  Add CG_ISA_OPCODE_LDA instruction to load attribute into a temporal register.
 
                     U32 newTemp;
 
@@ -1142,11 +1142,11 @@ void ShaderOptimization::attribute2lda(vector<cgoShaderInstr *> inProgram, vecto
                     tempInUse[newTemp] = true;
                     input2temp[inProgram[instr]->getOp1()] = newTemp;
 
-                    cgoShaderInstr *newCG1_ISA_OPCODE_LDAInstr;
+                    cgoShaderInstr *newCG_ISA_OPCODE_LDAInstr;
 
-                    newCG1_ISA_OPCODE_LDAInstr = new cgoShaderInstr(
+                    newCG_ISA_OPCODE_LDAInstr = new cgoShaderInstr(
                                             //  Opcode
-                                            CG1_ISA_OPCODE_LDA,
+                                            CG_ISA_OPCODE_LDA,
                                             //  First operand
                                             IN, INDEX_ATTRIBUTE, false, false, XXXX,
                                             //  Second operand
@@ -1163,9 +1163,9 @@ void ShaderOptimization::attribute2lda(vector<cgoShaderInstr *> inProgram, vecto
                                             false
                                       );
 
-                    outProgram.push_back(newCG1_ISA_OPCODE_LDAInstr);
+                    outProgram.push_back(newCG_ISA_OPCODE_LDAInstr);
 
-                    //  Patch the CG1_ISA_OPCODE_MOV instruction with the new temporal register.
+                    //  Patch the CG_ISA_OPCODE_MOV instruction with the new temporal register.
                     cgoShaderInstr *newMOVInstr;
 
                     newMOVInstr = patchedOpsInstruction(inProgram[instr], newTemp, TEMP,
@@ -1176,13 +1176,13 @@ void ShaderOptimization::attribute2lda(vector<cgoShaderInstr *> inProgram, vecto
                 }
                 else
                 {
-                    //  MOVs from an input attribute register are directly converted into CG1_ISA_OPCODE_LDA when
+                    //  MOVs from an input attribute register are directly converted into CG_ISA_OPCODE_LDA when
                     //  the read value is not modified (abs, neg or swizzle).
-                    cgoShaderInstr *newCG1_ISA_OPCODE_LDAInstr;
+                    cgoShaderInstr *newCG_ISA_OPCODE_LDAInstr;
 
-                    newCG1_ISA_OPCODE_LDAInstr = new cgoShaderInstr(
+                    newCG_ISA_OPCODE_LDAInstr = new cgoShaderInstr(
                                             //  Opcode
-                                            CG1_ISA_OPCODE_LDA,
+                                            CG_ISA_OPCODE_LDA,
                                             //  First operand
                                             IN, INDEX_ATTRIBUTE, false, false, XXXX,
                                             //  Second operand
@@ -1200,12 +1200,12 @@ void ShaderOptimization::attribute2lda(vector<cgoShaderInstr *> inProgram, vecto
                                             inProgram[instr]->getEndFlag()
                                       );
 
-                    outProgram.push_back(newCG1_ISA_OPCODE_LDAInstr);
+                    outProgram.push_back(newCG_ISA_OPCODE_LDAInstr);
                 }
             }
             else
             {
-                //  Recode the CG1_ISA_OPCODE_MOV instruction to use the temporal register.
+                //  Recode the CG_ISA_OPCODE_MOV instruction to use the temporal register.
                 cgoShaderInstr *newMOVInstr;
 
                 newMOVInstr = patchedOpsInstruction(inProgram[instr], input2temp[inProgram[instr]->getOp1()], TEMP,
@@ -1232,7 +1232,7 @@ void ShaderOptimization::attribute2lda(vector<cgoShaderInstr *> inProgram, vecto
                 //  Check if the attribute was already loaded.
                 if (input2temp[op1Reg] == MAX_TEMPORAL_REGISTERS)
                 {
-                    //  Add CG1_ISA_OPCODE_LDA instruction to load attribute into a temporal register.
+                    //  Add CG_ISA_OPCODE_LDA instruction to load attribute into a temporal register.
                     U32 newTemp;
 
                     //  Select the next free temporal register to store the attribute.
@@ -1248,11 +1248,11 @@ void ShaderOptimization::attribute2lda(vector<cgoShaderInstr *> inProgram, vecto
                     tempInUse[newTemp] = true;
                     input2temp[op1Reg] = newTemp;
 
-                    cgoShaderInstr *newCG1_ISA_OPCODE_LDAInstr;
+                    cgoShaderInstr *newCG_ISA_OPCODE_LDAInstr;
 
-                    newCG1_ISA_OPCODE_LDAInstr = new cgoShaderInstr(
+                    newCG_ISA_OPCODE_LDAInstr = new cgoShaderInstr(
                                             //  Opcode
-                                            CG1_ISA_OPCODE_LDA,
+                                            CG_ISA_OPCODE_LDA,
                                             //  First operand
                                             IN, INDEX_ATTRIBUTE, false, false, XXXX,
                                             //  Second operand
@@ -1269,7 +1269,7 @@ void ShaderOptimization::attribute2lda(vector<cgoShaderInstr *> inProgram, vecto
                                             false
                                       );
 
-                    outProgram.push_back(newCG1_ISA_OPCODE_LDAInstr);
+                    outProgram.push_back(newCG_ISA_OPCODE_LDAInstr);
 
                     //  Use the new temporal register.
                     op1Reg = newTemp;
@@ -1290,7 +1290,7 @@ void ShaderOptimization::attribute2lda(vector<cgoShaderInstr *> inProgram, vecto
                 //  Check if the attribute was already loaded.
                 if (input2temp[op2Reg] == MAX_TEMPORAL_REGISTERS)
                 {
-                    //  Add CG1_ISA_OPCODE_LDA instruction to load attribute into a temporal register.
+                    //  Add CG_ISA_OPCODE_LDA instruction to load attribute into a temporal register.
                     U32 newTemp;
 
                     //  Select the next free temporal register to store the attribute.
@@ -1306,11 +1306,11 @@ void ShaderOptimization::attribute2lda(vector<cgoShaderInstr *> inProgram, vecto
                     tempInUse[newTemp] = true;
                     input2temp[op2Reg] = newTemp;
 
-                    cgoShaderInstr *newCG1_ISA_OPCODE_LDAInstr;
+                    cgoShaderInstr *newCG_ISA_OPCODE_LDAInstr;
 
-                    newCG1_ISA_OPCODE_LDAInstr = new cgoShaderInstr(
+                    newCG_ISA_OPCODE_LDAInstr = new cgoShaderInstr(
                                             //  Opcode
-                                            CG1_ISA_OPCODE_LDA,
+                                            CG_ISA_OPCODE_LDA,
                                             //  First operand
                                             IN, INDEX_ATTRIBUTE, false, false, XXXX,
                                             //  Second operand
@@ -1327,7 +1327,7 @@ void ShaderOptimization::attribute2lda(vector<cgoShaderInstr *> inProgram, vecto
                                             false
                                       );
 
-                    outProgram.push_back(newCG1_ISA_OPCODE_LDAInstr);
+                    outProgram.push_back(newCG_ISA_OPCODE_LDAInstr);
 
                     //  Use the new temporal register.
                     op2Reg = newTemp;
@@ -1348,7 +1348,7 @@ void ShaderOptimization::attribute2lda(vector<cgoShaderInstr *> inProgram, vecto
                 //  Check if the attribute was already loaded.
                 if (input2temp[op3Reg] == MAX_TEMPORAL_REGISTERS)
                 {
-                    //  Add CG1_ISA_OPCODE_LDA instruction to load attribute into a temporal register.
+                    //  Add CG_ISA_OPCODE_LDA instruction to load attribute into a temporal register.
                     U32 newTemp;
 
                     //  Select the next free temporal register to store the attribute.
@@ -1364,11 +1364,11 @@ void ShaderOptimization::attribute2lda(vector<cgoShaderInstr *> inProgram, vecto
                     tempInUse[newTemp] = true;
                     input2temp[op3Reg] = newTemp;
 
-                    cgoShaderInstr *newCG1_ISA_OPCODE_LDAInstr;
+                    cgoShaderInstr *newCG_ISA_OPCODE_LDAInstr;
 
-                    newCG1_ISA_OPCODE_LDAInstr = new cgoShaderInstr(
+                    newCG_ISA_OPCODE_LDAInstr = new cgoShaderInstr(
                                             //  Opcode
-                                            CG1_ISA_OPCODE_LDA,
+                                            CG_ISA_OPCODE_LDA,
                                             //  First operand
                                             IN, INDEX_ATTRIBUTE, false, false, XXXX,
                                             //  Second operand
@@ -1385,7 +1385,7 @@ void ShaderOptimization::attribute2lda(vector<cgoShaderInstr *> inProgram, vecto
                                             false
                                       );
 
-                    outProgram.push_back(newCG1_ISA_OPCODE_LDAInstr);
+                    outProgram.push_back(newCG_ISA_OPCODE_LDAInstr);
 
                     //  Use the new temporal register.
                     op3Reg = newTemp;
@@ -1487,26 +1487,26 @@ printf("    %s\n", instrDisasm);*/
 
         switch(inProgram[instr]->getOpcode())
         {
-            case CG1_ISA_OPCODE_NOP:
-            case CG1_ISA_OPCODE_END:
-            case CG1_ISA_OPCODE_TEX:
-            case CG1_ISA_OPCODE_TXB:
-            case CG1_ISA_OPCODE_TXL:
-            case CG1_ISA_OPCODE_TXP:
-            case CG1_ISA_OPCODE_LDA:
-            case CG1_ISA_OPCODE_KIL:
-            case CG1_ISA_OPCODE_KLS:
-            case CG1_ISA_OPCODE_ZXP:
-            case CG1_ISA_OPCODE_ZXS:
-            case CG1_ISA_OPCODE_CHS:
-            case CG1_ISA_OPCODE_SETPEQ:
-            case CG1_ISA_OPCODE_SETPGT:
-            case CG1_ISA_OPCODE_SETPLT:
-            case CG1_ISA_OPCODE_ANDP:
-            case CG1_ISA_OPCODE_JMP:
-            case CG1_ISA_OPCODE_STPEQI:
-            case CG1_ISA_OPCODE_STPGTI:
-            case CG1_ISA_OPCODE_STPLTI:
+            case CG_ISA_OPCODE_NOP:
+            case CG_ISA_OPCODE_END:
+            case CG_ISA_OPCODE_TEX:
+            case CG_ISA_OPCODE_TXB:
+            case CG_ISA_OPCODE_TXL:
+            case CG_ISA_OPCODE_TXP:
+            case CG_ISA_OPCODE_LDA:
+            case CG_ISA_OPCODE_KIL:
+            case CG_ISA_OPCODE_KLS:
+            case CG_ISA_OPCODE_ZXP:
+            case CG_ISA_OPCODE_ZXS:
+            case CG_ISA_OPCODE_CHS:
+            case CG_ISA_OPCODE_SETPEQ:
+            case CG_ISA_OPCODE_SETPGT:
+            case CG_ISA_OPCODE_SETPLT:
+            case CG_ISA_OPCODE_ANDP:
+            case CG_ISA_OPCODE_JMP:
+            case CG_ISA_OPCODE_STPEQI:
+            case CG_ISA_OPCODE_STPGTI:
+            case CG_ISA_OPCODE_STPLTI:
 
                 //  Special instructions that are not affected by the conversion.
 
@@ -1516,9 +1516,9 @@ printf("    %s\n", instrDisasm);*/
 
                 break;
 
-            case CG1_ISA_OPCODE_DP3:
-            case CG1_ISA_OPCODE_DP4:
-            case CG1_ISA_OPCODE_DPH:
+            case CG_ISA_OPCODE_DP3:
+            case CG_ISA_OPCODE_DP4:
+            case CG_ISA_OPCODE_DPH:
                 //  Dot product instruction requires special conversion.
 
                 //  Extract components for first operand.
@@ -1576,14 +1576,14 @@ printf("    %s\n", instrDisasm);*/
 
                     //
                     // NOTE: When translating a DPx instruction with the saturated result flag it must be
-                    //       taken into account that the result has only to be saturated for the last CG1_ISA_OPCODE_MAD.
+                    //       taken into account that the result has only to be saturated for the last CG_ISA_OPCODE_MAD.
                     //
 
-                    if (inProgram[instr]->getOpcode() != CG1_ISA_OPCODE_DPH)
+                    if (inProgram[instr]->getOpcode() != CG_ISA_OPCODE_DPH)
                     {
                         mulInstr = new cgoShaderInstr(
                                                          //  Opcode
-                                                         CG1_ISA_OPCODE_MUL,
+                                                         CG_ISA_OPCODE_MUL,
                                                          //  First operand
                                                          inProgram[instr]->getBankOp1(), inProgram[instr]->getOp1(), inProgram[instr]->getOp1NegateFlag(),
                                                          inProgram[instr]->getOp1AbsoluteFlag(), op1Components[0],
@@ -1610,7 +1610,7 @@ printf("    %s\n", instrDisasm);*/
                     {
                         mad0Instr = new cgoShaderInstr(
                                                          //  Opcode
-                                                         CG1_ISA_OPCODE_MAD,
+                                                         CG_ISA_OPCODE_MAD,
                                                          //  First operand
                                                          inProgram[instr]->getBankOp1(), inProgram[instr]->getOp1(), inProgram[instr]->getOp1NegateFlag(),
                                                          inProgram[instr]->getOp1AbsoluteFlag(), op1Components[0],
@@ -1637,7 +1637,7 @@ printf("    %s\n", instrDisasm);*/
 
                     mad1Instr = new cgoShaderInstr(
                                                      //  Opcode
-                                                     CG1_ISA_OPCODE_MAD,
+                                                     CG_ISA_OPCODE_MAD,
                                                      //  First operand
                                                      inProgram[instr]->getBankOp1(), inProgram[instr]->getOp1(), inProgram[instr]->getOp1NegateFlag(),
                                                      inProgram[instr]->getOp1AbsoluteFlag(), op1Components[1],
@@ -1660,11 +1660,11 @@ printf("    %s\n", instrDisasm);*/
                                                      false
                                                      );
 
-                    if (inProgram[instr]->getOpcode() != CG1_ISA_OPCODE_DP4)
+                    if (inProgram[instr]->getOpcode() != CG_ISA_OPCODE_DP4)
                     {
                         mad2Instr = new cgoShaderInstr(
                                                          //  Opcode
-                                                         CG1_ISA_OPCODE_MAD,
+                                                         CG_ISA_OPCODE_MAD,
                                                          //  First operand
                                                          inProgram[instr]->getBankOp1(), inProgram[instr]->getOp1(), inProgram[instr]->getOp1NegateFlag(),
                                                          inProgram[instr]->getOp1AbsoluteFlag(), op1Components[2],
@@ -1692,7 +1692,7 @@ printf("    %s\n", instrDisasm);*/
                     {
                         mad2Instr = new cgoShaderInstr(
                                                          //  Opcode
-                                                         CG1_ISA_OPCODE_MAD,
+                                                         CG_ISA_OPCODE_MAD,
                                                          //  First operand
                                                          inProgram[instr]->getBankOp1(), inProgram[instr]->getOp1(), inProgram[instr]->getOp1NegateFlag(),
                                                          inProgram[instr]->getOp1AbsoluteFlag(), op1Components[2],
@@ -1717,7 +1717,7 @@ printf("    %s\n", instrDisasm);*/
 
                         mad3Instr = new cgoShaderInstr(
                                                          //  Opcode
-                                                         CG1_ISA_OPCODE_MAD,
+                                                         CG_ISA_OPCODE_MAD,
                                                          //  First operand
                                                          inProgram[instr]->getBankOp1(), inProgram[instr]->getOp1(), inProgram[instr]->getOp1NegateFlag(),
                                                          inProgram[instr]->getOp1AbsoluteFlag(), op1Components[3],
@@ -1742,7 +1742,7 @@ printf("    %s\n", instrDisasm);*/
                     }
 
 
-                    if (inProgram[instr]->getOpcode() != CG1_ISA_OPCODE_DPH)
+                    if (inProgram[instr]->getOpcode() != CG_ISA_OPCODE_DPH)
                         outProgram.push_back(mulInstr);
                     else
                         outProgram.push_back(mad0Instr);
@@ -1750,7 +1750,7 @@ printf("    %s\n", instrDisasm);*/
                     outProgram.push_back(mad1Instr);
                     outProgram.push_back(mad2Instr);
 
-                    if (inProgram[instr]->getOpcode() == CG1_ISA_OPCODE_DP4)
+                    if (inProgram[instr]->getOpcode() == CG_ISA_OPCODE_DP4)
                         outProgram.push_back(mad3Instr);
 
                     //  Broadcast result to other result components if required.
@@ -1760,7 +1760,7 @@ printf("    %s\n", instrDisasm);*/
 
                         movInstr = new cgoShaderInstr(
                                                          //  Opcode
-                                                         CG1_ISA_OPCODE_MOV,
+                                                         CG_ISA_OPCODE_MOV,
                                                          //  First operand
                                                          resBank, resReg, false, false,
                                                          resComponentsSwizzle[0],
@@ -1795,29 +1795,29 @@ printf("    %s\n", instrDisasm);*/
 
                 break;
 
-            case CG1_ISA_OPCODE_DST:
+            case CG_ISA_OPCODE_DST:
 
-                //  CG1_ISA_OPCODE_DST instruction requires special conversion.
-
-
-            case CG1_ISA_OPCODE_EXP:
-
-                //  CG1_ISA_OPCODE_EXP instruction requires special conversion.
+                //  CG_ISA_OPCODE_DST instruction requires special conversion.
 
 
-            case CG1_ISA_OPCODE_LIT:
+            case CG_ISA_OPCODE_EXP:
 
-                //  CG1_ISA_OPCODE_LIT instruction requires special conversion.
+                //  CG_ISA_OPCODE_EXP instruction requires special conversion.
 
 
-            case CG1_ISA_OPCODE_LOG:
+            case CG_ISA_OPCODE_LIT:
 
-                //  CG1_ISA_OPCODE_LOG instruction requires special conversion.
+                //  CG_ISA_OPCODE_LIT instruction requires special conversion.
+
+
+            case CG_ISA_OPCODE_LOG:
+
+                //  CG_ISA_OPCODE_LOG instruction requires special conversion.
 
                 //  NOTE:  The implementation of some of these instructions may be complex in a Scalar architecture
                 //         due to limitations in the current shader ISA.  For example loading a constant value
                 //         of 0.0f or 1.0f (the constant bank can not be manipulated directly) or because some
-                //         functions are quite complex like the CG1_ISA_OPCODE_LIT function for the .z component.
+                //         functions are quite complex like the CG_ISA_OPCODE_LIT function for the .z component.
                 //         As a temporal solution the instructions will be treated as standard SIMD instruction
                 //         and make the assumption that the ALUs implement the write of the four components
                 //         in multiple cycles.
@@ -1858,23 +1858,23 @@ printf("    %s\n", instrDisasm);*/
 
                 break;
 
-            case CG1_ISA_OPCODE_ADD:
-            case CG1_ISA_OPCODE_ARL:
-            case CG1_ISA_OPCODE_CMP:
-            case CG1_ISA_OPCODE_MAD:
-            case CG1_ISA_OPCODE_FXMAD:
-            case CG1_ISA_OPCODE_FXMAD2:
-            case CG1_ISA_OPCODE_MAX:
-            case CG1_ISA_OPCODE_MIN:
-            case CG1_ISA_OPCODE_MOV:
-            case CG1_ISA_OPCODE_MUL:
-            case CG1_ISA_OPCODE_FXMUL:
-            case CG1_ISA_OPCODE_SGE:
-            case CG1_ISA_OPCODE_SLT:
-            case CG1_ISA_OPCODE_DDX:
-            case CG1_ISA_OPCODE_DDY:
-            case CG1_ISA_OPCODE_ADDI:
-            case CG1_ISA_OPCODE_MULI:
+            case CG_ISA_OPCODE_ADD:
+            case CG_ISA_OPCODE_ARL:
+            case CG_ISA_OPCODE_CMP:
+            case CG_ISA_OPCODE_MAD:
+            case CG_ISA_OPCODE_FXMAD:
+            case CG_ISA_OPCODE_FXMAD2:
+            case CG_ISA_OPCODE_MAX:
+            case CG_ISA_OPCODE_MIN:
+            case CG_ISA_OPCODE_MOV:
+            case CG_ISA_OPCODE_MUL:
+            case CG_ISA_OPCODE_FXMUL:
+            case CG_ISA_OPCODE_SGE:
+            case CG_ISA_OPCODE_SLT:
+            case CG_ISA_OPCODE_DDX:
+            case CG_ISA_OPCODE_DDY:
+            case CG_ISA_OPCODE_ADDI:
+            case CG_ISA_OPCODE_MULI:
 
                 //  SIMD instructions.
 
@@ -1910,11 +1910,11 @@ printf("    %s\n", instrDisasm);*/
 
                 break;
 
-            case CG1_ISA_OPCODE_EX2:
-            case CG1_ISA_OPCODE_FRC:
-            case CG1_ISA_OPCODE_LG2:
-            case CG1_ISA_OPCODE_RCP:
-            case CG1_ISA_OPCODE_RSQ:
+            case CG_ISA_OPCODE_EX2:
+            case CG_ISA_OPCODE_FRC:
+            case CG_ISA_OPCODE_LG2:
+            case CG_ISA_OPCODE_RCP:
+            case CG_ISA_OPCODE_RSQ:
 
                 //  Scalar instructions.
 
@@ -1952,7 +1952,7 @@ printf("    %s\n", instrDisasm);*/
 
                     movInstr = new cgoShaderInstr(
                                                      //  Opcode
-                                                     CG1_ISA_OPCODE_MOV,
+                                                     CG_ISA_OPCODE_MOV,
                                                      //  First operand
                                                      inProgram[instr]->getBankRes(), inProgram[instr]->getResult(), false, false,
                                                      resComponentsSwizzle[0],
@@ -1982,7 +1982,7 @@ printf("    %s\n", instrDisasm);*/
 
                 break;
 
-            case CG1_ISA_OPCODE_FLR:
+            case CG_ISA_OPCODE_FLR:
 
                 // Unimplemented instructions.
 
@@ -2031,15 +2031,15 @@ bool ShaderOptimization::deadCodeElimination(vector<cgoShaderInstr *> inProgram,
 
         switch(inProgram[instr]->getOpcode())
         {
-            case CG1_ISA_OPCODE_NOP:
-            case CG1_ISA_OPCODE_END:
-            case CG1_ISA_OPCODE_CHS:
+            case CG_ISA_OPCODE_NOP:
+            case CG_ISA_OPCODE_END:
+            case CG_ISA_OPCODE_CHS:
 
                 //  These instructions don't set or use any register.
 
                 break;
 
-            case CG1_ISA_OPCODE_FLR:
+            case CG_ISA_OPCODE_FLR:
 
                 //  Unimplemented.
 
@@ -2115,7 +2115,7 @@ bool ShaderOptimization::deadCodeElimination(vector<cgoShaderInstr *> inProgram,
 
                     //  Set register component usage flag.  Only the components of the swizzled operand
                     //  that are actually read.  The components read are the same than those read for the
-                    //  first operand (CG1_ISA_OPCODE_MAD instruction).
+                    //  first operand (CG_ISA_OPCODE_MAD instruction).
                     for(U32 comp = 0; comp < readComponentsOp1.size(); comp++)
                     {
                         U32 readComp = readComponentsOp1[comp];
@@ -2128,7 +2128,7 @@ bool ShaderOptimization::deadCodeElimination(vector<cgoShaderInstr *> inProgram,
                 }
 
                 //  Check if the result is written into a temporal register.
-                //  The CG1_ISA_OPCODE_KIL, CG1_ISA_OPCODE_KLS, CG1_ISA_OPCODE_ZXP and CG1_ISA_OPCODE_ZXS instructions don't write a register.
+                //  The CG_ISA_OPCODE_KIL, CG_ISA_OPCODE_KLS, CG_ISA_OPCODE_ZXP and CG_ISA_OPCODE_ZXS instructions don't write a register.
                 if ((inProgram[instr]->getBankRes() == TEMP) && inProgram[instr]->hasResult())
                 {
                     U32 resReg = inProgram[instr]->getResult();
@@ -2181,14 +2181,14 @@ bool ShaderOptimization::deadCodeElimination(vector<cgoShaderInstr *> inProgram,
 
         switch(inProgram[instr]->getOpcode())
         {
-            case CG1_ISA_OPCODE_NOP:
-            case CG1_ISA_OPCODE_END:
-            case CG1_ISA_OPCODE_KIL:
-            case CG1_ISA_OPCODE_KLS:
-            case CG1_ISA_OPCODE_ZXP:
-            case CG1_ISA_OPCODE_ZXS:
-            case CG1_ISA_OPCODE_CHS:
-            case CG1_ISA_OPCODE_JMP:
+            case CG_ISA_OPCODE_NOP:
+            case CG_ISA_OPCODE_END:
+            case CG_ISA_OPCODE_KIL:
+            case CG_ISA_OPCODE_KLS:
+            case CG_ISA_OPCODE_ZXP:
+            case CG_ISA_OPCODE_ZXS:
+            case CG_ISA_OPCODE_CHS:
+            case CG_ISA_OPCODE_JMP:
 
                 //  These instruction don't set any result so they can't be removed.
 
@@ -2202,7 +2202,7 @@ bool ShaderOptimization::deadCodeElimination(vector<cgoShaderInstr *> inProgram,
 
                 break;
 
-            case CG1_ISA_OPCODE_CMPKIL:
+            case CG_ISA_OPCODE_CMPKIL:
 
                 //  This instruction is special, as it sets a result but can�t be removed if
                 //  the result is no later used, because it in addition sets the kill flag.
@@ -2217,7 +2217,7 @@ bool ShaderOptimization::deadCodeElimination(vector<cgoShaderInstr *> inProgram,
 
                 break;
 
-            case CG1_ISA_OPCODE_FLR:
+            case CG_ISA_OPCODE_FLR:
 
                 //  Unimplemented.
 
@@ -2299,9 +2299,9 @@ U32 ShaderOptimization::renameRegisters(vector<cgoShaderInstr *> inProgram, vect
 
         switch(inProgram[instr]->getOpcode())
         {
-            case CG1_ISA_OPCODE_NOP:
-            case CG1_ISA_OPCODE_END:
-            case CG1_ISA_OPCODE_CHS:
+            case CG_ISA_OPCODE_NOP:
+            case CG_ISA_OPCODE_END:
+            case CG_ISA_OPCODE_CHS:
 
                 //  Those instruction don't set or use registers.
 
@@ -2312,7 +2312,7 @@ U32 ShaderOptimization::renameRegisters(vector<cgoShaderInstr *> inProgram, vect
 
                 break;
 
-            case CG1_ISA_OPCODE_FLR:
+            case CG_ISA_OPCODE_FLR:
 
                 //  Unimplemented.
 
@@ -2354,8 +2354,8 @@ U32 ShaderOptimization::renameRegisters(vector<cgoShaderInstr *> inProgram, vect
                     //  Check if the register was actually renamed.
                     if (op1Name == 0)
                     {
-                        //  Check for special case.  CG1_ISA_OPCODE_SLT/CG1_ISA_OPCODE_SGE can be used to set a register to zero or one.
-                        if (((inProgram[instr]->getOpcode() == CG1_ISA_OPCODE_SLT) || (inProgram[instr]->getOpcode() == CG1_ISA_OPCODE_SGE)) &&
+                        //  Check for special case.  CG_ISA_OPCODE_SLT/CG_ISA_OPCODE_SGE can be used to set a register to zero or one.
+                        if (((inProgram[instr]->getOpcode() == CG_ISA_OPCODE_SLT) || (inProgram[instr]->getOpcode() == CG_ISA_OPCODE_SGE)) &&
                             (inProgram[instr]->getBankOp1() == TEMP) && (inProgram[instr]->getBankOp2() == TEMP) &&
                             (inProgram[instr]->getOp1SwizzleMode() == inProgram[instr]->getOp2SwizzleMode()) &&
                             (inProgram[instr]->getOp1NegateFlag() == inProgram[instr]->getOp2NegateFlag()) &&
@@ -2404,8 +2404,8 @@ U32 ShaderOptimization::renameRegisters(vector<cgoShaderInstr *> inProgram, vect
                     //  Check if the register was actually renamed.
                     if (op2Name == 0)
                     {
-                        //  Check for special case.  CG1_ISA_OPCODE_SLT/CG1_ISA_OPCODE_SGE can be used to set a register to zero or one.
-                        if (((inProgram[instr]->getOpcode() == CG1_ISA_OPCODE_SLT) || (inProgram[instr]->getOpcode() == CG1_ISA_OPCODE_SGE)) &&
+                        //  Check for special case.  CG_ISA_OPCODE_SLT/CG_ISA_OPCODE_SGE can be used to set a register to zero or one.
+                        if (((inProgram[instr]->getOpcode() == CG_ISA_OPCODE_SLT) || (inProgram[instr]->getOpcode() == CG_ISA_OPCODE_SGE)) &&
                             (inProgram[instr]->getBankOp1() == TEMP) && (inProgram[instr]->getBankOp2() == TEMP) &&
                             (inProgram[instr]->getOp1SwizzleMode() == inProgram[instr]->getOp2SwizzleMode()) &&
                             (inProgram[instr]->getOp1NegateFlag() == inProgram[instr]->getOp2NegateFlag()) &&
@@ -2537,7 +2537,7 @@ U32 ShaderOptimization::renameRegisters(vector<cgoShaderInstr *> inProgram, vect
 
                                         movInstr = new cgoShaderInstr(
                                                                          //  Opcode
-                                                                         CG1_ISA_OPCODE_MOV,
+                                                                         CG_ISA_OPCODE_MOV,
                                                                          //  First operand
                                                                          TEMP, resName, false, false, XYZW,
                                                                          //  Second operand
@@ -2567,7 +2567,7 @@ U32 ShaderOptimization::renameRegisters(vector<cgoShaderInstr *> inProgram, vect
 
                                 movInstr = new cgoShaderInstr(
                                                                  //  Opcode
-                                                                 CG1_ISA_OPCODE_MOV,
+                                                                 CG_ISA_OPCODE_MOV,
                                                                  //  First operand
                                                                  TEMP, resName, false, false, XYZW,
                                                                  //  Second operand
@@ -2688,15 +2688,15 @@ U32 ShaderOptimization::reduceLiveRegisters(vector<cgoShaderInstr *> inProgram, 
 
         switch(inProgram[instr]->getOpcode())
         {
-            case CG1_ISA_OPCODE_NOP:
-            case CG1_ISA_OPCODE_END:
-            case CG1_ISA_OPCODE_CHS:
+            case CG_ISA_OPCODE_NOP:
+            case CG_ISA_OPCODE_END:
+            case CG_ISA_OPCODE_CHS:
 
                 //  Those instruction don't set or use registers.
 
                 break;
 
-            case CG1_ISA_OPCODE_FLR:
+            case CG_ISA_OPCODE_FLR:
 
                 //  Unimplemented.
 
@@ -2749,8 +2749,8 @@ U32 ShaderOptimization::reduceLiveRegisters(vector<cgoShaderInstr *> inProgram, 
                     nameUsage[op1Name].instrPackedCompUse[instr] = (nameUsage[op1Name].instrPackedCompUse[instr] < packedCompUse) ?
                                                                    packedCompUse : nameUsage[op1Name].instrPackedCompUse[instr];
 
-                    //  Add copy information for CG1_ISA_OPCODE_MOV instructions without result or source modifiers.
-                    if ((inProgram[instr]->getOpcode() == CG1_ISA_OPCODE_MOV) && (!inProgram[instr]->getSaturatedRes()) &&
+                    //  Add copy information for CG_ISA_OPCODE_MOV instructions without result or source modifiers.
+                    if ((inProgram[instr]->getOpcode() == CG_ISA_OPCODE_MOV) && (!inProgram[instr]->getSaturatedRes()) &&
                         (!inProgram[instr]->getOp1AbsoluteFlag()) && (!inProgram[instr]->getOp1NegateFlag()))
                     {
                         //  Get result register bank.
@@ -2875,10 +2875,10 @@ U32 ShaderOptimization::reduceLiveRegisters(vector<cgoShaderInstr *> inProgram, 
                 }
 
                 //  Check if the result register is a temporal register.
-                //  Discard CG1_ISA_OPCODE_KIL, CG1_ISA_OPCODE_KLS, CG1_ISA_OPCODE_ZXP and CG1_ISA_OPCODE_ZXS instructions as they don't write a result.
-                if ((inProgram[instr]->getBankRes() == TEMP) && (inProgram[instr]->getOpcode() != CG1_ISA_OPCODE_KIL) &&
-                    (inProgram[instr]->getOpcode() != CG1_ISA_OPCODE_KLS) && (inProgram[instr]->getOpcode() != CG1_ISA_OPCODE_ZXP) &&
-                    (inProgram[instr]->getOpcode() != CG1_ISA_OPCODE_ZXS))
+                //  Discard CG_ISA_OPCODE_KIL, CG_ISA_OPCODE_KLS, CG_ISA_OPCODE_ZXP and CG_ISA_OPCODE_ZXS instructions as they don't write a result.
+                if ((inProgram[instr]->getBankRes() == TEMP) && (inProgram[instr]->getOpcode() != CG_ISA_OPCODE_KIL) &&
+                    (inProgram[instr]->getOpcode() != CG_ISA_OPCODE_KLS) && (inProgram[instr]->getOpcode() != CG_ISA_OPCODE_ZXP) &&
+                    (inProgram[instr]->getOpcode() != CG_ISA_OPCODE_ZXS))
                 {
                     //  Extract components for result.
                     extractResultComponents(inProgram[instr]->getResultMaskMode(), resComponentsMask, resComponentsSwizzle);
@@ -2907,7 +2907,7 @@ U32 ShaderOptimization::reduceLiveRegisters(vector<cgoShaderInstr *> inProgram, 
                         //  Set name component as created by the current instruction.
                         nameUsage[resName].createdByInstr[resComp] = instr + 1;
 
-                        //  Check if the result is a copy from another name (CG1_ISA_OPCODE_MOV instruction).
+                        //  Check if the result is a copy from another name (CG_ISA_OPCODE_MOV instruction).
                         if (!resultIsACopy)
                         {
                             //  The current value isn't a copy.
@@ -3244,9 +3244,9 @@ U32 ShaderOptimization::reduceLiveRegisters(vector<cgoShaderInstr *> inProgram, 
 
         switch(inProgram[instr]->getOpcode())
         {
-            case CG1_ISA_OPCODE_NOP:
-            case CG1_ISA_OPCODE_END:
-            case CG1_ISA_OPCODE_CHS:
+            case CG_ISA_OPCODE_NOP:
+            case CG_ISA_OPCODE_END:
+            case CG_ISA_OPCODE_CHS:
 
                 //  Those instruction don't set or use registers.
 
@@ -3258,7 +3258,7 @@ U32 ShaderOptimization::reduceLiveRegisters(vector<cgoShaderInstr *> inProgram, 
 
                 break;
 
-            case CG1_ISA_OPCODE_FLR:
+            case CG_ISA_OPCODE_FLR:
 
                 //  Unimplemented.
 
@@ -3553,7 +3553,7 @@ U32 ShaderOptimization::reduceLiveRegisters(vector<cgoShaderInstr *> inProgram, 
                 }
 
                 //  Check if the result register is a temporal register.
-                //  Discard CG1_ISA_OPCODE_KIL, CG1_ISA_OPCODE_KLS, CG1_ISA_OPCODE_ZXP and CG1_ISA_OPCODE_ZXS instructions as they don't write a result.
+                //  Discard CG_ISA_OPCODE_KIL, CG_ISA_OPCODE_KLS, CG_ISA_OPCODE_ZXP and CG_ISA_OPCODE_ZXS instructions as they don't write a result.
                 if ((inProgram[instr]->getBankRes() == TEMP) && inProgram[instr]->hasResult())
                 {
                     //  Get name written by the instruction.
@@ -3876,19 +3876,19 @@ void ShaderOptimization::removeRedundantMOVs(vector<cgoShaderInstr *> inProgram,
 
         switch(inProgram[instr]->getOpcode())
         {
-            case CG1_ISA_OPCODE_NOP:
-            case CG1_ISA_OPCODE_END:
-            case CG1_ISA_OPCODE_CHS:
+            case CG_ISA_OPCODE_NOP:
+            case CG_ISA_OPCODE_END:
+            case CG_ISA_OPCODE_CHS:
 
                 break;
 
-            case CG1_ISA_OPCODE_FLR:
+            case CG_ISA_OPCODE_FLR:
 
                 //  Unimplemented.
 
                 break;
 
-            case CG1_ISA_OPCODE_MOV:
+            case CG_ISA_OPCODE_MOV:
 
                 //  Check if the move is saturating the result.  A mov_sat is a saturation operation,
                 //  not an actual mov.
@@ -4145,15 +4145,15 @@ void ShaderOptimization::assignWaitPoints(vector<cgoShaderInstr *> inProgram, ve
 
         switch(inProgram[instr]->getOpcode())
         {
-            case CG1_ISA_OPCODE_NOP:
-            case CG1_ISA_OPCODE_END:
-            case CG1_ISA_OPCODE_CHS:
+            case CG_ISA_OPCODE_NOP:
+            case CG_ISA_OPCODE_END:
+            case CG_ISA_OPCODE_CHS:
 
                 //  Those instruction don't set or use registers.
 
                 break;
 
-            case CG1_ISA_OPCODE_FLR:
+            case CG_ISA_OPCODE_FLR:
 
                 //  Unimplemented.
 
@@ -4263,9 +4263,9 @@ void ShaderOptimization::assignWaitPoints(vector<cgoShaderInstr *> inProgram, ve
                 //  Check for texture or attribute load instructions.  If the result register is a temporal register
                 //  mark the register as pending from load operation.
                 if ((inProgram[instr]->getBankRes() == TEMP) &&
-                        ((inProgram[instr]->getOpcode() == CG1_ISA_OPCODE_TEX) || (inProgram[instr]->getOpcode() == CG1_ISA_OPCODE_TXB) ||
-                         (inProgram[instr]->getOpcode() == CG1_ISA_OPCODE_TXL) || (inProgram[instr]->getOpcode() == CG1_ISA_OPCODE_TXP) ||
-                         (inProgram[instr]->getOpcode() == CG1_ISA_OPCODE_LDA)))
+                        ((inProgram[instr]->getOpcode() == CG_ISA_OPCODE_TEX) || (inProgram[instr]->getOpcode() == CG_ISA_OPCODE_TXB) ||
+                         (inProgram[instr]->getOpcode() == CG_ISA_OPCODE_TXL) || (inProgram[instr]->getOpcode() == CG_ISA_OPCODE_TXP) ||
+                         (inProgram[instr]->getOpcode() == CG_ISA_OPCODE_LDA)))
                 {
                     //  Extract components for result.
                     extractResultComponents(inProgram[instr]->getResultMaskMode(), resComponentsMask, resComponentsSwizzle);
@@ -4309,7 +4309,7 @@ void ShaderOptimization::decodeProgram(U08 *code, U32 size, vector<cgoShaderInst
     numTemps = 0;
         
     //  Decode the instructions of the program.
-    for(U32 b = 0; b < size; b += cgoShaderInstr::CG1_ISA_INSTR_SIZE)
+    for(U32 b = 0; b < size; b += cgoShaderInstr::CG_ISA_INSTR_SIZE)
     {
         cgoShaderInstr *shInstr;
 
@@ -4356,12 +4356,12 @@ void ShaderOptimization::decodeProgram(U08 *code, U32 size, vector<cgoShaderInst
 void ShaderOptimization::encodeProgram(vector<cgoShaderInstr *> inProgram, U08 *code, U32 &size)
 {
     //  Check size buffer size.
-    CG_ASSERT_COND(!(size < (inProgram.size() * cgoShaderInstr::CG1_ISA_INSTR_SIZE)), "Buffer for shader program is too small.");
-    size = (U32) inProgram.size() * cgoShaderInstr::CG1_ISA_INSTR_SIZE;
+    CG_ASSERT_COND(!(size < (inProgram.size() * cgoShaderInstr::CG_ISA_INSTR_SIZE)), "Buffer for shader program is too small.");
+    size = (U32) inProgram.size() * cgoShaderInstr::CG_ISA_INSTR_SIZE;
 
     for(U32 instr = 0; instr < inProgram.size(); instr++)
     {
-        inProgram[instr]->getCode(&code[instr * cgoShaderInstr::CG1_ISA_INSTR_SIZE]);
+        inProgram[instr]->getCode(&code[instr * cgoShaderInstr::CG_ISA_INSTR_SIZE]);
     }
 }
 

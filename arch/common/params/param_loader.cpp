@@ -36,8 +36,6 @@ void ArchParams::read_csv_file(const std::string& file_path, const std::string& 
 
     std::string line;
 
-    // Line 1: ARCH_VERSION row — find the column index for the requested arch.
-    //         Format: ARCH_VERSION,CG1GPU.ini,CG1GPUx1.ini,...,explanation
     if (!std::getline(file, line)) {
         throw std::runtime_error("[ArchParams] CSV file is empty: " + file_path);
     }

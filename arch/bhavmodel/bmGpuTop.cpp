@@ -1,7 +1,7 @@
 /**************************************************************************
  *
  * GPU behaviorModel implementation file.
- *  This file contains the implementation of functions for the CG1 GPU behaviorModel.
+ *  This file contains the implementation of functions for the computrendering GPU behaviorModel.
  *
  */
 #include "bmGpuTop.h"
@@ -351,7 +351,7 @@ void bmoGpuTop::emulateCommandProcessor(cgoMetaStream *CurMetaStream)
 #endif
                 //}
                 
-                    CG1_BMDL_TRACE(
+                    BHAVMODEL_TRACE(
                         if (traceLog || (traceBatch && (batchCounter == watchBatch)))
                         {
                             sprintf(filename, "alpha%04d-batch%05d-pos%08d.bm", frameCounter, batchCounter, TraceDriver->getTracePosition());
@@ -4967,24 +4967,24 @@ void bmoGpuTop::loadVertexProgram()
             state.vertexProgramStartPC, state.vertexProgramSize);
         bool endProgram = false;
         U32 nopsAtTheEnd = 0;
-        for(U32 i = 0; i < (state.vertexProgramSize / cgoShaderInstr::CG1_ISA_INSTR_SIZE); i++)
+        for(U32 i = 0; i < (state.vertexProgramSize / cgoShaderInstr::CG_ISA_INSTR_SIZE); i++)
         {
-            cgoShaderInstr shInstr(&code[i * cgoShaderInstr::CG1_ISA_INSTR_SIZE]);
+            cgoShaderInstr shInstr(&code[i * cgoShaderInstr::CG_ISA_INSTR_SIZE]);
 
             if (!endProgram)
             {
                 char dis[1024];
                 shInstr.disassemble(dis, 1024);
                 CG_INFO(" %04x : ", state.vertexProgramStartPC + i);
-                for(U32 b = 0; b < cgoShaderInstr::CG1_ISA_INSTR_SIZE; b++)
-                    CG_INFO("%02x ", code[i * cgoShaderInstr::CG1_ISA_INSTR_SIZE + b]);
+                for(U32 b = 0; b < cgoShaderInstr::CG_ISA_INSTR_SIZE; b++)
+                    CG_INFO("%02x ", code[i * cgoShaderInstr::CG_ISA_INSTR_SIZE + b]);
                 CG_INFO(" : %s", dis);
                 fflush(stdout);
                 endProgram = shInstr.getEndFlag();
             }
             else
             {
-                if (shInstr.getOpcode() != CG1_ISA_OPCODE_NOP)
+                if (shInstr.getOpcode() != CG_ISA_OPCODE_NOP)
                     CG_ASSERT("Unexpected instruction after end of program.");
 
                 nopsAtTheEnd++;
@@ -5011,24 +5011,24 @@ void bmoGpuTop::loadFragmentProgram()
             state.fragProgramStartPC, state.fragProgramSize);
         bool endProgram = false;
         U32 nopsAtTheEnd = 0;
-        for(U32 i = 0; i < (state.fragProgramSize / cgoShaderInstr::CG1_ISA_INSTR_SIZE); i++)
+        for(U32 i = 0; i < (state.fragProgramSize / cgoShaderInstr::CG_ISA_INSTR_SIZE); i++)
         {
-            cgoShaderInstr shInstr(&code[i * cgoShaderInstr::CG1_ISA_INSTR_SIZE]);
+            cgoShaderInstr shInstr(&code[i * cgoShaderInstr::CG_ISA_INSTR_SIZE]);
 
             if (!endProgram)
             {
                 char dis[1024];
                 shInstr.disassemble(dis, 1024);
                 CG_INFO(" %04x : ", state.fragProgramStartPC + i);
-                for(U32 b = 0; b < cgoShaderInstr::CG1_ISA_INSTR_SIZE; b++)
-                    CG_INFO("%02x ", code[i * cgoShaderInstr::CG1_ISA_INSTR_SIZE + b]);
+                for(U32 b = 0; b < cgoShaderInstr::CG_ISA_INSTR_SIZE; b++)
+                    CG_INFO("%02x ", code[i * cgoShaderInstr::CG_ISA_INSTR_SIZE + b]);
                 CG_INFO(" : %s", dis);
                 fflush(stdout);
                 endProgram = shInstr.getEndFlag();
             }
             else
             {
-                if (shInstr.getOpcode() != CG1_ISA_OPCODE_NOP)
+                if (shInstr.getOpcode() != CG_ISA_OPCODE_NOP)
                     CG_ASSERT("Unexpected instruction after end of program.");
 
                 nopsAtTheEnd++;
@@ -5056,23 +5056,23 @@ void bmoGpuTop::loadShaderProgram()
             state.programLoadPC, state.programSize);
         bool endProgram = false;
         U32 nopsAtTheEnd = 0;
-        for(U32 i = 0; i < (state.programSize / cgoShaderInstr::CG1_ISA_INSTR_SIZE); i++)
+        for(U32 i = 0; i < (state.programSize / cgoShaderInstr::CG_ISA_INSTR_SIZE); i++)
         {
-            cgoShaderInstr shInstr(&code[i * cgoShaderInstr::CG1_ISA_INSTR_SIZE]);
+            cgoShaderInstr shInstr(&code[i * cgoShaderInstr::CG_ISA_INSTR_SIZE]);
 
             if (!endProgram)
             {
                 char dis[1024];
                 shInstr.disassemble(dis, 1024);
                 CG_INFO(" %04x : ", state.programLoadPC + i);
-                for(U32 b = 0; b < cgoShaderInstr::CG1_ISA_INSTR_SIZE; b++)
-                    CG_INFO("%02x ", code[i * cgoShaderInstr::CG1_ISA_INSTR_SIZE + b]);
+                for(U32 b = 0; b < cgoShaderInstr::CG_ISA_INSTR_SIZE; b++)
+                    CG_INFO("%02x ", code[i * cgoShaderInstr::CG_ISA_INSTR_SIZE + b]);
                 CG_INFO(" : %s", dis);
                 endProgram = shInstr.getEndFlag();
             }
             else
             {
-                if (shInstr.getOpcode() != CG1_ISA_OPCODE_NOP)
+                if (shInstr.getOpcode() != CG_ISA_OPCODE_NOP)
                     CG_ASSERT("Unexpected instruction after end of program.");
 
                 nopsAtTheEnd++;
@@ -5708,7 +5708,7 @@ vector<U32> shadedIndices;*/
             ShadedVertex *vertex;
             vertex = new ShadedVertex(attributes);
 
-            CG1_BMDL_TRACE(
+            BHAVMODEL_TRACE(
                 if (traceLog || (traceBatch && (watchBatch == batchCounter)) || (traceVertex && (currentIndex == watchIndex)))
                 {
                     CG_INFO("Vertex Shader input for batch %d index %d : ", batchCounter, currentIndex);
@@ -5736,7 +5736,7 @@ vector<U32> shadedIndices;*/
                 vertexInputLog.insert(make_pair(vInfo.vertexID, vInfo));
             }
             
-            CG1_BMDL_TRACE(
+            BHAVMODEL_TRACE(
                 traceVShader = traceLog || 
                 ((traceBatch && (batchCounter == watchBatch)) && (watchIndex == currentIndex)) ||
                 (traceVertex && (watchIndex == currentIndex));
@@ -5744,7 +5744,7 @@ vector<U32> shadedIndices;*/
             
             emulateVertexShader(vertex);
             
-            CG1_BMDL_TRACE(
+            BHAVMODEL_TRACE(
                 traceVShader = false;
             )
 
@@ -5755,7 +5755,7 @@ vector<U32> shadedIndices;*/
             vattributes[COLOR_ATTRIBUTE][2] = GPU_CLAMP(vattributes[COLOR_ATTRIBUTE][2], 0.0f, 1.0f);
             vattributes[COLOR_ATTRIBUTE][3] = GPU_CLAMP(vattributes[COLOR_ATTRIBUTE][3], 0.0f, 1.0f);
 
-            CG1_BMDL_TRACE(
+            BHAVMODEL_TRACE(
                 if (traceLog || (traceBatch && (watchBatch == batchCounter)) || (traceVertex && (watchIndex == currentIndex)))
                 {
                     CG_INFO("Vertex Shader output for batch %d index %d : ", batchCounter, currentIndex);
@@ -5863,7 +5863,7 @@ void bmoGpuTop::emulateVertexShader(ShadedVertex *vertex)
             CG_INFO("VSh => Executing instruction @ %04x : %s", pc, shInstrDisasm);
         )
 
-        CG1_BMDL_TRACE(
+        BHAVMODEL_TRACE(
             if (traceVShader)
             {
                 char shInstrDisasm[256];
@@ -5875,7 +5875,7 @@ void bmoGpuTop::emulateVertexShader(ShadedVertex *vertex)
         )
         bmShader->execShaderInstruction(shDecInstr);        //  Execute instruction.
         instrCount++;
-        CG1_BMDL_TRACE(
+        BHAVMODEL_TRACE(
             if (traceVShader)
             {                        
                 printShaderInstructionResult(shDecInstr);
@@ -6345,7 +6345,7 @@ void bmoGpuTop::emulateRasterization(ShadedVertex *vertex1, ShadedVertex *vertex
                         bool watchPixelFound = false;
                         U32 watchPixelPosInQuad = 0;
                         
-                        CG1_BMDL_TRACE(
+                        BHAVMODEL_TRACE(
                             if (traceLog || (traceBatch && (batchCounter == watchBatch)) || tracePixel)
                             {
                                 U32 watchPixelPosInQuad = 0;
@@ -6370,7 +6370,7 @@ void bmoGpuTop::emulateRasterization(ShadedVertex *vertex1, ShadedVertex *vertex
                             emulateZStencilTest(quad);
                         }
 
-                        CG1_BMDL_TRACE(
+                        BHAVMODEL_TRACE(
                             if (traceLog || (traceBatch && (batchCounter == watchBatch)) || tracePixel)
                             {
                                 if (watchPixelFound)
@@ -6387,7 +6387,7 @@ void bmoGpuTop::emulateRasterization(ShadedVertex *vertex1, ShadedVertex *vertex
                         //  Shade the fragment quad.
                         emulateFragmentShading(quad);
 
-                        CG1_BMDL_TRACE(
+                        BHAVMODEL_TRACE(
                             if (traceLog || (traceBatch && (batchCounter == watchBatch)) || tracePixel)
                             {
                                 if (watchPixelFound)
@@ -6412,7 +6412,7 @@ void bmoGpuTop::emulateRasterization(ShadedVertex *vertex1, ShadedVertex *vertex
                             emulateZStencilTest(quad);
                         }
 
-                        CG1_BMDL_TRACE(
+                        BHAVMODEL_TRACE(
                             if (traceLog || (traceBatch && (batchCounter == watchBatch)) || tracePixel)
                             {
                                 if (watchPixelFound)
@@ -6671,7 +6671,7 @@ void bmoGpuTop::emulateFragmentShading(ShadedFragment **quad)
     TextureAccess *texAccess;
 
     //  Emulation trace generation macro.
-    CG1_BMDL_TRACE(        
+    BHAVMODEL_TRACE(        
         if (traceLog || (traceBatch && (batchCounter == watchBatch)))
         {
             CG_INFO("FSh => Executing program at %04x for pixels: ", pc);
@@ -6707,7 +6707,7 @@ void bmoGpuTop::emulateFragmentShading(ShadedFragment **quad)
                     }
                 )
 
-                CG1_BMDL_TRACE(
+                BHAVMODEL_TRACE(
                     if (traceFShader)
                     {
                         char shInstrDisasm[256];
@@ -6735,12 +6735,12 @@ void bmoGpuTop::emulateFragmentShading(ShadedFragment **quad)
                 //  Check if this is the last instruction in the program.
                 fragmentEnd[p] = shDecInstr->getShaderInstruction()->getEndFlag() || bmShader->threadKill(p);
 
-                CG1_BMDL_TRACE(
+                BHAVMODEL_TRACE(
                     if (traceFShader)
                     {
                         printShaderInstructionResult(shDecInstr);
-                        CG_INFO("             CG1_ISA_OPCODE_KILL MASK -> %s", bmShader->threadKill(p) ? "true" : "false");
-                        CG_INFO("             FRAGMENT CG1_ISA_OPCODE_END -> %s", fragmentEnd[p] ? "true" : "false");
+                        CG_INFO("             CG_ISA_OPCODE_KILL MASK -> %s", bmShader->threadKill(p) ? "true" : "false");
+                        CG_INFO("             FRAGMENT CG_ISA_OPCODE_END -> %s", fragmentEnd[p] ? "true" : "false");
                         if (p == (STAMP_FRAGMENTS - 1))
                             CG_INFO("-------------------");
 
@@ -6763,7 +6763,7 @@ void bmoGpuTop::emulateFragmentShading(ShadedFragment **quad)
         {
             pc = destPC;
             
-            CG1_BMDL_TRACE(
+            BHAVMODEL_TRACE(
                 if (traceFShader)
                     CG_INFO("Jumping to PC %04x", pc);
             )
@@ -6839,7 +6839,7 @@ void bmoGpuTop::emulateTextureUnit(TextureAccess *texAccess)
     for(U32 s = 0; s < texAccess->anisoSamples; s++)
         bmTexture->filter(*texAccess, s);
 
-    CG1_BMDL_TRACE(
+    BHAVMODEL_TRACE(
         if (traceTexture)
             printTextureAccessInfo(texAccess);
     )
@@ -8142,7 +8142,7 @@ void bmoGpuTop::printShaderInstructionOperands(cgoShaderInstr::cgoShaderInstrEnc
                 //  Check for predicator operator instruction with constant register operator.
                 switch(shDecInstr->getShaderInstruction()->getOpcode())
                 {
-                    case arch::CG1_ISA_OPCODE_ANDP:
+                    case arch::CG_ISA_OPCODE_ANDP:
                         {
                             bool *op1 = (bool *) shDecInstr->getShEmulOp1();
                             CG_INFO("             OP1 -> {%s, %s, %s, %s}", op1[0] ? "true" : "false", op1[1] ? "true" : "false",
@@ -8150,11 +8150,11 @@ void bmoGpuTop::printShaderInstructionOperands(cgoShaderInstr::cgoShaderInstrEnc
                         }
                         break;
                       
-                    case arch::CG1_ISA_OPCODE_ADDI:
-                    case arch::CG1_ISA_OPCODE_MULI:
-                    case arch::CG1_ISA_OPCODE_STPEQI:
-                    case arch::CG1_ISA_OPCODE_STPGTI:
-                    case arch::CG1_ISA_OPCODE_STPLTI:
+                    case arch::CG_ISA_OPCODE_ADDI:
+                    case arch::CG_ISA_OPCODE_MULI:
+                    case arch::CG_ISA_OPCODE_STPEQI:
+                    case arch::CG_ISA_OPCODE_STPGTI:
+                    case arch::CG_ISA_OPCODE_STPLTI:
                         {
                             S32 *op1 = (S32 *) shDecInstr->getShEmulOp1();
                             CG_INFO("             OP1 -> {%d, %d, %d, %d}", op1[0], op1[1], op1[2], op1[3]);
@@ -8191,7 +8191,7 @@ void bmoGpuTop::printShaderInstructionOperands(cgoShaderInstr::cgoShaderInstrEnc
                 //  Check for predicator operator instruction with constant register operator.
                 switch(shDecInstr->getShaderInstruction()->getOpcode())
                 {
-                    case arch::CG1_ISA_OPCODE_ANDP:
+                    case arch::CG_ISA_OPCODE_ANDP:
                         {
                             bool *op2 = (bool *) shDecInstr->getShEmulOp2();
                             CG_INFO("             OP2 -> {%s, %s, %s, %s}", op2[0] ? "true" : "false", op2[1] ? "true" : "false",
@@ -8199,11 +8199,11 @@ void bmoGpuTop::printShaderInstructionOperands(cgoShaderInstr::cgoShaderInstrEnc
                         }
                         break;
                       
-                    case arch::CG1_ISA_OPCODE_ADDI:
-                    case arch::CG1_ISA_OPCODE_MULI:
-                    case arch::CG1_ISA_OPCODE_STPEQI:
-                    case arch::CG1_ISA_OPCODE_STPGTI:
-                    case arch::CG1_ISA_OPCODE_STPLTI:
+                    case arch::CG_ISA_OPCODE_ADDI:
+                    case arch::CG_ISA_OPCODE_MULI:
+                    case arch::CG_ISA_OPCODE_STPEQI:
+                    case arch::CG_ISA_OPCODE_STPGTI:
+                    case arch::CG_ISA_OPCODE_STPLTI:
                         {
                             S32 *op2 = (S32 *) shDecInstr->getShEmulOp2();
                             CG_INFO("             OP2 -> {%d, %d, %d, %d}", op2[0], op2[1], op2[2], op2[3]);
@@ -8240,7 +8240,7 @@ void bmoGpuTop::printShaderInstructionOperands(cgoShaderInstr::cgoShaderInstrEnc
                 //  Check for predicator operator instruction with constant register operator.
                 switch(shDecInstr->getShaderInstruction()->getOpcode())
                 {
-                    case arch::CG1_ISA_OPCODE_ANDP:
+                    case arch::CG_ISA_OPCODE_ANDP:
                         {
                             bool *op3 = (bool *) shDecInstr->getShEmulOp3();
                             CG_INFO("             OP3 -> {%s, %s, %s, %s}", op3[0] ? "true" : "false", op3[1] ? "true" : "false",
@@ -8248,11 +8248,11 @@ void bmoGpuTop::printShaderInstructionOperands(cgoShaderInstr::cgoShaderInstrEnc
                         }
                         break;
                       
-                    case arch::CG1_ISA_OPCODE_ADDI:
-                    case arch::CG1_ISA_OPCODE_MULI:
-                    case arch::CG1_ISA_OPCODE_STPEQI:
-                    case arch::CG1_ISA_OPCODE_STPGTI:
-                    case arch::CG1_ISA_OPCODE_STPLTI:
+                    case arch::CG_ISA_OPCODE_ADDI:
+                    case arch::CG_ISA_OPCODE_MULI:
+                    case arch::CG_ISA_OPCODE_STPEQI:
+                    case arch::CG_ISA_OPCODE_STPGTI:
+                    case arch::CG_ISA_OPCODE_STPLTI:
                         {
                             S32 *op3 = (S32 *) shDecInstr->getShEmulOp3();
                             CG_INFO("             OP3 -> {%d, %d, %d, %d}", op3[0], op3[1], op3[2], op3[3]);
@@ -8295,8 +8295,8 @@ void bmoGpuTop::printShaderInstructionResult(cgoShaderInstr::cgoShaderInstrEncod
             
                 switch(shDecInstr->getShaderInstruction()->getOpcode())
                 {
-                    case CG1_ISA_OPCODE_ADDI:
-                    case CG1_ISA_OPCODE_MULI:
+                    case CG_ISA_OPCODE_ADDI:
+                    case CG_ISA_OPCODE_MULI:
                         {
                             S32 *res = (S32 *) shDecInstr->getShEmulResult();                
                             CG_INFO("             RESULT -> {%d, %d, %d, %d}", res[0], res[1], res[2], res[3]);

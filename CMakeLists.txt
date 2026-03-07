@@ -2,11 +2,9 @@ cmake_minimum_required(VERSION 3.13.1)
 cmake_policy(SET CMP0079 NEW)
 cmake_policy(SET CMP0135 NEW) # DOWNLOAD_EXPLICT_TIMESTAMP
 
-project(CG1 VERSION 1.0)
+project(ComputRendering VERSION 1.0)
 
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
-
-set(CG1_ROOT ${CMAKE_SOURCE_DIR})
 
 # C++17 is set after thirdparty subdirectories to override SystemC's CMAKE_CXX_STANDARD=98 cache entry.
 

@@ -1,6 +1,6 @@
 #!/usr/bin/env pwsh
 #
-# CG1 GPU Simulator — Regression Test Script (Windows PowerShell)
+# computrendering GPU Simulator — Regression Test Script (Windows PowerShell)
 #
 # Parses regression_list and runs computrender (bhavmodel) for each test trace.
 # Compares output PPMs against reference using pixel-level comparison.
@@ -85,7 +85,7 @@ $Pass = 0; $Fail = 0; $Skip = 0; $Total = 0
 "" | Out-File $RegOut
 
 Write-Host "========================================"
-Write-Host " CG1 GPU Regression Test (Windows)"
+Write-Host " computrendering GPU Regression Test (Windows)"
 Write-Host " Simulator: $Simulator"
 Write-Host " List: $RegList"
 Write-Host "========================================"

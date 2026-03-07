@@ -94,7 +94,7 @@ struct GAL_CONFIG_OPTIONS
 
 
 /**
- * This interface represents the high-level abstraction of CG1 GPU
+ * This interface represents the high-level abstraction of computrendering GPU
  *
  * It includes access to two interfaces GALResourceManager (for managing resources such as buffers, 
  * textures, etc) and GALStateManager (to manage GPU state that can be saved and restored)

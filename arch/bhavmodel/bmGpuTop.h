@@ -1,7 +1,7 @@
 /**************************************************************************
  *
  * GPU behaviorModel definition file.
- *  This file contains definitions and includes for the CG1 GPU behaviorModel.
+ *  This file contains definitions and includes for the computrendering GPU behaviorModel.
  *
  */
 #ifndef __BM_GPUTOP_H__
@@ -42,10 +42,10 @@ namespace arch
  *  Used to enable the generation of traces of the behaviorModel execution.
  *
  */
-#ifdef ENABLE_CG1_BMDL_TRACE
-    #define CG1_BMDL_TRACE(x) {x}
+#ifdef ENABLE_BHAVMODEL_TRACE
+    #define BHAVMODEL_TRACE(x) {x}
 #else
-    #define CG1_BMDL_TRACE(x) {}
+    #define BHAVMODEL_TRACE(x) {}
 #endif
 
 /**

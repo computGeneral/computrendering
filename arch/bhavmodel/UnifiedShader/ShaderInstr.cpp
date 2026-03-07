@@ -20,14 +20,14 @@ using namespace arch;
 
 ShOpcode arch::translateShOpcodeTable[] =
 {
-    CG1_ISA_OPCODE_NOP,    CG1_ISA_OPCODE_ADD,    CG1_ISA_OPCODE_ADDI,   CG1_ISA_OPCODE_ARL,    CG1_ISA_OPCODE_ANDP,   INVOPC, INVOPC, CG1_ISA_OPCODE_COS,        //  Opcodes 00h - 07h
-    CG1_ISA_OPCODE_DP3,    CG1_ISA_OPCODE_DP4,    CG1_ISA_OPCODE_DPH,    CG1_ISA_OPCODE_DST,    CG1_ISA_OPCODE_EX2,    CG1_ISA_OPCODE_EXP,    CG1_ISA_OPCODE_FLR,    CG1_ISA_OPCODE_FRC,        //  Opcodes 08h - 0Fh
-    CG1_ISA_OPCODE_LG2,    CG1_ISA_OPCODE_LIT,    CG1_ISA_OPCODE_LOG,    CG1_ISA_OPCODE_MAD,    CG1_ISA_OPCODE_MAX,    CG1_ISA_OPCODE_MIN,    CG1_ISA_OPCODE_MOV,    CG1_ISA_OPCODE_MUL,        //  Opcodes 10h - 17h
-    CG1_ISA_OPCODE_MULI,   CG1_ISA_OPCODE_RCP,    INVOPC, CG1_ISA_OPCODE_RSQ,    CG1_ISA_OPCODE_SETPEQ, CG1_ISA_OPCODE_SETPGT, CG1_ISA_OPCODE_SGE,    CG1_ISA_OPCODE_SETPLT,     //  Opcodes 18h - 1Fh
-    CG1_ISA_OPCODE_SIN,    CG1_ISA_OPCODE_STPEQI, CG1_ISA_OPCODE_SLT,    CG1_ISA_OPCODE_STPGTI, CG1_ISA_OPCODE_STPLTI, CG1_ISA_OPCODE_TXL,    CG1_ISA_OPCODE_TEX,    CG1_ISA_OPCODE_TXB,        //  Opcodes 20h - 27h
+    CG_ISA_OPCODE_NOP,    CG_ISA_OPCODE_ADD,    CG_ISA_OPCODE_ADDI,   CG_ISA_OPCODE_ARL,    CG_ISA_OPCODE_ANDP,   INVOPC, INVOPC, CG_ISA_OPCODE_COS,        //  Opcodes 00h - 07h
+    CG_ISA_OPCODE_DP3,    CG_ISA_OPCODE_DP4,    CG_ISA_OPCODE_DPH,    CG_ISA_OPCODE_DST,    CG_ISA_OPCODE_EX2,    CG_ISA_OPCODE_EXP,    CG_ISA_OPCODE_FLR,    CG_ISA_OPCODE_FRC,        //  Opcodes 08h - 0Fh
+    CG_ISA_OPCODE_LG2,    CG_ISA_OPCODE_LIT,    CG_ISA_OPCODE_LOG,    CG_ISA_OPCODE_MAD,    CG_ISA_OPCODE_MAX,    CG_ISA_OPCODE_MIN,    CG_ISA_OPCODE_MOV,    CG_ISA_OPCODE_MUL,        //  Opcodes 10h - 17h
+    CG_ISA_OPCODE_MULI,   CG_ISA_OPCODE_RCP,    INVOPC, CG_ISA_OPCODE_RSQ,    CG_ISA_OPCODE_SETPEQ, CG_ISA_OPCODE_SETPGT, CG_ISA_OPCODE_SGE,    CG_ISA_OPCODE_SETPLT,     //  Opcodes 18h - 1Fh
+    CG_ISA_OPCODE_SIN,    CG_ISA_OPCODE_STPEQI, CG_ISA_OPCODE_SLT,    CG_ISA_OPCODE_STPGTI, CG_ISA_OPCODE_STPLTI, CG_ISA_OPCODE_TXL,    CG_ISA_OPCODE_TEX,    CG_ISA_OPCODE_TXB,        //  Opcodes 20h - 27h
 
-    CG1_ISA_OPCODE_TXP,    CG1_ISA_OPCODE_KIL,    CG1_ISA_OPCODE_KLS,    CG1_ISA_OPCODE_ZXP,    CG1_ISA_OPCODE_ZXS,    CG1_ISA_OPCODE_CMP,    CG1_ISA_OPCODE_CMPKIL, CG1_ISA_OPCODE_CHS,        //  Opcodes 28h - 2Fh
-    CG1_ISA_OPCODE_LDA,    CG1_ISA_OPCODE_FXMUL,  CG1_ISA_OPCODE_FXMAD,  CG1_ISA_OPCODE_FXMAD2, CG1_ISA_OPCODE_DDX,    CG1_ISA_OPCODE_DDY,    CG1_ISA_OPCODE_JMP,    CG1_ISA_OPCODE_END,        //  Opcodes 30h - 37h
+    CG_ISA_OPCODE_TXP,    CG_ISA_OPCODE_KIL,    CG_ISA_OPCODE_KLS,    CG_ISA_OPCODE_ZXP,    CG_ISA_OPCODE_ZXS,    CG_ISA_OPCODE_CMP,    CG_ISA_OPCODE_CMPKIL, CG_ISA_OPCODE_CHS,        //  Opcodes 28h - 2Fh
+    CG_ISA_OPCODE_LDA,    CG_ISA_OPCODE_FXMUL,  CG_ISA_OPCODE_FXMAD,  CG_ISA_OPCODE_FXMAD2, CG_ISA_OPCODE_DDX,    CG_ISA_OPCODE_DDY,    CG_ISA_OPCODE_JMP,    CG_ISA_OPCODE_END,        //  Opcodes 30h - 37h
     INVOPC, INVOPC, INVOPC, INVOPC, INVOPC, INVOPC, INVOPC, INVOPC      //  Opcodes 38h - 3Fh
 };
 
@@ -209,13 +209,13 @@ char swizzleMode2Str[] =
 cgoShaderInstr::cgoShaderInstr(U08 *instrCode)
 {
     // reset binary code
-    memset(code.code8, 0, CG1_ISA_INSTR_SIZE);
+    memset(code.code8, 0, CG_ISA_INSTR_SIZE);
 
     //  WARNING:  THIS FUNCTION DOES NOT CHECK OVERFLOW IN THE
     //    ARRAY WITH THE INSTRUCTION CODIFICATION!!!!!
 
     //  Copies to instruction binary encoding.
-    memcpy(code.code8, instrCode, CG1_ISA_INSTR_SIZE);
+    memcpy(code.code8, instrCode, CG_ISA_INSTR_SIZE);
 
     //  Gets the instruction opcode.
     if (code.fields.lo64Bits.opcode < LASTOPC)
@@ -241,22 +241,22 @@ cgoShaderInstr::cgoShaderInstr(U08 *instrCode)
     hasResultB = setHasResult(opcode);
     
     //  Set if this instruction is an integer instruction.
-    isIntegerB = (opcode == CG1_ISA_OPCODE_ARL) || (opcode == CG1_ISA_OPCODE_ADDI) || (opcode == CG1_ISA_OPCODE_MULI) || (opcode == CG1_ISA_OPCODE_STPEQI) || (opcode == CG1_ISA_OPCODE_STPGTI) || (opcode == CG1_ISA_OPCODE_STPLTI);
+    isIntegerB = (opcode == CG_ISA_OPCODE_ARL) || (opcode == CG_ISA_OPCODE_ADDI) || (opcode == CG_ISA_OPCODE_MULI) || (opcode == CG_ISA_OPCODE_STPEQI) || (opcode == CG_ISA_OPCODE_STPGTI) || (opcode == CG_ISA_OPCODE_STPLTI);
 
     //  Set if this instruction is a load instruction.
-    isALoadB = (opcode == CG1_ISA_OPCODE_TEX) || (opcode == CG1_ISA_OPCODE_TXB) || (opcode == CG1_ISA_OPCODE_TXP) || (opcode == CG1_ISA_OPCODE_TXL) || (opcode == CG1_ISA_OPCODE_LDA);
+    isALoadB = (opcode == CG_ISA_OPCODE_TEX) || (opcode == CG_ISA_OPCODE_TXB) || (opcode == CG_ISA_OPCODE_TXP) || (opcode == CG_ISA_OPCODE_TXL) || (opcode == CG_ISA_OPCODE_LDA);
 
     //  Set if this instruction is a store instruction.
     isAStoreB = false;
 
     //  Set if this instruction is a Z export instruction.
-    isZExportB = (opcode == CG1_ISA_OPCODE_ZXP) || (opcode == CG1_ISA_OPCODE_ZXS); 
+    isZExportB = (opcode == CG_ISA_OPCODE_ZXP) || (opcode == CG_ISA_OPCODE_ZXS); 
     
     //  Set if the instruction result is a predicate register.
     isPredInstrB = resultIsPredicateReg(opcode);
    
     //  Set if the instruction is a jump.
-    isAJumpB = (opcode == CG1_ISA_OPCODE_JMP);
+    isAJumpB = (opcode == CG_ISA_OPCODE_JMP);
     
     //  Reset immediate field.
     immediate = 0;
@@ -277,9 +277,9 @@ cgoShaderInstr::cgoShaderInstr(U08 *instrCode)
     switch(opcode)
     {
         //  Opcodes without operands.
-        case CG1_ISA_OPCODE_END:
-        case CG1_ISA_OPCODE_NOP:
-        case CG1_ISA_OPCODE_CHS:
+        case CG_ISA_OPCODE_END:
+        case CG_ISA_OPCODE_NOP:
+        case CG_ISA_OPCODE_CHS:
         
             //  Get end flag for the instruction.
             endFlag = code.fields.lo64Bits.endflag;
@@ -304,7 +304,7 @@ cgoShaderInstr::cgoShaderInstr(U08 *instrCode)
 
         //  Predicate operator.
         
-        case CG1_ISA_OPCODE_ANDP:
+        case CG_ISA_OPCODE_ANDP:
         
             //  Get first operand register identifier.
             op1 = code.fields.hi64Bits.operands.op1reg;
@@ -387,7 +387,7 @@ cgoShaderInstr::cgoShaderInstr(U08 *instrCode)
             relModeOffset = ((code.fields.lo64Bits.reloffset & 0x100) != 0) ? S16(code.fields.lo64Bits.reloffset | 0xff00) :
                                                                               S16(code.fields.lo64Bits.reloffset);
 
-            //  CG1_ISA_OPCODE_ANDP doesn't support immediate operand.
+            //  CG_ISA_OPCODE_ANDP doesn't support immediate operand.
             hasImmediateB = false;
 
             //  Set default values for undefined parameters.
@@ -398,7 +398,7 @@ cgoShaderInstr::cgoShaderInstr(U08 *instrCode)
             break;
             
         //  Jump instructions.
-        case CG1_ISA_OPCODE_JMP:
+        case CG_ISA_OPCODE_JMP:
         
             //  Get first operand register identifier.
             op1 = code.fields.hi64Bits.immediate.op1reg;
@@ -516,13 +516,13 @@ cgoShaderInstr::cgoShaderInstr(U08 *instrCode)
             //  Check if the instruction supports a second operand.
             if (numOperands > 1)
             {        
-                //  Check for texture instructions (CG1_ISA_OPCODE_TEX, CG1_ISA_OPCODE_TXB, CG1_ISA_OPCODE_TXL, CG1_ISA_OPCODE_TXP, CG1_ISA_OPCODE_LDA).
+                //  Check for texture instructions (CG_ISA_OPCODE_TEX, CG_ISA_OPCODE_TXB, CG_ISA_OPCODE_TXL, CG_ISA_OPCODE_TXP, CG_ISA_OPCODE_LDA).
                 if (isALoadB)
                 {
                     //  Second operand bank is implicit.
                     bankOp2 = TEXT;
                 }
-                else if ((opcode == CG1_ISA_OPCODE_KLS) || (opcode == CG1_ISA_OPCODE_ZXS))
+                else if ((opcode == CG_ISA_OPCODE_KLS) || (opcode == CG_ISA_OPCODE_ZXS))
                 {
                     //  Second operand bank is implicit.
                     bankOp2 = SAMP;
@@ -685,7 +685,7 @@ cgoShaderInstr::cgoShaderInstr(U08 *instrCode)
 
     //  Set if this instruction is an End instruction or an arithmetic instruction
     //  marked as the last kernel instruction.
-    isEndB = (opcode == CG1_ISA_OPCODE_END) || endFlag;
+    isEndB = (opcode == CG_ISA_OPCODE_END) || endFlag;
 
     //  Set if this instruction is a float instruction.
     isFloatB = !isIntegerB;
@@ -735,10 +735,10 @@ cgoShaderInstr::cgoShaderInstr(ShOpcode opc,                          //  Instru
     hasResultB = setHasResult(opcode);
 
     //  Set if this instruction is an End instruction.
-    isEndB = (opcode == CG1_ISA_OPCODE_END) || endFlag;
+    isEndB = (opcode == CG_ISA_OPCODE_END) || endFlag;
 
     //  Set if this instruction is an integer instruction.
-    isIntegerB = (opcode == CG1_ISA_OPCODE_ARL) || (opcode == CG1_ISA_OPCODE_ADDI) || (opcode == CG1_ISA_OPCODE_MULI) || (opcode == CG1_ISA_OPCODE_STPEQI) || (opcode == CG1_ISA_OPCODE_STPGTI) || (opcode == CG1_ISA_OPCODE_STPLTI);
+    isIntegerB = (opcode == CG_ISA_OPCODE_ARL) || (opcode == CG_ISA_OPCODE_ADDI) || (opcode == CG_ISA_OPCODE_MULI) || (opcode == CG_ISA_OPCODE_STPEQI) || (opcode == CG_ISA_OPCODE_STPGTI) || (opcode == CG_ISA_OPCODE_STPLTI);
 
     //  Set if this instruction is a float instruction.
     isFloatB = !isIntegerB;
@@ -750,26 +750,26 @@ cgoShaderInstr::cgoShaderInstr(ShOpcode opc,                          //  Instru
     isSOACompatibleB = setIsSOACompatible(opcode, maskMode);
 
     //  Set if this instruction is a load instruction.
-    isALoadB = (opcode == CG1_ISA_OPCODE_TEX) || (opcode == CG1_ISA_OPCODE_TXP) || (opcode == CG1_ISA_OPCODE_TXB) || (opcode == CG1_ISA_OPCODE_TXL) || (opcode == CG1_ISA_OPCODE_LDA);
+    isALoadB = (opcode == CG_ISA_OPCODE_TEX) || (opcode == CG_ISA_OPCODE_TXP) || (opcode == CG_ISA_OPCODE_TXB) || (opcode == CG_ISA_OPCODE_TXL) || (opcode == CG_ISA_OPCODE_LDA);
 
     //  Set if this instruction is a store instruction.
     isAStoreB = false;
 
     //  Set if this instruction is a Z export instruction.
-    isZExportB = (opcode == CG1_ISA_OPCODE_ZXP) || (opcode == CG1_ISA_OPCODE_ZXS);
+    isZExportB = (opcode == CG_ISA_OPCODE_ZXP) || (opcode == CG_ISA_OPCODE_ZXS);
 
     //  Set if the instruction result is a predicate register.
     isPredInstrB = resultIsPredicateReg(opcode);
 
     //  Set if the instruction is a jump instruction.
-    isAJumpB = (opcode == CG1_ISA_OPCODE_JMP);
+    isAJumpB = (opcode == CG_ISA_OPCODE_JMP);
     
     //  Check for instructions without operands or result.
     switch(opcode)
     {
-        case CG1_ISA_OPCODE_END:
-        case CG1_ISA_OPCODE_NOP:
-        case CG1_ISA_OPCODE_CHS:
+        case CG_ISA_OPCODE_END:
+        case CG_ISA_OPCODE_NOP:
+        case CG_ISA_OPCODE_CHS:
         
             //  Set default values in all unused fields.
             relativeModeFlag = false;
@@ -788,7 +788,7 @@ cgoShaderInstr::cgoShaderInstr(ShOpcode opc,                          //  Instru
             
             break;
         
-        case CG1_ISA_OPCODE_ANDP:
+        case CG_ISA_OPCODE_ANDP:
         
             //  Only predicate or constant operands allowed.
             if (bankOp1 != PARAM)
@@ -811,7 +811,7 @@ cgoShaderInstr::cgoShaderInstr(ShOpcode opc,                          //  Instru
             
             break;
 
-        case CG1_ISA_OPCODE_JMP:
+        case CG_ISA_OPCODE_JMP:
         
             //  Only predicate or constant operands allowed.
             if (bankOp1 != PARAM)
@@ -854,7 +854,7 @@ cgoShaderInstr::cgoShaderInstr(ShOpcode opc,                          //  Instru
                     //  The instruction doesn't have an immediate operand.
                     hasImmediateB = false;
                 }
-                else if ((opcode == CG1_ISA_OPCODE_KLS) || (opcode == CG1_ISA_OPCODE_ZXS))
+                else if ((opcode == CG_ISA_OPCODE_KLS) || (opcode == CG_ISA_OPCODE_ZXS))
                 {
                     //  Fragment sample identifier is implicit.
                     bankOp2 = SAMP;
@@ -942,7 +942,7 @@ cgoShaderInstr::cgoShaderInstr(ShOpcode opc,                          //  Instru
     }  
 
     // reset binary code
-    memset(code.code8, 0, CG1_ISA_INSTR_SIZE);
+    memset(code.code8, 0, CG_ISA_INSTR_SIZE);
 
     //  Encode the instruction.
 
@@ -1087,7 +1087,7 @@ cgoShaderInstr::cgoShaderInstr(ShOpcode opc):     //  Instruction Opcode.
 
 {
     // reset binary code
-    memset(code.code8, 0, CG1_ISA_INSTR_SIZE);
+    memset(code.code8, 0, CG_ISA_INSTR_SIZE);
 
     //  Encode the instruction.
 
@@ -1096,7 +1096,7 @@ cgoShaderInstr::cgoShaderInstr(ShOpcode opc):     //  Instruction Opcode.
 
     //  Encode instruction wait point and end flags.
     code.fields.lo64Bits.waitpoint = waitPointFlag ? 1 : 0;
-    code.fields.lo64Bits.endflag = (opcode == CG1_ISA_OPCODE_END) ? 1 : 0;
+    code.fields.lo64Bits.endflag = (opcode == CG_ISA_OPCODE_END) ? 1 : 0;
 
     //  Encode instruction predication parameters.
     code.fields.lo64Bits.predicated = predicatedFlag ? 1 : 0;
@@ -1109,10 +1109,10 @@ cgoShaderInstr::cgoShaderInstr(ShOpcode opc):     //  Instruction Opcode.
     //
 
     //  Set if this instruction is an end instruction.
-    isEndB = (opcode == CG1_ISA_OPCODE_END);
+    isEndB = (opcode == CG_ISA_OPCODE_END);
 
     //  Set if this instruction is an integer instruction.
-    isIntegerB = (opcode == CG1_ISA_OPCODE_ARL) || (opcode == CG1_ISA_OPCODE_ADDI) || (opcode == CG1_ISA_OPCODE_MULI) || (opcode == CG1_ISA_OPCODE_STPEQI) || (opcode == CG1_ISA_OPCODE_STPGTI) || (opcode == CG1_ISA_OPCODE_STPLTI);
+    isIntegerB = (opcode == CG_ISA_OPCODE_ARL) || (opcode == CG_ISA_OPCODE_ADDI) || (opcode == CG_ISA_OPCODE_MULI) || (opcode == CG_ISA_OPCODE_STPEQI) || (opcode == CG_ISA_OPCODE_STPGTI) || (opcode == CG_ISA_OPCODE_STPLTI);
 
     //  Set if this instruction is a float instruction.
     isFloatB = !isIntegerB;
@@ -1130,7 +1130,7 @@ cgoShaderInstr::cgoShaderInstr(ShOpcode opc):     //  Instruction Opcode.
     isAStoreB = false;
 
     //  Set if this instruction is a Z export instruction.
-    isZExportB = (opcode == CG1_ISA_OPCODE_ZXP) || (opcode == CG1_ISA_OPCODE_ZXS);
+    isZExportB = (opcode == CG_ISA_OPCODE_ZXP) || (opcode == CG_ISA_OPCODE_ZXS);
     
     //  Set if the instruction is a jump instruction.
     isAJumpB = false;
@@ -1167,19 +1167,19 @@ void cgoShaderInstr::disassemble(char* dis, int size)
     //  Disassemble the instruction based on the specific instruction type/opcode.
     switch(opcode)
     {
-        case CG1_ISA_OPCODE_END:
-        case CG1_ISA_OPCODE_NOP:
-        case CG1_ISA_OPCODE_CHS:
+        case CG_ISA_OPCODE_END:
+        case CG_ISA_OPCODE_NOP:
+        case CG_ISA_OPCODE_CHS:
         
             //  Do nothing.  These instructions don't have parameters.
             break;
     
-        case CG1_ISA_OPCODE_KIL:
-        case CG1_ISA_OPCODE_KLS:
-        case CG1_ISA_OPCODE_ZXP:
-        case CG1_ISA_OPCODE_ZXS:
+        case CG_ISA_OPCODE_KIL:
+        case CG_ISA_OPCODE_KLS:
+        case CG_ISA_OPCODE_ZXP:
+        case CG_ISA_OPCODE_ZXS:
         
-            //  CG1_ISA_OPCODE_KIL, CG1_ISA_OPCODE_KLS, CG1_ISA_OPCODE_ZXP or CG1_ISA_OPCODE_ZXS instructions only have an operand an no results.
+            //  CG_ISA_OPCODE_KIL, CG_ISA_OPCODE_KLS, CG_ISA_OPCODE_ZXP or CG_ISA_OPCODE_ZXS instructions only have an operand an no results.
 
             //  Write wizzle mask to buffer.
             if ((swizzleModeOp1 == 0x00) || (swizzleModeOp1 == 0x55) ||
@@ -1232,14 +1232,14 @@ void cgoShaderInstr::disassemble(char* dis, int size)
             }
 
             //  Print sample identifier.
-            if ((opcode == CG1_ISA_OPCODE_KLS) || (opcode == CG1_ISA_OPCODE_ZXS))
+            if ((opcode == CG_ISA_OPCODE_KLS) || (opcode == CG_ISA_OPCODE_ZXS))
             {
                 sprintf_s(dis, size,"%s, s%d", dis, op2);
             }
             
             break;
             
-        case CG1_ISA_OPCODE_ANDP:
+        case CG_ISA_OPCODE_ANDP:
         
             //  The predicate operator instruction requires special processing.
             
@@ -1362,7 +1362,7 @@ void cgoShaderInstr::disassemble(char* dis, int size)
 
             break;
 
-        case CG1_ISA_OPCODE_JMP:
+        case CG_ISA_OPCODE_JMP:
         
             //  The predicate operator instruction requires special processing.
             
@@ -1646,7 +1646,7 @@ cgoShaderInstr *cgoShaderInstr::assemble(char *line, string &errorString)
 {
 
     U32 i, j, length;
-    char opcodeStr[CG1_ISA_OPCODE_LENGTH_MAX + 1];
+    char opcodeStr[CG_ISA_OPCODE_LENGTH_MAX + 1];
     char addrStr[12];
     char maskStr[4];
     cgoShaderInstr *shInstr;
@@ -1752,7 +1752,7 @@ cgoShaderInstr *cgoShaderInstr::assemble(char *line, string &errorString)
     }
     
     //  Get the opcode.
-    for(j = 0; (i < length) && (j < CG1_ISA_OPCODE_LENGTH_MAX) && ((line[i] !=' ') && (line[i] != '_') && (line[i] != '\t') && (line[i] != '\n')); i++, j++)
+    for(j = 0; (i < length) && (j < CG_ISA_OPCODE_LENGTH_MAX) && ((line[i] !=' ') && (line[i] != '_') && (line[i] != '\t') && (line[i] != '\n')); i++, j++)
         opcodeStr[j] = line[i];
 
     //  End of string mark.
@@ -1771,7 +1771,7 @@ cgoShaderInstr *cgoShaderInstr::assemble(char *line, string &errorString)
     opc = translateShOpcodeTable[j];
 
     //  Set if this instruction is an integer instruction.
-    bool integerOp = (opc == CG1_ISA_OPCODE_ARL) || (opc == CG1_ISA_OPCODE_ADDI) || (opc == CG1_ISA_OPCODE_MULI) || (opc == CG1_ISA_OPCODE_STPEQI) || (opc == CG1_ISA_OPCODE_STPGTI) || (opc == CG1_ISA_OPCODE_STPLTI);
+    bool integerOp = (opc == CG_ISA_OPCODE_ARL) || (opc == CG_ISA_OPCODE_ADDI) || (opc == CG_ISA_OPCODE_MULI) || (opc == CG_ISA_OPCODE_STPEQI) || (opc == CG_ISA_OPCODE_STPGTI) || (opc == CG_ISA_OPCODE_STPLTI);
 
     bool parseOK;
     
@@ -1779,9 +1779,9 @@ cgoShaderInstr *cgoShaderInstr::assemble(char *line, string &errorString)
     switch(opc)
     {
     
-        case CG1_ISA_OPCODE_END:
-        case CG1_ISA_OPCODE_NOP:
-        case CG1_ISA_OPCODE_CHS:
+        case CG_ISA_OPCODE_END:
+        case CG_ISA_OPCODE_NOP:
+        case CG_ISA_OPCODE_CHS:
         
             //  Instruction without arguments/parameters.
 
@@ -1799,12 +1799,12 @@ cgoShaderInstr *cgoShaderInstr::assemble(char *line, string &errorString)
             
             break;
 
-        case CG1_ISA_OPCODE_KIL:
-        case CG1_ISA_OPCODE_KLS:
-        case CG1_ISA_OPCODE_ZXP:
-        case CG1_ISA_OPCODE_ZXS:
+        case CG_ISA_OPCODE_KIL:
+        case CG_ISA_OPCODE_KLS:
+        case CG_ISA_OPCODE_ZXP:
+        case CG_ISA_OPCODE_ZXS:
         
-            //  The CG1_ISA_OPCODE_KIL, CG1_ISA_OPCODE_KLS, CG1_ISA_OPCODE_ZXP and CG1_ISA_OPCODE_ZXS instructions have a single operand an no result register.
+            //  The CG_ISA_OPCODE_KIL, CG_ISA_OPCODE_KLS, CG_ISA_OPCODE_ZXP and CG_ISA_OPCODE_ZXS instructions have a single operand an no result register.
 
             //  Skip spaces and tabs.
             SKIP_BLANK_CHARS
@@ -1846,7 +1846,7 @@ cgoShaderInstr *cgoShaderInstr::assemble(char *line, string &errorString)
             return shInstr;
             break;
 
-        case CG1_ISA_OPCODE_ANDP:
+        case CG_ISA_OPCODE_ANDP:
             
             //  The predicate operator instruction is special.
             
@@ -2255,7 +2255,7 @@ cgoShaderInstr *cgoShaderInstr::assemble(char *line, string &errorString)
 
             break;
             
-        case CG1_ISA_OPCODE_JMP:
+        case CG_ISA_OPCODE_JMP:
         
             //  The jump instruction is special.
             
@@ -3155,27 +3155,27 @@ U32 cgoShaderInstr::setNumOperands(ShOpcode opcode)
 
     switch(opcode)
     {
-        case CG1_ISA_OPCODE_NOP: case CG1_ISA_OPCODE_END: case CG1_ISA_OPCODE_CHS:
+        case CG_ISA_OPCODE_NOP: case CG_ISA_OPCODE_END: case CG_ISA_OPCODE_CHS:
             //  Instructions with 0 input operands.
             return 0;
             break;
 
-        case CG1_ISA_OPCODE_ARL: case CG1_ISA_OPCODE_COS: case CG1_ISA_OPCODE_EX2: case CG1_ISA_OPCODE_EXP: case CG1_ISA_OPCODE_FLR: case CG1_ISA_OPCODE_FRC: case CG1_ISA_OPCODE_LG2: case CG1_ISA_OPCODE_LIT:
-        case CG1_ISA_OPCODE_LOG: case CG1_ISA_OPCODE_MOV: case CG1_ISA_OPCODE_RCP: case CG1_ISA_OPCODE_RSQ: case CG1_ISA_OPCODE_SIN: case CG1_ISA_OPCODE_KIL: case CG1_ISA_OPCODE_ZXP: case CG1_ISA_OPCODE_DDX:
-        case CG1_ISA_OPCODE_DDY: case CG1_ISA_OPCODE_JMP:
+        case CG_ISA_OPCODE_ARL: case CG_ISA_OPCODE_COS: case CG_ISA_OPCODE_EX2: case CG_ISA_OPCODE_EXP: case CG_ISA_OPCODE_FLR: case CG_ISA_OPCODE_FRC: case CG_ISA_OPCODE_LG2: case CG_ISA_OPCODE_LIT:
+        case CG_ISA_OPCODE_LOG: case CG_ISA_OPCODE_MOV: case CG_ISA_OPCODE_RCP: case CG_ISA_OPCODE_RSQ: case CG_ISA_OPCODE_SIN: case CG_ISA_OPCODE_KIL: case CG_ISA_OPCODE_ZXP: case CG_ISA_OPCODE_DDX:
+        case CG_ISA_OPCODE_DDY: case CG_ISA_OPCODE_JMP:
             //  Instructions with 1 input operand.
             return 1;
             break;
 
-        case CG1_ISA_OPCODE_ADD: case CG1_ISA_OPCODE_DP3: case CG1_ISA_OPCODE_DP4: case CG1_ISA_OPCODE_DPH: case CG1_ISA_OPCODE_DST: case CG1_ISA_OPCODE_MAX: case CG1_ISA_OPCODE_MIN: case CG1_ISA_OPCODE_MUL:
-        case CG1_ISA_OPCODE_SGE: case CG1_ISA_OPCODE_SLT: case CG1_ISA_OPCODE_TEX: case CG1_ISA_OPCODE_TXB: case CG1_ISA_OPCODE_TXP: case CG1_ISA_OPCODE_LDA: case CG1_ISA_OPCODE_KLS: case CG1_ISA_OPCODE_ZXS:
-        case CG1_ISA_OPCODE_FXMUL: case CG1_ISA_OPCODE_SETPEQ: case CG1_ISA_OPCODE_SETPGT: case CG1_ISA_OPCODE_SETPLT: case CG1_ISA_OPCODE_TXL: case CG1_ISA_OPCODE_ANDP: case CG1_ISA_OPCODE_ADDI:
-        case CG1_ISA_OPCODE_MULI: case CG1_ISA_OPCODE_STPEQI: case CG1_ISA_OPCODE_STPGTI: case CG1_ISA_OPCODE_STPLTI:
+        case CG_ISA_OPCODE_ADD: case CG_ISA_OPCODE_DP3: case CG_ISA_OPCODE_DP4: case CG_ISA_OPCODE_DPH: case CG_ISA_OPCODE_DST: case CG_ISA_OPCODE_MAX: case CG_ISA_OPCODE_MIN: case CG_ISA_OPCODE_MUL:
+        case CG_ISA_OPCODE_SGE: case CG_ISA_OPCODE_SLT: case CG_ISA_OPCODE_TEX: case CG_ISA_OPCODE_TXB: case CG_ISA_OPCODE_TXP: case CG_ISA_OPCODE_LDA: case CG_ISA_OPCODE_KLS: case CG_ISA_OPCODE_ZXS:
+        case CG_ISA_OPCODE_FXMUL: case CG_ISA_OPCODE_SETPEQ: case CG_ISA_OPCODE_SETPGT: case CG_ISA_OPCODE_SETPLT: case CG_ISA_OPCODE_TXL: case CG_ISA_OPCODE_ANDP: case CG_ISA_OPCODE_ADDI:
+        case CG_ISA_OPCODE_MULI: case CG_ISA_OPCODE_STPEQI: case CG_ISA_OPCODE_STPGTI: case CG_ISA_OPCODE_STPLTI:
             //  Instructions with 2 input operands.
             return 2;
             break;
 
-        case CG1_ISA_OPCODE_MAD: case CG1_ISA_OPCODE_CMP: case CG1_ISA_OPCODE_CMPKIL: case CG1_ISA_OPCODE_FXMAD: case CG1_ISA_OPCODE_FXMAD2:
+        case CG_ISA_OPCODE_MAD: case CG_ISA_OPCODE_CMP: case CG_ISA_OPCODE_CMPKIL: case CG_ISA_OPCODE_FXMAD: case CG_ISA_OPCODE_FXMAD2:
             //  Instructions with 3 input operands.
             return 3;
             break;
@@ -3195,7 +3195,7 @@ bool cgoShaderInstr::setIsScalar(ShOpcode opcode, MaskMode writeMask)
     switch(opcode)
     {
         //  Not implemented.
-        case CG1_ISA_OPCODE_FLR:
+        case CG_ISA_OPCODE_FLR:
             {
                 char buffer[128];
                 sprintf_s(buffer, sizeof(buffer), "Instruction opcode %02x not implemented.\n", opcode);
@@ -3204,17 +3204,17 @@ bool cgoShaderInstr::setIsScalar(ShOpcode opcode, MaskMode writeMask)
             break;
 
         //  Pure vector instructions
-        case CG1_ISA_OPCODE_DP3: case CG1_ISA_OPCODE_DP4: case CG1_ISA_OPCODE_DPH: case CG1_ISA_OPCODE_DST: case CG1_ISA_OPCODE_EXP: case CG1_ISA_OPCODE_LIT: case CG1_ISA_OPCODE_LOG: case CG1_ISA_OPCODE_TEX:
-        case CG1_ISA_OPCODE_TXB: case CG1_ISA_OPCODE_TXP: case CG1_ISA_OPCODE_LDA: case CG1_ISA_OPCODE_KIL: case CG1_ISA_OPCODE_KLS: case CG1_ISA_OPCODE_ZXP: case CG1_ISA_OPCODE_ZXS: case CG1_ISA_OPCODE_TXL:
+        case CG_ISA_OPCODE_DP3: case CG_ISA_OPCODE_DP4: case CG_ISA_OPCODE_DPH: case CG_ISA_OPCODE_DST: case CG_ISA_OPCODE_EXP: case CG_ISA_OPCODE_LIT: case CG_ISA_OPCODE_LOG: case CG_ISA_OPCODE_TEX:
+        case CG_ISA_OPCODE_TXB: case CG_ISA_OPCODE_TXP: case CG_ISA_OPCODE_LDA: case CG_ISA_OPCODE_KIL: case CG_ISA_OPCODE_KLS: case CG_ISA_OPCODE_ZXP: case CG_ISA_OPCODE_ZXS: case CG_ISA_OPCODE_TXL:
 
             return false;
             break;
 
         //  Vector instructions treated as a scalar instruction when using a scalar write mask.
-        case CG1_ISA_OPCODE_ADD:   case CG1_ISA_OPCODE_ARL:   case CG1_ISA_OPCODE_CMP:    case CG1_ISA_OPCODE_CMPKIL: case CG1_ISA_OPCODE_EX2: case CG1_ISA_OPCODE_FRC: case CG1_ISA_OPCODE_LG2: case CG1_ISA_OPCODE_MAD:
-        case CG1_ISA_OPCODE_MAX:   case CG1_ISA_OPCODE_MIN:   case CG1_ISA_OPCODE_MOV:    case CG1_ISA_OPCODE_MUL:    case CG1_ISA_OPCODE_SGE: case CG1_ISA_OPCODE_SLT: case CG1_ISA_OPCODE_RCP: case CG1_ISA_OPCODE_RSQ:
-        case CG1_ISA_OPCODE_FXMUL: case CG1_ISA_OPCODE_FXMAD: case CG1_ISA_OPCODE_FXMAD2: case CG1_ISA_OPCODE_COS:    case CG1_ISA_OPCODE_SIN: case CG1_ISA_OPCODE_DDX: case CG1_ISA_OPCODE_DDY: case CG1_ISA_OPCODE_ADDI:
-        case CG1_ISA_OPCODE_MULI:
+        case CG_ISA_OPCODE_ADD:   case CG_ISA_OPCODE_ARL:   case CG_ISA_OPCODE_CMP:    case CG_ISA_OPCODE_CMPKIL: case CG_ISA_OPCODE_EX2: case CG_ISA_OPCODE_FRC: case CG_ISA_OPCODE_LG2: case CG_ISA_OPCODE_MAD:
+        case CG_ISA_OPCODE_MAX:   case CG_ISA_OPCODE_MIN:   case CG_ISA_OPCODE_MOV:    case CG_ISA_OPCODE_MUL:    case CG_ISA_OPCODE_SGE: case CG_ISA_OPCODE_SLT: case CG_ISA_OPCODE_RCP: case CG_ISA_OPCODE_RSQ:
+        case CG_ISA_OPCODE_FXMUL: case CG_ISA_OPCODE_FXMAD: case CG_ISA_OPCODE_FXMAD2: case CG_ISA_OPCODE_COS:    case CG_ISA_OPCODE_SIN: case CG_ISA_OPCODE_DDX: case CG_ISA_OPCODE_DDY: case CG_ISA_OPCODE_ADDI:
+        case CG_ISA_OPCODE_MULI:
 
             if ((writeMask == XNNN) || (writeMask == NYNN) || (writeMask == NNZN) || (writeMask == NNNW))
                 return true;
@@ -3224,13 +3224,13 @@ bool cgoShaderInstr::setIsScalar(ShOpcode opcode, MaskMode writeMask)
             break;
 
         //  The predicate set instructions only work with scalar values and results.
-        case CG1_ISA_OPCODE_SETPEQ: case CG1_ISA_OPCODE_SETPGT: case CG1_ISA_OPCODE_SETPLT: case CG1_ISA_OPCODE_ANDP: case CG1_ISA_OPCODE_STPEQI: case CG1_ISA_OPCODE_STPGTI: case CG1_ISA_OPCODE_STPLTI:
+        case CG_ISA_OPCODE_SETPEQ: case CG_ISA_OPCODE_SETPGT: case CG_ISA_OPCODE_SETPLT: case CG_ISA_OPCODE_ANDP: case CG_ISA_OPCODE_STPEQI: case CG_ISA_OPCODE_STPGTI: case CG_ISA_OPCODE_STPLTI:
         
             return true;            
             break;
         
         //  Jump instructions are scalar.
-        case CG1_ISA_OPCODE_JMP:
+        case CG_ISA_OPCODE_JMP:
             return TRUE;
             break;
 
@@ -3250,7 +3250,7 @@ bool cgoShaderInstr::setIsSOACompatible(ShOpcode opcode, MaskMode writeMask)
     switch(opcode)
     {
         //  Not implemented.
-        case CG1_ISA_OPCODE_FLR:
+        case CG_ISA_OPCODE_FLR:
             {
                 char buffer[128];
                 sprintf_s(buffer, sizeof(buffer), "Instruction opcode %02x not implemented.\n", opcode);
@@ -3260,13 +3260,13 @@ bool cgoShaderInstr::setIsSOACompatible(ShOpcode opcode, MaskMode writeMask)
             break;
 
         //  Instructions with no equivalent in Scalar.
-        case CG1_ISA_OPCODE_DP3: case CG1_ISA_OPCODE_DP4: case CG1_ISA_OPCODE_DPH:
+        case CG_ISA_OPCODE_DP3: case CG_ISA_OPCODE_DP4: case CG_ISA_OPCODE_DPH:
 
             return false;
             break;
 
         //  Scalar instructions
-        case CG1_ISA_OPCODE_EX2:  case CG1_ISA_OPCODE_LG2: case CG1_ISA_OPCODE_RCP: case CG1_ISA_OPCODE_RSQ: case CG1_ISA_OPCODE_FRC: case CG1_ISA_OPCODE_COS: case CG1_ISA_OPCODE_SIN:
+        case CG_ISA_OPCODE_EX2:  case CG_ISA_OPCODE_LG2: case CG_ISA_OPCODE_RCP: case CG_ISA_OPCODE_RSQ: case CG_ISA_OPCODE_FRC: case CG_ISA_OPCODE_COS: case CG_ISA_OPCODE_SIN:
 
             if ((writeMask == XNNN) || (writeMask == NYNN) || (writeMask == NNZN) || (writeMask == NNNW))
                 return true;
@@ -3277,7 +3277,7 @@ bool cgoShaderInstr::setIsSOACompatible(ShOpcode opcode, MaskMode writeMask)
 
         //  Instructions with fake Scalar support.  They would require special conversion
         //  code that is not currently implemented in the Scalar to SIMD4 translator.
-        case CG1_ISA_OPCODE_DST: case CG1_ISA_OPCODE_EXP: case CG1_ISA_OPCODE_LIT: case CG1_ISA_OPCODE_LOG:
+        case CG_ISA_OPCODE_DST: case CG_ISA_OPCODE_EXP: case CG_ISA_OPCODE_LIT: case CG_ISA_OPCODE_LOG:
 
             //if ((writeMask == XNNN) || (writeMask == NYNN) || (writeMask == NNZN) || (writeMask == NNNW))
             //    return true;
@@ -3289,17 +3289,17 @@ bool cgoShaderInstr::setIsSOACompatible(ShOpcode opcode, MaskMode writeMask)
             break;
 
         //  Special instructions supported in Scalar mode.
-        case CG1_ISA_OPCODE_NOP: case CG1_ISA_OPCODE_TEX: case CG1_ISA_OPCODE_TXB: case CG1_ISA_OPCODE_TXP: case CG1_ISA_OPCODE_LDA: case CG1_ISA_OPCODE_KIL: case CG1_ISA_OPCODE_KLS: case CG1_ISA_OPCODE_ZXP:
-        case CG1_ISA_OPCODE_ZXS: case CG1_ISA_OPCODE_CHS: case CG1_ISA_OPCODE_TXL:
+        case CG_ISA_OPCODE_NOP: case CG_ISA_OPCODE_TEX: case CG_ISA_OPCODE_TXB: case CG_ISA_OPCODE_TXP: case CG_ISA_OPCODE_LDA: case CG_ISA_OPCODE_KIL: case CG_ISA_OPCODE_KLS: case CG_ISA_OPCODE_ZXP:
+        case CG_ISA_OPCODE_ZXS: case CG_ISA_OPCODE_CHS: case CG_ISA_OPCODE_TXL:
 
             return true;
 
             break;
 
         //  Vector/SIMD4 instructions treated as a scalar instruction when using a scalar write mask.
-        case CG1_ISA_OPCODE_ADD: case CG1_ISA_OPCODE_ARL: case CG1_ISA_OPCODE_CMP: case CG1_ISA_OPCODE_CMPKIL: case CG1_ISA_OPCODE_MAD:   case CG1_ISA_OPCODE_MAX:    case CG1_ISA_OPCODE_MIN: case CG1_ISA_OPCODE_MOV:
-        case CG1_ISA_OPCODE_MUL: case CG1_ISA_OPCODE_SGE: case CG1_ISA_OPCODE_SLT: case CG1_ISA_OPCODE_FXMUL:  case CG1_ISA_OPCODE_FXMAD: case CG1_ISA_OPCODE_FXMAD2: case CG1_ISA_OPCODE_DDX: case CG1_ISA_OPCODE_DDY:
-        case CG1_ISA_OPCODE_ADDI: case CG1_ISA_OPCODE_MULI:
+        case CG_ISA_OPCODE_ADD: case CG_ISA_OPCODE_ARL: case CG_ISA_OPCODE_CMP: case CG_ISA_OPCODE_CMPKIL: case CG_ISA_OPCODE_MAD:   case CG_ISA_OPCODE_MAX:    case CG_ISA_OPCODE_MIN: case CG_ISA_OPCODE_MOV:
+        case CG_ISA_OPCODE_MUL: case CG_ISA_OPCODE_SGE: case CG_ISA_OPCODE_SLT: case CG_ISA_OPCODE_FXMUL:  case CG_ISA_OPCODE_FXMAD: case CG_ISA_OPCODE_FXMAD2: case CG_ISA_OPCODE_DDX: case CG_ISA_OPCODE_DDY:
+        case CG_ISA_OPCODE_ADDI: case CG_ISA_OPCODE_MULI:
 
             if ((writeMask == XNNN) || (writeMask == NYNN) || (writeMask == NNZN) || (writeMask == NNNW))
                 return true;
@@ -3309,12 +3309,12 @@ bool cgoShaderInstr::setIsSOACompatible(ShOpcode opcode, MaskMode writeMask)
             break;
 
         //  Set predicate instructions are only scalar.
-        case CG1_ISA_OPCODE_SETPEQ: case CG1_ISA_OPCODE_SETPGT: case CG1_ISA_OPCODE_SETPLT: case CG1_ISA_OPCODE_ANDP: case CG1_ISA_OPCODE_STPEQI: case CG1_ISA_OPCODE_STPGTI: case CG1_ISA_OPCODE_STPLTI:
+        case CG_ISA_OPCODE_SETPEQ: case CG_ISA_OPCODE_SETPGT: case CG_ISA_OPCODE_SETPLT: case CG_ISA_OPCODE_ANDP: case CG_ISA_OPCODE_STPEQI: case CG_ISA_OPCODE_STPGTI: case CG_ISA_OPCODE_STPLTI:
             return true;
             break;
 
         //  Jump instructions are scalar.
-        case CG1_ISA_OPCODE_JMP:
+        case CG_ISA_OPCODE_JMP:
             return true;
             break;
             
@@ -3436,7 +3436,7 @@ ShOpcode cgoShaderInstr::getOpcode()
 void cgoShaderInstr::getCode(U08 *encode)
 {
     //  WARNING:  DOES NOT CHECK BUFFER OVERFLOWS!!!!
-    memcpy(encode, code.code8, CG1_ISA_INSTR_SIZE);
+    memcpy(encode, code.code8, CG_ISA_INSTR_SIZE);
 }
 
 U32 cgoShaderInstr::getOperandIndex(int opIdx)
@@ -3764,14 +3764,14 @@ bool cgoShaderInstr::setHasResult(ShOpcode opcode)
 {
     switch(opcode)
     {
-        case CG1_ISA_OPCODE_END:
-        case CG1_ISA_OPCODE_NOP:
-        case CG1_ISA_OPCODE_KIL:
-        case CG1_ISA_OPCODE_KLS:
-        case CG1_ISA_OPCODE_ZXP:
-        case CG1_ISA_OPCODE_ZXS:
-        case CG1_ISA_OPCODE_CHS:
-        case CG1_ISA_OPCODE_JMP:
+        case CG_ISA_OPCODE_END:
+        case CG_ISA_OPCODE_NOP:
+        case CG_ISA_OPCODE_KIL:
+        case CG_ISA_OPCODE_KLS:
+        case CG_ISA_OPCODE_ZXP:
+        case CG_ISA_OPCODE_ZXS:
+        case CG_ISA_OPCODE_CHS:
+        case CG_ISA_OPCODE_JMP:
         case INVOPC:
             return false;
             break;
@@ -3791,13 +3791,13 @@ bool cgoShaderInstr::resultIsPredicateReg(ShOpcode opcode)
 {
     switch(opcode)
     {
-        case CG1_ISA_OPCODE_SETPEQ:
-        case CG1_ISA_OPCODE_SETPGT:
-        case CG1_ISA_OPCODE_SETPLT:
-        case CG1_ISA_OPCODE_ANDP:
-        case CG1_ISA_OPCODE_STPEQI:
-        case CG1_ISA_OPCODE_STPGTI:
-        case CG1_ISA_OPCODE_STPLTI:
+        case CG_ISA_OPCODE_SETPEQ:
+        case CG_ISA_OPCODE_SETPGT:
+        case CG_ISA_OPCODE_SETPLT:
+        case CG_ISA_OPCODE_ANDP:
+        case CG_ISA_OPCODE_STPEQI:
+        case CG_ISA_OPCODE_STPGTI:
+        case CG_ISA_OPCODE_STPLTI:
             return true;
             break;
        

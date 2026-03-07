@@ -1,7 +1,7 @@
 /**************************************************************************
  *
  * GPU simulator implementation file.
- * This file contains the implementation of functions for the CG1 GPU simulator.
+ * This file contains the implementation of functions for the computrendering GPU simulator.
  */
 
 #include "GpuTop.h"

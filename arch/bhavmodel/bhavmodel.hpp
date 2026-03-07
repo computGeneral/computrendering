@@ -1,11 +1,11 @@
 /**************************************************************************
  *
  * GPU behaviorModel definition file.
- *  This file contains definitions and includes for the CG1 GPU behaviorModel.
+ *  This file contains definitions and includes for the computrendering GPU behaviorModel.
  *
  */
-#ifndef __CG1_BHAVMODEL_HPP__
-#define __CG1_BHAVMODEL_HPP__
+#ifndef __BHAVMODEL_HPP__
+#define __BHAVMODEL_HPP__
 
 //  Configuration file definitions.
 #include "archParams.h"

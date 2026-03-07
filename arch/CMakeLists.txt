@@ -86,7 +86,7 @@ set(D3DINC
 
 )
 
-# Generate CG1 GPU CModel
+# Generate computrendering GPU CModel
 if(MSVC)
     set(EXTSRC ${OGLSRC} ${D3DSRC})
     set(EXTINC ${OGLINC} ${D3DINC})
@@ -117,7 +117,7 @@ endif()
 
 # following is a demo argument line for the debugger
 set_target_properties(computrender PROPERTIES VS_DEBUGGER_COMMAND_ARGUMENTS 
-                                        "--param ../../../arch/common/params/archParams.csv --arch CG1GPU.ini
+                                        "--param ../../../arch/common/params/archParams.csv --arch archParams.csv
                                          --trace ${CMAKE_SOURCE_DIR}/tests/ogl/trace/simplefog/tracefile.ogl.txt.gz"
                                         VS_DEBUGGER_WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/_BUILD_/arch/Debug
                     )
@@ -144,7 +144,7 @@ target_link_libraries(computrender PUBLIC
 if(CG_ARCH_MODEL_DEVEL)
     add_definitions(-DCG_ARCH_MODEL_DEVEL=1)
     add_subdirectory(archmodel)
-    target_link_libraries(computrender PUBLIC CG1AMDL)
-    target_link_libraries(CG1AMDL PUBLIC systemc)
+    target_link_libraries(computrender PUBLIC archmodel)
+    target_link_libraries(archmodel PUBLIC systemc)
     target_include_directories(computrender PUBLIC ${CMAKE_SOURCE_DIR}/arch/archmodel)
 endif()

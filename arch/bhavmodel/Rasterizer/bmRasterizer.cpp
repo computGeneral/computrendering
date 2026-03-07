@@ -6419,9 +6419,9 @@ void oldSetupMatrix()
     auxA[1] = - A[1];
     auxA[2] = - A[2];
 
-    GPUMath::CG1_ISA_OPCODE_MAD(X1, Y2, auxC, C);
-    GPUMath::CG1_ISA_OPCODE_MAD(X2, W1, auxB, B);
-    GPUMath::CG1_ISA_OPCODE_MAD(Y1, W2, auxA, A);
+    GPUMath::CG_ISA_OPCODE_MAD(X1, Y2, auxC, C);
+    GPUMath::CG_ISA_OPCODE_MAD(X2, W1, auxB, B);
+    GPUMath::CG_ISA_OPCODE_MAD(Y1, W2, auxA, A);
     */
 
 }

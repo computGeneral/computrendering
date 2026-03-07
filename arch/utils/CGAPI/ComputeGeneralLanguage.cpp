@@ -28,7 +28,7 @@ void CGLInterface::cglInitialize(bool verboseExec)
 {
     DynamicMemoryOpt::initialize(512, 1024, 1024, 1024, 4096, 1024);
     ConfigLoader* cl;
-    char* configFile = "../../arch/config/CG1GPU.ini";
+    char* configFile = "../../arch/config/archParams.csv";
     cl = new ConfigLoader(configFile);
     arch = new cgsArchConfig;
     cl->getParameters(arch);

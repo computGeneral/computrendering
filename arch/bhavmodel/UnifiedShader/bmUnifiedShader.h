@@ -56,7 +56,7 @@ struct TextureQueue
     F32 *parameter;              //  Pointer to the per fragment parameter (lod/bias) for the operation (only for texture reads).  
     U32 textUnit;                //  Identifier of the texture sampler (texture reads) or attribute (attribute read) to be used for the operation.  
     U32 requested;               //  Number of requests received for the stamp.  
-    bool vertexTextureAccess;       //  The texture access comes from a vertex shader (only for the CG1 behaviorModel!!!).  
+    bool vertexTextureAccess;       //  The texture access comes from a vertex shader (only for the behaviorModel!!!).  
     cgoShaderInstr::cgoShaderInstrEncoding **shInstrD; //  Pointer to the shader instructions that produced the texture access.  
     DynamicObject *accessCookies;                           //  Cookies for the texture access.  
 };
@@ -965,7 +965,7 @@ public:
     /**
     *
      *  Generates the next complete texture request for a vertex texture access available in the shader behaviorModel.
-     *  Only the CG1 behaviorModel should use this function.
+     *  Only the behaviorModel should use this function.
      *
      *  @return A TextureAccess object with the information about the texture accesses for a vertex texture access.
      *

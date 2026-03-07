@@ -676,14 +676,14 @@ void cmoShaderDecExe::clock(U64 cycle)
                     //  Unblock the threads that finished the texture access.  
                     for(j = 0; j < STAMP_FRAGMENTS; j++)
                     {
-                        //  Unblock thread if thread hasn't processed CG1_ISA_OPCODE_END instruction
+                        //  Unblock thread if thread hasn't processed CG_ISA_OPCODE_END instruction
                         if (!threadInfo[textThreads[j]].end)
                             unblockThread(cycle, textThreads[j], 0, NULL);
 
                         //  Mark thread as no longer waiting for texture result.
                         threadInfo[textThreads[j]].waitTexture = false;
 
-                        //  Check if thread has received the CG1_ISA_OPCODE_END instruction and finished all previous instructions.
+                        //  Check if thread has received the CG_ISA_OPCODE_END instruction and finished all previous instructions.
                         if (threadInfo[textThreads[j]].end && (threadInfo[textThreads[j]].pending == 0))
                         {
                             //  Remove thread end condition..  
@@ -692,7 +692,7 @@ void cmoShaderDecExe::clock(U64 cycle)
                             //  Remove thread block condition.  
                             threadInfo[textThreads[j]].ready = true;
 
-                            //  Send CG1_ISA_OPCODE_END signal to Fetch.  
+                            //  Send CG_ISA_OPCODE_END signal to Fetch.  
                             endThread(cycle, textThreads[j], 0, NULL);
                         }
                     }
@@ -923,10 +923,10 @@ void cmoShaderDecExe::endExecution(U64 cycle)
         //  Update number of pending instructions for the thread.  
         threadInfo[numThread].pending--;
 
-        //  Check for CG1_ISA_OPCODE_KILL instruction.  
-        //if (shInstr->getOpcode() == CG1_ISA_OPCODE_KIL)
+        //  Check for CG_ISA_OPCODE_KILL instruction.  
+        //if (shInstr->getOpcode() == CG_ISA_OPCODE_KIL)
         //{
-        //    //  Check CG1_ISA_OPCODE_KILL instruction result.  
+        //    //  Check CG_ISA_OPCODE_KILL instruction result.  
         //    if (bmUnifiedShader.threadKill(numThread))
         //    {
         //        //  The thread must end.  
@@ -965,11 +965,11 @@ void cmoShaderDecExe::endExecution(U64 cycle)
             //  Remove thread block condition.  
             threadInfo[numThread].ready = TRUE;
 
-            //  Send CG1_ISA_OPCODE_END signal to Fetch.  
+            //  Send CG_ISA_OPCODE_END signal to Fetch.  
             endThread(cycle, numThread, pc, shExecInstr);
         }
 
-        //  Determine if it is an CG1_ISA_OPCODE_END instruction.  
+        //  Determine if it is an CG_ISA_OPCODE_END instruction.  
         if (shInstr->isEnd())
         {
             //  Nothing to do.  Wait for end of all pending instructions.   
@@ -1038,10 +1038,10 @@ void cmoShaderDecExe::startExecution(U64 cycle, ShaderExecInstruction *shExecIns
     //  Get result register number.  
     resReg = shInstr->getResult();
 
-    //  If CG1_ISA_OPCODE_END instruction check that all previous instructions has finished.  
+    //  If CG_ISA_OPCODE_END instruction check that all previous instructions has finished.  
     if (shInstr->isEnd())
     {
-        //  Set CG1_ISA_OPCODE_END received flag for the thread.  
+        //  Set CG_ISA_OPCODE_END received flag for the thread.  
         threadInfo[numThread].end = TRUE;
 
         //  Send a block signal to fetch.  
@@ -1069,7 +1069,7 @@ void cmoShaderDecExe::startExecution(U64 cycle, ShaderExecInstruction *shExecIns
     }
 
     //  Check if it is an instruction with a result.  
-    if (!shInstr->isEnd() && (shInstr->getOpcode() != CG1_ISA_OPCODE_NOP) && (shInstr->getOpcode() != CG1_ISA_OPCODE_KIL) && (shInstr->getOpcode() != CG1_ISA_OPCODE_KLS) && (shInstr->getOpcode() != CG1_ISA_OPCODE_ZXP) && (shInstr->getOpcode() != CG1_ISA_OPCODE_ZXS) && (shInstr->getOpcode() != CG1_ISA_OPCODE_CHS))
+    if (!shInstr->isEnd() && (shInstr->getOpcode() != CG_ISA_OPCODE_NOP) && (shInstr->getOpcode() != CG_ISA_OPCODE_KIL) && (shInstr->getOpcode() != CG_ISA_OPCODE_KLS) && (shInstr->getOpcode() != CG_ISA_OPCODE_ZXP) && (shInstr->getOpcode() != CG_ISA_OPCODE_ZXS) && (shInstr->getOpcode() != CG_ISA_OPCODE_CHS))
     {
         //  Set pending register write tables.  
         switch(shInstr->getBankRes())
@@ -1127,7 +1127,7 @@ void cmoShaderDecExe::startExecution(U64 cycle, ShaderExecInstruction *shExecIns
     threadInfo[numThread].pending++;
 
     //  Check if it is an instruction with a result.  
-    if (!shInstr->isEnd() && (shInstr->getOpcode() != CG1_ISA_OPCODE_NOP) && (shInstr->getOpcode() != CG1_ISA_OPCODE_KIL) && (shInstr->getOpcode() != CG1_ISA_OPCODE_KLS) && (shInstr->getOpcode() != CG1_ISA_OPCODE_ZXP) && (shInstr->getOpcode() != CG1_ISA_OPCODE_ZXS) && (shInstr->getOpcode() != CG1_ISA_OPCODE_CHS))
+    if (!shInstr->isEnd() && (shInstr->getOpcode() != CG_ISA_OPCODE_NOP) && (shInstr->getOpcode() != CG_ISA_OPCODE_KIL) && (shInstr->getOpcode() != CG_ISA_OPCODE_KLS) && (shInstr->getOpcode() != CG_ISA_OPCODE_ZXP) && (shInstr->getOpcode() != CG_ISA_OPCODE_ZXS) && (shInstr->getOpcode() != CG_ISA_OPCODE_CHS))
     {
         //  Set register write cycle tables.  
         switch(shInstr->getBankRes())
@@ -1309,13 +1309,13 @@ printf("ShDExec => %lld\n", cycle);
     //  Check branch dependencies.  Branch/call/ret must finish before a new instruction can be executed.  
     //* NOT IMPLEMENTED *
 
-    //  Check if an CG1_ISA_OPCODE_END instruction was decoded.  Ignore any further instructions different from CG1_ISA_OPCODE_END.  
+    //  Check if an CG_ISA_OPCODE_END instruction was decoded.  Ignore any further instructions different from CG_ISA_OPCODE_END.  
     if (threadInfo[numThread].end)
     {
-        //  Ignore any instruction after a thread receives CG1_ISA_OPCODE_END.  
+        //  Ignore any instruction after a thread receives CG_ISA_OPCODE_END.  
 
         GPU_DEBUG_BOX(
-            printf("cmoShaderDecExe => Ignoring instruction after CG1_ISA_OPCODE_END.\n");
+            printf("cmoShaderDecExe => Ignoring instruction after CG_ISA_OPCODE_END.\n");
         )
 
         //  Do not execute the instruction.  
@@ -1515,8 +1515,8 @@ printf("ShDExec => %lld\n", cycle);
     instrLat = shArchParams->getExecutionLatency(shInstr->getOpcode()) + 1;
 
     //  Check if it is an instruction with a result.  
-    if (!shInstr->isEnd() && (shInstr->getOpcode() != CG1_ISA_OPCODE_NOP) && (shInstr->getOpcode() != CG1_ISA_OPCODE_KIL) &&
-        (shInstr->getOpcode() != CG1_ISA_OPCODE_KLS) && (shInstr->getOpcode() != CG1_ISA_OPCODE_ZXP) && (shInstr->getOpcode() != CG1_ISA_OPCODE_ZXS) && (shInstr->getOpcode() != CG1_ISA_OPCODE_CHS))
+    if (!shInstr->isEnd() && (shInstr->getOpcode() != CG_ISA_OPCODE_NOP) && (shInstr->getOpcode() != CG_ISA_OPCODE_KIL) &&
+        (shInstr->getOpcode() != CG_ISA_OPCODE_KLS) && (shInstr->getOpcode() != CG_ISA_OPCODE_ZXP) && (shInstr->getOpcode() != CG_ISA_OPCODE_ZXS) && (shInstr->getOpcode() != CG_ISA_OPCODE_CHS))
     {
         //  Get Result register.  
         resReg = shInstr->getResult();
@@ -1766,7 +1766,7 @@ void cmoShaderDecExe::clearDependences(U64 cycle, cgoShaderInstr *shInstr, U32 t
     //  Update pending registers write tables.
 
     //  Check if the instruction writes a register.
-    if (!shInstr->isEnd() && (shInstr->getOpcode() != CG1_ISA_OPCODE_NOP) && (shInstr->getOpcode() != CG1_ISA_OPCODE_KIL) && (shInstr->getOpcode() != CG1_ISA_OPCODE_KLS) && (shInstr->getOpcode() != CG1_ISA_OPCODE_ZXP) && (shInstr->getOpcode() != CG1_ISA_OPCODE_ZXS) && (shInstr->getOpcode() != CG1_ISA_OPCODE_CHS))
+    if (!shInstr->isEnd() && (shInstr->getOpcode() != CG_ISA_OPCODE_NOP) && (shInstr->getOpcode() != CG_ISA_OPCODE_KIL) && (shInstr->getOpcode() != CG_ISA_OPCODE_KLS) && (shInstr->getOpcode() != CG_ISA_OPCODE_ZXP) && (shInstr->getOpcode() != CG_ISA_OPCODE_ZXS) && (shInstr->getOpcode() != CG_ISA_OPCODE_CHS))
     {
         //  Get the result register.
         U32 resReg = shInstr->getResult();

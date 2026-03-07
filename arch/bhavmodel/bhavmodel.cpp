@@ -1,7 +1,7 @@
 /**************************************************************************
  *
  * GPU behaviorModel implementation file.
- *  This file contains the implementation of functions for the CG1 GPU behaviorModel.
+ *  This file contains the implementation of functions for the computrendering GPU behaviorModel.
  *
  */
 #include "bhavmodel.hpp"

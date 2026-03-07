@@ -536,7 +536,7 @@ void DDRModuleState::postPrecharge(U32 bank)
         CG_ASSERT("write to precharge delay within the same bank violated");     
 
     if ( state == BS_Idle || state == BS_Precharging )
-        return; // interpreted as a CG1_ISA_OPCODE_NOP
+        return; // interpreted as a CG_ISA_OPCODE_NOP
     else if ( state == BS_Activating )
         CG_ASSERT("Bank being activated. Can not be precharged");
     else if ( state == BS_Reading )

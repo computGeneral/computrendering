@@ -1,6 +1,6 @@
 @echo off
 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-:: CG1 GPU Simulator — Windows build script (MSVC)
+:: computrendering GPU Simulator — Windows build script (MSVC)
 ::
 :: This script configures and builds the project into the _BUILD_ directory
 :: using CMake and MSBuild (Visual Studio 2022).
@@ -39,7 +39,7 @@ set PROJECT_ROOT=%CD%
 popd
 
 echo ============================================================
-echo  CG1 GPU Simulator — Windows Build
+echo  computrendering GPU Simulator — Windows Build
 echo  Configuration : %CONFIG%
 echo  Architecture  : %ARCH%
 echo  Project Root  : %PROJECT_ROOT%

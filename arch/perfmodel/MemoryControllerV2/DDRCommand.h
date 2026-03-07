@@ -34,7 +34,7 @@ public:
     enum DDRCmd 
     { 
         Deselect, 
-        CG1_ISA_OPCODE_NOP, 
+        CG_ISA_OPCODE_NOP, 
         Active, 
         Read, 
         Write, 

@@ -275,11 +275,11 @@ typedef enum {
 // GPU Simulator Types (MAL)
 enum cgeModelAbstractLevel
 {
-    CG_BEHV_MODEL, // CG1 Gpu Behavior Model 
-    CG_FUNC_MODEL, // CG1 Gpu Function Model 
-    CG_ARCH_MODEL, // CG1 Gpu Archtecture Model 
-    CG_PERF_MODEL, // CG1 Gpu Performance Model
-    CG_ENGY_MODEL, // CG1 Gpu Energy Model
+    CG_BEHV_MODEL, // Gpu Behavior Model 
+    CG_FUNC_MODEL, // Gpu Function Model 
+    CG_ARCH_MODEL, // Gpu Archtecture Model 
+    CG_PERF_MODEL, // Gpu Performance Model
+    CG_ENGY_MODEL, // Gpu Energy Model
 };
 
 #endif

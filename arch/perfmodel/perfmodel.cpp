@@ -1,7 +1,7 @@
 /**************************************************************************
  *
  * GPU simulator implementation file.
- * This file contains the implementation of functions for the CG1 GPU simulator.
+ * This file contains the implementation of functions for the computrendering GPU simulator.
  */
 
 #include "perfmodel.h"
@@ -146,7 +146,7 @@ void PerfModel::createSnapshot()
         char directoryName[100];
         while (!directoryCreated && !error && !tooManySnapshots)
         {
-            sprintf(directoryName, "CG1snapshot%02d", snapshotID);
+            sprintf(directoryName, "snapshot%02d", snapshotID);
             
             S32 res = createDirectory(directoryName);                
             
@@ -333,7 +333,7 @@ void PerfModel::debugLoop(bool validate)
     
     while(!endDebug)
     {
-        lr->readLine("CG1> ", line);
+        lr->readLine("pm> ", line);
 
         lineStream.clear();
         lineStream.str(line);

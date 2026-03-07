@@ -127,7 +127,7 @@ void InstructionInfo::print(ostream& os) const
 
 InstructionInfo::InstructionInfo(arch::ShOpcode opcode, gal_uint instrIndex)
 {
-    if (opcode != CG1_ISA_OPCODE_NOP)
+    if (opcode != CG_ISA_OPCODE_NOP)
         CG_ASSERT("The single param constructor allows only construct NOP instructions");
 
     line = instrIndex;
@@ -141,12 +141,12 @@ InstructionInfo::InstructionInfo(cgoShaderInstr& shInstr, gal_uint instrIndex, g
     line = instrIndex;
     str = string(instrAsm);
 
-    bool writesAnyRegister = ((shInstr.getOpcode() != CG1_ISA_OPCODE_NOP) && (shInstr.getOpcode() != CG1_ISA_OPCODE_END) && (shInstr.getOpcode() != CG1_ISA_OPCODE_KIL) &&
-                              (shInstr.getOpcode() != CG1_ISA_OPCODE_KLS) && (shInstr.getOpcode() != CG1_ISA_OPCODE_ZXP) && (shInstr.getOpcode() != CG1_ISA_OPCODE_ZXS) &&
-                              (shInstr.getOpcode() != CG1_ISA_OPCODE_CHS) && (shInstr.getOpcode() != CG1_ISA_OPCODE_JMP));
-    bool setsThreadState = ((shInstr.getOpcode() == CG1_ISA_OPCODE_KIL) || (shInstr.getOpcode() == CG1_ISA_OPCODE_KLS) || (shInstr.getOpcode() == CG1_ISA_OPCODE_CMPKIL) ||
-                            (shInstr.getOpcode() == CG1_ISA_OPCODE_ZXP) || (shInstr.getOpcode() == CG1_ISA_OPCODE_ZXS) || (shInstr.getOpcode() == CG1_ISA_OPCODE_JMP));
-    bool changesSampleId = (shInstr.getOpcode() == CG1_ISA_OPCODE_CHS);
+    bool writesAnyRegister = ((shInstr.getOpcode() != CG_ISA_OPCODE_NOP) && (shInstr.getOpcode() != CG_ISA_OPCODE_END) && (shInstr.getOpcode() != CG_ISA_OPCODE_KIL) &&
+                              (shInstr.getOpcode() != CG_ISA_OPCODE_KLS) && (shInstr.getOpcode() != CG_ISA_OPCODE_ZXP) && (shInstr.getOpcode() != CG_ISA_OPCODE_ZXS) &&
+                              (shInstr.getOpcode() != CG_ISA_OPCODE_CHS) && (shInstr.getOpcode() != CG_ISA_OPCODE_JMP));
+    bool setsThreadState = ((shInstr.getOpcode() == CG_ISA_OPCODE_KIL) || (shInstr.getOpcode() == CG_ISA_OPCODE_KLS) || (shInstr.getOpcode() == CG_ISA_OPCODE_CMPKIL) ||
+                            (shInstr.getOpcode() == CG_ISA_OPCODE_ZXP) || (shInstr.getOpcode() == CG_ISA_OPCODE_ZXS) || (shInstr.getOpcode() == CG_ISA_OPCODE_JMP));
+    bool changesSampleId = (shInstr.getOpcode() == CG_ISA_OPCODE_CHS);
 
     operation = OperationInfo(shInstr.getOpcode(),
                                 shInstr.getNumOperands(),
@@ -252,9 +252,9 @@ InstructionInfo::InstructionInfo(cgoShaderInstr& shInstr, gal_uint instrIndex, g
 
 cgoShaderInstr* InstructionInfo::getShaderInstructionCopy(gal_bool lastInstruction) const
 {
-    if (operation.opcode == arch::CG1_ISA_OPCODE_NOP)
+    if (operation.opcode == arch::CG_ISA_OPCODE_NOP)
     {
-        return new cgoShaderInstr(CG1_ISA_OPCODE_NOP);
+        return new cgoShaderInstr(CG_ISA_OPCODE_NOP);
     }
     else
     {

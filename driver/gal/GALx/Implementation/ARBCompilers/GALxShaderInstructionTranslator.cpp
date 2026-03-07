@@ -250,7 +250,7 @@ list<cgoShaderInstr*> GALxShaderInstructionTranslator::preloadOperands(int line,
     if (preloadOp1) // Operand 1 has to be preloaded to a temporary register 
     {
         aux.idReg = preloadReg1;
-        code.push_back(new cgoShaderInstr(CG1_ISA_OPCODE_MOV, shop1.idBank, shop1.idReg,
+        code.push_back(new cgoShaderInstr(CG_ISA_OPCODE_MOV, shop1.idBank, shop1.idReg,
                                              shop1.negateFlag, shop1.absoluteFlag,
                                              shop1.swizzleMode,
                                              INVALID,0,false,false,XYZW,
@@ -272,7 +272,7 @@ list<cgoShaderInstr*> GALxShaderInstructionTranslator::preloadOperands(int line,
     if (preloadOp2)  // Operand 2 has to be preloaded to a temporary register 
     {
         aux.idReg = preloadReg2;
-        code.push_back(new cgoShaderInstr(CG1_ISA_OPCODE_MOV, shop2.idBank, shop2.idReg,
+        code.push_back(new cgoShaderInstr(CG_ISA_OPCODE_MOV, shop2.idBank, shop2.idReg,
                                              shop2.negateFlag, shop2.absoluteFlag,
                                              shop2.swizzleMode,
                                              INVALID,0,false,false,XYZW,
@@ -333,223 +333,223 @@ ShOpcode GALxShaderInstructionTranslator::translateOpcode(GALxGenericInstruction
     switch(opc)
     {
         case GALxGenericInstruction::G_ADD:
-            opcode = CG1_ISA_OPCODE_ADD;
+            opcode = CG_ISA_OPCODE_ADD;
             break;    
 
         case GALxGenericInstruction::G_ADD_SAT:
-            opcode = CG1_ISA_OPCODE_ADD;
+            opcode = CG_ISA_OPCODE_ADD;
             saturated = true;
             break;
             
         case GALxGenericInstruction::G_ARL:
-            opcode = CG1_ISA_OPCODE_ARL;            
+            opcode = CG_ISA_OPCODE_ARL;            
             break;
             
         case GALxGenericInstruction::G_CMP:
-            opcode = CG1_ISA_OPCODE_CMP;
+            opcode = CG_ISA_OPCODE_CMP;
             break;
         case GALxGenericInstruction::G_CMPKIL:
-            opcode = CG1_ISA_OPCODE_CMPKIL;
+            opcode = CG_ISA_OPCODE_CMPKIL;
             break;
         case GALxGenericInstruction::G_CHS:
-            opcode = CG1_ISA_OPCODE_CHS;
+            opcode = CG_ISA_OPCODE_CHS;
             break;
         case GALxGenericInstruction::G_CMP_SAT:
-            opcode = CG1_ISA_OPCODE_CMP;
+            opcode = CG_ISA_OPCODE_CMP;
             saturated = true;
             break;
         case GALxGenericInstruction::G_COS:
-            opcode = CG1_ISA_OPCODE_COS;
+            opcode = CG_ISA_OPCODE_COS;
             break;
         case GALxGenericInstruction::G_COS_SAT:
-            opcode = CG1_ISA_OPCODE_COS;
+            opcode = CG_ISA_OPCODE_COS;
             saturated = true;
             break;
         case GALxGenericInstruction::G_DP3:
-            opcode = CG1_ISA_OPCODE_DP3;
+            opcode = CG_ISA_OPCODE_DP3;
             break;
         case GALxGenericInstruction::G_DP3_SAT:
-            opcode = CG1_ISA_OPCODE_DP3;
+            opcode = CG_ISA_OPCODE_DP3;
             saturated = true;
             break;
         case GALxGenericInstruction::G_DP4:
-            opcode = CG1_ISA_OPCODE_DP4;
+            opcode = CG_ISA_OPCODE_DP4;
             break;
         case GALxGenericInstruction::G_DP4_SAT:
-            opcode = CG1_ISA_OPCODE_DP4;
+            opcode = CG_ISA_OPCODE_DP4;
             saturated = true;
         case GALxGenericInstruction::G_DPH:
-            opcode = CG1_ISA_OPCODE_DPH;
+            opcode = CG_ISA_OPCODE_DPH;
             break;
         case GALxGenericInstruction::G_DPH_SAT:
-            opcode = CG1_ISA_OPCODE_DPH;
+            opcode = CG_ISA_OPCODE_DPH;
             saturated = true;
             break;
         case GALxGenericInstruction::G_DST:
-            opcode = CG1_ISA_OPCODE_DST;
+            opcode = CG_ISA_OPCODE_DST;
             break;
         case GALxGenericInstruction::G_DST_SAT:
-            opcode = CG1_ISA_OPCODE_DST;
+            opcode = CG_ISA_OPCODE_DST;
             saturated = true;
             break;
         case GALxGenericInstruction::G_EX2:
-            opcode = CG1_ISA_OPCODE_EX2;
+            opcode = CG_ISA_OPCODE_EX2;
             break;
         case GALxGenericInstruction::G_EX2_SAT:
-            opcode = CG1_ISA_OPCODE_EX2;
+            opcode = CG_ISA_OPCODE_EX2;
             saturated = true;
             break;
         case GALxGenericInstruction::G_EXP:
-            opcode = CG1_ISA_OPCODE_EXP;
+            opcode = CG_ISA_OPCODE_EXP;
             break;
         case GALxGenericInstruction::G_FLR:
-            opcode = CG1_ISA_OPCODE_FLR;
+            opcode = CG_ISA_OPCODE_FLR;
             break;
         case GALxGenericInstruction::G_FLR_SAT:
-            opcode = CG1_ISA_OPCODE_FLR;
+            opcode = CG_ISA_OPCODE_FLR;
             saturated = true;
         case GALxGenericInstruction::G_FRC:
-            opcode = CG1_ISA_OPCODE_FRC;
+            opcode = CG_ISA_OPCODE_FRC;
             break;
         case GALxGenericInstruction::G_FRC_SAT:
-            opcode = CG1_ISA_OPCODE_FRC;
+            opcode = CG_ISA_OPCODE_FRC;
             saturated = true;
             break;
         case GALxGenericInstruction::G_KIL:
-            opcode = CG1_ISA_OPCODE_KIL;
+            opcode = CG_ISA_OPCODE_KIL;
             break;
         case GALxGenericInstruction::G_KLS:
-            opcode = CG1_ISA_OPCODE_KLS;
+            opcode = CG_ISA_OPCODE_KLS;
             sample = true;
             break;
         case GALxGenericInstruction::G_LG2:
-            opcode = CG1_ISA_OPCODE_LG2;
+            opcode = CG_ISA_OPCODE_LG2;
             break;
         case GALxGenericInstruction::G_LG2_SAT:
-            opcode = CG1_ISA_OPCODE_LG2;
+            opcode = CG_ISA_OPCODE_LG2;
             saturated = true;
             break;
         case GALxGenericInstruction::G_LIT:
-            opcode = CG1_ISA_OPCODE_LIT;
+            opcode = CG_ISA_OPCODE_LIT;
             break;
         case GALxGenericInstruction::G_LIT_SAT:
-            opcode = CG1_ISA_OPCODE_LIT;
+            opcode = CG_ISA_OPCODE_LIT;
             saturated = true;
             break;
         case GALxGenericInstruction::G_LOG:
-            opcode = CG1_ISA_OPCODE_LOG;
+            opcode = CG_ISA_OPCODE_LOG;
             break;
         case GALxGenericInstruction::G_MAD:
-            opcode = CG1_ISA_OPCODE_MAD;
+            opcode = CG_ISA_OPCODE_MAD;
             break;
          case GALxGenericInstruction::G_MAD_SAT:
-            opcode = CG1_ISA_OPCODE_MAD;
+            opcode = CG_ISA_OPCODE_MAD;
             saturated = true;
             break;
         case GALxGenericInstruction::G_FXMAD:
-            opcode = CG1_ISA_OPCODE_FXMAD;
+            opcode = CG_ISA_OPCODE_FXMAD;
             break;
         case GALxGenericInstruction::G_FXMAD2:
-            opcode = CG1_ISA_OPCODE_FXMAD2;
+            opcode = CG_ISA_OPCODE_FXMAD2;
             break;
         case GALxGenericInstruction::G_MAX:
-            opcode = CG1_ISA_OPCODE_MAX;
+            opcode = CG_ISA_OPCODE_MAX;
             break;
         case GALxGenericInstruction::G_MAX_SAT:
-            opcode = CG1_ISA_OPCODE_MAX;
+            opcode = CG_ISA_OPCODE_MAX;
             saturated = true;
             break;
         case GALxGenericInstruction::G_MIN:
-            opcode = CG1_ISA_OPCODE_MIN;
+            opcode = CG_ISA_OPCODE_MIN;
             break;
         case GALxGenericInstruction::G_MIN_SAT:
-            opcode = CG1_ISA_OPCODE_MIN;
+            opcode = CG_ISA_OPCODE_MIN;
             saturated = true;
             break;
         case GALxGenericInstruction::G_MOV:
-            opcode = CG1_ISA_OPCODE_MOV;
+            opcode = CG_ISA_OPCODE_MOV;
             break;
         case GALxGenericInstruction::G_MOV_SAT:
-            opcode = CG1_ISA_OPCODE_MOV;
+            opcode = CG_ISA_OPCODE_MOV;
             saturated = true;
             break;
         case GALxGenericInstruction::G_MUL:
-            opcode = CG1_ISA_OPCODE_MUL;
+            opcode = CG_ISA_OPCODE_MUL;
             break;
         case GALxGenericInstruction::G_FXMUL:
-            opcode = CG1_ISA_OPCODE_FXMUL;
+            opcode = CG_ISA_OPCODE_FXMUL;
             break;
         case GALxGenericInstruction::G_MUL_SAT:
-            opcode = CG1_ISA_OPCODE_MUL;
+            opcode = CG_ISA_OPCODE_MUL;
             saturated = true;
             break;
         case GALxGenericInstruction::G_RCP:
-            opcode = CG1_ISA_OPCODE_RCP;
+            opcode = CG_ISA_OPCODE_RCP;
             break;
         case GALxGenericInstruction::G_RCP_SAT:
-            opcode = CG1_ISA_OPCODE_RCP;
+            opcode = CG_ISA_OPCODE_RCP;
             saturated = true;
             break;
         case GALxGenericInstruction::G_RSQ:
-            opcode = CG1_ISA_OPCODE_RSQ;
+            opcode = CG_ISA_OPCODE_RSQ;
             break;
         case GALxGenericInstruction::G_RSQ_SAT:
-            opcode = CG1_ISA_OPCODE_RSQ;
+            opcode = CG_ISA_OPCODE_RSQ;
             saturated = true;
             break;
         case GALxGenericInstruction::G_SGE:
-            opcode = CG1_ISA_OPCODE_SGE;
+            opcode = CG_ISA_OPCODE_SGE;
             break;
         case GALxGenericInstruction::G_SGE_SAT:
-            opcode = CG1_ISA_OPCODE_SGE;
+            opcode = CG_ISA_OPCODE_SGE;
             saturated = true;
             break;
         case GALxGenericInstruction::G_SIN:
-            opcode = CG1_ISA_OPCODE_SIN;
+            opcode = CG_ISA_OPCODE_SIN;
             break;
         case GALxGenericInstruction::G_SIN_SAT:
-            opcode = CG1_ISA_OPCODE_SIN;
+            opcode = CG_ISA_OPCODE_SIN;
             saturated = true;
             break;
         case GALxGenericInstruction::G_SLT:
-            opcode = CG1_ISA_OPCODE_SLT;
+            opcode = CG_ISA_OPCODE_SLT;
             break;
         case GALxGenericInstruction::G_SLT_SAT:
-            opcode = CG1_ISA_OPCODE_SLT;
+            opcode = CG_ISA_OPCODE_SLT;
             saturated = true;
             break;
         case GALxGenericInstruction::G_TEX:
-            opcode = CG1_ISA_OPCODE_TEX;
+            opcode = CG_ISA_OPCODE_TEX;
             texture = true;
             break;
         case GALxGenericInstruction::G_TEX_SAT:
-            opcode = CG1_ISA_OPCODE_TEX;
+            opcode = CG_ISA_OPCODE_TEX;
             texture = true;
             saturated = true;
             break;
         case GALxGenericInstruction::G_TXB:
-            opcode = CG1_ISA_OPCODE_TXB;
+            opcode = CG_ISA_OPCODE_TXB;
             texture = true;
             break;
         case GALxGenericInstruction::G_TXB_SAT:
-            opcode = CG1_ISA_OPCODE_TXB;
+            opcode = CG_ISA_OPCODE_TXB;
             texture = true;
             saturated = true;
             break;
         case GALxGenericInstruction::G_TXP:
-            opcode = CG1_ISA_OPCODE_TXP;
+            opcode = CG_ISA_OPCODE_TXP;
             texture = true;
             break;
         case GALxGenericInstruction::G_TXP_SAT:
-            opcode = CG1_ISA_OPCODE_TXP;
+            opcode = CG_ISA_OPCODE_TXP;
             texture = true;
             saturated = true;
             break;
         case GALxGenericInstruction::G_ZXP:
-            opcode = CG1_ISA_OPCODE_ZXP;
+            opcode = CG_ISA_OPCODE_ZXP;
             break;
         case GALxGenericInstruction::G_ZXS:
-            opcode = CG1_ISA_OPCODE_ZXS;
+            opcode = CG_ISA_OPCODE_ZXS;
             sample = true;
             break;
         default:
@@ -597,9 +597,9 @@ list<cgoShaderInstr*> GALxShaderInstructionTranslator::translateInstruction(GALx
     if (sample)
     {
         shop2.idBank = SAMP;
-        if (opcodeTranslated == CG1_ISA_OPCODE_KLS)
+        if (opcodeTranslated == CG_ISA_OPCODE_KLS)
             shop2.idReg = killedSample;
-        else if (opcodeTranslated == CG1_ISA_OPCODE_ZXS)
+        else if (opcodeTranslated == CG_ISA_OPCODE_ZXS)
             shop2.idReg = exportSample;
         shop2.negateFlag = false;
         shop2.absoluteFlag = false;
@@ -1069,7 +1069,7 @@ list<cgoShaderInstr*> GALxShaderInstructionTranslator::translateInstruction(GALx
                                             lastInstruction)); break;
 
         case GALxGenericInstruction::G_KLS:
-                code.push_back(new cgoShaderInstr(CG1_ISA_OPCODE_KLS,
+                code.push_back(new cgoShaderInstr(CG_ISA_OPCODE_KLS,
                                             shop1.idBank, shop1.idReg,
                                             shop1.negateFlag, shop1.absoluteFlag,
                                             shop1.swizzleMode,
@@ -1248,7 +1248,7 @@ list<cgoShaderInstr*> GALxShaderInstructionTranslator::translateInstruction(GALx
                                             relop->relModeOffset,
                                             lastInstruction)); break;
         case GALxGenericInstruction::G_MAX:
-                code.push_back(new cgoShaderInstr(CG1_ISA_OPCODE_MAX,
+                code.push_back(new cgoShaderInstr(CG_ISA_OPCODE_MAX,
                                             shop1.idBank, shop1.idReg,
                                             shop1.negateFlag, shop1.absoluteFlag,
                                             shop1.swizzleMode,
@@ -1266,7 +1266,7 @@ list<cgoShaderInstr*> GALxShaderInstructionTranslator::translateInstruction(GALx
                                             relop->relModeOffset,
                                             lastInstruction)); break;
         case GALxGenericInstruction::G_MAX_SAT:
-                code.push_back(new cgoShaderInstr(CG1_ISA_OPCODE_MAX,
+                code.push_back(new cgoShaderInstr(CG_ISA_OPCODE_MAX,
                                             shop1.idBank, shop1.idReg,
                                             shop1.negateFlag, shop1.absoluteFlag,
                                             shop1.swizzleMode,
@@ -1320,7 +1320,7 @@ list<cgoShaderInstr*> GALxShaderInstructionTranslator::translateInstruction(GALx
                                             relop->relModeOffset,
                                             lastInstruction)); break;
         case GALxGenericInstruction::G_MOV:
-                code.push_back(new cgoShaderInstr(CG1_ISA_OPCODE_MOV,
+                code.push_back(new cgoShaderInstr(CG_ISA_OPCODE_MOV,
                                             shop1.idBank, shop1.idReg,
                                             shop1.negateFlag, shop1.absoluteFlag,
                                             shop1.swizzleMode,
@@ -1338,7 +1338,7 @@ list<cgoShaderInstr*> GALxShaderInstructionTranslator::translateInstruction(GALx
                                             relop->relModeOffset,
                                             lastInstruction)); break;
         case GALxGenericInstruction::G_MOV_SAT:
-                code.push_back(new cgoShaderInstr(CG1_ISA_OPCODE_MOV,
+                code.push_back(new cgoShaderInstr(CG_ISA_OPCODE_MOV,
                                             shop1.idBank, shop1.idReg,
                                             shop1.negateFlag, shop1.absoluteFlag,
                                             shop1.swizzleMode,
@@ -1706,7 +1706,7 @@ list<cgoShaderInstr*> GALxShaderInstructionTranslator::translateInstruction(GALx
                                             lastInstruction)); break;
 
         case GALxGenericInstruction::G_ZXS:
-                code.push_back(new cgoShaderInstr(CG1_ISA_OPCODE_ZXS,
+                code.push_back(new cgoShaderInstr(CG_ISA_OPCODE_ZXS,
                                             shop1.idBank, shop1.idReg,
                                             shop1.negateFlag, shop1.absoluteFlag,
                                             shop1.swizzleMode,
@@ -1777,7 +1777,7 @@ SwizzleMode GALxShaderInstructionTranslator::composeSwizzles(SwizzleMode swz1, S
  *      "VP1.0" programs:
  *
  *          * ABS:  absolute value.  Supported on VP1.1 NV programs, but not
- *            on VP1.0 programs.  Equivalent to "CG1_ISA_OPCODE_MAX dst, src, -src".
+ *            on VP1.0 programs.  Equivalent to "CG_ISA_OPCODE_MAX dst, src, -src".
  *
  *          * EX2:  exponential base 2.  On VP1.0 and VP1.1 hardware, this
  *            instruction will be emulated using EXP and a number of
@@ -1787,7 +1787,7 @@ SwizzleMode GALxShaderInstructionTranslator::composeSwizzles(SwizzleMode swz1, S
  *            be emulated using an EXP and an ADD instruction.
  *
  *          * FRC:  fraction.  On VP1.0 and VP1.1 hardware, this instruction
- *            will be emulated using an EXP instruction, and possibly a CG1_ISA_OPCODE_MOV
+ *            will be emulated using an EXP instruction, and possibly a CG_ISA_OPCODE_MOV
  *            instruction to replicate the scalar result.
  *
  *          * LG2:  logarithm base 2.  On VP1.0 and VP1.1 hardware, this
@@ -1866,7 +1866,7 @@ list<cgoShaderInstr*> GALxShaderInstructionTranslator::generateEquivalentInstruc
              * "Equivalent instructions to: ABS Dest0, Source0:
              *          max Dest0, Source0, -Source0
              */
-                code.push_back(new cgoShaderInstr(CG1_ISA_OPCODE_MAX,
+                code.push_back(new cgoShaderInstr(CG_ISA_OPCODE_MAX,
                                                      shop1.idBank, shop1.idReg,
                                                      shop1.negateFlag, shop1.absoluteFlag,
                                                      shop1.swizzleMode,
@@ -1884,7 +1884,7 @@ list<cgoShaderInstr*> GALxShaderInstructionTranslator::generateEquivalentInstruc
                                                      lastInstruction));
                 break;
         case GALxGenericInstruction::G_ABS_SAT:
-                code.push_back(new cgoShaderInstr(CG1_ISA_OPCODE_MAX,
+                code.push_back(new cgoShaderInstr(CG_ISA_OPCODE_MAX,
                                                      shop1.idBank, shop1.idReg,
                                                      shop1.negateFlag, shop1.absoluteFlag,
                                                      shop1.swizzleMode,
@@ -2020,7 +2020,7 @@ list<cgoShaderInstr*> GALxShaderInstructionTranslator::generateEquivalentInstruc
                 tempBank.set(preloadReg1,value);
                 calculatedPreloadReg1 = true;
             }
-            code.push_back(new cgoShaderInstr(CG1_ISA_OPCODE_ADD,
+            code.push_back(new cgoShaderInstr(CG_ISA_OPCODE_ADD,
                                                  shop2.idBank, shop2.idReg,
                                                  shop2.negateFlag, shop2.absoluteFlag,
                                                  shop2.swizzleMode,
@@ -2034,7 +2034,7 @@ list<cgoShaderInstr*> GALxShaderInstructionTranslator::generateEquivalentInstruc
                                                  shop2.relModeAddrComp,
                                                  shop2.relModeOffset));
 
-            code.push_back(new cgoShaderInstr(CG1_ISA_OPCODE_MAD,
+            code.push_back(new cgoShaderInstr(CG_ISA_OPCODE_MAD,
                                                  TEMP, preloadReg1,
                                                  false, false,XYZW,
                                                  shop1.idBank, shop1.idReg,
@@ -2059,7 +2059,7 @@ list<cgoShaderInstr*> GALxShaderInstructionTranslator::generateEquivalentInstruc
                 tempBank.set(preloadReg1,value);
                 calculatedPreloadReg1 = true;
             }
-            code.push_back(new cgoShaderInstr(CG1_ISA_OPCODE_ADD,
+            code.push_back(new cgoShaderInstr(CG_ISA_OPCODE_ADD,
                                                  shop2.idBank, shop2.idReg,
                                                  shop2.negateFlag, shop2.absoluteFlag,
                                                  shop2.swizzleMode,
@@ -2073,7 +2073,7 @@ list<cgoShaderInstr*> GALxShaderInstructionTranslator::generateEquivalentInstruc
                                                  shop2.relModeAddrComp,
                                                  shop2.relModeOffset));
 
-            code.push_back(new cgoShaderInstr(CG1_ISA_OPCODE_MAD,
+            code.push_back(new cgoShaderInstr(CG_ISA_OPCODE_MAD,
                                                  TEMP, preloadReg1,
                                                  false, false,XYZW,
                                                  shop1.idBank, shop1.idReg,
@@ -2105,7 +2105,7 @@ list<cgoShaderInstr*> GALxShaderInstructionTranslator::generateEquivalentInstruc
              */
 
 
-            code.push_back(new cgoShaderInstr(CG1_ISA_OPCODE_LG2,
+            code.push_back(new cgoShaderInstr(CG_ISA_OPCODE_LG2,
                                                  shop1.idBank, shop1.idReg,
                                                  shop1.negateFlag, shop1.absoluteFlag,
                                                  shop1.swizzleMode,
@@ -2140,7 +2140,7 @@ list<cgoShaderInstr*> GALxShaderInstructionTranslator::generateEquivalentInstruc
 
             U32 swizzleMask = (component_id << 6) + (component_id << 4) + (component_id << 2) + (component_id);
 
-            code.push_back(new cgoShaderInstr(CG1_ISA_OPCODE_MUL,
+            code.push_back(new cgoShaderInstr(CG_ISA_OPCODE_MUL,
                                                  shres.idBank, shres.idReg,
                                                  false, false,(SwizzleMode)swizzleMask,
                                                  shop2.idBank,shop2.idReg,
@@ -2153,7 +2153,7 @@ list<cgoShaderInstr*> GALxShaderInstructionTranslator::generateEquivalentInstruc
                                                  shop2.relModeAddrReg,
                                                  shop2.relModeAddrComp,
                                                  shop2.relModeOffset));
-            code.push_back(new cgoShaderInstr(CG1_ISA_OPCODE_EX2,
+            code.push_back(new cgoShaderInstr(CG_ISA_OPCODE_EX2,
                                                  shres.idBank, shres.idReg,
                                                  false, false,(SwizzleMode)swizzleMask,
                                                  INVALID,0,false,false,XYZW,
@@ -2182,7 +2182,7 @@ list<cgoShaderInstr*> GALxShaderInstructionTranslator::generateEquivalentInstruc
              * vector is undefined.
              *
              */
-                code.push_back(new cgoShaderInstr(CG1_ISA_OPCODE_COS,
+                code.push_back(new cgoShaderInstr(CG_ISA_OPCODE_COS,
                                                      shop1.idBank, shop1.idReg,
                                                      shop1.negateFlag, shop1.absoluteFlag,
                                                      shop1.swizzleMode,
@@ -2201,7 +2201,7 @@ list<cgoShaderInstr*> GALxShaderInstructionTranslator::generateEquivalentInstruc
                                                      relop->relModeOffset,
                                                      lastInstruction));
 
-                code.push_back(new cgoShaderInstr(CG1_ISA_OPCODE_SIN,
+                code.push_back(new cgoShaderInstr(CG_ISA_OPCODE_SIN,
                                                      shop1.idBank, shop1.idReg,
                                                      shop1.negateFlag, shop1.absoluteFlag,
                                                      shop1.swizzleMode,
@@ -2225,7 +2225,7 @@ list<cgoShaderInstr*> GALxShaderInstructionTranslator::generateEquivalentInstruc
                  * operand negated:
                  *  SUB Dest0, Source0, Source1 --> ADD Dest0, Source0, -Source1
                  */
-                code.push_back(new cgoShaderInstr(CG1_ISA_OPCODE_ADD,
+                code.push_back(new cgoShaderInstr(CG_ISA_OPCODE_ADD,
                                                      shop1.idBank, shop1.idReg,
                                                      shop1.negateFlag, shop1.absoluteFlag,
                                                      shop1.swizzleMode,
@@ -2243,7 +2243,7 @@ list<cgoShaderInstr*> GALxShaderInstructionTranslator::generateEquivalentInstruc
                                                      lastInstruction));
                 break;
         case GALxGenericInstruction::G_SUB_SAT:
-                code.push_back(new cgoShaderInstr(CG1_ISA_OPCODE_ADD,
+                code.push_back(new cgoShaderInstr(CG_ISA_OPCODE_ADD,
                                                      shop1.idBank, shop1.idReg,
                                                      shop1.negateFlag, shop1.absoluteFlag,
                                                      shop1.swizzleMode,
@@ -2449,7 +2449,7 @@ list<cgoShaderInstr*> GALxShaderInstructionTranslator::generateEquivalentInstruc
                 paramBank.setType(constantReg,QR_CONSTANT);
             }
 
-            code.push_back(new cgoShaderInstr(CG1_ISA_OPCODE_MAD,
+            code.push_back(new cgoShaderInstr(CG_ISA_OPCODE_MAD,
                                                  shop1.idBank, shop1.idReg,
                                                  false, false,
                                                  swizzleMask1,
@@ -2475,7 +2475,7 @@ list<cgoShaderInstr*> GALxShaderInstructionTranslator::generateEquivalentInstruc
              * is done by the auxiliar function called composeSwizzles().
              */
 
-            code.push_back(new cgoShaderInstr(CG1_ISA_OPCODE_MUL,
+            code.push_back(new cgoShaderInstr(CG_ISA_OPCODE_MUL,
                                                  shop1.idBank, shop1.idReg,
                                                  shop1.negateFlag, shop1.absoluteFlag,
                                                  composeSwizzles(shop1.swizzleMode,ZXYY),
@@ -2490,7 +2490,7 @@ list<cgoShaderInstr*> GALxShaderInstructionTranslator::generateEquivalentInstruc
                                                  shop1.relModeAddrComp,
                                                  shop1.relModeOffset));
 
-            code.push_back(new cgoShaderInstr(CG1_ISA_OPCODE_MAD,
+            code.push_back(new cgoShaderInstr(CG_ISA_OPCODE_MAD,
                                                  shop1.idBank,
                                                  shop1.idReg,
                                                  shop1.negateFlag, shop1.absoluteFlag,

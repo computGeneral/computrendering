@@ -12,7 +12,7 @@ ShaderInstructionBuilder::ShaderInstructionBuilder() {
 
 
 void ShaderInstructionBuilder::resetParameters() {
-    opc = CG1_ISA_OPCODE_NOP;
+    opc = CG_ISA_OPCODE_NOP;
     for(U32 i = 0; i < 3; i ++) operand[i] = Operand();
     result = Result();
     relMode = RelativeMode();
@@ -56,7 +56,7 @@ list< cgoShaderInstr* >  generate_ending_nops()
     list< cgoShaderInstr* >   instructions;
     ShaderInstructionBuilder builder;
     builder.resetParameters();
-    builder.setOpcode(CG1_ISA_OPCODE_NOP);
+    builder.setOpcode(CG_ISA_OPCODE_NOP);
     for(DWORD i = 0; i < 8; i ++)
         instructions.push_back(builder.buildInstruction());
     return instructions;
@@ -65,7 +65,7 @@ list< cgoShaderInstr* >  generate_ending_nops()
 cgoShaderInstr* generate_mov(GPURegisterId dest, GPURegisterId src)
 {
     ShaderInstructionBuilder builder;
-    builder.setOpcode(CG1_ISA_OPCODE_MOV);
+    builder.setOpcode(CG_ISA_OPCODE_MOV);
     Operand op;
     op.registerId = src;
     builder.setOperand(0, op);

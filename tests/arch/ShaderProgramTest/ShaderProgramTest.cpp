@@ -16,7 +16,7 @@ int main(int argc, char **argv)
 {   
     cgsArchConfig arch;
 
-    ConfigLoader cl("CG1GPU.ini");
+    ConfigLoader cl("archParams.csv");
     cl.getParameters(&arch);
     
     DynamicMemoryOpt::initialize(arch.objectSize0, arch.bucketSize0, arch.objectSize1, arch.bucketSize1,

@@ -65,7 +65,7 @@ ChannelScheduler* arch::memorycontroller::createChannelScheduler(const char* nam
         params.rwfifo_maxConsecutiveReads,
         params.rwfifo_maxConsecutiveWrites,
         policy,
-        params.maxChannelTransactions, // CG1_ISA_OPCODE_MAX on-flight transactions per channel 
+        params.maxChannelTransactions, // CG_ISA_OPCODE_MAX on-flight transactions per channel 
         params.dedicatedChannelReadTransactions, // Dedicated reads (0 means that the number of reads an writes are maxTrans/2)
         *params.debugString,
         params.useClassicSchedulerStates,

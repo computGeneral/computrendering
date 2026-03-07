@@ -136,9 +136,9 @@ int main(int argc, char *argv[])
             //  Check if the instruction is beyond the last instruction in the program.
             if (endFlaggedInstructionFound && noTrailNOPs)
             {
-                //  Ignore the instruction.  Generate a warning if the instruction is not a CG1_ISA_OPCODE_NOP.
-                if (shInstr->getOpcode() != CG1_ISA_OPCODE_NOP)
-                    printf("Warning: Instruction %d after program END is not a CG1_ISA_OPCODE_NOP\n", instruction);
+                //  Ignore the instruction.  Generate a warning if the instruction is not a CG_ISA_OPCODE_NOP.
+                if (shInstr->getOpcode() != CG_ISA_OPCODE_NOP)
+                    printf("Warning: Instruction %d after program END is not a CG_ISA_OPCODE_NOP\n", instruction);
             }
             else
             {

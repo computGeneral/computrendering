@@ -8,21 +8,21 @@ using namespace std;
 char testVertexProgram[] =
 "!!ARBvp1.0"
 ""
-"CG1_ISA_OPCODE_MOV result.position, vertex.position;"
-"CG1_ISA_OPCODE_MOV result.color, vertex.attrib[1];"
+"CG_ISA_OPCODE_MOV result.position, vertex.position;"
+"CG_ISA_OPCODE_MOV result.color, vertex.attrib[1];"
 "END";
 
 char testFragmentProgram[] =
 "!!ARBfp1.0"
 ""
-"CG1_ISA_OPCODE_MOV result.color, fragment.color;"
+"CG_ISA_OPCODE_MOV result.color, fragment.color;"
 "END";
 
 char testVertexProgram2[] =
 "!!ARBvp1.0"
 ""
-"CG1_ISA_OPCODE_MOV result.position, vertex.position;"
-"CG1_ISA_OPCODE_MOV result.texcoord[0], vertex.attrib[8];"
+"CG_ISA_OPCODE_MOV result.position, vertex.position;"
+"CG_ISA_OPCODE_MOV result.texcoord[0], vertex.attrib[8];"
 "END";
 
 char testFragmentProgram2[] =

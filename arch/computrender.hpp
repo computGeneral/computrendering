@@ -1,6 +1,6 @@
 /**************************************************************************
  *
- *  CG1 GPU definition file 
+ *  computrendering GPU definition file 
  *  This file contains definitions and includes for the
  *  main simulation loop 
  *
@@ -28,4 +28,4 @@ bool fileExtensionTester(const std::string file_name, const std::string extensio
 
 } // namespace arch;
 
-#endif // #ifndef __CG1GPU_SIM_H__
+#endif // #ifndef __COPMUTRENDER_HPP__

@@ -691,23 +691,23 @@ void bmoUnifiedShader::loadShaderProgram(U08 *code, U32 address, U32 sizeCode, U
     cgoShaderInstr *shInstr;
 
     //  Check.  The size of the code must be a multiple of the instruction size.
-    CG_ASSERT_COND(!(((sizeCode & cgoShaderInstr::CG1_ISA_INSTR_SIZE_MASK) != 0) && (sizeCode > 0)), "Shader Program incorrect size.");
+    CG_ASSERT_COND(!(((sizeCode & cgoShaderInstr::CG_ISA_INSTR_SIZE_MASK) != 0) && (sizeCode > 0)), "Shader Program incorrect size.");
     //  Check the program address range.
     CG_ASSERT_COND(!(address >= instructionMemorySize ), "Out of range shader program load address.");
     //  Check if the Shader Program is too large for the instruction memory.
-    CG_ASSERT_COND(!((address + (sizeCode >> cgoShaderInstr::CG1_ISA_INSTR_SIZE_LOG)) > instructionMemorySize), "Shader Program too large for Instruction Memory.");
+    CG_ASSERT_COND(!((address + (sizeCode >> cgoShaderInstr::CG_ISA_INSTR_SIZE_LOG)) > instructionMemorySize), "Shader Program too large for Instruction Memory.");
 //char buffer[200];
 //printf("bmShader => loadShaderProgram address %x size %d\n", address, sizeCode);
 
     //  Load the shader program.
-    for(U32 i = 0; i < (sizeCode >> cgoShaderInstr::CG1_ISA_INSTR_SIZE_LOG); i++)
+    for(U32 i = 0; i < (sizeCode >> cgoShaderInstr::CG_ISA_INSTR_SIZE_LOG); i++)
     {
         //  Delete the old instruction.
         if (InstrMemory[i + address] != NULL)
             delete InstrMemory[i + address];
 
         //  Create and decode the new instruction.
-        shInstr = InstrMemory[i + address] = new cgoShaderInstr(&code[i << cgoShaderInstr::CG1_ISA_INSTR_SIZE_LOG]);
+        shInstr = InstrMemory[i + address] = new cgoShaderInstr(&code[i << cgoShaderInstr::CG_ISA_INSTR_SIZE_LOG]);
 
 //InstrMemory[i + address][j]->disassemble(buffer);
 //printf("%04x : %s\n", i + address, buffer);
@@ -816,16 +816,16 @@ void bmoUnifiedShader::loadShaderProgramLight(U08 *code, U32 address, U32 sizeCo
     cgoShaderInstr *shInstr;     //  Pointer to the Shader Instruction.
 
     //  Check.  The size of the code must be a multiple of the instruction size.
-    CG_ASSERT_COND(!(((sizeCode & cgoShaderInstr::CG1_ISA_INSTR_SIZE_MASK) != 0) && (sizeCode > 0)), "Shader Program incorrect size.");
+    CG_ASSERT_COND(!(((sizeCode & cgoShaderInstr::CG_ISA_INSTR_SIZE_MASK) != 0) && (sizeCode > 0)), "Shader Program incorrect size.");
     //  Check the program address range.
     CG_ASSERT_COND(!(address >= instructionMemorySize), "Out of range shader program load address.");
     //  Check if the Shader Program is too large for the instruction memory.
-    CG_ASSERT_COND(!((address + (sizeCode >> cgoShaderInstr::CG1_ISA_INSTR_SIZE_LOG)) > instructionMemorySize), "Shader Program too large for Instruction Memory.");
+    CG_ASSERT_COND(!((address + (sizeCode >> cgoShaderInstr::CG_ISA_INSTR_SIZE_LOG)) > instructionMemorySize), "Shader Program too large for Instruction Memory.");
 //char buffer[200];
 //printf("bmShader => loadShaderProgram address %x size %d\n", address, sizeCode);
 
     //  Load the shader program instructions.
-    for(U32 i = 0; i < (sizeCode >> cgoShaderInstr::CG1_ISA_INSTR_SIZE_LOG); i++)
+    for(U32 i = 0; i < (sizeCode >> cgoShaderInstr::CG_ISA_INSTR_SIZE_LOG); i++)
     {
         //  Destroy the old instructions.
         if (InstrMemory[i + address] != NULL)
@@ -835,9 +835,9 @@ void bmoUnifiedShader::loadShaderProgramLight(U08 *code, U32 address, U32 sizeCo
         // i << 4 (i * 16) is the position of the first byte of the next instruction.  
 //printf("Byte Code : ");
 //for(int cc = 0; cc < 16; cc++)
-//printf("%02x ", code[(i << cgoShaderInstr::CG1_ISA_INSTR_SIZE_LOG) + cc]);
+//printf("%02x ", code[(i << cgoShaderInstr::CG_ISA_INSTR_SIZE_LOG) + cc]);
 //printf("\n");
-        shInstr = InstrMemory[i + address] = new cgoShaderInstr(&code[i << cgoShaderInstr::CG1_ISA_INSTR_SIZE_LOG]);
+        shInstr = InstrMemory[i + address] = new cgoShaderInstr(&code[i << cgoShaderInstr::CG_ISA_INSTR_SIZE_LOG]);
 
 //InstrMemory[i + address]->disassemble(buffer);
 //printf("%04x : %s\n", i + address, buffer);
@@ -1243,12 +1243,12 @@ void bmoUnifiedShader::derivOperation(arch::cgoShaderInstr::cgoShaderInstrEncodi
         //  Check the derivation direction.
         switch(currentDerivation.shInstrD[0]->getShaderInstruction()->getOpcode())
         {
-            case CG1_ISA_OPCODE_DDX:
+            case CG_ISA_OPCODE_DDX:
             
                 GPUMath::derivX(currentDerivation.input, derivates);
                 break;
                 
-            case CG1_ISA_OPCODE_DDY:
+            case CG_ISA_OPCODE_DDY:
                 
                 GPUMath::derivY(currentDerivation.input, derivates);
                 break;

@@ -351,7 +351,7 @@ void IRTranslator::visit(EndIRNode *n)
         res = Result();
 
         //  MAD color, color, fogFactor.x, fogColor
-        builder.setOpcode(arch::CG1_ISA_OPCODE_MAD);
+        builder.setOpcode(arch::CG_ISA_OPCODE_MAD);
         op1.registerId = color;
         builder.setOperand(0, op1);
         op2.registerId = fogFactor;
@@ -369,7 +369,7 @@ void IRTranslator::visit(EndIRNode *n)
         res = Result();
 
         //  MAD color, fogColor, -fogFactor.x, color
-        builder.setOpcode(arch::CG1_ISA_OPCODE_MAD);
+        builder.setOpcode(arch::CG_ISA_OPCODE_MAD);
         op1.registerId = fogColor;
         builder.setOperand(0, op1);
         op2.registerId = fogFactor;
@@ -426,7 +426,7 @@ void IRTranslator::visit(EndIRNode *n)
     {
         //  Add an END instruction.
         ShaderInstructionBuilder builder;
-        builder.setOpcode(CG1_ISA_OPCODE_END);
+        builder.setOpcode(CG_ISA_OPCODE_END);
         instructions.push_back(builder.buildInstruction());
     }
     else
@@ -456,7 +456,7 @@ void IRTranslator::visit(EndIRNode *n)
 void IRTranslator::generateMov(GPURegisterId dest, GPURegisterId src)
 {
     ShaderInstructionBuilder builder;
-    builder.setOpcode(CG1_ISA_OPCODE_MOV);
+    builder.setOpcode(CG_ISA_OPCODE_MOV);
     Operand op;
     op.registerId = src;
     builder.setOperand(0, op);
@@ -1426,58 +1426,58 @@ void IRTranslator::initializeOpcodes()
     //  Create the mapping table based on the shader type and version.
     if(type == VERTEX_SHADER)
     {
-        opcodeMap[D3DSIO_ADD]  = CG1_ISA_OPCODE_ADD;
-        opcodeMap[D3DSIO_DP3]  = CG1_ISA_OPCODE_DP3;
-        opcodeMap[D3DSIO_DP4]  = CG1_ISA_OPCODE_DP4;
-        opcodeMap[D3DSIO_DST]  = CG1_ISA_OPCODE_DST;
-        opcodeMap[D3DSIO_EXP]  = CG1_ISA_OPCODE_EX2;
+        opcodeMap[D3DSIO_ADD]  = CG_ISA_OPCODE_ADD;
+        opcodeMap[D3DSIO_DP3]  = CG_ISA_OPCODE_DP3;
+        opcodeMap[D3DSIO_DP4]  = CG_ISA_OPCODE_DP4;
+        opcodeMap[D3DSIO_DST]  = CG_ISA_OPCODE_DST;
+        opcodeMap[D3DSIO_EXP]  = CG_ISA_OPCODE_EX2;
         if (version == 0x0101)
-            opcodeMap[D3DSIO_EXPP] = CG1_ISA_OPCODE_EXP;
+            opcodeMap[D3DSIO_EXPP] = CG_ISA_OPCODE_EXP;
         else
-            opcodeMap[D3DSIO_EXPP] = CG1_ISA_OPCODE_EX2;
-        opcodeMap[D3DSIO_FRC]  = CG1_ISA_OPCODE_FRC;
-        opcodeMap[D3DSIO_LIT]  = CG1_ISA_OPCODE_LIT;
-        opcodeMap[D3DSIO_LOG]  = CG1_ISA_OPCODE_LG2;
-        opcodeMap[D3DSIO_LOGP] = CG1_ISA_OPCODE_LOG;
-        opcodeMap[D3DSIO_MAD]  = CG1_ISA_OPCODE_MAD;
-        opcodeMap[D3DSIO_MAX]  = CG1_ISA_OPCODE_MAX;
-        opcodeMap[D3DSIO_MIN]  = CG1_ISA_OPCODE_MIN;
-        opcodeMap[D3DSIO_MOV]  = CG1_ISA_OPCODE_MOV;
-        opcodeMap[D3DSIO_MOVA] = CG1_ISA_OPCODE_ARL;
-        opcodeMap[D3DSIO_MUL]  = CG1_ISA_OPCODE_MUL;
-        opcodeMap[D3DSIO_NOP]  = CG1_ISA_OPCODE_NOP;
-        opcodeMap[D3DSIO_RCP]  = CG1_ISA_OPCODE_RCP;
-        opcodeMap[D3DSIO_RSQ]  = CG1_ISA_OPCODE_RSQ;
-        opcodeMap[D3DSIO_SGE]  = CG1_ISA_OPCODE_SGE;
-        opcodeMap[D3DSIO_SLT]  = CG1_ISA_OPCODE_SLT;
+            opcodeMap[D3DSIO_EXPP] = CG_ISA_OPCODE_EX2;
+        opcodeMap[D3DSIO_FRC]  = CG_ISA_OPCODE_FRC;
+        opcodeMap[D3DSIO_LIT]  = CG_ISA_OPCODE_LIT;
+        opcodeMap[D3DSIO_LOG]  = CG_ISA_OPCODE_LG2;
+        opcodeMap[D3DSIO_LOGP] = CG_ISA_OPCODE_LOG;
+        opcodeMap[D3DSIO_MAD]  = CG_ISA_OPCODE_MAD;
+        opcodeMap[D3DSIO_MAX]  = CG_ISA_OPCODE_MAX;
+        opcodeMap[D3DSIO_MIN]  = CG_ISA_OPCODE_MIN;
+        opcodeMap[D3DSIO_MOV]  = CG_ISA_OPCODE_MOV;
+        opcodeMap[D3DSIO_MOVA] = CG_ISA_OPCODE_ARL;
+        opcodeMap[D3DSIO_MUL]  = CG_ISA_OPCODE_MUL;
+        opcodeMap[D3DSIO_NOP]  = CG_ISA_OPCODE_NOP;
+        opcodeMap[D3DSIO_RCP]  = CG_ISA_OPCODE_RCP;
+        opcodeMap[D3DSIO_RSQ]  = CG_ISA_OPCODE_RSQ;
+        opcodeMap[D3DSIO_SGE]  = CG_ISA_OPCODE_SGE;
+        opcodeMap[D3DSIO_SLT]  = CG_ISA_OPCODE_SLT;
         if(version >= 0x0300)
-            opcodeMap[D3DSIO_TEXLDL] = CG1_ISA_OPCODE_TXL;
+            opcodeMap[D3DSIO_TEXLDL] = CG_ISA_OPCODE_TXL;
     }
     else
     {
         //IR_PIXEL_SHADER
-        opcodeMap[D3DSIO_ADD]     = CG1_ISA_OPCODE_ADD;
-        opcodeMap[D3DSIO_DP3]     = CG1_ISA_OPCODE_DP3;
-        opcodeMap[D3DSIO_DP4]     = CG1_ISA_OPCODE_DP4;
-        opcodeMap[D3DSIO_EXP]     = CG1_ISA_OPCODE_EX2;
-        opcodeMap[D3DSIO_EXPP]    = CG1_ISA_OPCODE_EXP;
-        opcodeMap[D3DSIO_FRC]     = CG1_ISA_OPCODE_FRC;
-        opcodeMap[D3DSIO_LOG]     = CG1_ISA_OPCODE_LG2;
-        opcodeMap[D3DSIO_MAD]     = CG1_ISA_OPCODE_MAD;
-        opcodeMap[D3DSIO_MAX]     = CG1_ISA_OPCODE_MAX;
-        opcodeMap[D3DSIO_MIN]     = CG1_ISA_OPCODE_MIN;
-        opcodeMap[D3DSIO_MOV]     = CG1_ISA_OPCODE_MOV;
-        opcodeMap[D3DSIO_MUL]     = CG1_ISA_OPCODE_MUL;
-        opcodeMap[D3DSIO_NOP]     = CG1_ISA_OPCODE_NOP;
-        opcodeMap[D3DSIO_RCP]     = CG1_ISA_OPCODE_RCP;
-        opcodeMap[D3DSIO_RSQ]     = CG1_ISA_OPCODE_RSQ;
-        opcodeMap[D3DSIO_TEXKILL] = CG1_ISA_OPCODE_KIL;
+        opcodeMap[D3DSIO_ADD]     = CG_ISA_OPCODE_ADD;
+        opcodeMap[D3DSIO_DP3]     = CG_ISA_OPCODE_DP3;
+        opcodeMap[D3DSIO_DP4]     = CG_ISA_OPCODE_DP4;
+        opcodeMap[D3DSIO_EXP]     = CG_ISA_OPCODE_EX2;
+        opcodeMap[D3DSIO_EXPP]    = CG_ISA_OPCODE_EXP;
+        opcodeMap[D3DSIO_FRC]     = CG_ISA_OPCODE_FRC;
+        opcodeMap[D3DSIO_LOG]     = CG_ISA_OPCODE_LG2;
+        opcodeMap[D3DSIO_MAD]     = CG_ISA_OPCODE_MAD;
+        opcodeMap[D3DSIO_MAX]     = CG_ISA_OPCODE_MAX;
+        opcodeMap[D3DSIO_MIN]     = CG_ISA_OPCODE_MIN;
+        opcodeMap[D3DSIO_MOV]     = CG_ISA_OPCODE_MOV;
+        opcodeMap[D3DSIO_MUL]     = CG_ISA_OPCODE_MUL;
+        opcodeMap[D3DSIO_NOP]     = CG_ISA_OPCODE_NOP;
+        opcodeMap[D3DSIO_RCP]     = CG_ISA_OPCODE_RCP;
+        opcodeMap[D3DSIO_RSQ]     = CG_ISA_OPCODE_RSQ;
+        opcodeMap[D3DSIO_TEXKILL] = CG_ISA_OPCODE_KIL;
         if(version >= 0x0200)
         {
-            opcodeMap[D3DSIO_TEX]    = CG1_ISA_OPCODE_TEX;
-            opcodeMap[D3DSIO_TEXLDL] = CG1_ISA_OPCODE_TXL;
-            opcodeMap[D3DSIO_DSX]    = CG1_ISA_OPCODE_DDX;
-            opcodeMap[D3DSIO_DSY]    = CG1_ISA_OPCODE_DDY;
+            opcodeMap[D3DSIO_TEX]    = CG_ISA_OPCODE_TEX;
+            opcodeMap[D3DSIO_TEXLDL] = CG_ISA_OPCODE_TXL;
+            opcodeMap[D3DSIO_DSX]    = CG_ISA_OPCODE_DDX;
+            opcodeMap[D3DSIO_DSY]    = CG_ISA_OPCODE_DDY;
         }
 	}
 }
@@ -1755,7 +1755,7 @@ void IRTranslator::emulateM4X4(InstructionIRNode *n)
 
 
     ShaderInstructionBuilder builder;
-    builder.setOpcode(CG1_ISA_OPCODE_DP4);
+    builder.setOpcode(CG_ISA_OPCODE_DP4);
     builder.setOperand(0, operands[0]);
     Operand auxOp = operands[1];
     Result auxRes = result;
@@ -1793,7 +1793,7 @@ void IRTranslator::emulateSUB()
     //  ADD dst, src0, -src1
     
     ShaderInstructionBuilder builder;
-    builder.setOpcode(CG1_ISA_OPCODE_ADD);
+    builder.setOpcode(CG_ISA_OPCODE_ADD);
     builder.setOperand(0, operands[0]);
     Operand auxOp = operands[1];
     auxOp.negate = !auxOp.negate;
@@ -1822,7 +1822,7 @@ void IRTranslator::emulateTEXLD1314(InstructionIRNode *n)
         
             destN = n->getDestination();
             resultD3DRegister = D3DRegisterId(destN->getNRegister(), destN->getRegisterType());
-            builder.setOpcode(CG1_ISA_OPCODE_TEX);
+            builder.setOpcode(CG_ISA_OPCODE_TEX);
             builder.setResult(result);
             resultRegister = result.registerId;
             operand.registerId = result.registerId;
@@ -1867,7 +1867,7 @@ void IRTranslator::emulateLRP()
 
     // ADD t0, src1, -src2
     builder.resetParameters();
-    builder.setOpcode(CG1_ISA_OPCODE_ADD);
+    builder.setOpcode(CG_ISA_OPCODE_ADD);
     builder.setOperand(0, operands[1]);
     Operand op2neg = operands[2];
     op2neg.negate = !op2neg.negate;
@@ -1880,7 +1880,7 @@ void IRTranslator::emulateLRP()
 
     //    MAD dst, src0, r0, src2
     builder.resetParameters();
-    builder.setOpcode(CG1_ISA_OPCODE_MAD);
+    builder.setOpcode(CG_ISA_OPCODE_MAD);
     builder.setOperand(0, operands[0]);
     Operand op_t0;
     op_t0.registerId = t0;
@@ -1910,7 +1910,7 @@ void IRTranslator::emulatePOW()
 
     //  Build => LG2 t0, |src0|
     builder.resetParameters();
-    builder.setOpcode(arch::CG1_ISA_OPCODE_LG2);
+    builder.setOpcode(arch::CG_ISA_OPCODE_LG2);
     Operand opTemp = operands[0];
     opTemp.absolute = true;
     builder.setOperand(0, opTemp);
@@ -1923,7 +1923,7 @@ void IRTranslator::emulatePOW()
 
     //  Build => MUL t0, t0, src1
     builder.resetParameters();
-    builder.setOpcode(arch::CG1_ISA_OPCODE_MUL);
+    builder.setOpcode(arch::CG_ISA_OPCODE_MUL);
     opTemp.registerId = t0;
     opTemp.absolute = opTemp.negate = false;
     opTemp.swizzle = arch::XXXX;    
@@ -1935,7 +1935,7 @@ void IRTranslator::emulatePOW()
     
     //  Build => EX2 dst, dst
     builder.resetParameters();
-    builder.setOpcode(arch::CG1_ISA_OPCODE_EX2);
+    builder.setOpcode(arch::CG_ISA_OPCODE_EX2);
     builder.setOperand(0, opTemp);
     builder.setResult(result);
     builder.setPredication(predication.back());
@@ -1958,7 +1958,7 @@ void IRTranslator::emulateNRM()
 
     //  Build => DP3 t0, src0, src0
     builder.resetParameters();
-    builder.setOpcode(arch::CG1_ISA_OPCODE_DP3);
+    builder.setOpcode(arch::CG_ISA_OPCODE_DP3);
     builder.setOperand(0, operands[0]);
     builder.setOperand(1, operands[0]);
     Result t0_res;
@@ -1970,7 +1970,7 @@ void IRTranslator::emulateNRM()
    
     //  Build => RSQ t0, t0
     builder.resetParameters();
-    builder.setOpcode(arch::CG1_ISA_OPCODE_RSQ);
+    builder.setOpcode(arch::CG_ISA_OPCODE_RSQ);
     Operand t0_tempOp;
     t0_tempOp.registerId = t0;
     t0_tempOp.swizzle = arch::XXXX;
@@ -1981,7 +1981,7 @@ void IRTranslator::emulateNRM()
     
     //  Build => MUL dest, src0, t0
     builder.resetParameters();
-    builder.setOpcode(arch::CG1_ISA_OPCODE_MUL);
+    builder.setOpcode(arch::CG_ISA_OPCODE_MUL);
     builder.setOperand(0, operands[0]);
     builder.setOperand(1, t0_tempOp);
     builder.setResult(result);
@@ -2010,7 +2010,7 @@ void IRTranslator::emulateCMP()
     ShaderInstructionBuilder builder;
 
     builder.resetParameters();
-    builder.setOpcode(CG1_ISA_OPCODE_CMP);
+    builder.setOpcode(CG_ISA_OPCODE_CMP);
     builder.setOperand(0, operands[0]);
     builder.setOperand(1, operands[2]);
     builder.setOperand(2, operands[1]);
@@ -2045,7 +2045,7 @@ void IRTranslator::emulateDP2ADD()
     
     //   MAD t0, src0.x, src1.x, src2
     builder.resetParameters();
-    builder.setOpcode(CG1_ISA_OPCODE_MAD);        
+    builder.setOpcode(CG_ISA_OPCODE_MAD);        
     mad_src0 = operands[0];
     selectSwizzledComponent(0, operands[0], mad_src0);
     mad_src1 = operands[1];
@@ -2061,7 +2061,7 @@ void IRTranslator::emulateDP2ADD()
 
     //   MAD dest, src0.y, src1.y, t0
     builder.resetParameters();
-    builder.setOpcode(CG1_ISA_OPCODE_MAD);    
+    builder.setOpcode(CG_ISA_OPCODE_MAD);    
     selectSwizzledComponent(1, operands[0], mad_src0);
     selectSwizzledComponent(1, operands[1], mad_src1);
     mad_src2.registerId = t0;
@@ -2088,7 +2088,7 @@ void IRTranslator::emulateABS()
     Operand absOp0 = operands[0];
     absOp0.absolute = true;
     builder.resetParameters();
-    builder.setOpcode(CG1_ISA_OPCODE_MOV);
+    builder.setOpcode(CG_ISA_OPCODE_MOV);
     builder.setOperand(0, absOp0);        
     builder.setResult(result);
     builder.setPredication(predication.back());
@@ -2126,7 +2126,7 @@ void IRTranslator::emulateSINCOS()
     {
         //   COS dest.x, src
         builder.resetParameters();
-        builder.setOpcode(CG1_ISA_OPCODE_COS);
+        builder.setOpcode(CG_ISA_OPCODE_COS);
         builder.setOperand(0, operands[0]);
         cos_res = result;
         cos_res.maskMode = arch::XNNN;
@@ -2140,7 +2140,7 @@ void IRTranslator::emulateSINCOS()
     {
         //   SIN dest.y, src
         builder.resetParameters();
-        builder.setOpcode(CG1_ISA_OPCODE_SIN);
+        builder.setOpcode(CG_ISA_OPCODE_SIN);
         builder.setOperand(0, operands[0]);
         sin_res = result;
         sin_res.maskMode = arch::NYNN;
@@ -2181,31 +2181,31 @@ void IRTranslator::computeIFPredication(D3DSHADER_COMPARISON compareOp)
     {
         case D3DSPC_GT:
             currentPredication.negatePredicate = false;
-            builder.setOpcode(CG1_ISA_OPCODE_SETPGT);
+            builder.setOpcode(CG_ISA_OPCODE_SETPGT);
             break;
             
         case D3DSPC_EQ:
             currentPredication.negatePredicate = false;
-            builder.setOpcode(CG1_ISA_OPCODE_SETPEQ);
+            builder.setOpcode(CG_ISA_OPCODE_SETPEQ);
             break;
             
         case D3DSPC_LT:
             currentPredication.negatePredicate = false;
-            builder.setOpcode(CG1_ISA_OPCODE_SETPLT);
+            builder.setOpcode(CG_ISA_OPCODE_SETPLT);
             break;
 
         case D3DSPC_GE:        
             currentPredication.negatePredicate = true;
-            builder.setOpcode(CG1_ISA_OPCODE_SETPLT);
+            builder.setOpcode(CG_ISA_OPCODE_SETPLT);
             break;
         case D3DSPC_NE:
             currentPredication.negatePredicate = true;
-            builder.setOpcode(CG1_ISA_OPCODE_SETPEQ);
+            builder.setOpcode(CG_ISA_OPCODE_SETPEQ);
             break;
 
         case D3DSPC_LE:
             currentPredication.negatePredicate = true;
-            builder.setOpcode(CG1_ISA_OPCODE_SETPGT);
+            builder.setOpcode(CG_ISA_OPCODE_SETPGT);
             break;
         
         case D3DSPC_RESERVED0:
@@ -2235,7 +2235,7 @@ void IRTranslator::computeIFPredication(D3DSHADER_COMPARISON compareOp)
         op2.registerId = predReg;
 
         builder.resetParameters();        
-        builder.setOpcode(arch::CG1_ISA_OPCODE_ANDP);
+        builder.setOpcode(arch::CG_ISA_OPCODE_ANDP);
         builder.setOperand(0, op1);
         builder.setOperand(1, op2);
         builder.setResult(predResult);
@@ -2270,7 +2270,7 @@ void IRTranslator::computeBREAKCPredication(D3DSHADER_COMPARISON compareOp, U32 
     {
         case D3DSPC_GT:
         
-            builder.setOpcode(CG1_ISA_OPCODE_SETPGT);
+            builder.setOpcode(CG_ISA_OPCODE_SETPGT);
             
             //  Aliased to invert (NOT) result.  Do not invert result.
             predResult.saturate = false; 
@@ -2279,7 +2279,7 @@ void IRTranslator::computeBREAKCPredication(D3DSHADER_COMPARISON compareOp, U32 
             
         case D3DSPC_EQ:
 
-            builder.setOpcode(CG1_ISA_OPCODE_SETPEQ);
+            builder.setOpcode(CG_ISA_OPCODE_SETPEQ);
 
             //  Aliased to invert (NOT) result.  Do not invert result.
             predResult.saturate = false; 
@@ -2288,7 +2288,7 @@ void IRTranslator::computeBREAKCPredication(D3DSHADER_COMPARISON compareOp, U32 
             
         case D3DSPC_LT:
 
-            builder.setOpcode(CG1_ISA_OPCODE_SETPLT);
+            builder.setOpcode(CG_ISA_OPCODE_SETPLT);
 
             //  Aliased to invert (NOT) result.  Do not invert result.
             predResult.saturate = false; 
@@ -2297,7 +2297,7 @@ void IRTranslator::computeBREAKCPredication(D3DSHADER_COMPARISON compareOp, U32 
 
         case D3DSPC_GE:        
 
-            builder.setOpcode(CG1_ISA_OPCODE_SETPLT);
+            builder.setOpcode(CG_ISA_OPCODE_SETPLT);
 
             //  Aliased to invert (NOT) result.  Invert result.
             predResult.saturate = true; 
@@ -2306,7 +2306,7 @@ void IRTranslator::computeBREAKCPredication(D3DSHADER_COMPARISON compareOp, U32 
             
         case D3DSPC_NE:
 
-            builder.setOpcode(CG1_ISA_OPCODE_SETPEQ);
+            builder.setOpcode(CG_ISA_OPCODE_SETPEQ);
 
             //  Aliased to invert (NOT) result.  Invert result.
             predResult.saturate = true; 
@@ -2315,7 +2315,7 @@ void IRTranslator::computeBREAKCPredication(D3DSHADER_COMPARISON compareOp, U32 
 
         case D3DSPC_LE:
 
-            builder.setOpcode(CG1_ISA_OPCODE_SETPGT);
+            builder.setOpcode(CG_ISA_OPCODE_SETPGT);
 
             //  Aliased to invert (NOT) result.  Invert result.
             predResult.saturate = true; 
@@ -2343,7 +2343,7 @@ void IRTranslator::generateNOP()
 {
     ShaderInstructionBuilder builder;
     builder.resetParameters();
-    builder.setOpcode(CG1_ISA_OPCODE_NOP);
+    builder.setOpcode(CG_ISA_OPCODE_NOP);
     instructions.push_back(builder.buildInstruction());
 }
 
@@ -2439,7 +2439,7 @@ void IRTranslator::generateCodeForIFC(D3DSHADER_COMPARISON comparisonMode)
     op.negate = !predication.back().negatePredicate;
 
     builder.resetParameters();
-    builder.setOpcode(arch::CG1_ISA_OPCODE_JMP);
+    builder.setOpcode(arch::CG_ISA_OPCODE_JMP);
     builder.setOperand(0, op);
     
     //  Add jump instruction to the program.
@@ -2491,7 +2491,7 @@ void IRTranslator::generateCodeForIFB()
     operands[0].swizzle = arch::XXXX;
     
     builder.resetParameters();
-    builder.setOpcode(arch::CG1_ISA_OPCODE_ANDP);
+    builder.setOpcode(arch::CG_ISA_OPCODE_ANDP);
     builder.setOperand(0, operands[0]);
     builder.setOperand(1, op2);
     builder.setResult(predResult);
@@ -2515,7 +2515,7 @@ void IRTranslator::generateCodeForIFB()
         op2.registerId = predReg;
 
         builder.resetParameters();        
-        builder.setOpcode(arch::CG1_ISA_OPCODE_ANDP);
+        builder.setOpcode(arch::CG_ISA_OPCODE_ANDP);
         builder.setOperand(0, op1);
         builder.setOperand(1, op2);
         builder.setResult(predResult);
@@ -2536,7 +2536,7 @@ void IRTranslator::generateCodeForIFB()
     op.negate = !predication.back().negatePredicate;
 
     builder.resetParameters();
-    builder.setOpcode(arch::CG1_ISA_OPCODE_JMP);
+    builder.setOpcode(arch::CG_ISA_OPCODE_JMP);
     builder.setOperand(0, op);
     
     //  Add jump instruction to the program.
@@ -2593,7 +2593,7 @@ void IRTranslator::generateCodeForELSE()
                 //  Create the instruction to combine the previous predication with the else side
                 //  predication.
                 builder.resetParameters();
-                builder.setOpcode(arch::CG1_ISA_OPCODE_ANDP);
+                builder.setOpcode(arch::CG_ISA_OPCODE_ANDP);
                 builder.setOperand(0, op1);
                 builder.setOperand(1, op2);
                 builder.setResult(res);
@@ -2627,7 +2627,7 @@ void IRTranslator::generateCodeForELSE()
             op.negate = !predication.back().negatePredicate;
 
             builder.resetParameters();
-            builder.setOpcode(arch::CG1_ISA_OPCODE_JMP);
+            builder.setOpcode(arch::CG_ISA_OPCODE_JMP);
             builder.setOperand(0, op);
             
             //  Add jump instruction to the program.
@@ -2810,7 +2810,7 @@ void IRTranslator::generateCodeForREP()
     op2.registerId = GPURegisterId(0, arch::IMM);
     
     builder.resetParameters();
-    builder.setOpcode(arch::CG1_ISA_OPCODE_ADDI);
+    builder.setOpcode(arch::CG_ISA_OPCODE_ADDI);
     builder.setOperand(0, operands[0]);
     builder.setOperand(1, op2);
     builder.setResult(res);
@@ -2835,7 +2835,7 @@ void IRTranslator::generateCodeForREP()
     op1.swizzle = arch::XXXX;
     
     builder.resetParameters();
-    builder.setOpcode(arch::CG1_ISA_OPCODE_STPGTI);
+    builder.setOpcode(arch::CG_ISA_OPCODE_STPGTI);
     builder.setOperand(0, op1);
     builder.setOperand(1, op2);
     builder.setResult(res);
@@ -2869,7 +2869,7 @@ void IRTranslator::generateCodeForREP()
         res.registerId = predREP;
         
         builder.resetParameters();        
-        builder.setOpcode(arch::CG1_ISA_OPCODE_ANDP);
+        builder.setOpcode(arch::CG_ISA_OPCODE_ANDP);
         builder.setOperand(0, op1);
         builder.setOperand(1, op2);
         builder.setResult(res);
@@ -2927,7 +2927,7 @@ void IRTranslator::generateCodeForENDREP()
             res.maskMode = arch::XNNN;
             
             builder.resetParameters();
-            builder.setOpcode(arch::CG1_ISA_OPCODE_ADDI);
+            builder.setOpcode(arch::CG_ISA_OPCODE_ADDI);
             builder.setOperand(0, op1);
             builder.setOperand(1, op2);
             builder.setResult(res);
@@ -2950,7 +2950,7 @@ void IRTranslator::generateCodeForENDREP()
             res.registerId = predREP;
             
             builder.resetParameters();
-            builder.setOpcode(arch::CG1_ISA_OPCODE_STPGTI);
+            builder.setOpcode(arch::CG_ISA_OPCODE_STPGTI);
             builder.setOperand(0, op1);
             builder.setOperand(1, op2);
             builder.setResult(res);
@@ -2978,7 +2978,7 @@ void IRTranslator::generateCodeForENDREP()
                 res.registerId = predREP;
                 
                 builder.resetParameters();        
-                builder.setOpcode(arch::CG1_ISA_OPCODE_ANDP);
+                builder.setOpcode(arch::CG_ISA_OPCODE_ANDP);
                 builder.setOperand(0, op1);
                 builder.setOperand(1, op2);
                 builder.setResult(res);
@@ -3004,7 +3004,7 @@ void IRTranslator::generateCodeForENDREP()
             op2.registerId = GPURegisterId(U32(jumpOffset), arch::IMM);
             
             builder.resetParameters();
-            builder.setOpcode(arch::CG1_ISA_OPCODE_JMP);
+            builder.setOpcode(arch::CG_ISA_OPCODE_JMP);
             builder.setOperand(0, op1);
             builder.setOperand(1, op2);
             builder.setPredication(predication[0]);
@@ -3079,7 +3079,7 @@ void IRTranslator::generateCodeForENDREP()
             res.maskMode = arch::XNNN;
             
             builder.resetParameters();
-            builder.setOpcode(arch::CG1_ISA_OPCODE_ADDI);
+            builder.setOpcode(arch::CG_ISA_OPCODE_ADDI);
             builder.setOperand(0, op1);
             builder.setOperand(1, op2);
             builder.setResult(res);
@@ -3102,7 +3102,7 @@ void IRTranslator::generateCodeForENDREP()
             res.registerId = predTemp;
             
             builder.resetParameters();
-            builder.setOpcode(arch::CG1_ISA_OPCODE_STPGTI);
+            builder.setOpcode(arch::CG_ISA_OPCODE_STPGTI);
             builder.setOperand(0, op1);
             builder.setOperand(1, op2);
             builder.setResult(res);
@@ -3128,7 +3128,7 @@ void IRTranslator::generateCodeForENDREP()
             res.registerId = predREP;
             
             builder.resetParameters();
-            builder.setOpcode(arch::CG1_ISA_OPCODE_ANDP);
+            builder.setOpcode(arch::CG_ISA_OPCODE_ANDP);
             builder.setOperand(0, op1);
             builder.setOperand(1, op2);
             builder.setResult(res);
@@ -3156,7 +3156,7 @@ void IRTranslator::generateCodeForENDREP()
                 res.registerId = predREP;
                 
                 builder.resetParameters();        
-                builder.setOpcode(arch::CG1_ISA_OPCODE_ANDP);
+                builder.setOpcode(arch::CG_ISA_OPCODE_ANDP);
                 builder.setOperand(0, op1);
                 builder.setOperand(1, op2);
                 builder.setResult(res);
@@ -3182,7 +3182,7 @@ void IRTranslator::generateCodeForENDREP()
             op2.registerId = GPURegisterId(U32(jumpOffset), arch::IMM);
             
             builder.resetParameters();
-            builder.setOpcode(arch::CG1_ISA_OPCODE_JMP);
+            builder.setOpcode(arch::CG_ISA_OPCODE_JMP);
             builder.setOperand(0, op1);
             builder.setOperand(1, op2);
             builder.setPredication(predication[0]);
@@ -3252,7 +3252,7 @@ void IRTranslator::generateCodeForBREAK()
             op2.registerId = GPURegisterId(0, arch::IMM);
             
             builder.resetParameters();
-            builder.setOpcode(arch::CG1_ISA_OPCODE_JMP);
+            builder.setOpcode(arch::CG_ISA_OPCODE_JMP);
             builder.setOperand(0, op1);
             builder.setOperand(1, op2);
             builder.setPredication(predication[0]);
@@ -3295,7 +3295,7 @@ void IRTranslator::generateCodeForBREAK()
                 res.registerId = GPURegisterId(predication[nextLevel].predicateRegister, arch::PRED);
                 
                 builder.resetParameters();
-                builder.setOpcode(arch::CG1_ISA_OPCODE_ANDP);
+                builder.setOpcode(arch::CG_ISA_OPCODE_ANDP);
                 builder.setOperand(0, op1);
                 builder.setOperand(1, op2);
                 builder.setResult(res);
@@ -3333,7 +3333,7 @@ void IRTranslator::generateCodeForBREAK()
                 op2.registerId = GPURegisterId(0, arch::IMM);
                 
                 builder.resetParameters();
-                builder.setOpcode(arch::CG1_ISA_OPCODE_JMP);
+                builder.setOpcode(arch::CG_ISA_OPCODE_JMP);
                 builder.setOperand(0, op1);
                 builder.setOperand(1, op2);
                 builder.setPredication(predication[0]);
@@ -3400,7 +3400,7 @@ void IRTranslator::generateCodeForBREAKC(D3DSHADER_COMPARISON comparisonMode)
             res.registerId = GPURegisterId(predication[nextLevel].predicateRegister, arch::PRED);
             
             builder.resetParameters();
-            builder.setOpcode(arch::CG1_ISA_OPCODE_ANDP);
+            builder.setOpcode(arch::CG_ISA_OPCODE_ANDP);
             builder.setOperand(0, op1);
             builder.setOperand(1, op2);
             builder.setResult(res);
@@ -3438,7 +3438,7 @@ void IRTranslator::generateCodeForBREAKC(D3DSHADER_COMPARISON comparisonMode)
             op2.registerId = GPURegisterId(0, arch::IMM);
             
             builder.resetParameters();
-            builder.setOpcode(arch::CG1_ISA_OPCODE_JMP);
+            builder.setOpcode(arch::CG_ISA_OPCODE_JMP);
             builder.setOperand(0, op1);
             builder.setOperand(1, op2);
             builder.setPredication(predication[0]);
@@ -3534,11 +3534,11 @@ void IRTranslator::visit(InstructionIRNode *n)
         if (n->getOpcode() == D3DSIO_TEX)
         {
             if (n->getSpecificControls() == D3DSI_TEXLD_PROJECT)
-                opcode = arch::CG1_ISA_OPCODE_TXP;
+                opcode = arch::CG_ISA_OPCODE_TXP;
             else if (n->getSpecificControls() == D3DSI_TEXLD_BIAS)
-                opcode = arch::CG1_ISA_OPCODE_TXB;
+                opcode = arch::CG_ISA_OPCODE_TXB;
             else
-                opcode = arch::CG1_ISA_OPCODE_TEX;
+                opcode = arch::CG_ISA_OPCODE_TEX;
         }
         else
             opcode = (*it_opc).second;
@@ -3548,8 +3548,8 @@ void IRTranslator::visit(InstructionIRNode *n)
         //       So when a D3D MOV instruction is found, it's translated to either
         //       CG1 ARL or CG1 MOV depending on if instruction destination
         //       register is the address register or not
-        if((type == VERTEX_SHADER) && (result.registerId.bank == ADDR) && (opcode == CG1_ISA_OPCODE_MOV))
-            opcode = CG1_ISA_OPCODE_ARL;
+        if((type == VERTEX_SHADER) && (result.registerId.bank == ADDR) && (opcode == CG_ISA_OPCODE_MOV))
+            opcode = CG_ISA_OPCODE_ARL;
 
         //  Set instruction predication in the CG1 instruction builder.
         builder.setPredication(predication.back());
@@ -3758,7 +3758,7 @@ void IRTranslator::generate_extra_code(GPURegisterId color_temp, GPURegisterId c
                 res = Result();
                 
                 //  KIL c
-                builder.setOpcode(CG1_ISA_OPCODE_KIL);
+                builder.setOpcode(CG_ISA_OPCODE_KIL);
                 op0.registerId = GPURegisterId(alpha_test_declaration.alpha_const_minus_one, arch::PARAM);
                 builder.setOperand(0, op0);
                 
@@ -3783,7 +3783,7 @@ void IRTranslator::generate_extra_code(GPURegisterId color_temp, GPURegisterId c
                 res = Result();
 
                 // SGE temp, color_temp.w, alpha_ref.w
-                builder.setOpcode(CG1_ISA_OPCODE_SGE);
+                builder.setOpcode(CG_ISA_OPCODE_SGE);
                 op0.registerId = color_temp;
                 op0.swizzle = arch::WWWW;
                 op1.registerId = GPURegisterId(alpha_test_declaration.alpha_const_ref, arch::PARAM);
@@ -3802,7 +3802,7 @@ void IRTranslator::generate_extra_code(GPURegisterId color_temp, GPURegisterId c
                 res = Result();
 
                 // KIL -temp
-                builder.setOpcode(CG1_ISA_OPCODE_KIL);
+                builder.setOpcode(CG_ISA_OPCODE_KIL);
                 op0.registerId = temp;
                 op0.negate = true;
                 builder.setOperand(0, op0);
@@ -3831,7 +3831,7 @@ void IRTranslator::generate_extra_code(GPURegisterId color_temp, GPURegisterId c
                 res = Result();
                 
                 // ADD temp, alpha_ref.w, -color_temp.w
-                builder.setOpcode(CG1_ISA_OPCODE_ADD);
+                builder.setOpcode(CG_ISA_OPCODE_ADD);
                 op0.registerId = GPURegisterId(alpha_test_declaration.alpha_const_ref, arch::PARAM);
                 op0.swizzle = arch::WWWW;
                 op1.registerId = color_temp;
@@ -3851,7 +3851,7 @@ void IRTranslator::generate_extra_code(GPURegisterId color_temp, GPURegisterId c
                 res = Result();
                 
                 // KIL temp
-                builder.setOpcode(CG1_ISA_OPCODE_KIL);
+                builder.setOpcode(CG_ISA_OPCODE_KIL);
                 op0.registerId = temp;
                 builder.setOperand(0, op0);
 
@@ -3879,7 +3879,7 @@ void IRTranslator::generate_extra_code(GPURegisterId color_temp, GPURegisterId c
                 res = Result();
 
                 // ADD temp, alpha_ref.w, -color_temp.w
-                builder.setOpcode(CG1_ISA_OPCODE_ADD);
+                builder.setOpcode(CG_ISA_OPCODE_ADD);
                 op0.registerId = GPURegisterId(alpha_test_declaration.alpha_const_ref, arch::PARAM);
                 op0.swizzle = arch::WWWW;
                 op1.registerId = color_temp;
@@ -3899,7 +3899,7 @@ void IRTranslator::generate_extra_code(GPURegisterId color_temp, GPURegisterId c
                 res = Result();
 
                 // KIL -|temp|
-                builder.setOpcode(CG1_ISA_OPCODE_KIL);
+                builder.setOpcode(CG_ISA_OPCODE_KIL);
                 op0.registerId = temp;
                 op0.negate = true;
                 op0.absolute = true;
@@ -3929,7 +3929,7 @@ void IRTranslator::generate_extra_code(GPURegisterId color_temp, GPURegisterId c
                 res = Result();
 
                 // ADD temp, color_temp.w, -alpha_ref.w
-                builder.setOpcode(CG1_ISA_OPCODE_ADD);
+                builder.setOpcode(CG_ISA_OPCODE_ADD);
                 op0.registerId = color_temp;
                 op0.swizzle = arch::WWWW;
                 op1.registerId = GPURegisterId(alpha_test_declaration.alpha_const_ref, arch::PARAM);
@@ -3949,7 +3949,7 @@ void IRTranslator::generate_extra_code(GPURegisterId color_temp, GPURegisterId c
                 res = Result();
 
                 // KIL temp
-                builder.setOpcode(CG1_ISA_OPCODE_KIL);
+                builder.setOpcode(CG_ISA_OPCODE_KIL);
                 op0.registerId = temp;
                 builder.setOperand(0, op0);
 
@@ -3977,7 +3977,7 @@ void IRTranslator::generate_extra_code(GPURegisterId color_temp, GPURegisterId c
                 res = Result();
 
                 // SGE temp, -color_temp.w, -alpha_ref.w
-                builder.setOpcode(CG1_ISA_OPCODE_SGE);
+                builder.setOpcode(CG_ISA_OPCODE_SGE);
                 op0.registerId = color_temp;
                 op0.swizzle = arch::WWWW;
                 op0.negate = true;
@@ -3998,7 +3998,7 @@ void IRTranslator::generate_extra_code(GPURegisterId color_temp, GPURegisterId c
                 res = Result();
 
                 // KIL -temp
-                builder.setOpcode(CG1_ISA_OPCODE_KIL);
+                builder.setOpcode(CG_ISA_OPCODE_KIL);
                 op0.registerId = temp;
                 op0.negate = true;
                 builder.setOperand(0, op0);
@@ -4028,7 +4028,7 @@ void IRTranslator::generate_extra_code(GPURegisterId color_temp, GPURegisterId c
                 res = Result();
 
                 // SGE temp.x, color_temp.w, alpha_ref.w
-                builder.setOpcode(CG1_ISA_OPCODE_SGE);
+                builder.setOpcode(CG_ISA_OPCODE_SGE);
                 op0.registerId = color_temp;
                 op0.swizzle = arch::WWWW;
                 op1.registerId = GPURegisterId(alpha_test_declaration.alpha_const_ref, arch::PARAM);
@@ -4048,7 +4048,7 @@ void IRTranslator::generate_extra_code(GPURegisterId color_temp, GPURegisterId c
                 res = Result();
 
                 // SGE temp.y, -color_temp.w, -alpha_ref.w
-                builder.setOpcode(CG1_ISA_OPCODE_SGE);
+                builder.setOpcode(CG_ISA_OPCODE_SGE);
                 op0.registerId = color_temp;
                 op0.swizzle = arch::WWWW;
                 op0.negate = true;
@@ -4070,7 +4070,7 @@ void IRTranslator::generate_extra_code(GPURegisterId color_temp, GPURegisterId c
                 res = Result();
 
                 // MUL temp temp.x temp.y
-                builder.setOpcode(CG1_ISA_OPCODE_MUL);
+                builder.setOpcode(CG_ISA_OPCODE_MUL);
                 op0.registerId = temp;
                 op0.swizzle = XXXX;
                 op1.registerId = temp;
@@ -4089,7 +4089,7 @@ void IRTranslator::generate_extra_code(GPURegisterId color_temp, GPURegisterId c
                 res = Result();
 
                 // KIL -temp
-                builder.setOpcode(CG1_ISA_OPCODE_KIL);
+                builder.setOpcode(CG_ISA_OPCODE_KIL);
                 op0.registerId = temp;
                 op0.negate = true;
                 builder.setOperand(0, op0);

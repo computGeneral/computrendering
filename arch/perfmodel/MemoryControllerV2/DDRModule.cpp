@@ -942,7 +942,7 @@ void DDRModule::processPrechargeCommand(U64 cycle, DDRCommand* prechargeCommand)
     }
 
     if ( state == BS_Idle || state == BS_Precharging )
-        return; // interpreted as a CG1_ISA_OPCODE_NOP
+        return; // interpreted as a CG_ISA_OPCODE_NOP
     else if ( state == BS_Activating ) {
         dump();
         CG_ASSERT("Bank being activated. Can not be precharged");

@@ -1,6 +1,6 @@
 /**************************************************************************
  * GPU simulator definition file.
- * This file contains definitions and includes for the CG1 GPU simulator.
+ * This file contains definitions and includes for the computrendering GPU simulator.
  *
  */
 
@@ -48,7 +48,7 @@ namespace arch
          *  @param shaderCycle Reference to an integer variable where to store the current shader domain clock cycle.
          *  @param memCycle Reference to an integer variable where to store the current memory domain clock cycle.
          */
-        //TODO for draft code sharing of CG1GpuSim.cpp 
+        //TODO for draft code sharing of computrender.cpp 
         virtual void  getCycles(U64 &gpuCycle, U64 &shaderCycle, U64 &memCycle) = 0;
         virtual void  createSnapshot() {};
 

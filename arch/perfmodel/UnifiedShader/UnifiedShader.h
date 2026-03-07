@@ -1,6 +1,6 @@
 /**************************************************************************
  * GPU simulator definition file.
- * This file contains definitions and includes for the CG1 GPU simulator.
+ * This file contains definitions and includes for the computrendering GPU simulator.
  *
  */
 

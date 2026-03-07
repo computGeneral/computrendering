@@ -807,7 +807,7 @@ void cmoShaderDecExeVector::wakeUpTextureThreads(U64 cycle)
         )
                 
         //  Unblock thread if thread was waiting a texture, the thread is blocked, but the thread is not waiting a pending
-        //  jump to finalize and the thread is not waiting in the CG1_ISA_OPCODE_END thread state.
+        //  jump to finalize and the thread is not waiting in the CG_ISA_OPCODE_END thread state.
         if (threadInfo[threadID].waitTexture && !threadInfo[threadID].ready &&
             !threadInfo[threadID].pendingJump && !threadInfo[threadID].end)
             unblockThread(cycle, threadID, 0, NULL);
@@ -815,7 +815,7 @@ void cmoShaderDecExeVector::wakeUpTextureThreads(U64 cycle)
         //  Mark thread as no longer waiting for texture result.
         threadInfo[threadID].waitTexture = false;
 
-        //  Check if thread has received the CG1_ISA_OPCODE_END instruction and finished all previous instructions.
+        //  Check if thread has received the CG_ISA_OPCODE_END instruction and finished all previous instructions.
         if (threadInfo[threadID].end && (threadInfo[threadID].pendingInstructions == 0))
         {
             //  Remove thread end condition..
@@ -824,7 +824,7 @@ void cmoShaderDecExeVector::wakeUpTextureThreads(U64 cycle)
             //  Remove thread block condition.
             threadInfo[threadID].ready = true;
 
-            //  Send CG1_ISA_OPCODE_END signal to Fetch.
+            //  Send CG_ISA_OPCODE_END signal to Fetch.
             endThread(cycle, threadID, 0, NULL);
         }
     }
@@ -1090,10 +1090,10 @@ void cmoShaderDecExeVector::writeBackStage(U64 cycle)
             threadInfo[threadID].pendingInstructions--;
 
 
-            //  Check for CG1_ISA_OPCODE_KILL instruction.
+            //  Check for CG_ISA_OPCODE_KILL instruction.
 
             //
-            //  EARLY TERMINATION OF SHADER PROGRAM THAT HAS BEEN CG1_ISA_OPCODE_KILLED IS NOT IMPLEMENTED.
+            //  EARLY TERMINATION OF SHADER PROGRAM THAT HAS BEEN CG_ISA_OPCODE_KILLED IS NOT IMPLEMENTED.
             //
 
             //  Check for Z exported condition.
@@ -1110,7 +1110,7 @@ void cmoShaderDecExeVector::writeBackStage(U64 cycle)
             clearDependences(cycle, shInstr, threadID);
         }
 
-        //  Determine if all the shader instruction have finished.  Wait until the end of the vector to send the CG1_ISA_OPCODE_END_TRHEAD signal to fetch.
+        //  Determine if all the shader instruction have finished.  Wait until the end of the vector to send the CG_ISA_OPCODE_END_TRHEAD signal to fetch.
         if (threadInfo[threadID].end && !threadInfo[threadID].waitTexture && (threadInfo[threadID].pendingInstructions == 0) &&
             (GPU_MOD(shEmuElemID, vectorLength) == (vectorLength - 1)))
         {
@@ -1120,7 +1120,7 @@ void cmoShaderDecExeVector::writeBackStage(U64 cycle)
             //  Remove thread block condition.
             threadInfo[threadID].ready = true;
 
-            //  Send CG1_ISA_OPCODE_END signal to Fetch.
+            //  Send CG_ISA_OPCODE_END signal to Fetch.
             endThread(cycle, threadID, pc, shExecInstr);
         }
             
@@ -1135,7 +1135,7 @@ void cmoShaderDecExeVector::writeBackStage(U64 cycle)
             jump = bmUnifiedShader.checkJump(shInstrDec, vectorLength, destinationPC);
             
             GPU_DEBUG_BOX(
-                printf("%s => CG1_ISA_OPCODE_JMP instruction executed.  Jump Taken? = %s Target PC = %06x\n", getName(), jump? "Yes": "No", destinationPC);
+                printf("%s => CG_ISA_OPCODE_JMP instruction executed.  Jump Taken? = %s Target PC = %06x\n", getName(), jump? "Yes": "No", destinationPC);
             )
             
             //  Update the PC in the fetch stage.
@@ -1241,7 +1241,7 @@ void cmoShaderDecExeVector::startExecution(U64 cycle, U32 element, ShaderExecIns
         printShaderInstructionResult(shInstrDec);
         
         //  Print the kill mask after the instruction.
-        printf("             CG1_ISA_OPCODE_KILL MASK -> %s\n", bmUnifiedShader.threadKill(shInstrDec->getNumThread()) ? "true" : "false");
+        printf("             CG_ISA_OPCODE_KILL MASK -> %s\n", bmUnifiedShader.threadKill(shInstrDec->getNumThread()) ? "true" : "false");
     }
 }
 
@@ -1310,10 +1310,10 @@ void cmoShaderDecExeVector::updateDecodeStage(U64 cycle, ShaderExecInstruction *
     //  Get result register number.
     resReg = shInstr->getResult();
 
-    //  For CG1_ISA_OPCODE_END instruction block the vector thread so no more instructions are accepted until the program is finished.
+    //  For CG_ISA_OPCODE_END instruction block the vector thread so no more instructions are accepted until the program is finished.
     if (shInstr->isEnd())
     {
-        //  Set CG1_ISA_OPCODE_END received flag for the thread.
+        //  Set CG_ISA_OPCODE_END received flag for the thread.
         threadInfo[threadID].end = true;
 
         //  Send a block signal to fetch.
@@ -1590,25 +1590,25 @@ void cmoShaderDecExeVector::decodeInstruction(U64 cycle, U32 instruction, bool &
 
     //  **** NOT IMPLEMENTED ****
 
-    //  Check if an CG1_ISA_OPCODE_END instruction was decoded.  Ignore any further instructions different from CG1_ISA_OPCODE_END.
+    //  Check if an CG_ISA_OPCODE_END instruction was decoded.  Ignore any further instructions different from CG_ISA_OPCODE_END.
     if (threadInfo[threadID].end)
     {
-        //  Ignore any instruction after a thread receives CG1_ISA_OPCODE_END.
+        //  Ignore any instruction after a thread receives CG_ISA_OPCODE_END.
 
         GPU_DEBUG_BOX(
-            printf("%s => Ignoring instruction after CG1_ISA_OPCODE_END.\n", getName());
+            printf("%s => Ignoring instruction after CG_ISA_OPCODE_END.\n", getName());
         )
 
         return;
     }
 
-    //  Check if a CG1_ISA_OPCODE_JMP instruction is pending.  Ignore further instructions until the CG1_ISA_OPCODE_JMP is executed.
+    //  Check if a CG_ISA_OPCODE_JMP instruction is pending.  Ignore further instructions until the CG_ISA_OPCODE_JMP is executed.
     if (threadInfo[threadID].pendingJump)
     {
         //  Ignore any instruction until the pending jump is executed.
 
         GPU_DEBUG_BOX(
-            printf("%s => Ignoring instruction after CG1_ISA_OPCODE_JMP.\n", getName());
+            printf("%s => Ignoring instruction after CG_ISA_OPCODE_JMP.\n", getName());
         )
 
         return;
@@ -2102,7 +2102,7 @@ void cmoShaderDecExeVector::printShaderInstructionOperands(cgoShaderInstr::cgoSh
                 //  Check for predicator operator instruction with constant register operator.
                 switch(shDecInstr->getShaderInstruction()->getOpcode())
                 {
-                    case arch::CG1_ISA_OPCODE_ANDP:
+                    case arch::CG_ISA_OPCODE_ANDP:
                         {
                             bool *op1 = (bool *) shDecInstr->getShEmulOp1();
                             printf("             OP1 -> {%s, %s, %s, %s}\n", op1[0] ? "true" : "false", op1[1] ? "true" : "false",
@@ -2110,11 +2110,11 @@ void cmoShaderDecExeVector::printShaderInstructionOperands(cgoShaderInstr::cgoSh
                         }
                         break;
                       
-                    case arch::CG1_ISA_OPCODE_ADDI:
-                    case arch::CG1_ISA_OPCODE_MULI:
-                    case arch::CG1_ISA_OPCODE_STPEQI:
-                    case arch::CG1_ISA_OPCODE_STPGTI:
-                    case arch::CG1_ISA_OPCODE_STPLTI:
+                    case arch::CG_ISA_OPCODE_ADDI:
+                    case arch::CG_ISA_OPCODE_MULI:
+                    case arch::CG_ISA_OPCODE_STPEQI:
+                    case arch::CG_ISA_OPCODE_STPGTI:
+                    case arch::CG_ISA_OPCODE_STPLTI:
                         {
                             S32 *op1 = (S32 *) shDecInstr->getShEmulOp1();
                             printf("             OP1 -> {%d, %d, %d, %d}\n", op1[0], op1[1], op1[2], op1[3]);
@@ -2151,7 +2151,7 @@ void cmoShaderDecExeVector::printShaderInstructionOperands(cgoShaderInstr::cgoSh
                 //  Check for predicator operator instruction with constant register operator.
                 switch(shDecInstr->getShaderInstruction()->getOpcode())
                 {
-                    case arch::CG1_ISA_OPCODE_ANDP:
+                    case arch::CG_ISA_OPCODE_ANDP:
                         {
                             bool *op2 = (bool *) shDecInstr->getShEmulOp2();
                             printf("             OP2 -> {%s, %s, %s, %s}\n", op2[0] ? "true" : "false", op2[1] ? "true" : "false",
@@ -2159,11 +2159,11 @@ void cmoShaderDecExeVector::printShaderInstructionOperands(cgoShaderInstr::cgoSh
                         }
                         break;
                       
-                    case arch::CG1_ISA_OPCODE_ADDI:
-                    case arch::CG1_ISA_OPCODE_MULI:
-                    case arch::CG1_ISA_OPCODE_STPEQI:
-                    case arch::CG1_ISA_OPCODE_STPGTI:
-                    case arch::CG1_ISA_OPCODE_STPLTI:
+                    case arch::CG_ISA_OPCODE_ADDI:
+                    case arch::CG_ISA_OPCODE_MULI:
+                    case arch::CG_ISA_OPCODE_STPEQI:
+                    case arch::CG_ISA_OPCODE_STPGTI:
+                    case arch::CG_ISA_OPCODE_STPLTI:
                         {
                             S32 *op2 = (S32 *) shDecInstr->getShEmulOp2();
                             printf("             OP2 -> {%d, %d, %d, %d}\n", op2[0], op2[1], op2[2], op2[3]);
@@ -2200,7 +2200,7 @@ void cmoShaderDecExeVector::printShaderInstructionOperands(cgoShaderInstr::cgoSh
                 //  Check for predicator operator instruction with constant register operator.
                 switch(shDecInstr->getShaderInstruction()->getOpcode())
                 {
-                    case arch::CG1_ISA_OPCODE_ANDP:
+                    case arch::CG_ISA_OPCODE_ANDP:
                         {
                             bool *op3 = (bool *) shDecInstr->getShEmulOp3();
                             printf("             OP3 -> {%s, %s, %s, %s}\n", op3[0] ? "true" : "false", op3[1] ? "true" : "false",
@@ -2208,11 +2208,11 @@ void cmoShaderDecExeVector::printShaderInstructionOperands(cgoShaderInstr::cgoSh
                         }
                         break;
                       
-                    case arch::CG1_ISA_OPCODE_ADDI:
-                    case arch::CG1_ISA_OPCODE_MULI:
-                    case arch::CG1_ISA_OPCODE_STPEQI:
-                    case arch::CG1_ISA_OPCODE_STPGTI:
-                    case arch::CG1_ISA_OPCODE_STPLTI:
+                    case arch::CG_ISA_OPCODE_ADDI:
+                    case arch::CG_ISA_OPCODE_MULI:
+                    case arch::CG_ISA_OPCODE_STPEQI:
+                    case arch::CG_ISA_OPCODE_STPGTI:
+                    case arch::CG_ISA_OPCODE_STPLTI:
                         {
                             S32 *op3 = (S32 *) shDecInstr->getShEmulOp3();
                             printf("             OP3 -> {%d, %d, %d, %d}\n", op3[0], op3[1], op3[2], op3[3]);
@@ -2255,8 +2255,8 @@ void cmoShaderDecExeVector::printShaderInstructionResult(cgoShaderInstr::cgoShad
             
                 switch(shDecInstr->getShaderInstruction()->getOpcode())
                 {
-                    case CG1_ISA_OPCODE_ADDI:
-                    case CG1_ISA_OPCODE_MULI:
+                    case CG_ISA_OPCODE_ADDI:
+                    case CG_ISA_OPCODE_MULI:
                         {
                             S32 *res = (S32 *) shDecInstr->getShEmulResult();                
                             printf("             RESULT -> {%d, %d, %d, %d}\n", res[0], res[1], res[2], res[3]);

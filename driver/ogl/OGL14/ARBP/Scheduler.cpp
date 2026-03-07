@@ -137,7 +137,7 @@ vector<InstructionInfo*>* Scheduler::extractInstructionInfo(const list<cgoShader
             ii->str = string(instr);
             ii->operation = OperationInfo((*iter)->getOpcode(),
                                         (*iter)->getNumOperands(),
-                                        (((*iter)->getOpcode() != CG1_ISA_OPCODE_NOP) && ((*iter)->getOpcode() != CG1_ISA_OPCODE_KIL) && ((*iter)->getOpcode() != CG1_ISA_OPCODE_KLS) && ((*iter)->getOpcode() != CG1_ISA_OPCODE_ZXP) && ((*iter)->getOpcode() != CG1_ISA_OPCODE_ZXS)),
+                                        (((*iter)->getOpcode() != CG_ISA_OPCODE_NOP) && ((*iter)->getOpcode() != CG_ISA_OPCODE_KIL) && ((*iter)->getOpcode() != CG_ISA_OPCODE_KLS) && ((*iter)->getOpcode() != CG_ISA_OPCODE_ZXP) && ((*iter)->getOpcode() != CG_ISA_OPCODE_ZXS)),
                                         (*iter)->getSaturatedRes(),
                                         (*iter)->getRelativeModeFlag(),
                                         (*iter)->getRelMAddrRegComp(),
@@ -536,7 +536,7 @@ void Scheduler::reorderCode(std::vector<InstructionInfo*>& originalCode, const v
     for(unsigned int i=0; i < NOPsToInsert; i++)
     {
         InstructionInfo *nop = new InstructionInfo;
-        nop->operation.opcode = CG1_ISA_OPCODE_NOP;
+        nop->operation.opcode = CG_ISA_OPCODE_NOP;
         nop->operation.numOperands = 0;
         nop->operation.writesAnyRegister = false;
         originalCode.push_back(nop);
@@ -554,7 +554,7 @@ list<cgoShaderInstr*> Scheduler::createNewCode(const vector<InstructionInfo*>& n
     
     while ( iter != newcode.end() & !found )
     {  
-        if ((*iter)->operation.opcode == CG1_ISA_OPCODE_NOP)
+        if ((*iter)->operation.opcode == CG_ISA_OPCODE_NOP)
             found = true;
         else
             usefulInstructions++;

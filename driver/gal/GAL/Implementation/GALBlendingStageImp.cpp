@@ -301,8 +301,8 @@ void GALBlendingStageImp::sync()
 void GALBlendingStageImp::_getGPUBlendOption(GAL_BLEND_OPTION option, arch::GPURegData* data)
 {
     // Note:
-    // BLEND_FUNCTION in CG1 GPU is equivalent to BLEND_OPTION in CG1 GAL
-    // BLEND_EQUATION in CG1 GPU is equivalent to BLEND_FUNCTION in CG1 GAL
+    // BLEND_FUNCTION in computrendering GPU is equivalent to BLEND_OPTION in CG1 GAL
+    // BLEND_EQUATION in computrendering GPU is equivalent to BLEND_FUNCTION in CG1 GAL
 
     using namespace arch;
     switch ( option )
@@ -366,8 +366,8 @@ void GALBlendingStageImp::_getGPUBlendOption(GAL_BLEND_OPTION option, arch::GPUR
 void GALBlendingStageImp::_getGPUBlendFunction(GAL_BLEND_FUNCTION func, arch::GPURegData* eq)
 {
     // Note:
-    // BLEND_FUNCTION in CG1 GPU is equivalent to BLEND_OPTION in CG1 GAL
-    // BLEND_EQUATION in CG1 GPU is equivalent to BLEND_FUNCTION in CG1 GAL
+    // BLEND_FUNCTION in computrendering GPU is equivalent to BLEND_OPTION in CG1 GAL
+    // BLEND_EQUATION in computrendering GPU is equivalent to BLEND_FUNCTION in CG1 GAL
 
     using namespace arch;
     

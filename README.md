@@ -3,7 +3,7 @@
 
 ## Introduction
 
-computrender (computGeneral 1) is a GPU simulator with OpenGL and D3D9 API implementations
+computrender is a GPU simulator with OpenGL and D3D9 API implementations
 that can be used to simulate PC Windows game traces. It replays API call sequences
 captured from real applications via **apitrace**, modeling a complete GPU pipeline —
 from command processing through rasterization to display output — at multiple
@@ -47,9 +47,6 @@ by patents (for example DXTC/S3TC compression or the Z compression algorithm).
 ```
 computrendering/
 ├── README.md                    # This file
-├── CLAUDE.md                    # Architecture deep-dive for coding agents
-├── CLEAN_UP.md                  # Cleanup history and migration log
-├── OPENISSUES.md                # Known issues
 ├── CMakeLists.txt               # Top-level build configuration
 │
 ├── arch/                        # Core simulator architecture
@@ -67,8 +64,6 @@ computrendering/
 │   │   ├── DynamicObject.h/cpp  # Fast dynamic allocation
 │   │   └── params/              # Configuration files
 │   │       ├── archParams.csv       # ★ Primary simulator config
-│   │       ├── CG1.0.json       # Architecture v1.0 params
-│   │       └── CG1.1.json       # Architecture v1.1 params
 │   │
 │   ├── bhavmodel/               # Behavior model (fast emulation)
 │   │   ├── bhavmodel.hpp/cpp    # Top-level behavior model
@@ -79,7 +74,7 @@ computrendering/
 │   │   ├── TextureProcessor/    # Texture sampling
 │   │   └── FragmentOperator/    # Fragment operations (Z, blend, write)
 │   │
-│   ├── perfmodel/               # Functional model (cycle-accurate)
+│   ├── perfmodel/               # Performance model (cycle-accurate)
 │   │   ├── perfmodel.h/cpp       # Top-level functional model
 │   │   ├── common/base/         # ★ Base simulation classes
 │   │   │   ├── MduBase.h      # Module base class (all MDUs inherit)
@@ -153,13 +148,6 @@ computrendering/
 bash tools/script/build.sh
 ```
 
-**Manual Build:**
-```bash
-mkdir -p _BUILD_ && cd _BUILD_
-cmake ..
-make -j$(nproc)
-```
-
 The compiled binaries are placed in `_BUILD_/arch/` (computrender simulator).
 
 ### Windows (Visual Studio)
@@ -176,13 +164,6 @@ Open _BUILD_\ComputRendering.sln in Visual Studio 2022+
 Select architecture: Win32 (32-bit) or x64 (64-bit)
 Select configuration: Debug / Optimized / Profile
 Build target: computrender
-```
-
-**Or via CMake manually:**
-```powershell
-mkdir _BUILD_; cd _BUILD_
-cmake .. -A Win32
-cmake --build . --config Debug --target computrender -- /m /v:m
 ```
 
 ### Build Targets
@@ -241,11 +222,11 @@ apitrace .trace file (binary, Snappy-compressed)
 ApitraceParser (format parsing, event extraction)
         ↓
     ┌── OGL detected ──────────┐   ┌── D3D9 detected ─────────┐
-    │ ApitraceCallDispatcherOGL │   │ ApitraceCallDispatcherD3D │
-    │ (111 GL calls)            │   │ (80+ D3D9 calls)          │
-    └──────────┬────────────────┘   └──────────┬────────────────┘
-               │                               │
-               ▼                               ▼
+    │ ApitraceCallDispatcherOGL│   │ ApitraceCallDispatcherD3D│
+    │ (111 GL calls)           │   │ (80+ D3D9 calls)         │
+    └──────────┬───────────────┘   └──────────┬───────────────┘
+               │                              │
+               ▼                              ▼
         OGL2 entry points              AIDeviceImp9
                │                               │
                └──────────────┬────────────────┘
@@ -266,7 +247,7 @@ ApitraceParser (format parsing, event extraction)
 cd _BUILD_/arch
 
 # Run with an OpenGL apitrace (archParams.csv is auto-discovered)
-./computrender --trace ../../tests/ogl/trace/glxgears/glxgears.trace --frames 1
+./computrender --arch 1.0 --trace ../../tests/ogl/trace/glxgears/glxgears.trace --frames 1
 ```
 
 ### Quick Start (Windows)
@@ -277,16 +258,15 @@ tools\script\build.bat
 
 REM Run with an OpenGL apitrace (archParams.csv is auto-discovered)
 cd _BUILD_\arch\Debug
-.\computrender.exe --trace ..\..\..\tests\ogl\trace\glxgears\glxgears.trace --frames 1
+.\computrender.exe --arch 1.0 --trace ..\..\..\tests\ogl\trace\glxgears\glxgears.trace --frames 1
 ```
 
 ### Configuration File Loading
 
 The simulator **automatically locates** `archParams.csv` using the following search order:
-1. Current working directory: `archParams.csv`
-2. Relative from `_BUILD_/arch/`: `../../../arch/common/params/archParams.csv`
-3. Relative paths: `../../arch/common/params/archParams.csv`
-4. From project root: `arch/common/params/archParams.csv`
+1. Relative from `_BUILD_/arch/`: `../../../arch/common/params/archParams.csv`
+2. Relative paths: `../../arch/common/params/archParams.csv`
+3. From project root: `arch/common/params/archParams.csv`
 
 You can override the configuration file path and architecture version:
 ```bash
@@ -321,8 +301,8 @@ computrender <filename> <n> <m>           # n frames, starting from frame m
 | Output | Description |
 |--------|-------------|
 | Standard output | Progress dots (10K cycles), 'B' per draw call, frame timing |
-| `frame0000.cm.ppm` | Rendered frame (perfmodel, cycle-accurate) |
-| `frame0000.bm.png` | Rendered frame (bhavmodel, fast emulation) |
+| `frame0000.pm.ppm` | Rendered frame (perfmodel, cycle esitmation) |
+| `frame0000.bm.png` | Rendered frame (bhavmodel, fast simulation) |
 | `stats.frames.csv.gz` | Per-frame statistics |
 | `stats.batches.csv.gz` | Per-batch (draw call) statistics |
 | `stats.general.csv.gz` | Accumulated statistics at configurable cycle rate |
@@ -361,6 +341,7 @@ cmp frame0000.cm.ppm ../../tests/ogl/trace/glxgears/glxgears.ppm && echo "PASS" 
 | Trace | Path |
 |-------|------|
 | glxgears (OGL) | `tests/ogl/trace/glxgears/glxgears.trace` |
+| NinjiaFruit (D3D9) | `tests/d3d/trace/NinjiaFruit/FruitNinjia.trace` |
 
 ### Known Platform Differences
 
@@ -377,48 +358,48 @@ cmp frame0000.cm.ppm ../../tests/ogl/trace/glxgears/glxgears.ppm && echo "PASS" 
 
 ```
     ┌───────────────────────────────────────────────────────────────┐
-    │                       Input Traces                           │
+    │                       Input Traces                            │
     │                                                               │
     │  .trace (apitrace binary, Snappy-compressed)                  │
     │  └─ Auto-detected: OpenGL or D3D9                             │
     │                                                               │
     │  .metaStream.txt.gz (Pre-compiled MetaStreams)                │
-    └──────────────┬────────────────────────────┬──────────────────┘
+    └──────────────┬────────────────────────────┬───────────────────┘
                    │                            │
     ┌──────────────▼────────────────────────────▼──────────────────┐
-    │                     computrender main()                            │
-    │                   (arch/computrender.cpp)                  │
-    │                                                               │
+    │                     computrender main()                      │
+    │                   (arch/computrender.cpp)                    │
+    │                                                              │
     │  .trace → API auto-detect → TraceDriver instantiation        │
-    └──────┬──────────┬──────────┬────────────────────────────────────┘
+    └──────┬──────────┬──────────┬─────────────────────────────────┘
            │          │          │
     ┌──────▼───┐ ┌────▼────┐ ┌──▼───┐
     │ Apitrace │ │Apitrace │ │ Meta │
-    │   OGL   │ │  D3D9   │ │Driver│
+    │   OGL    │ │  D3D9   │ │Driver│
     └──────┬───┘ └────┬────┘ └──┬───┘
            │          │         │
     ┌──────▼──────────▼─────────│───────────│───────────────────────┐
     │                           │           │                       │
     │   OGL/GAL/HAL Pipeline    │           │  (future)             │
     │                           │           │                       │
-    │   GLExec → OGL2 →        │           │                       │
-    │   GAL → HAL              │           │                       │
+    │   GLExec → OGL2 →         │           │                       │
+    │   GAL → HAL               │           │                       │
     │         │                 │           │                       │
-    │   ┌─────▼─────────────────▼───────────▼──────────────────┐   │
-    │   │              MetaStream Buffer                        │   │
-    │   │   (HAL::metaStreamBuffer[] — circular queue)          │   │
-    │   └─────────────────────────┬────────────────────────────┘   │
-    └─────────────────────────────┼────────────────────────────────┘
+    │   ┌─────▼─────────────────▼───────────▼──────────────────┐    │
+    │   │              MetaStream Buffer                       │    │
+    │   │   (HAL::metaStreamBuffer[] — circular queue)         │    │
+    │   └─────────────────────────┬────────────────────────────┘    │
+    └─────────────────────────────┼─────────────────────────────────┘
                                   │
     ┌─────────────────────────────▼────────────────────────────────┐
     │                    Simulation Models                         │
-    │                                                               │
-    │  BhavModel (bhavmodel)        PerfModel (perfmodel)         │
-    │  - Fast emulation              - Cycle-accurate simulation   │
+    │                                                              │
+    │  BhavModel (bhavmodel)        PerfModel (perfmodel)          │
+    │  - Fast simulation              - Cycle-approximate simulation   │
     │  - emulateCommandProcessor()   - clock() all MDUs per cycle  │
-    │                                                               │
+    │                                                              │
     │  GPU Pipeline: CommandProcessor → Streamer → Clipper →       │
-    │  Rasterizer → UnifiedShader → Z/Stencil → ColorWrite → DAC  │
+    │  Rasterizer → UnifiedShader → Z/Stencil → ColorWrite → DAC   │
     └──────────────────────────────────────────────────────────────┘
 ```
 
@@ -530,14 +511,14 @@ TraceDriverMeta(ProfilingFile, startFrame, headerStartFrame)
 
 All trace drivers produce `cgoMetaStream` objects consumed by the simulation models.
 
-**Bhavmodel (Fast Emulation):**
+**Bhavmodel (Fast Simulation):**
 ```
 BhavModel::simulationLoop()
   └─ Loop: TraceDriver->nxtMetaStream() → GpuBMdl.emulateCommandProcessor(ms)
       └─ Decode MetaStream → update GPU state → emulate pipeline on DRAW
 ```
 
-**Perfmodel (Cycle-Accurate):**
+**Perfmodel (Cycle-Approximate):**
 ```
 PerfModel::simulationLoop()
   └─ Cycle loop: clock all MDUs per cycle
@@ -614,7 +595,7 @@ value = 0x00         // null
 | File | Purpose |
 |------|---------|
 | `arch/bhavmodel/bhavmodel.hpp` | Behavior model top-level |
-| `arch/perfmodel/perfmodel.h` | Functional model top-level |
+| `arch/perfmodel/perfmodel.hpp` | Performance model top-level |
 | `arch/perfmodel/common/base/MduBase.h` | Perfmodel module base class |
 | `arch/perfmodel/common/base/GPUSignal.h` | Signal class for inter-module comm |
 | `arch/perfmodel/CommandProcessor/MetaStream.h` | MetaStream protocol definition |

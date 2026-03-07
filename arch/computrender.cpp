@@ -6,7 +6,7 @@
  */
 
 //  CG1 GPU definitions and declarations.  
-#include "CG1SIM.h"
+#include "computrender.hpp"
 
 #include "perfmodel.h"
 

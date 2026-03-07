@@ -16,7 +16,7 @@
 
 //  Behavior Model classes.
 #include "bmGpuTop.h"
-#include "CG1MDLBASE.h"
+#include "modelbase.h"
 
 #include <vector>
 #include <map>

@@ -7,7 +7,7 @@
 #ifndef __CG1_PERFMODEL_H__
 
 #define __CG1_PERFMODEL_H__
-#include "CG1MDLBASE.h"
+#include "modelbase.h"
 
 #include "ArchConfig.h"
 #include "param_loader.hpp"

@@ -99,8 +99,8 @@ else()
 endif()
 
 set( MAINSRC
-            "CG1SIM.cpp"
-            "CG1SIM.h"
+            "computrender.cpp"
+            "computrender.hpp"
 )
 
 source_group(external   FILES ${EXTSRC})

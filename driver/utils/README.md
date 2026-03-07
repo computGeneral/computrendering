@@ -41,7 +41,7 @@ Provides the abstract base class `cgoTraceDriverBase` and concrete implementatio
 | `TraceDriverApitraceD3D.h/cpp` | Drives simulation from **apitrace** `.trace` files containing D3D9 calls. Routes calls through `ApitraceCallDispatcherD3D` into the D3D9 GAL layer. |
 | `TraceDriverMeta.h/cpp` | Drives simulation from pre-translated **MetaStream** trace files (`.tracefile.gz`). Bypasses the API driver entirely — reads binary GPU command streams directly. Handles frame skipping, register caching, and shader program preloading. |
 
-**Used by:** `arch/CG1SIM.cpp` (main entry), `arch/perfmodel/CG1CMDL`, `arch/bhavmodel/CG1BMDL`, `cmCommandProcessor`, `cmUnifiedShader`.
+**Used by:** `arch/computrender.cpp` (main entry), `arch/perfmodel/CG1CMDL`, `arch/bhavmodel/CG1BMDL`, `cmCommandProcessor`, `cmUnifiedShader`.
 
 ---
 
@@ -73,7 +73,7 @@ Defines the binary MetaStream trace file format and provides tools for generatin
 | ~~`traceTranslator/`~~ | **Removed.** Was `Api2MetaTranslator` — converted GLInterceptor traces to MetaStream. Depended on removed `TraceReader`. |
 | `CMakeLists.txt` | Standalone CMake project (not part of main build). Has its own compiler setup for building the tools independently. |
 
-**Used by:** `TraceDriverBase.h`, `TraceDriverMeta`, `CG1SIM.h`, `ComputeGeneralLanguage`.
+**Used by:** `TraceDriverBase.h`, `TraceDriverMeta`, `computrender.hpp`, `ComputeGeneralLanguage`.
 
 ---
 
@@ -187,7 +187,7 @@ Maps OpenGL function **names** to `APICall` enum IDs and vice versa. Also maps O
 
 C++ iostream-compatible wrapper around zlib for reading/writing gzip-compressed files. Provides `gzifstream` (input) and `gzofstream` (output) classes. Critical for reading compressed trace files (`.txt.gz`, `.tracefile.gz`).
 
-**Used by:** `MetaStream.h`, `CG1MDLBASE.h`, `perfmodel.h`, `cmFragmentFIFO`, `cmTextureProcessor`, `ComputeGeneralLanguage`, unit tests.
+**Used by:** `MetaStream.h`, `modelbase.h`, `perfmodel.h`, `cmFragmentFIFO`, `cmTextureProcessor`, `ComputeGeneralLanguage`, unit tests.
 
 **Note:** `zlib.h` and `zconf.h` are local copies of zlib headers. The project also has `thirdparty/zlib-1.2.13/` — these local copies exist for historical reasons and point to the same API.
 

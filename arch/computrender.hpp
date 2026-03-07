@@ -6,8 +6,8 @@
  *
  */
 
-#ifndef __CG1GPU_SIM_H__
-#define __CG1GPU_SIM_H__
+#ifndef __COMPUTRENDER_HPP__
+#define __COMPUTRENDER_HPP__
 
 #include <string>
 #include "MetaStreamTrace.h"

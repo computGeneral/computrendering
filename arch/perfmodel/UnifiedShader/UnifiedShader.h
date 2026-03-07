@@ -7,7 +7,7 @@
 #ifndef __CM_UNIFIEDSHADER_H__
 
 #define __CM_UNIFIEDSHADER_H__
-#include "CG1MDLBASE.h"
+#include "modelbase.h"
 
 #include "ArchConfig.h"
 #include "TraceDriverBase.h"

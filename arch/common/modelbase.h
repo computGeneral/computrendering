@@ -4,8 +4,8 @@
  *
  */
 
-#ifndef __CG1MDLBASE_H__
-#define __CG1MDLBASE_H__
+#ifndef __MODELBASE_H__
+#define __MODELBASE_H__
 #include <vector>
 #include "zfstream.h"
 #include "GPUType.h"

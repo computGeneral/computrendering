@@ -53,7 +53,7 @@ computrendering/
 ├── CMakeLists.txt               # Top-level build configuration
 │
 ├── arch/                        # Core simulator architecture
-│   ├── CG1SIM.cpp/h            # ★ MAIN ENTRY POINT (main())
+│   ├── computrender.cpp/hpp    # ★ MAIN ENTRY POINT (main())
 │   ├── CMakeLists.txt           # Arch build config
 │   ├── common/                  # Shared utilities
 │   │   ├── GPUReg.h             # GPU register definitions & commands
@@ -377,7 +377,7 @@ cmp frame0000.cm.ppm ../../tests/ogl/trace/glxgears/glxgears.ppm && echo "PASS" 
                    │                            │
     ┌──────────────▼────────────────────────────▼──────────────────┐
     │                     CG1SIM main()                            │
-    │                   (arch/CG1SIM.cpp)                          │
+    │                   (arch/computrender.cpp)                  │
     │                                                               │
     │  .trace → API auto-detect → TraceDriver instantiation        │
     └──────┬──────────┬──────────┬────────────────────────────────────┘
@@ -575,7 +575,7 @@ value = 0x00         // null
 
 | File | Purpose |
 |------|---------|
-| `arch/CG1SIM.cpp` | Main entry point (`main()`) |
+| `arch/computrender.cpp` | Main entry point (`main()`) |
 | `arch/common/GPUReg.h` | GPU register & command definitions |
 | `arch/common/GPUType.h` | GPU data types (F32, U32, etc.) |
 | `arch/common/params/CG1GPU.ini` | Primary configuration file |
@@ -697,7 +697,7 @@ struct cgoMetaStream {
 2. **Create trace driver** in `driver/utils/TraceDriver/TraceDriverNew.h/cpp`:
    Inherit from `cgoTraceDriverBase`. Implement `startTrace()`, `nxtMetaStream()`, `getTracePosition()`.
 
-3. **Register in CG1SIM.cpp**:
+3. **Register in computrender.cpp**:
    Add `#include "TraceDriverNew.h"`, add extension check, instantiate the driver.
 
 4. **Update build system**:

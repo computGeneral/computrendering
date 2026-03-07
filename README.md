@@ -66,7 +66,7 @@ computrendering/
 │   │   ├── ImageSaver.h/cpp     # PPM image output
 │   │   ├── DynamicObject.h/cpp  # Fast dynamic allocation
 │   │   └── params/              # Configuration files
-│   │       ├── CG1GPU.ini       # ★ Primary simulator config
+│   │       ├── archParams.csv       # ★ Primary simulator config
 │   │       ├── CG1.0.json       # Architecture v1.0 params
 │   │       └── CG1.1.json       # Architecture v1.1 params
 │   │
@@ -172,7 +172,7 @@ Optional arguments: `build.bat [Debug|Release] [Win32|x64]` (defaults: Debug, Wi
 
 **Or open the solution directly:**
 ```
-Open _BUILD_\CG1.sln in Visual Studio 2022+
+Open _BUILD_\ComputRendering.sln in Visual Studio 2022+
 Select architecture: Win32 (32-bit) or x64 (64-bit)
 Select configuration: Debug / Optimized / Profile
 Build target: computrender
@@ -265,10 +265,7 @@ ApitraceParser (format parsing, event extraction)
 # After building
 cd _BUILD_/arch
 
-# Copy configuration file (required at runtime)
-cp ../../arch/common/params/CG1GPU.ini .
-
-# Run with an OpenGL apitrace
+# Run with an OpenGL apitrace (archParams.csv is auto-discovered)
 ./computrender --trace ../../tests/ogl/trace/glxgears/glxgears.trace --frames 1
 ```
 
@@ -278,19 +275,33 @@ cp ../../arch/common/params/CG1GPU.ini .
 REM Build (from project root)
 tools\script\build.bat
 
-REM Copy configuration file (required at runtime)
-copy arch\common\params\CG1GPU.ini _BUILD_\arch\Debug\
-
-REM Run with an OpenGL apitrace
+REM Run with an OpenGL apitrace (archParams.csv is auto-discovered)
 cd _BUILD_\arch\Debug
 .\computrender.exe --trace ..\..\..\tests\ogl\trace\glxgears\glxgears.trace --frames 1
+```
+
+### Configuration File Loading
+
+The simulator **automatically locates** `archParams.csv` using the following search order:
+1. Current working directory: `archParams.csv`
+2. Relative from `_BUILD_/arch/`: `../../../arch/common/params/archParams.csv`
+3. Relative paths: `../../arch/common/params/archParams.csv`
+4. From project root: `arch/common/params/archParams.csv`
+
+You can override the configuration file path and architecture version:
+```bash
+# Use a custom parameter file
+./computrender --param /path/to/custom.csv --trace <file> --frames 1
+
+# Select a different ARCH_VERSION column from the CSV
+./computrender --arch 1.1 --trace <file> --frames 1
 ```
 
 ### General Usage
 
 ```
-computrender                              # Config file (CG1GPU.ini) provides all params
 computrender --trace <file> --frames N    # Apitrace file with frame limit
+computrender --param <csv> --arch <ver>   # Override config file and arch version
 computrender <filename>                   # MetaStream trace file
 computrender <filename> <n>               # n < 10K → frames; n >= 10K → cycles
 computrender <filename> <n> <m>           # n frames, starting from frame m
@@ -339,7 +350,6 @@ See `tools/script/regression/regression_list` for the list of test cases.
 
 ```bash
 cd _BUILD_/arch
-cp ../../arch/common/params/CG1GPU.ini .
 ./computrender --trace ../../tests/ogl/trace/glxgears/glxgears.trace --frames 1
 
 # Byte-for-byte comparison against reference
@@ -578,7 +588,7 @@ value = 0x00         // null
 | `arch/computrender.cpp` | Main entry point (`main()`) |
 | `arch/common/GPUReg.h` | GPU register & command definitions |
 | `arch/common/GPUType.h` | GPU data types (F32, U32, etc.) |
-| `arch/common/params/CG1GPU.ini` | Primary configuration file |
+| `arch/common/params/archParams.csv` | Primary configuration file |
 | `arch/utils/ConfigLoader.h` | Configuration file parser |
 
 ### Trace Drivers
@@ -760,7 +770,7 @@ struct cgoMetaStream {
 
 ## Configuration
 
-The primary configuration file is `arch/common/params/CG1GPU.ini`. Key sections:
+The primary configuration file is `arch/common/params/archParams.csv`. Key sections:
 
 | Section | Purpose |
 |---------|---------|

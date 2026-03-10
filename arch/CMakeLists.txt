@@ -57,7 +57,7 @@ set(OGLSRC
 # Include directories for OGL driver integration
 set(OGLINC    
                           ${CMAKE_SOURCE_DIR}/driver/utils/ApitraceParser
-              ${CMAKE_SOURCE_DIR}/driver/utils/OGLApiCodeGen # APICall.gen (pre-generated)
+              ${CMAKE_SOURCE_DIR}/driver/utils/generated # Pre-generated .gen files
               ${CMAKE_SOURCE_DIR}/driver/utils/GL 
               ${CMAKE_SOURCE_DIR}/driver/utils/log
               ${CMAKE_SOURCE_DIR}/driver/utils/MetaTraceGenerator # MetaStreamTrace.h

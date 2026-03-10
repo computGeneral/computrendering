@@ -47,7 +47,7 @@ target_include_directories(OGL2 PUBLIC ${CMAKE_SOURCE_DIR}/arch/common
                                        ${CMAKE_SOURCE_DIR}/arch/perfmodel/CommandProcessor
                                        ${CMAKE_SOURCE_DIR}/arch/perfmodel/UnifiedShader
                                        ${CMAKE_SOURCE_DIR}/driver/utils
-                                       ${CMAKE_SOURCE_DIR}/driver/utils/OGLApiCodeGen
+                                       ${CMAKE_SOURCE_DIR}/driver/utils/generated
                                        ${CMAKE_SOURCE_DIR}/driver/hal
                                        ${CMAKE_SOURCE_DIR}/driver/gal/GAL/Interface
                                        ${CMAKE_SOURCE_DIR}/driver/gal/GALx/Interface

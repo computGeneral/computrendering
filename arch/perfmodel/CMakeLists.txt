@@ -343,7 +343,7 @@ target_include_directories(perfmodel PUBLIC ${CMAKE_SOURCE_DIR}/arch/common
                                           # for TraceDriverMeta.cpp
                                           ${CMAKE_SOURCE_DIR}/driver/utils/GL            # glAll.h
                                           ${CMAKE_SOURCE_DIR}/driver/utils/TraceReader   # GLExec.h
-                                          ${CMAKE_SOURCE_DIR}/driver/utils/OGLApiCodeGen # APICall.gen
+                                          ${CMAKE_SOURCE_DIR}/driver/utils/generated     # Pre-generated .gen files
                                           ${CMAKE_SOURCE_DIR}/driver/utils/TraceDriver# TraceDriverBase.h
                                           ${CMAKE_SOURCE_DIR}/driver/utils/MetaTraceGenerator/traceExtractor  # RegisterWriteBufferMeta.h
                                           ${CMAKE_SOURCE_DIR}/driver/utils/MetaTraceGenerator

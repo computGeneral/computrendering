@@ -18,5 +18,5 @@ target_include_directories(HAL PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}
                                       ${CMAKE_SOURCE_DIR}/arch/perfmodel/base
                                       ${CMAKE_SOURCE_DIR}/arch/perfmodel/CommandProcessor
                                       ${CMAKE_SOURCE_DIR}/arch/perfmodel/MemoryController
-                                      ${CMAKE_SOURCE_DIR}/driver/utils
+                                      ${CMAKE_SOURCE_DIR}/driver/utils/misc
                           )

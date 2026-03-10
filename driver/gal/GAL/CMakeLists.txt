@@ -22,7 +22,7 @@ target_sources(GAL PUBLIC ${GALIF}
 target_include_directories(GAL PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/Interface
                                       ${CMAKE_CURRENT_SOURCE_DIR}/Implementation
                                       ${CMAKE_CURRENT_SOURCE_DIR}/Implementation/ShaderOptimization
-                                      ${CMAKE_SOURCE_DIR}/driver/utils
+                                      ${CMAKE_SOURCE_DIR}/driver/utils/misc
                                       ${CMAKE_SOURCE_DIR}/driver/hal
                                       ${CMAKE_SOURCE_DIR}/arch/common
                                       ${CMAKE_SOURCE_DIR}/arch/bhavmodel

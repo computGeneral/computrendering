@@ -282,7 +282,7 @@ set( TOP
 
 set(EXTERNALSRC 
                 "../utils/MemoryControllerSelector.cpp"
-                "../../driver/utils/zfstream.cpp"
+                "../../driver/utils/misc/zfstream.cpp"
                 "../../driver/utils/TraceDriver/TraceDriverMeta.cpp" # FIXME: update to cgoTraceDriverBase? move TraceDriverMeta to CG1GpuSim
                 "../../driver/utils/MetaTraceGenerator/traceExtractor/RegisterWriteBufferMeta.cpp"# FIXME: update to cgoTraceDriverBase?
                 ) 
@@ -339,7 +339,7 @@ target_include_directories(perfmodel PUBLIC ${CMAKE_SOURCE_DIR}/arch/common
                                           ${CMAKE_SOURCE_DIR}/arch/perfmodel/StreamController
                                           ${CMAKE_SOURCE_DIR}/arch/utils
 
-                                          ${CMAKE_SOURCE_DIR}/driver/utils               # zfstream.h
+                                          ${CMAKE_SOURCE_DIR}/driver/utils/misc          # zfstream.h
                                           # for TraceDriverMeta.cpp
                                           ${CMAKE_SOURCE_DIR}/driver/ogl/inc/GL          # glAll.h
                                           ${CMAKE_SOURCE_DIR}/driver/utils/TraceReader   # GLExec.h

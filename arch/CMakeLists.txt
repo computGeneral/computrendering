@@ -38,15 +38,15 @@ set(OGLSRC
               ${CMAKE_SOURCE_DIR}/arch/utils/CommandLineReader.cpp
               ${CMAKE_SOURCE_DIR}/arch/utils/CommandLineReader.h
 
-              ${CMAKE_SOURCE_DIR}/driver/utils/BufferDescriptor.cpp
-              ${CMAKE_SOURCE_DIR}/driver/utils/MemoryRegion.cpp
-              ${CMAKE_SOURCE_DIR}/driver/utils/DArray.cpp
-              ${CMAKE_SOURCE_DIR}/driver/utils/log/LogObject.cpp
-              ${CMAKE_SOURCE_DIR}/driver/utils/log/IncludeLog.cpp
+              ${CMAKE_SOURCE_DIR}/driver/utils/misc/BufferDescriptor.cpp
+              ${CMAKE_SOURCE_DIR}/driver/utils/misc/MemoryRegion.cpp
+              ${CMAKE_SOURCE_DIR}/driver/utils/misc/DArray.cpp
+              ${CMAKE_SOURCE_DIR}/driver/utils/misc/LogObject.cpp
+              ${CMAKE_SOURCE_DIR}/driver/utils/misc/IncludeLog.cpp
 
 
-              ${CMAKE_SOURCE_DIR}/driver/utils/GLResolver.cpp
-              ${CMAKE_SOURCE_DIR}/driver/utils/GLJumpTable.cpp
+              ${CMAKE_SOURCE_DIR}/driver/utils/misc/GLResolver.cpp
+              ${CMAKE_SOURCE_DIR}/driver/utils/misc/GLJumpTable.cpp
 
 
               ${CMAKE_SOURCE_DIR}/driver/utils/TraceDriver/TraceDriverApitraceOGL.cpp
@@ -59,7 +59,7 @@ set(OGLINC
                           ${CMAKE_SOURCE_DIR}/driver/utils/ApitraceParser
               ${CMAKE_SOURCE_DIR}/driver/utils/generated # Pre-generated .gen files
               ${CMAKE_SOURCE_DIR}/driver/ogl/inc/GL 
-              ${CMAKE_SOURCE_DIR}/driver/utils/log
+              ${CMAKE_SOURCE_DIR}/driver/utils/misc
               ${CMAKE_SOURCE_DIR}/driver/utils/MetaTraceGenerator # MetaStreamTrace.h
               ${CMAKE_SOURCE_DIR}/driver/ogl/OGL14 # GLContext.h
               ${CMAKE_SOURCE_DIR}/driver/ogl/OGL14/ARBP # ImplementationLimits.h

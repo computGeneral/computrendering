@@ -87,6 +87,6 @@ target_include_directories(BhavModel PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}
                                           ${CMAKE_SOURCE_DIR}/arch/utils
                                           ${CMAKE_SOURCE_DIR}/driver/utils/TraceDriver
                                           ${CMAKE_SOURCE_DIR}/driver/utils/MetaTraceGenerator
-                                          ${CMAKE_SOURCE_DIR}/driver/utils
+                                          ${CMAKE_SOURCE_DIR}/driver/utils/misc
                                           ${CMAKE_SOURCE_DIR}/driver/hal
                           )

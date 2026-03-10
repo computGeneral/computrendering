@@ -30,7 +30,7 @@ target_include_directories(GALx PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/Interface
                                        ${CMAKE_CURRENT_SOURCE_DIR}/Implementation/FPEmulation
                                        ${CMAKE_SOURCE_DIR}/driver/gal/GAL/Interface
                                        ${CMAKE_SOURCE_DIR}/driver/gal/GAL/Implementation
-                                       ${CMAKE_SOURCE_DIR}/driver/ogl/inc
+                                       ${CMAKE_SOURCE_DIR}/driver/ogl/inc/GL
                                        ${CMAKE_SOURCE_DIR}/arch/common
                                        ${CMAKE_SOURCE_DIR}/arch/bhavmodel/UnifiedShader
                           )

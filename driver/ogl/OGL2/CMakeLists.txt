@@ -51,7 +51,7 @@ target_include_directories(OGL2 PUBLIC ${CMAKE_SOURCE_DIR}/arch/common
                                        ${CMAKE_SOURCE_DIR}/driver/hal
                                        ${CMAKE_SOURCE_DIR}/driver/gal/GAL/Interface
                                        ${CMAKE_SOURCE_DIR}/driver/gal/GALx/Interface
-                                       ${CMAKE_SOURCE_DIR}/driver/ogl/inc
+                                       ${CMAKE_SOURCE_DIR}/driver/ogl/inc/GL
                                        ${CMAKE_SOURCE_DIR}/driver/ogl/OGL2
                                        ${CMAKE_SOURCE_DIR}/driver/ogl/OGL2/ARBProgramObject
                                        ${CMAKE_SOURCE_DIR}/driver/ogl/OGL2/OGLBaseObject

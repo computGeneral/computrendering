@@ -341,7 +341,7 @@ target_include_directories(perfmodel PUBLIC ${CMAKE_SOURCE_DIR}/arch/common
 
                                           ${CMAKE_SOURCE_DIR}/driver/utils               # zfstream.h
                                           # for TraceDriverMeta.cpp
-                                          ${CMAKE_SOURCE_DIR}/driver/utils/GL            # glAll.h
+                                          ${CMAKE_SOURCE_DIR}/driver/ogl/inc/GL          # glAll.h
                                           ${CMAKE_SOURCE_DIR}/driver/utils/TraceReader   # GLExec.h
                                           ${CMAKE_SOURCE_DIR}/driver/utils/generated     # Pre-generated .gen files
                                           ${CMAKE_SOURCE_DIR}/driver/utils/TraceDriver# TraceDriverBase.h

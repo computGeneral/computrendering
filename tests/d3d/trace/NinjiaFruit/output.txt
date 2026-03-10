@@ -13,4 +13,4 @@ HAL => Memory usage : GPU 7416 blocks | System 0 blocks
 Warning: Clear Z implemented as Clear Z and Stencil (optimization)
 GALDeviceImp::swapBuffers() - OK
 HAL => Memory usage : GPU 7425 blocks | System 0 blocks
-Simulation clock time = 130 seconds
+Simulation clock time = 160 seconds

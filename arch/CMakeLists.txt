@@ -58,7 +58,7 @@ set(OGLSRC
 set(OGLINC    
                           ${CMAKE_SOURCE_DIR}/driver/utils/ApitraceParser
               ${CMAKE_SOURCE_DIR}/driver/utils/generated # Pre-generated .gen files
-              ${CMAKE_SOURCE_DIR}/driver/utils/GL 
+              ${CMAKE_SOURCE_DIR}/driver/ogl/inc/GL 
               ${CMAKE_SOURCE_DIR}/driver/utils/log
               ${CMAKE_SOURCE_DIR}/driver/utils/MetaTraceGenerator # MetaStreamTrace.h
               ${CMAKE_SOURCE_DIR}/driver/ogl/OGL14 # GLContext.h

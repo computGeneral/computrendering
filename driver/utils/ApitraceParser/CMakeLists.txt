@@ -10,7 +10,7 @@ target_include_directories(ApitraceParser PUBLIC
     ${CMAKE_SOURCE_DIR}/arch/common
     ${CMAKE_SOURCE_DIR}/thirdparty/snappy-1.1.10
     ${CMAKE_SOURCE_DIR}/driver/utils
-    ${CMAKE_SOURCE_DIR}/driver/utils/GL
+    ${CMAKE_SOURCE_DIR}/driver/ogl/inc/GL
     ${CMAKE_SOURCE_DIR}/driver/utils/generated
     ${CMAKE_SOURCE_DIR}/driver/ogl/OGL2
     ${CMAKE_SOURCE_DIR}/driver/ogl/OGLShaders

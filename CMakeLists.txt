@@ -97,11 +97,9 @@ add_subdirectory(driver/hal)
 add_subdirectory(driver/gal/GAL)
 add_subdirectory(driver/gal/GALx)
 # OGL
-add_subdirectory(driver/utils/OGLApiCodeGen)
+# Note: OGLApiCodeGen removed - using pre-generated .gen files instead
 add_subdirectory(driver/utils/ApitraceParser)
 add_subdirectory(driver/ogl/OGL2)
-# FIXME
-#add_dependencies(driver/gal/GALx driver/utils/OGLApiCodeGen)
 # D3D9 (Windows/MSVC only)
 if(MSVC)
     add_subdirectory(driver/d3d/D3D9)

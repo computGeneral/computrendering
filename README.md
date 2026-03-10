@@ -109,13 +109,14 @@ computrendering/
 │   ├── ogl/                     # OpenGL
 │   │   ├── OGL2/                # OpenGL 2.0 implementation (GAL-based)
 │   │   ├── OGL14/               # Legacy OpenGL 1.4 (deprecated)
-│   │   └── inc/                 # OpenGL headers
+│   │   └── inc/                 # OpenGL headers (canonical set in inc/GL)
 │   ├── d3d/                     # Direct3D 9
 │   │   └── D3D9/                # D3D9 implementation (GAL-based)
 │   └── utils/                   # Driver utilities
 │       ├── ApitraceParser/      # ★ Apitrace binary format parser & call dispatchers
 │       ├── TraceDriver/         # ★ Trace drivers (Apitrace OGL/D3D, MetaStream)
-│       └── OGLApiCodeGen/       # ★ Pre-generated OpenGL API code (.gen files)
+│       ├── generated/           # ★ Pre-generated OpenGL mapping tables (.gen files)
+│       └── misc/                # ★ Shared utility sources (buffer/memory/log/zfstream/GL resolver)
 │
 ├── tests/                       # Test suites
 │   ├── arch/                    # Architecture unit tests
@@ -716,7 +717,7 @@ struct cgoMetaStream {
 | Limitation | Impact |
 |-----------|--------|
 | OpenGL version | computrender supports GL 1.4-2.0 subset; traces using GL 3.0+ features will fail |
-| No GLSL shaders | Only ARB vertex/fragment programs supported |
+| No GLSL/HLSL shaders | Only ARB vertex/fragment programs supported; see [Shader Compiler Modernization](#shader-compiler-modernization-glsl--hlsl--llvm) for the LLVM migration plan |
 | D3D9 only | D3D10/11/12 traces detected but not supported |
 | 32-bit build | Win32 platform has 2GB address space limit; large traces may OOM |
 | Thread support | Single-threaded only; multi-threaded traces may misbehave |
@@ -732,10 +733,16 @@ struct cgoMetaStream {
 - [ ] Multiple simultaneous Lock/Unlock support (current memcpy uses first-pending heuristic)
 - [ ] Image quality validation for D3D9 traces (pixel correctness, format handling)
 
+### Shader Compiler Modernization (Next Major Milestone)
+
+- [ ] Drop legacy ARB-Program-only shader path; add GLSL and HLSL front-ends
+- [ ] Integrate LLVM as the compiler back-end targeting the CG1 ISA
+- [ ] See **[Shader Compiler Modernization](#shader-compiler-modernization-glsl--hlsl--llvm)** section below for the full plan
+
 ### Coverage Expansion
 
 - [ ] Additional D3D9 calls: GetFunction, GetDevice, BeginStateBlock, EndStateBlock, Capture, Apply
-- [ ] Additional GL calls for complex traces (GL 2.0 GLSL shaders, FBO, MRT)
+- [ ] Additional GL calls for complex traces (GL 2.0+ GLSL shaders, FBO, MRT)
 - [ ] Enum signature name preservation from apitrace (currently numeric-only)
 
 ### Regression Tests
@@ -749,6 +756,246 @@ struct cgoMetaStream {
 - [ ] 64-bit build support for large traces
 - [ ] Performance tuning for large trace files
 - [ ] Better error reporting for unsupported API calls
+
+---
+
+## Shader Compiler Modernization: GLSL / HLSL + LLVM
+
+### Motivation
+
+The simulator currently only supports **ARB vertex/fragment programs** (OpenGL `GL_ARB_vertex_program` / `GL_ARB_fragment_program` extensions). These are a fixed-function-era assembly language — no high-level shading language is supported. This limits the simulator to very old OpenGL 1.4-era traces and prevents running any real-world application that uses GLSL (OpenGL 2.0+) or HLSL (Direct3D 9 Shader Model 2.0/3.0).
+
+The goal is to replace the hand-rolled ARB parser + custom code generator with a modern, LLVM-based compiler stack that can accept **GLSL** and **HLSL** source and compile them down to the simulator's **CG1 ISA** binary.
+
+### Current Shader Pipeline (Status Quo)
+
+```
+  ┌─── OpenGL Path ─────────────────────────────────────────────────────────┐
+  │                                                                         │
+  │  glProgramStringARB(GL_VERTEX_PROGRAM_ARB, source)                      │
+  │         │                                                               │
+  │         ▼                                                               │
+  │  OGL14/ARBP/  (Flex/Bison parser, now pre-generated .gen files)         │
+  │  ProgramObject  →  GenericInstruction (HW-independent IR)               │
+  │         │                                                               │
+  │         ▼                                                               │
+  │  ShaderInstructionTranslator  (GenericInstruction → cgoShaderInstr)     │
+  │         │                                                               │
+  │         ▼                                                               │
+  │  GALShaderProgramImp.setCode()  →  CG1 bytecode (16-byte instrs)       │
+  │         │                                                               │
+  │         ▼                                                               │
+  │  HAL MetaStream WRITE  →  GPU instruction memory                        │
+  └─────────────────────────────────────────────────────────────────────────┘
+
+  ┌─── Direct3D 9 Path ────────────────────────────────────────────────────┐
+  │                                                                         │
+  │  CreateVertexShader / CreatePixelShader (DWORD bytecode)                │
+  │         │                                                               │
+  │         ▼                                                               │
+  │  D3D9/ShaderTranslator/  (IR.h → IRTranslator → IRBuilder)             │
+  │  D3D DWORD tokens  →  IR tree (visitor pattern)  →  cgoShaderInstr     │
+  │         │                                                               │
+  │         ▼                                                               │
+  │  NativeShader  →  CG1 bytecode  →  HAL MetaStream WRITE                │
+  └─────────────────────────────────────────────────────────────────────────┘
+
+  ┌─── Simulator Execution ────────────────────────────────────────────────┐
+  │                                                                         │
+  │  CG1 ISA bytecode (16 bytes/instruction) loaded into shader memory      │
+  │         │                                                               │
+  │         ▼                                                               │
+  │  bhavmodel: bmUnifiedShader.loadShaderProgram() → decode → execute      │
+  │  perfmodel: ShaderFetch → ShaderDecodeExecute (cycle-accurate)          │
+  │                                                                         │
+  │  Register model: IN, OUT, PARAM (constants), TEMP, ADDR, PRED banks    │
+  │  ~56 opcodes: ALU (ADD, MUL, MAD, DP3, DP4, ...), SFU (RCP, RSQ,      │
+  │    SIN, COS, EX2, LG2), TEX (TEX, TXB, TXP, TXL), control (JMP,      │
+  │    KIL, CMP, SETPXX, ANDP), misc (MOV, LDA, DDX, DDY, END)            │
+  └─────────────────────────────────────────────────────────────────────────┘
+```
+
+### Key Files in the Current System
+
+| Path | Purpose |
+|------|---------|
+| `driver/ogl/OGL14/ARBP/` | ARB program parser (Flex/Bison .gen), `GenericInstruction`, `ShaderInstructionTranslator` |
+| `driver/ogl/OGL2/ARBProgramObject/` | OGL2-level ARB program management (`ARBProgramObject`, `ARBProgramTarget`, `ARBProgramManager`) |
+| `driver/gal/GAL/Interface/GALShaderProgram.h` | Abstract shader program interface (CG1 bytecode + constants) |
+| `driver/gal/GALx/Implementation/GALxCompiledProgramImp.h` | Compiled program storage (bytecode, constant bank, texture usage) |
+| `driver/d3d/D3D9/*/ShaderTranslator/` | D3D9 DWORD-token → IR → CG1 translator (`IR.h`, `IRTranslator`, `IRBuilder`) |
+| `arch/bhavmodel/UnifiedShader/ShaderInstr.h` | CG1 ISA definition: `ShOpcode` enum, `cgoShaderInstr` class (16-byte encoding) |
+| `arch/bhavmodel/UnifiedShader/bmUnifiedShader.h` | Behavioral shader execution engine |
+| `arch/perfmodel/UnifiedShader/ShaderDecodeExecute*.h` | Cycle-accurate shader decode + execute |
+| `arch/utils/CGAPI/ComputeGeneralLanguage.h` | CGL interface: `cglCompileARBProgram()`, `cglLoadVertexShader()` |
+| `arch/utils/CGASM/` | Standalone CG1 assembler / disassembler / optimizer tools |
+
+### CG1 ISA Summary
+
+| Property | Value |
+|----------|-------|
+| Instruction size | 16 bytes (128 bits) |
+| Encoding | Two 64-bit halves: Lo64 (opcode, flags, banks, masks, rel-addressing) + Hi64 (registers, swizzles or immediate) |
+| Register banks | IN (0), OUT (1), PARAM (2), TEMP (3), ADDR (4), PARAM2 (5), IMM (6), PRED (0xA) |
+| Operands | Up to 3 source operands + 1 result; per-operand swizzle, negate, absolute |
+| Write masking | 4-bit XYZW mask on result |
+| Predication | Per-instruction predicate register with inversion |
+| Special | Relative addressing mode for constant bank access |
+| Opcode count | ~56 defined (0x00–0x50); see `ShOpcode` enum |
+
+### Target Architecture
+
+```
+                              GLSL source            HLSL source
+                                  │                      │
+                                  ▼                      ▼
+                          ┌──────────────┐      ┌──────────────┐
+                          │  glslang or  │      │   DXC/HLSL   │
+                          │  Mesa NIR    │      │   front-end   │
+                          └──────┬───────┘      └──────┬───────┘
+                                 │                      │
+                                 ▼                      ▼
+                          ┌────────────────────────────────────┐
+                          │         SPIR-V (optional)          │
+                          │   Common intermediate for both     │
+                          │   front-ends (via SPIRV-Tools)     │
+                          └────────────────┬───────────────────┘
+                                           │
+                                           ▼
+                          ┌────────────────────────────────────┐
+                          │          LLVM IR Module            │
+                          │   SPIR-V → LLVM IR translator      │
+                          │   (or direct glslang → LLVM)       │
+                          └────────────────┬───────────────────┘
+                                           │
+                                           ▼
+                          ┌────────────────────────────────────┐
+                          │       CG1 LLVM Back-End            │
+                          │                                    │
+                          │  • CG1TargetMachine                │
+                          │  • CG1InstrInfo (map LLVM → CG1)   │
+                          │  • CG1RegisterInfo (IN/OUT/TEMP/    │
+                          │    PARAM/ADDR/PRED banks)           │
+                          │  • CG1AsmPrinter (emit 16-byte     │
+                          │    encoded instructions)            │
+                          │  • SelectionDAG / GlobalISel        │
+                          │    lowering for TEX, KIL, DDX/DDY   │
+                          └────────────────┬───────────────────┘
+                                           │
+                                           ▼
+                          ┌────────────────────────────────────┐
+                          │   CG1 ISA bytecode (unchanged)     │
+                          │   16-byte encoded instructions     │
+                          │   loaded via existing HAL path     │
+                          └────────────────────────────────────┘
+```
+
+### Implementation Plan
+
+#### Phase 1 — LLVM CG1 Back-End (Foundation)
+
+Create a custom LLVM target back-end that emits CG1 ISA bytecode. This is the core piece that everything else depends on.
+
+| Task | Details |
+|------|---------|
+| **CG1 target triple** | Define `cg1-none-none`; register with LLVM `TargetRegistry` |
+| **`CG1TargetMachine`** | Subclass `LLVMTargetMachine`; data layout for 32-bit float vector machine |
+| **`CG1RegisterInfo`** | Model the CG1 register banks: 16 IN regs, 16 OUT regs, 512 PARAM regs, 32 TEMP regs, 4 ADDR regs, 32 PRED regs |
+| **`CG1InstrInfo`** | TableGen `.td` file mapping LLVM opcodes to CG1 ISA opcodes (ADD, MUL, MAD, DP3, DP4, MOV, etc.) |
+| **`CG1FrameLowering`** | Trivial — no stack; TEMP registers are the "stack" |
+| **`CG1ISelLowering`** | Lower LLVM IR intrinsics to CG1 special instructions: `@llvm.cg1.tex`, `@llvm.cg1.kill`, `@llvm.cg1.ddx`, `@llvm.cg1.ddy`, `@llvm.cg1.sincos` |
+| **`CG1MCCodeEmitter`** | Emit the 16-byte `cgsInstrFieldsLo64` + `cgsInstrFieldsHi64` binary encoding |
+| **Standalone test** | `llc -march=cg1 < test.ll` produces `.cg1bin` matching hand-assembled output from `arch/utils/CGASM/` |
+
+New directory: `arch/compiler/llvm-cg1/` (or integrated into a forked LLVM `lib/Target/CG1/`).
+
+#### Phase 2 — GLSL Front-End
+
+Accept GLSL shader source (vertex + fragment) from `glShaderSource` / `glCompileShader` / `glLinkProgram` calls.
+
+| Task | Details |
+|------|---------|
+| **GLSL parsing** | Use [glslang](https://github.com/KhronosGroup/glslang) to compile GLSL → SPIR-V |
+| **SPIR-V → LLVM IR** | Use a SPIR-V reader (e.g., [SPIRV-LLVM-Translator](https://github.com/AcademySoftwareFoundation/SPIRV-LLVM-Translator)) to convert SPIR-V modules to LLVM IR |
+| **Built-in functions** | Map GLSL built-ins (`texture2D`, `normalize`, `reflect`, `clamp`, `mix`, etc.) to CG1 intrinsics or instruction sequences |
+| **OGL driver hooks** | Add `glCreateShader`, `glShaderSource`, `glCompileShader`, `glAttachShader`, `glLinkProgram`, `glUseProgram` to the OGL2 dispatch tables (new handler files alongside existing ARBProgramObject) |
+| **Uniform handling** | Map GLSL uniforms to CG1 PARAM bank registers; `glUniform*` writes go through existing `HAL::writeGPUReg(GPU_VERTEX_CONSTANT_*)` path |
+| **Varying linkage** | Link VS outputs to FS inputs via the existing IN/OUT banks; respect `gl_Position` → position output mapping |
+| **Apitrace support** | GLSL calls are already captured by apitrace tools — no changes needed on the tracing side |
+
+New directories:
+- `driver/ogl/OGL2/GLSLObject/` — GLSL shader/program object management
+- `arch/compiler/` — LLVM pipeline driver and SPIR-V utilities
+
+#### Phase 3 — HLSL Front-End (D3D9 Shader Model 2.0/3.0)
+
+Replace the current D3D9 DWORD-token → IR → CG1 hand-translation with an LLVM-based pipeline.
+
+| Task | Details |
+|------|---------|
+| **HLSL source path** | For traces with embedded HLSL: use [DXC](https://github.com/microsoft/DirectXShaderCompiler) to compile HLSL → SPIR-V (via `-spirv` flag), then reuse Phase 2 SPIR-V → LLVM → CG1 pipeline |
+| **D3D bytecode path** | For traces with only compiled SM2/SM3 bytecode: keep existing `IRTranslator` as a fallback, or write a DXBC → SPIR-V lifter |
+| **SM3 features** | Dynamic branching (`if`/`else`/`loop`) maps to CG1 `JMP` + predication; derivative instructions map to `DDX`/`DDY` |
+| **Constant registers** | D3D constant registers (c0–c255) map directly to CG1 PARAM bank |
+
+Modified directories:
+- `driver/d3d/D3D9/D3DImplement/ShaderTranslator/` — add LLVM code path alongside existing translator
+- `driver/d3d/D3D9/D3DControllers/ShaderTranslator/` — same
+
+#### Phase 4 — Optimization & ISA Extensions
+
+| Task | Details |
+|------|---------|
+| **LLVM optimization passes** | Standard `-O2` passes (dead code elimination, constant propagation, loop unrolling) run on LLVM IR before CG1 lowering |
+| **Register allocation** | LLVM's register allocator handles TEMP bank allocation (replaces current `Scheduler` and `maxAliveTemps` tracking in ARBP) |
+| **Instruction scheduling** | LLVM scheduling pass replaces the hand-written `ShaderOptimization` class |
+| **ISA extensions** | Extend `ShOpcode` enum for new instructions as needed (integer ops, bitwise ops for GLSL `ivec`/`uvec` types) |
+| **Shader cache** | Cache compiled CG1 binaries keyed by shader source hash to avoid re-compilation |
+
+### Integration Points (What Stays, What Changes)
+
+| Component | Status | Notes |
+|-----------|--------|-------|
+| `cgoShaderInstr` (128-bit encoding) | **Unchanged** | ISA binary format is the compilation *target* — no changes |
+| `GALShaderProgram` / `GALShaderProgramImp` | **Unchanged** | Still stores CG1 bytecode + constants |
+| `HAL` MetaStream shader loading | **Unchanged** | `cglLoadVertexShader()` / `cglLoadFragmentShader()` still write CG1 bytecode |
+| `bmUnifiedShader` / `cmoShaderDecExe` | **Unchanged** | Shader execution decodes CG1 bytecode — compiler-agnostic |
+| `OGL14/ARBP/` parser + translator | **Deprecated** | Replaced by glslang → SPIR-V → LLVM → CG1. Keep as legacy fallback |
+| `D3D9/ShaderTranslator/` IR pipeline | **Deprecated** | Replaced by DXC/DXBC → SPIR-V → LLVM → CG1. Keep as fallback for SM2 bytecode |
+| `ARBProgramObject` | **Kept** | Still handles `glProgramStringARB` — route through LLVM if desired, or keep existing path |
+| `driver/utils/generated/*.gen` | **Kept** | Flex/Bison-generated tables for ARB parsing — still needed for legacy path |
+| `arch/utils/CGASM/` | **Kept** | Standalone assembler/disassembler remain useful for debugging |
+
+### New Dependencies
+
+| Library | Version | Purpose |
+|---------|---------|---------|
+| LLVM | ≥ 17.0 | Compiler infrastructure, optimization passes, CG1 back-end hosting |
+| glslang | ≥ 14.0 | GLSL → SPIR-V compiler (Khronos reference) |
+| SPIRV-Tools | ≥ 2024.1 | SPIR-V validation and optimization |
+| SPIRV-LLVM-Translator | matching LLVM | SPIR-V ↔ LLVM IR bidirectional translation |
+| DXC (optional) | latest | HLSL → SPIR-V compilation |
+
+### Build Configuration (CMake)
+
+```cmake
+# In CMakeLists.txt — new options for the compiler subsystem
+option(CG_ENABLE_LLVM_COMPILER  "Build LLVM-based shader compiler (requires LLVM)"  OFF)
+option(CG_ENABLE_GLSL           "Enable GLSL front-end (requires glslang)"          OFF)
+option(CG_ENABLE_HLSL           "Enable HLSL front-end (requires DXC)"              OFF)
+
+if (CG_ENABLE_LLVM_COMPILER)
+    find_package(LLVM REQUIRED CONFIG)
+    add_subdirectory(arch/compiler/llvm-cg1)
+endif()
+
+if (CG_ENABLE_GLSL)
+    find_package(glslang REQUIRED)
+    # links glslang::glslang, glslang::SPIRV
+endif()
+```
+
+When `CG_ENABLE_LLVM_COMPILER` is OFF, the build uses the existing ARB parser and D3D IR translator only — no LLVM dependency. This keeps the default build lightweight.
 
 ---
 

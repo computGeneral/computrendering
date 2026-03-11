@@ -75,8 +75,8 @@ computrendering/
 │   │   ├── TextureProcessor/    # Texture sampling
 │   │   └── FragmentOperator/    # Fragment operations (Z, blend, write)
 │   │
-│   ├── perfmodel/               # Functional model (cycle-accurate)
-│   │   ├── perfmodel.h/cpp       # Top-level functional model
+│   ├── perfmodel/               # Performace model (cycle-approximate)
+│   │   ├── perfmodel.h/cpp       # Top-level performance model
 │   │   ├── common/base/         # ★ Base simulation classes
 │   │   │   ├── MduBase.h      # Module base class (all MDUs inherit)
 │   │   │   └── GPUSignal.h    # Signal class for inter-module comm
@@ -999,17 +999,6 @@ When `CG_ENABLE_LLVM_COMPILER` is OFF, the build uses the existing ARB parser an
 
 ---
 
-## Legacy Trace Formats (Removed)
-
-| Feature | GLInterceptor (.txt.gz) | D3D9 PIX (.PIXRun) | Apitrace (.trace) |
-|---------|-------------------------|---------------------|-------------------|
-| Format | Text-based, human-readable | Binary (Microsoft) | Binary, compact |
-| Buffer data | External .dat files | Embedded | Embedded as blobs |
-| Compression | gzip | None/LZMA | Snappy (faster) |
-| Platform | Windows capture only | Windows only | Cross-platform |
-| Status | **Removed** | **Removed** | **Active** |
-
----
 
 ## Configuration
 

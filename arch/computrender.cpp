@@ -10,9 +10,6 @@
 
 #include "perfmodel.h"
 
-#if CG_ARCH_MODEL_DEVEL
-#include "archmodel.h"
-#endif
 
 #include "param_loader.hpp"
 #include "CommandLineReader.h"
@@ -308,7 +305,7 @@ int main(int argc, char *argv[])
     bool   validMode = false; // validation mode
 
     int    argIndex = 1;
-    int    argPos = 0;
+    //int    argPos = 0;
     int    argCount = 0;
     char **argList = new char*[argc];
     const char *paramFile = nullptr;             // path to archParams.csv (optional)
@@ -356,7 +353,7 @@ int main(int argc, char *argv[])
 
     // Second pass: parse the rest of arguments and override configuration.
     argIndex = 0;
-    argPos = 0;
+    //argPos = 0;
 
     while (argIndex < argCount) {
         if (strcmp(argList[argIndex], "--pm") == 0)
@@ -377,28 +374,29 @@ int main(int argc, char *argv[])
             ArchConf.sim.inputFile = new char[strlen(argList[argIndex]) + 1];
             strcpy(ArchConf.sim.inputFile, argList[argIndex]);
         } else { // traditional arguments style
-            switch (argPos) {
-                case 0: // trace file
-                    ArchConf.sim.inputFile = new char[strlen(argList[argIndex]) + 1];
-                    strcpy(ArchConf.sim.inputFile, argList[argIndex]);
-                    break;
-                case 1: // num frames/cycles
-                    if (PARSE_CYCLES(argList[argIndex]) >= 10000) {
-                        ArchConf.sim.simFrames = 0;
-                        ArchConf.sim.simCycles = PARSE_CYCLES(argList[argIndex]);
-                    } else {
-                        ArchConf.sim.simFrames = U32(PARSE_CYCLES(argList[argIndex]));
-                        ArchConf.sim.simCycles = 0;
-                    }
-                    break;
-                case 2: // start frame
-                    ArchConf.sim.startFrame = atoi(argList[argIndex]);
-                    break;
-                default:
-                    CG_INFO("Illegal argument at position %i: %s", argIndex, argList[argIndex]);
-                    exit(-1);
-            }
-            argPos++;
+            CG_ASSERT("[FATAL] ILLEGAL ARGUMENT DETECTED");
+            //switch (argPos) {
+            //    case 0: // trace file
+            //        ArchConf.sim.inputFile = new char[strlen(argList[argIndex]) + 1];
+            //        strcpy(ArchConf.sim.inputFile, argList[argIndex]);
+            //        break;
+            //    case 1: // num frames/cycles
+            //        if (PARSE_CYCLES(argList[argIndex]) >= 10000) {
+            //            ArchConf.sim.simFrames = 0;
+            //            ArchConf.sim.simCycles = PARSE_CYCLES(argList[argIndex]);
+            //        } else {
+            //            ArchConf.sim.simFrames = U32(PARSE_CYCLES(argList[argIndex]));
+            //            ArchConf.sim.simCycles = 0;
+            //        }
+            //        break;
+            //    case 2: // start frame
+            //        ArchConf.sim.startFrame = atoi(argList[argIndex]);
+            //        break;
+            //    default:
+            //        CG_INFO("Illegal argument at position %i: %s", argIndex, argList[argIndex]);
+            //        exit(-1);
+            //}
+         //   //argPos++;
         }
         argIndex++;
     }
@@ -584,18 +582,6 @@ int main(int argc, char *argv[])
             panicCallback = &panicSnapshotWrapper;    //  Define the call back for the panic function to save a snapshot on simulator errors.
             CG_INFO("ComputGeneral MAL3 perfmodel Enabled for Simulation");
             break;
-#if CG_ARCH_MODEL_DEVEL
-        case CG_ARCH_MODEL:
-            sc_core::sc_report_handler::set_log_file_name("./CG_ARCH_MODEL_SC.log");
-            sc_core::sc_report_handler::set_actions(SC_INFO, SC_LOG);
-            sc_core::sc_report_handler::set_actions(SC_WARNING, SC_LOG);
-            //sc_report_handler::set_actions(SC_ID_INSTANCE_EXISTS_, SC_DO_NOTHING);
-            sc_core::sc_report_handler::set_actions(SC_ID_INSTANCE_EXISTS_, SC_WARNING, SC_DO_NOTHING);
-            GpuModel = new ArchModel(ArchConf, TraceDriver);
-            panicCallback = &panicSnapshotWrapper;    //  Define the call back for the panic function to save a snapshot on simulator errors.
-            CG_INFO("computrendering MAL1 AMDL Enabled for Simulation");
-            break;
-#endif
         default: CG_ASSERT("UNDEFINED/UNIMPLEMENTED MAL Detected!");
     }
   } catch (bool b) {

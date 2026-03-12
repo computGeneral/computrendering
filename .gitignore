@@ -1,5 +1,5 @@
 # ============================================================
-# CG1 GPU Simulator — .gitignore
+# ComputRendering Simulator — .gitignore
 # ============================================================
 
 # ------ Build artifacts ------
@@ -51,9 +51,6 @@ thirdparty/zlib-1.2.13/
 *.png
 stats.*.csv
 stats.*.csv.gz
-signaltrace.txt
-signaltrace.txt.gz
-CG1.MetaStream.tracefile.gz
 
 # ------ OS ------
 .DS_Store

@@ -1619,7 +1619,7 @@ void PerfModel::saveSnapshotCommand()
     char directoryName[100];
     while (!directoryCreated && !error && !tooManySnapshots)
     {
-        sprintf(directoryName, "CG1snapshot%02d", snapshotID);
+        sprintf(directoryName, "snapshot%02d", snapshotID);
         
         S32 res = createDirectory(directoryName);                
         
@@ -1773,7 +1773,7 @@ void PerfModel::loadSnapshotCommand(stringstream &comStream)
             
             //  Change to the snapshot directory.
             char directoryName[100];
-            sprintf(directoryName, "CG1snapshot%02d", snapshotID);
+            sprintf(directoryName, "snapshot%02d", snapshotID);
             
             char workingDirectory[1024];
             char snapshotDirectory[1024];

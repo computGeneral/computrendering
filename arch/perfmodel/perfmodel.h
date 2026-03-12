@@ -4,9 +4,9 @@
  *
  */
 
-#ifndef __CG1_PERFMODEL_H__
+#ifndef __PERFMODEL_H__
 
-#define __CG1_PERFMODEL_H__
+#define __PERFMODEL_H__
 #include "modelbase.h"
 
 #include "archParams.h"

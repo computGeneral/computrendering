@@ -2,7 +2,8 @@
 #include "IDeviceImp_9.h"
 #include "IStateBlockImp_9.h"
 
-IStateBlockImp9 :: IStateBlockImp9() {}
+IStateBlockImp9 :: IStateBlockImp9() :
+ref_count(0) {}
 
 IStateBlockImp9 & IStateBlockImp9 :: getInstance() {
     static IStateBlockImp9 instance;
@@ -17,15 +18,13 @@ HRESULT D3D_CALL IStateBlockImp9 :: QueryInterface (  REFIID riid , void** ppvOb
 }
 
 ULONG D3D_CALL IStateBlockImp9 :: AddRef ( ) {
-    D3D_DEBUG( cout <<"WARNING:  IDirect3DStateBlock9 :: AddRef  NOT IMPLEMENTED" << endl; )
-    ULONG ret = static_cast< ULONG >(0);
-    return ret;
+    D3D_DEBUG( cout <<"IDirect3DStateBlock9 :: AddRef" << endl; )
+    return 0;
 }
 
 ULONG D3D_CALL IStateBlockImp9 :: Release ( ) {
-    D3D_DEBUG( cout <<"WARNING:  IDirect3DStateBlock9 :: Release  NOT IMPLEMENTED" << endl; )
-    ULONG ret = static_cast< ULONG >(0);
-    return ret;
+    D3D_DEBUG( cout <<"IDirect3DStateBlock9 :: Release" << endl; )
+    return 0;
 }
 
 HRESULT D3D_CALL IStateBlockImp9 :: GetDevice (  IDirect3DDevice9** ppDevice ) {

@@ -27,13 +27,15 @@ i_parent(_i_parent) {
     // Add to state data tree
     s_parent->add_child(state);
 
-    refs = 0;
+    ref_count = 0;
 }
 
 
 IVertexShaderImp9 :: IVertexShaderImp9() {
 	///@note Used to differentiate singleton cover
 	i_parent = 0;
+    state = 0;
+    ref_count = 0;
 }
 
 IVertexShaderImp9 & IVertexShaderImp9 :: getInstance() {
@@ -52,8 +54,8 @@ HRESULT D3D_CALL IVertexShaderImp9 :: QueryInterface (  REFIID riid , void** ppv
 ULONG D3D_CALL IVertexShaderImp9 :: AddRef ( ) {
 	D3D_DEBUG( cout << "IVERTEXSHADER9: AddRef" << endl; )
 	if(i_parent != 0) {
-		refs ++;
-    	return refs;
+		ref_count ++;
+    	return ref_count;
 	}
 	else return 0;
 }
@@ -61,15 +63,15 @@ ULONG D3D_CALL IVertexShaderImp9 :: AddRef ( ) {
 ULONG D3D_CALL IVertexShaderImp9 :: Release ( ) {
     D3D_DEBUG( cout <<"IVERTEXSHADER9: Release" << endl; )
     if(i_parent != 0) {
-        refs--;
-        if(refs == 0) {
+        ref_count--;
+        if(ref_count == 0) {
             // Remove state
             StateDataNode* parent = state->get_parent();
             parent->remove_child(state);
             delete state;
             state = 0;
         }
-        return refs;
+        return ref_count;
     }
     else {
         // Object is used as singleton "cover"

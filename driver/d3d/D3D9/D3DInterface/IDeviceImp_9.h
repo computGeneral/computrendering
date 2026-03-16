@@ -37,6 +37,7 @@ private:
     set< ICubeTextureImp9* > i_cubetexture_childs;
     set< IVolumeTextureImp9* > i_volumetexture_childs;
     set< ISurfaceImp9* > i_surface_childs;
+    ULONG ref_count;
 
     /// Checks implicit and current rt/zs are the same
     bool using_implicit_render_target_zstencil();

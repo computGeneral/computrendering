@@ -337,6 +337,7 @@ f, stampCoord[f][0], stampCoord[f][1], stampCoord[f][2], stampCoord[f][3], stamp
 
                     //  Not use mipmap.
                     d1 = levelBase;
+                    d2 = levelBase;
 
                     break;
 
@@ -346,6 +347,7 @@ f, stampCoord[f][0], stampCoord[f][1], stampCoord[f][2], stampCoord[f][3], stamp
                     //  Use only the nearest mipmap level.
                     d1 = (lod <= 0.5f)?levelBase:((F32(levelBase) + lod) <= (F32(q) + 0.5f))?
                         (U32(CG_CEIL(F32(levelBase) + lod + 0.5f)) - 1):q;
+                    d2 = d1;
 
 //printf("frag %d > lod: %f  d1: %d  levelBase: %d  q: %d\n", frag, lod, d1, levelBase, q);
 

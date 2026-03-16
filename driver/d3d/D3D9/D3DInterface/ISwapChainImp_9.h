@@ -16,6 +16,7 @@ public:
     HRESULT D3D_CALL GetPresentParameters (  D3DPRESENT_PARAMETERS* pPresentationParameters );
 private:
     ISwapChainImp9();
+    ULONG ref_count;
 };
 
 #endif

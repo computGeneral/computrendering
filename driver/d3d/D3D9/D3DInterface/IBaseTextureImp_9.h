@@ -23,6 +23,9 @@ public:
     void D3D_CALL GenerateMipSubLevels ( );
 private:
     IBaseTextureImp9();
+    ULONG ref_count;
+    DWORD priority;
+    DWORD lod;
 };
 
 #endif

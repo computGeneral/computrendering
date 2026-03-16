@@ -17,6 +17,8 @@ public:
     D3DRESOURCETYPE D3D_CALL GetType ( );
 private:
     IResourceImp9();
+    ULONG ref_count;
+    DWORD priority;
 };
 
 #endif

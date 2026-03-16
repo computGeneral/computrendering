@@ -17,6 +17,7 @@ private:
     StateDataNode* state;
 
     ULONG refs;
+    DWORD priority;
 
 public:
 

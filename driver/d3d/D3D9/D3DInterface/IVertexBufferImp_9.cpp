@@ -24,6 +24,7 @@ IVertexBufferImp9 :: IVertexBufferImp9(StateDataNode* s_parent, IDeviceImp9* _i_
     s_parent->add_child(state);
 
     refs = 0;
+    priority = 0;
 
 }
 
@@ -31,6 +32,9 @@ IVertexBufferImp9 :: IVertexBufferImp9(StateDataNode* s_parent, IDeviceImp9* _i_
 IVertexBufferImp9 :: IVertexBufferImp9() {
 	///@note used to differentiate when creating singleton
 	i_parent = 0;
+    state = 0;
+    refs = 0;
+    priority = 0;
 }
 
 IVertexBufferImp9 & IVertexBufferImp9 :: getInstance() {
@@ -80,43 +84,39 @@ HRESULT D3D_CALL IVertexBufferImp9 :: GetDevice (  IDirect3DDevice9** ppDevice )
 }
 
 HRESULT D3D_CALL IVertexBufferImp9 :: SetPrivateData (  REFGUID refguid , CONST void* pData , DWORD SizeOfData , DWORD Flags ) {
-    D3D_DEBUG( cout <<"WARNING:  IDirect3DVertexBuffer9 :: SetPrivateData  NOT IMPLEMENTED" << endl; )
-    HRESULT ret = static_cast< HRESULT >(0);
-    return ret;
+    D3D_DEBUG( cout <<"IVertexBuffer9 :: SetPrivateData" << endl; )
+    return D3D_OK;
 }
 
 HRESULT D3D_CALL IVertexBufferImp9 :: GetPrivateData (  REFGUID refguid , void* pData , DWORD* pSizeOfData ) {
-    D3D_DEBUG( cout <<"WARNING:  IDirect3DVertexBuffer9 :: GetPrivateData  NOT IMPLEMENTED" << endl; )
-    HRESULT ret = static_cast< HRESULT >(0);
-    return ret;
+    D3D_DEBUG( cout <<"IVertexBuffer9 :: GetPrivateData" << endl; )
+    return D3D_OK;
 }
 
 HRESULT D3D_CALL IVertexBufferImp9 :: FreePrivateData (  REFGUID refguid ) {
-    D3D_DEBUG( cout <<"WARNING:  IDirect3DVertexBuffer9 :: FreePrivateData  NOT IMPLEMENTED" << endl; )
-    HRESULT ret = static_cast< HRESULT >(0);
-    return ret;
+    D3D_DEBUG( cout <<"IVertexBuffer9 :: FreePrivateData" << endl; )
+    return D3D_OK;
 }
 
 DWORD D3D_CALL IVertexBufferImp9 :: SetPriority (  DWORD PriorityNew ) {
-    D3D_DEBUG( cout <<"WARNING:  IDirect3DVertexBuffer9 :: SetPriority  NOT IMPLEMENTED" << endl; )
-    DWORD ret = static_cast< DWORD >(0);
-    return ret;
+    D3D_DEBUG( cout <<"IVertexBuffer9 :: SetPriority" << endl; )
+    DWORD old_priority = priority;
+    priority = PriorityNew;
+    return old_priority;
 }
 
 DWORD D3D_CALL IVertexBufferImp9 :: GetPriority ( ) {
-    D3D_DEBUG( cout <<"WARNING:  IDirect3DVertexBuffer9 :: GetPriority  NOT IMPLEMENTED" << endl; )
-    DWORD ret = static_cast< DWORD >(0);
-    return ret;
+    D3D_DEBUG( cout <<"IVertexBuffer9 :: GetPriority" << endl; )
+    return priority;
 }
 
 void D3D_CALL IVertexBufferImp9 :: PreLoad ( ) {
-    D3D_DEBUG( cout <<"WARNING:  IDirect3DVertexBuffer9 :: PreLoad  NOT IMPLEMENTED" << endl; )
+    D3D_DEBUG( cout <<"IVertexBuffer9 :: PreLoad" << endl; )
 }
 
 D3DRESOURCETYPE D3D_CALL IVertexBufferImp9 :: GetType ( ) {
-    D3D_DEBUG( cout <<"WARNING:  IDirect3DVertexBuffer9 :: GetType  NOT IMPLEMENTED" << endl; )
-    D3DRESOURCETYPE ret = static_cast< D3DRESOURCETYPE >(0);
-    return ret;
+    D3D_DEBUG( cout <<"IVertexBuffer9 :: GetType" << endl; )
+    return D3DRTYPE_VERTEXBUFFER;
 }
 
 HRESULT D3D_CALL IVertexBufferImp9 :: Lock (  UINT OffsetToLock , UINT SizeToLock , void** ppbData , DWORD Flags ) {

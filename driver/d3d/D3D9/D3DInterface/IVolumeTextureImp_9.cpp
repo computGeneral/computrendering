@@ -7,6 +7,9 @@ IVolumeTextureImp9::IVolumeTextureImp9(StateDataNode* s_parent, IDeviceImp9* _i_
     UINT Levels, DWORD Usage , D3DFORMAT Format, D3DPOOL Pool) {
 
     i_parent = _i_parent;
+    ref_count = 1;  // Initialize reference count
+    priority = 0;
+    lod = 0;
     // Create state
     state = D3DState::create_volumetexture_state_9(this);
     // Initialize state
@@ -53,7 +56,13 @@ IVolumeTextureImp9 ::~IVolumeTextureImp9() {
     }
 }
 
-IVolumeTextureImp9 :: IVolumeTextureImp9() {}
+IVolumeTextureImp9 :: IVolumeTextureImp9() {
+    i_parent = 0;
+    state = 0;
+    ref_count = 0;
+    priority = 0;
+    lod = 0;
+}
 
 IVolumeTextureImp9 & IVolumeTextureImp9 :: getInstance() {
     static IVolumeTextureImp9 instance;
@@ -68,15 +77,29 @@ HRESULT D3D_CALL IVolumeTextureImp9 :: QueryInterface (  REFIID riid , void** pp
 }
 
 ULONG D3D_CALL IVolumeTextureImp9 :: AddRef ( ) {
-    D3D_DEBUG( cout <<"WARNING:  IDirect3DVolumeTexture9 :: AddRef  NOT IMPLEMENTED" << endl; )
-    ULONG ret = static_cast< ULONG >(0);
-    return ret;
+    D3D_DEBUG( cout <<"IDirect3DVolumeTexture9 :: AddRef" << endl; )
+    if(i_parent != 0) {
+        ref_count ++;
+        return ref_count;
+    }
+    else return 0;
 }
 
 ULONG D3D_CALL IVolumeTextureImp9 :: Release ( ) {
-    D3D_DEBUG( cout <<"WARNING:  IDirect3DVolumeTexture9 :: Release  NOT IMPLEMENTED" << endl; )
-    ULONG ret = static_cast< ULONG >(0);
-    return ret;
+    D3D_DEBUG( cout <<"IDirect3DVolumeTexture9 :: Release" << endl; )
+    if(i_parent != 0) {
+        ref_count--;
+        if(ref_count == 0) {
+            StateDataNode* parent = state->get_parent();
+            parent->remove_child(state);
+            delete state;
+            state = 0;
+        }
+        return ref_count;
+    }
+    else {
+        return 0;
+    }
 }
 
 HRESULT D3D_CALL IVolumeTextureImp9 :: GetDevice (  IDirect3DDevice9** ppDevice ) {
@@ -86,37 +109,34 @@ HRESULT D3D_CALL IVolumeTextureImp9 :: GetDevice (  IDirect3DDevice9** ppDevice 
 }
 
 HRESULT D3D_CALL IVolumeTextureImp9 :: SetPrivateData (  REFGUID refguid , CONST void* pData , DWORD SizeOfData , DWORD Flags ) {
-    D3D_DEBUG( cout <<"WARNING:  IDirect3DVolumeTexture9 :: SetPrivateData  NOT IMPLEMENTED" << endl; )
-    HRESULT ret = static_cast< HRESULT >(0);
-    return ret;
+    D3D_DEBUG( cout <<"IVolumeTexture9 :: SetPrivateData" << endl; )
+    return D3D_OK;
 }
 
 HRESULT D3D_CALL IVolumeTextureImp9 :: GetPrivateData (  REFGUID refguid , void* pData , DWORD* pSizeOfData ) {
-    D3D_DEBUG( cout <<"WARNING:  IDirect3DVolumeTexture9 :: GetPrivateData  NOT IMPLEMENTED" << endl; )
-    HRESULT ret = static_cast< HRESULT >(0);
-    return ret;
+    D3D_DEBUG( cout <<"IVolumeTexture9 :: GetPrivateData" << endl; )
+    return D3D_OK;
 }
 
 HRESULT D3D_CALL IVolumeTextureImp9 :: FreePrivateData (  REFGUID refguid ) {
-    D3D_DEBUG( cout <<"WARNING:  IDirect3DVolumeTexture9 :: FreePrivateData  NOT IMPLEMENTED" << endl; )
-    HRESULT ret = static_cast< HRESULT >(0);
-    return ret;
+    D3D_DEBUG( cout <<"IVolumeTexture9 :: FreePrivateData" << endl; )
+    return D3D_OK;
 }
 
 DWORD D3D_CALL IVolumeTextureImp9 :: SetPriority (  DWORD PriorityNew ) {
-    D3D_DEBUG( cout <<"WARNING:  IDirect3DVolumeTexture9 :: SetPriority  NOT IMPLEMENTED" << endl; )
-    DWORD ret = static_cast< DWORD >(0);
-    return ret;
+    D3D_DEBUG( cout <<"IVolumeTexture9 :: SetPriority" << endl; )
+    DWORD old_priority = priority;
+    priority = PriorityNew;
+    return old_priority;
 }
 
 DWORD D3D_CALL IVolumeTextureImp9 :: GetPriority ( ) {
-    D3D_DEBUG( cout <<"WARNING:  IDirect3DVolumeTexture9 :: GetPriority  NOT IMPLEMENTED" << endl; )
-    DWORD ret = static_cast< DWORD >(0);
-    return ret;
+    D3D_DEBUG( cout <<"IVolumeTexture9 :: GetPriority" << endl; )
+    return priority;
 }
 
 void D3D_CALL IVolumeTextureImp9 :: PreLoad ( ) {
-    D3D_DEBUG( cout <<"WARNING:  IDirect3DVolumeTexture9 :: PreLoad  NOT IMPLEMENTED" << endl; )
+    D3D_DEBUG( cout <<"IVolumeTexture9 :: PreLoad" << endl; )
 }
 
 D3DRESOURCETYPE D3D_CALL IVolumeTextureImp9 :: GetType ( ) {
@@ -126,15 +146,15 @@ D3DRESOURCETYPE D3D_CALL IVolumeTextureImp9 :: GetType ( ) {
 }
 
 DWORD D3D_CALL IVolumeTextureImp9 :: SetLOD (  DWORD LODNew ) {
-    D3D_DEBUG( cout <<"WARNING:  IDirect3DVolumeTexture9 :: SetLOD  NOT IMPLEMENTED" << endl; )
-    DWORD ret = static_cast< DWORD >(0);
-    return ret;
+    D3D_DEBUG( cout <<"IVolumeTexture9 :: SetLOD" << endl; )
+    DWORD old_lod = lod;
+    lod = LODNew;
+    return old_lod;
 }
 
 DWORD D3D_CALL IVolumeTextureImp9 :: GetLOD ( ) {
-    D3D_DEBUG( cout <<"WARNING:  IDirect3DVolumeTexture9 :: GetLOD  NOT IMPLEMENTED" << endl; )
-    DWORD ret = static_cast< DWORD >(0);
-    return ret;
+    D3D_DEBUG( cout <<"IVolumeTexture9 :: GetLOD" << endl; )
+    return lod;
 }
 
 DWORD D3D_CALL IVolumeTextureImp9 :: GetLevelCount ( ) {

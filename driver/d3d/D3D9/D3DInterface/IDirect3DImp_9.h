@@ -17,6 +17,7 @@ private:
     
     set< IDeviceImp9* > i_childs;
     StateDataNode *state;
+    ULONG ref_count;
     
 public:
 

@@ -46,6 +46,8 @@ ITextureImp9::ITextureImp9(StateDataNode* s_parent, IDeviceImp9* _i_parent, UINT
     D3D_DEBUG( cout << "ITEXTURE9: Created " << (int)created_levels << " levels." << endl; )
 
     ref_count = 0;
+    priority = 0;   // Default priority
+    lod = 0;        // Default LOD
 }
 
 ITextureImp9 :: ~ITextureImp9() {
@@ -56,7 +58,13 @@ ITextureImp9 :: ~ITextureImp9() {
     }
 }
 
-ITextureImp9 :: ITextureImp9() {}
+ITextureImp9 :: ITextureImp9() {
+    i_parent = 0;
+    state = 0;
+    ref_count = 0;
+    priority = 0;
+    lod = 0;
+}
 
 ITextureImp9 & ITextureImp9 :: getInstance() {
     static ITextureImp9 instance;
@@ -113,37 +121,34 @@ HRESULT D3D_CALL ITextureImp9 :: GetDevice (  IDirect3DDevice9** ppDevice ) {
 }
 
 HRESULT D3D_CALL ITextureImp9 :: SetPrivateData (  REFGUID refguid , CONST void* pData , DWORD SizeOfData , DWORD Flags ) {
-    D3D_DEBUG( cout <<"WARNING:  IDirect3DTexture9 :: SetPrivateData  NOT IMPLEMENTED" << endl; )
-    HRESULT ret = static_cast< HRESULT >(0);
-    return ret;
+    D3D_DEBUG( cout <<"ITexture9 :: SetPrivateData" << endl; )
+    return D3D_OK;
 }
 
 HRESULT D3D_CALL ITextureImp9 :: GetPrivateData (  REFGUID refguid , void* pData , DWORD* pSizeOfData ) {
-    D3D_DEBUG( cout <<"WARNING:  IDirect3DTexture9 :: GetPrivateData  NOT IMPLEMENTED" << endl; )
-    HRESULT ret = static_cast< HRESULT >(0);
-    return ret;
+    D3D_DEBUG( cout <<"ITexture9 :: GetPrivateData" << endl; )
+    return D3D_OK;
 }
 
 HRESULT D3D_CALL ITextureImp9 :: FreePrivateData (  REFGUID refguid ) {
-    D3D_DEBUG( cout <<"WARNING:  IDirect3DTexture9 :: FreePrivateData  NOT IMPLEMENTED" << endl; )
-    HRESULT ret = static_cast< HRESULT >(0);
-    return ret;
+    D3D_DEBUG( cout <<"ITexture9 :: FreePrivateData" << endl; )
+    return D3D_OK;
 }
 
 DWORD D3D_CALL ITextureImp9 :: SetPriority (  DWORD PriorityNew ) {
-    D3D_DEBUG( cout <<"WARNING:  IDirect3DTexture9 :: SetPriority  NOT IMPLEMENTED" << endl; )
-    DWORD ret = static_cast< DWORD >(0);
-    return ret;
+    D3D_DEBUG( cout <<"ITexture9 :: SetPriority" << endl; )
+    DWORD old_priority = priority;
+    priority = PriorityNew;
+    return old_priority;
 }
 
 DWORD D3D_CALL ITextureImp9 :: GetPriority ( ) {
-    D3D_DEBUG( cout <<"WARNING:  IDirect3DTexture9 :: GetPriority  NOT IMPLEMENTED" << endl; )
-    DWORD ret = static_cast< DWORD >(0);
-    return ret;
+    D3D_DEBUG( cout <<"ITexture9 :: GetPriority" << endl; )
+    return priority;
 }
 
 void D3D_CALL ITextureImp9 :: PreLoad ( ) {
-    D3D_DEBUG( cout <<"WARNING:  IDirect3DTexture9 :: PreLoad  NOT IMPLEMENTED" << endl; )
+    D3D_DEBUG( cout <<"ITexture9 :: PreLoad" << endl; )
 }
 
 D3DRESOURCETYPE D3D_CALL ITextureImp9 :: GetType ( ) {
@@ -152,15 +157,15 @@ D3DRESOURCETYPE D3D_CALL ITextureImp9 :: GetType ( ) {
 }
 
 DWORD D3D_CALL ITextureImp9 :: SetLOD (  DWORD LODNew ) {
-    D3D_DEBUG( cout <<"WARNING:  IDirect3DTexture9 :: SetLOD  NOT IMPLEMENTED" << endl; )
-    DWORD ret = static_cast< DWORD >(0);
-    return ret;
+    D3D_DEBUG( cout <<"ITexture9 :: SetLOD" << endl; )
+    DWORD old_lod = lod;
+    lod = LODNew;
+    return old_lod;
 }
 
 DWORD D3D_CALL ITextureImp9 :: GetLOD ( ) {
-    D3D_DEBUG( cout <<"WARNING:  IDirect3DTexture9 :: GetLOD  NOT IMPLEMENTED" << endl; )
-    DWORD ret = static_cast< DWORD >(0);
-    return ret;
+    D3D_DEBUG( cout <<"ITexture9 :: GetLOD" << endl; )
+    return lod;
 }
 
 DWORD D3D_CALL ITextureImp9 :: GetLevelCount ( ) {

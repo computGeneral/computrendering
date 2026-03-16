@@ -12,6 +12,7 @@ public:
     HRESULT D3D_CALL Apply ( );
 private:
     IStateBlockImp9();
+    ULONG ref_count;
 };
 
 

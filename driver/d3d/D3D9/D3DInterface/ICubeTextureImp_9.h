@@ -23,6 +23,8 @@ private:
     set<ISurfaceImp9*> i_surface_childs;
 
     ULONG ref_count;
+    DWORD priority;
+    DWORD lod;
 public:
     HRESULT D3D_CALL QueryInterface (  REFIID riid , void** ppvObj );
     ULONG D3D_CALL AddRef ( );

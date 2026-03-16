@@ -6,6 +6,8 @@
 IVolumeImp9::IVolumeImp9(StateDataNode* s_parent, IDeviceImp9* _i_parent, UINT Width, UINT Height, UINT Depth,
     DWORD Usage , D3DFORMAT Format, D3DPOOL Pool) {
     i_parent = _i_parent;
+    ref_count = 1;  // Initialize reference count
+    priority = 0;
     // Create state
     state = D3DState::create_volume_state_9(this);
     // Fill state with parameters
@@ -25,6 +27,9 @@ IVolumeImp9::IVolumeImp9(StateDataNode* s_parent, IDeviceImp9* _i_parent, UINT W
 IVolumeImp9 :: IVolumeImp9() {
     ///@note used to differentiate when creating singleton
     i_parent = 0;
+    state = 0;
+    ref_count = 0;
+    priority = 0;
 }
 
 IVolumeImp9 & IVolumeImp9 :: getInstance() {
@@ -40,15 +45,29 @@ HRESULT D3D_CALL IVolumeImp9 :: QueryInterface (  REFIID riid , void** ppvObj ) 
 }
 
 ULONG D3D_CALL IVolumeImp9 :: AddRef ( ) {
-    D3D_DEBUG( cout <<"WARNING:  IDirect3DVolume9 :: AddRef  NOT IMPLEMENTED" << endl; )
-    ULONG ret = static_cast< ULONG >(0);
-    return ret;
+    D3D_DEBUG( cout <<"IDirect3DVolume9 :: AddRef" << endl; )
+    if(i_parent != 0) {
+        ref_count ++;
+        return ref_count;
+    }
+    else return 0;
 }
 
 ULONG D3D_CALL IVolumeImp9 :: Release ( ) {
-    D3D_DEBUG( cout <<"WARNING:  IDirect3DVolume9 :: Release  NOT IMPLEMENTED" << endl; )
-    ULONG ret = static_cast< ULONG >(0);
-    return ret;
+    D3D_DEBUG( cout <<"IDirect3DVolume9 :: Release" << endl; )
+    if(i_parent != 0) {
+        ref_count--;
+        if(ref_count == 0) {
+            StateDataNode* parent = state->get_parent();
+            parent->remove_child(state);
+            delete state;
+            state = 0;
+        }
+        return ref_count;
+    }
+    else {
+        return 0;
+    }
 }
 
 HRESULT D3D_CALL IVolumeImp9 :: GetDevice (  IDirect3DDevice9** ppDevice ) {
@@ -59,21 +78,18 @@ HRESULT D3D_CALL IVolumeImp9 :: GetDevice (  IDirect3DDevice9** ppDevice ) {
 }
 
 HRESULT D3D_CALL IVolumeImp9 :: SetPrivateData (  REFGUID refguid , CONST void* pData , DWORD SizeOfData , DWORD Flags ) {
-    D3D_DEBUG( cout <<"WARNING:  IDirect3DVolume9 :: SetPrivateData  NOT IMPLEMENTED" << endl; )
-    HRESULT ret = static_cast< HRESULT >(0);
-    return ret;
+    D3D_DEBUG( cout <<"IVolume9 :: SetPrivateData" << endl; )
+    return D3D_OK;
 }
 
 HRESULT D3D_CALL IVolumeImp9 :: GetPrivateData (  REFGUID refguid , void* pData , DWORD* pSizeOfData ) {
-    D3D_DEBUG( cout <<"WARNING:  IDirect3DVolume9 :: GetPrivateData  NOT IMPLEMENTED" << endl; )
-    HRESULT ret = static_cast< HRESULT >(0);
-    return ret;
+    D3D_DEBUG( cout <<"IVolume9 :: GetPrivateData" << endl; )
+    return D3D_OK;
 }
 
 HRESULT D3D_CALL IVolumeImp9 :: FreePrivateData (  REFGUID refguid ) {
-    D3D_DEBUG( cout <<"WARNING:  IDirect3DVolume9 :: FreePrivateData  NOT IMPLEMENTED" << endl; )
-    HRESULT ret = static_cast< HRESULT >(0);
-    return ret;
+    D3D_DEBUG( cout <<"IVolume9 :: FreePrivateData" << endl; )
+    return D3D_OK;
 }
 
 HRESULT D3D_CALL IVolumeImp9 :: GetContainer (  REFIID riid , void** ppContainer ) {
@@ -190,22 +206,24 @@ HRESULT D3D_CALL IVolumeImp9 :: UnlockBox ( ) {
 }
 
 
-DWORD IVolumeImp9 :: SetPriority(DWORD) {
-    D3D_DEBUG( cout << "WARNING: IDirect3DVolume9 :: SetPriority NOT IMPLEMENTED" << endl; )
-    return static_cast<DWORD>(0);
+DWORD IVolumeImp9 :: SetPriority(DWORD PriorityNew) {
+    D3D_DEBUG( cout << "IVolume9 :: SetPriority" << endl; )
+    DWORD old_priority = priority;
+    priority = PriorityNew;
+    return old_priority;
 }
 
 DWORD IVolumeImp9 :: GetPriority() {
-    D3D_DEBUG( cout << "WARNING: IDirect3DVolume9 :: GetPriority NOT IMPLEMENTED" << endl; )
-    return static_cast<DWORD>(0);
+    D3D_DEBUG( cout << "IVolume9 :: GetPriority" << endl; )
+    return priority;
 }
 
 void IVolumeImp9 :: PreLoad() {
-    D3D_DEBUG( cout << "WARNING: IDirect3DVolume9 :: PreLoad NOT IMPLEMENTED" << endl; )
+    D3D_DEBUG( cout << "IVolume9 :: PreLoad" << endl; )
 }
 
 D3DRESOURCETYPE IVolumeImp9 :: GetType() {
-    D3D_DEBUG( cout << "WARNING: IDirect3DVolume9 :: GetType NOT IMPLEMENTED" << endl; )
-    return static_cast<D3DRESOURCETYPE>(0);
+    D3D_DEBUG( cout << "IVolume9 :: GetType" << endl; )
+    return D3DRTYPE_VOLUME;
 }
 

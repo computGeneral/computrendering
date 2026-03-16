@@ -14,6 +14,7 @@ public:
     HRESULT D3D_CALL GetData (  void* pData , DWORD dwSize , DWORD dwGetDataFlags );
 private:
     IQueryImp9();
+    ULONG ref_count;
 };
 
 

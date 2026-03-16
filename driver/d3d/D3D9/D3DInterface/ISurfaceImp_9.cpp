@@ -5,6 +5,8 @@
 ISurfaceImp9::ISurfaceImp9(StateDataNode* s_parent, IDeviceImp9* _i_parent, UINT Width, UINT Height,
     DWORD Usage , D3DFORMAT Format, D3DPOOL Pool) {
     i_parent = _i_parent;
+    ref_count = 0;
+    priority = 0;   // Default priority
     // Create state
     state = D3DState::create_surface_state_9(this);
     // Fill state with parameters
@@ -18,13 +20,14 @@ ISurfaceImp9::ISurfaceImp9(StateDataNode* s_parent, IDeviceImp9* _i_parent, UINT
 
     // Add state
     s_parent->add_child(state);
-
-    ref_count = 0;
 }
 
 ISurfaceImp9 :: ISurfaceImp9() {
     ///@note used to differentiate when creating singleton
     i_parent = 0;
+    state = 0;
+    ref_count = 0;
+    priority = 0;
 }
 
 ISurfaceImp9 & ISurfaceImp9 :: getInstance() {
@@ -78,43 +81,39 @@ HRESULT D3D_CALL ISurfaceImp9 :: GetDevice (  IDirect3DDevice9** ppDevice ) {
 }
 
 HRESULT D3D_CALL ISurfaceImp9 :: SetPrivateData (  REFGUID refguid , CONST void* pData , DWORD SizeOfData , DWORD Flags ) {
-    D3D_DEBUG( cout <<"WARNING:  IDirect3DSurface9 :: SetPrivateData  NOT IMPLEMENTED" << endl; )
-    HRESULT ret = static_cast< HRESULT >(0);
-    return ret;
+    D3D_DEBUG( cout <<"ISurface9 :: SetPrivateData" << endl; )
+    return D3D_OK;
 }
 
 HRESULT D3D_CALL ISurfaceImp9 :: GetPrivateData (  REFGUID refguid , void* pData , DWORD* pSizeOfData ) {
-    D3D_DEBUG( cout <<"WARNING:  IDirect3DSurface9 :: GetPrivateData  NOT IMPLEMENTED" << endl; )
-    HRESULT ret = static_cast< HRESULT >(0);
-    return ret;
+    D3D_DEBUG( cout <<"ISurface9 :: GetPrivateData" << endl; )
+    return D3D_OK;
 }
 
 HRESULT D3D_CALL ISurfaceImp9 :: FreePrivateData (  REFGUID refguid ) {
-    D3D_DEBUG( cout <<"WARNING:  IDirect3DSurface9 :: FreePrivateData  NOT IMPLEMENTED" << endl; )
-    HRESULT ret = static_cast< HRESULT >(0);
-    return ret;
+    D3D_DEBUG( cout <<"ISurface9 :: FreePrivateData" << endl; )
+    return D3D_OK;
 }
 
 DWORD D3D_CALL ISurfaceImp9 :: SetPriority (  DWORD PriorityNew ) {
-    D3D_DEBUG( cout <<"WARNING:  IDirect3DSurface9 :: SetPriority  NOT IMPLEMENTED" << endl; )
-    DWORD ret = static_cast< DWORD >(0);
-    return ret;
+    D3D_DEBUG( cout <<"ISurface9 :: SetPriority" << endl; )
+    DWORD old_priority = priority;
+    priority = PriorityNew;
+    return old_priority;
 }
 
 DWORD D3D_CALL ISurfaceImp9 :: GetPriority ( ) {
-    D3D_DEBUG( cout <<"WARNING:  IDirect3DSurface9 :: GetPriority  NOT IMPLEMENTED" << endl; )
-    DWORD ret = static_cast< DWORD >(0);
-    return ret;
+    D3D_DEBUG( cout <<"ISurface9 :: GetPriority" << endl; )
+    return priority;
 }
 
 void D3D_CALL ISurfaceImp9 :: PreLoad ( ) {
-    D3D_DEBUG( cout <<"WARNING:  IDirect3DSurface9 :: PreLoad  NOT IMPLEMENTED" << endl; )
+    D3D_DEBUG( cout <<"ISurface9 :: PreLoad" << endl; )
 }
 
 D3DRESOURCETYPE D3D_CALL ISurfaceImp9 :: GetType ( ) {
-    D3D_DEBUG( cout <<"WARNING:  IDirect3DSurface9 :: GetType  NOT IMPLEMENTED" << endl; )
-    D3DRESOURCETYPE ret = static_cast< D3DRESOURCETYPE >(0);
-    return ret;
+    D3D_DEBUG( cout <<"ISurface9 :: GetType" << endl; )
+    return D3DRTYPE_SURFACE;
 }
 
 HRESULT D3D_CALL ISurfaceImp9 :: GetContainer (  REFIID riid , void** ppContainer ) {

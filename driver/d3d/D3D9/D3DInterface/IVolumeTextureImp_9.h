@@ -21,6 +21,9 @@ private:
     StateDataNode* state;
 
     set<IVolumeImp9*> i_volume_childs;
+    ULONG ref_count;
+    DWORD priority;
+    DWORD lod;
 
 public:
     HRESULT D3D_CALL QueryInterface (  REFIID riid , void** ppvObj );

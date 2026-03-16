@@ -3,7 +3,9 @@
 #include "ISurfaceImp_9.h"
 #include "ISwapChainImp_9.h"
 
-ISwapChainImp9 :: ISwapChainImp9() {}
+ISwapChainImp9 :: ISwapChainImp9() {
+    ref_count = 0;
+}
 
 ISwapChainImp9 & ISwapChainImp9 :: getInstance() {
     static ISwapChainImp9 instance;
@@ -18,15 +20,13 @@ HRESULT D3D_CALL ISwapChainImp9 :: QueryInterface (  REFIID riid , void** ppvObj
 }
 
 ULONG D3D_CALL ISwapChainImp9 :: AddRef ( ) {
-    D3D_DEBUG( cout <<"WARNING:  IDirect3DSwapChain9 :: AddRef  NOT IMPLEMENTED" << endl; )
-    ULONG ret = static_cast< ULONG >(0);
-    return ret;
+    D3D_DEBUG( cout <<"IDirect3DSwapChain9 :: AddRef" << endl; )
+    return 0;
 }
 
 ULONG D3D_CALL ISwapChainImp9 :: Release ( ) {
-    D3D_DEBUG( cout <<"WARNING:  IDirect3DSwapChain9 :: Release  NOT IMPLEMENTED" << endl; )
-    ULONG ret = static_cast< ULONG >(0);
-    return ret;
+    D3D_DEBUG( cout <<"IDirect3DSwapChain9 :: Release" << endl; )
+    return 0;
 }
 
 HRESULT D3D_CALL ISwapChainImp9 :: Present (  CONST RECT* pSourceRect , CONST RECT* pDestRect , HWND hDestWindowOverride , CONST RGNDATA* pDirtyRegion , DWORD dwFlags ) {

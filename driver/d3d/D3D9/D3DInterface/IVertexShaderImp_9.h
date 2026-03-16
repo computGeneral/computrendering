@@ -14,7 +14,7 @@ private:
     IDeviceImp9* i_parent;
     StateDataNode* state;
 
-    ULONG refs;
+    ULONG ref_count;
 
 public:
     HRESULT D3D_CALL QueryInterface (  REFIID riid , void** ppvObj );

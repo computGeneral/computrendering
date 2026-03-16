@@ -18,6 +18,7 @@ private:
     StateDataNode* state;
 
     ULONG refs;
+    DWORD priority;
 
 public:
     HRESULT D3D_CALL QueryInterface (  REFIID riid , void** ppvObj );

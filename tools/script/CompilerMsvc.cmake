@@ -4,7 +4,7 @@ if(NOT COMPILER_DEFINE_SET)
     #if(WARNINGS_AS_ERRORS)
     #    add_definitions(/WX)
     #endif()
-    add_definitions(/MP) # enable multi-processor compiling for all projects by default.
+    add_definitions(/MP /FS) # enable multi-processor compiling and synchronized PDB writes.
     add_definitions(/bigobj) # enable jumbo sized object files
     add_definitions(/D"WIN32"
                     /D"_X86_"

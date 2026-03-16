@@ -13,6 +13,7 @@ private:
 
     IDeviceImp9* i_parent;
     StateDataNode* state;
+    ULONG ref_count;
 
 public:
 

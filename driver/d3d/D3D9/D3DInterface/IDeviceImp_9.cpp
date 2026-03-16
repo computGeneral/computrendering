@@ -15,7 +15,8 @@
 #include "ITextureImp_9.h"
 #include "IDeviceImp_9.h"
 
-IDeviceImp9 :: IDeviceImp9() {}
+IDeviceImp9 :: IDeviceImp9() :
+i_parent(0), state(0), ref_count(0) {}
 
 IDeviceImp9 & IDeviceImp9 :: getInstance() {
     static IDeviceImp9 instance;
@@ -181,6 +182,8 @@ i_parent(_i_parent)
     dw_value = pp->EnableAutoDepthStencil ? D3DZB_TRUE : D3DZB_FALSE;
     state->get_child(StateId(NAME_Z_ENABLED))->write_data(&dw_value);
 
+    // Initialize reference count
+    ref_count = 1;
 }
 
 bool IDeviceImp9::using_implicit_render_target_zstencil() {
@@ -235,6 +238,14 @@ IDeviceImp9 :: ~IDeviceImp9() {
     set< ISurfaceImp9 * > :: iterator it_surf;
     for(it_surf =  i_surface_childs.begin(); it_surf != i_surface_childs.end(); it_surf ++)
         delete (*it_surf);
+
+    if (state != 0) {
+        StateDataNode* parent = state->get_parent();
+        if (parent != 0)
+            parent->remove_child(state);
+        delete state;
+        state = 0;
+    }
 }
 
 HRESULT D3D_CALL IDeviceImp9 :: QueryInterface (  REFIID riid , void** ppvObj ) {
@@ -245,15 +256,27 @@ HRESULT D3D_CALL IDeviceImp9 :: QueryInterface (  REFIID riid , void** ppvObj ) 
 }
 
 ULONG D3D_CALL IDeviceImp9 :: AddRef ( ) {
-    D3D_DEBUG( D3D_DEBUG( cout <<"WARNING:  IDirect3DDevice9 :: AddRef  NOT IMPLEMENTED" << endl; ) )
-    ULONG ret = static_cast< ULONG >(0);
-    return ret;
+    D3D_DEBUG( D3D_DEBUG( cout <<"IDEVICE9: AddRef" << endl; ) )
+    if (i_parent == 0)
+        return 0;
+    return ++ref_count;
 }
 
 ULONG D3D_CALL IDeviceImp9 :: Release ( ) {
-    D3D_DEBUG( D3D_DEBUG( cout <<"WARNING:  IDirect3DDevice9 :: Release  NOT IMPLEMENTED" << endl; ) )
-    ULONG ret = static_cast< ULONG >(0);
-    return ret;
+    D3D_DEBUG( D3D_DEBUG( cout <<"IDEVICE9: Release" << endl; ) )
+    if ((i_parent == 0) || (ref_count == 0))
+        return 0;
+
+    ULONG new_ref = --ref_count;
+    if (new_ref == 0) {
+        if (state) {
+            StateDataNode* parent = state->get_parent();
+            if (parent) parent->remove_child(state);
+            delete state;
+            state = 0;
+        }
+    }
+    return new_ref;
 }
 
 HRESULT D3D_CALL IDeviceImp9 :: TestCooperativeLevel ( ) {

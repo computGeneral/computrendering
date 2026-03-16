@@ -315,13 +315,17 @@ int main(int argc, char *argv[])
     while (argIndex < argc) {
         if (strcmp(argv[argIndex], "--arch") == 0) {
             // --arch selects which ARCH_VERSION column of archParams.csv to use.
-            if (++argIndex < argc)
+                if (++argIndex < argc) {
                 archName = argv[argIndex];
+                    argIndex++;
+                }
         }
         else if (strcmp(argv[argIndex], "--param") == 0) {
             // --param overrides the default CSV parameter file path.
-            if (++argIndex < argc)
+                if (++argIndex < argc) {
                 paramFile = argv[argIndex];
+                    argIndex++;
+                }
         }
         else
             argList[argCount++] = argv[argIndex++];

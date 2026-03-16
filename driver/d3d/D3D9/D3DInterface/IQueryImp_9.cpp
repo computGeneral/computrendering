@@ -2,7 +2,9 @@
 #include "IDeviceImp_9.h"
 #include "IQueryImp_9.h"
 
-IQueryImp9 :: IQueryImp9() {}
+IQueryImp9 :: IQueryImp9() {
+    ref_count = 0;
+}
 
 IQueryImp9 & IQueryImp9 :: getInstance() {
     static IQueryImp9 instance;
@@ -17,15 +19,13 @@ HRESULT D3D_CALL IQueryImp9 :: QueryInterface (  REFIID riid , void** ppvObj ) {
 }
 
 ULONG D3D_CALL IQueryImp9 :: AddRef ( ) {
-    D3D_DEBUG( cout <<"WARNING:  IDirect3DQuery9 :: AddRef  NOT IMPLEMENTED" << endl; )
-    ULONG ret = static_cast< ULONG >(0);
-    return ret;
+    D3D_DEBUG( cout <<"IDirect3DQuery9 :: AddRef" << endl; )
+    return 0;
 }
 
 ULONG D3D_CALL IQueryImp9 :: Release ( ) {
-    D3D_DEBUG( cout <<"WARNING:  IDirect3DQuery9 :: Release  NOT IMPLEMENTED" << endl; )
-    ULONG ret = static_cast< ULONG >(0);
-    return ret;
+    D3D_DEBUG( cout <<"IDirect3DQuery9 :: Release" << endl; )
+    return 0;
 }
 
 HRESULT D3D_CALL IQueryImp9 :: GetDevice (  IDirect3DDevice9** ppDevice ) {

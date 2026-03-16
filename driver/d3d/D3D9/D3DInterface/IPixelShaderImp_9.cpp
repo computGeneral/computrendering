@@ -31,6 +31,8 @@ IPixelShaderImp9::IPixelShaderImp9(StateDataNode* s_parent, IDeviceImp9* i_paren
 IPixelShaderImp9 :: IPixelShaderImp9() {
 	///@note Used to differentiate when using as singleton cover
 	i_parent = 0;
+    state = 0;
+    refs = 0;
 }
 
 IPixelShaderImp9 & IPixelShaderImp9 :: getInstance() {

@@ -2,7 +2,8 @@
 #include "IDeviceImp_9.h"
 #include "IDirect3DImp_9.h"
 
-IDirect3DImp9 :: IDirect3DImp9() {}
+IDirect3DImp9 :: IDirect3DImp9() :
+state(0), ref_count(0) {}
 
 IDirect3DImp9 & IDirect3DImp9 :: getInstance() {
     static IDirect3DImp9 instance;
@@ -13,12 +14,21 @@ IDirect3DImp9 & IDirect3DImp9 :: getInstance() {
 IDirect3DImp9 :: IDirect3DImp9(StateDataNode* s_parent) {
     state = D3DState::create_direct3d_state_9(this);
     s_parent->add_child(state);
+    ref_count = 1;  // Initialize reference count to 1
 }
 
 IDirect3DImp9 :: ~IDirect3DImp9() {
     set< IDeviceImp9* > :: iterator it;
     for(it = i_childs.begin(); it != i_childs.end(); it ++)
         delete *it;
+
+    if (state != 0) {
+        StateDataNode* parent = state->get_parent();
+        if (parent != 0)
+            parent->remove_child(state);
+        delete state;
+        state = 0;
+    }
 
     /// @todo delete state
 }
@@ -32,15 +42,26 @@ HRESULT D3D_CALL IDirect3DImp9 :: QueryInterface (  REFIID riid , void** ppvObj 
 }
 
 ULONG D3D_CALL IDirect3DImp9 :: AddRef ( ) {
-    D3D_DEBUG( D3D_DEBUG( cout <<"WARNING:  IDirect3D9 :: AddRef  NOT IMPLEMENTED" << endl; ) )
-    ULONG ret = static_cast< ULONG >(0);
-    return ret;
+    D3D_DEBUG( D3D_DEBUG( cout <<"IDIRECT3D9: AddRef" << endl; ) )
+    if (state == 0)
+        return 0;
+    return ++ref_count;
 }
 
 ULONG D3D_CALL IDirect3DImp9 :: Release ( ) {
-    D3D_DEBUG( D3D_DEBUG( cout <<"WARNING:  IDirect3D9 :: Release  NOT IMPLEMENTED" << endl; ) )
-    ULONG ret = static_cast< ULONG >(0);
-    return ret;
+    D3D_DEBUG( D3D_DEBUG( cout <<"IDIRECT3D9: Release" << endl; ) )
+    if ((state == 0) || (ref_count == 0))
+        return 0;
+
+    ULONG new_ref = --ref_count;
+    if (new_ref == 0) {
+        StateDataNode* parent = state->get_parent();
+        if (parent != 0)
+            parent->remove_child(state);
+        delete state;
+        state = 0;
+    }
+    return new_ref;
 }
 
 HRESULT D3D_CALL IDirect3DImp9 :: RegisterSoftwareDevice (  void* pInitializeFunction ) {
@@ -116,9 +137,9 @@ HRESULT D3D_CALL IDirect3DImp9 :: GetDeviceCaps (  UINT Adapter , D3DDEVTYPE Dev
 }
 
 HMONITOR D3D_CALL IDirect3DImp9 :: GetAdapterMonitor (  UINT Adapter ) {
-    D3D_DEBUG( D3D_DEBUG( cout <<"WARNING:  IDirect3D9 :: GetAdapterMonitor  NOT IMPLEMENTED" << endl; ) )
-    HMONITOR ret = static_cast< HMONITOR >(0);
-    return ret;
+    D3D_DEBUG( D3D_DEBUG( cout <<"IDIRECT3D9: GetAdapterMonitor" << endl; ) )
+    // Return the primary display monitor
+    return ::MonitorFromPoint({0, 0}, MONITOR_DEFAULTTOPRIMARY);
 }
 
 HRESULT D3D_CALL IDirect3DImp9 :: CreateDevice (  UINT Adapter , D3DDEVTYPE DeviceType , HWND hFocusWindow , DWORD BehaviorFlags , D3DPRESENT_PARAMETERS* pPresentationParameters , IDirect3DDevice9** ppReturnedDeviceInterface ) {

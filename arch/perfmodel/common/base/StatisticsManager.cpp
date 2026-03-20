@@ -47,7 +47,8 @@ void StatisticsManager::clock(U64 cycle)
         {
             //  Buffer column for transposed output.
             ostringstream hdr;
-            hdr << startCycle << ".." << lastCycle;
+            //hdr << startCycle << ".." << lastCycle;
+            hdr << startCycle / nCycles;
             bufferColumn(transCycle, hdr.str(), FREQ_CYCLES);
         }
 
@@ -153,14 +154,15 @@ void StatisticsManager::finish()
     if ( lastCycle > prevDump ) {
         if ( osCycle ) {
             ostringstream hdr;
-            hdr << startCycle << ".." << lastCycle;
+            //hdr << startCycle << ".." << lastCycle;
+            hdr << startCycle / nCycles;
             bufferColumn(transCycle, hdr.str(), FREQ_CYCLES);
         }    
     }
 
     //  Flush transposed buffers.
     if (osCycle && !transCycle.colHeaders.empty())
-        flushTransposed(transCycle, "Cycles", *osCycle);
+        flushTransposed(transCycle, "Sample", *osCycle);
     if (osFrame && !transFrame.colHeaders.empty())
         flushTransposed(transFrame, "Frame", *osFrame);
     if (osBatch && !transBatch.colHeaders.empty())

@@ -32,8 +32,21 @@ The `regression_list` file defines the test cases to run. Each line represents a
     *   Example: `90` (effectively identical)
     *   Example: `40` (visually similar, allows for minor differences)
 
+7.  **Mode (`mode`)**:
+    Optional. Defines how the case is validated.
+    *   `image` (default): requires a `<trace_name>.ppm` reference image and performs the normal image comparison.
+    *   `smoke`: requires the simulator to complete successfully and emit the requested output frame, but does not require a reference image.
+
 ### Example Line
 
 ```
-ogl/glxgears, 1.0, glxgears.trace, 10, 0, 40
+ogl/glxgears, 1.0, glxgears.trace, 10, 0, 40, image
 ```
+
+## D3D9 Notes
+
+- Public D3D9 traces are staged in `tests/d3d9/traces/`.
+- `FruitNinja.trace` and `FruitNinja.ppm` are versioned there as the canonical image-based D3D9 regression asset.
+- `download_d3d9_traces.sh` downloads the supplemental public smoke-test traces (`garfield`, `spv3-*`, and `tokitori*`) into the same directory.
+- D3D9 entries can use `d3d9/traces` as the `test_dir`, with the specific trace selected by the `trace_file` column.
+- The regression scripts probe the current simulator once and automatically skip D3D9 cases when the built binary reports `Unsupported API type 'd3d9'`, which is the current behavior for Linux builds without `BUILD_D3D`.

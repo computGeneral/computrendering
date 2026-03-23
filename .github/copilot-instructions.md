@@ -2,6 +2,10 @@
 
 This file gives concise, actionable guidance for AI coding agents working in this repository.
 
+## Key Rule
+- **Build entrypoint:** On Linux/POSIX, always build this repository with `tools/script/build.sh`. Do not substitute direct `cmake --build`, `make`, `ninja`, or other manual build commands.
+- **Windows build entrypoint:** On Windows, use `tools/script/build.bat`.
+
 ## Code Style
 - **Language:** C++ (C++11 / C++14). Follow existing code in `arch/`.
 - **Indentation:** 4 spaces (no tabs). Line endings: LF. Column ~80-100.
@@ -20,8 +24,7 @@ This file gives concise, actionable guidance for AI coding agents working in thi
 - **Communication:** perfmodel uses Signal-based communication (`cmGPUSignal`) with bandwidth and latency modeling.
 
 ## Build & Test
-- **Build (preferred):** `tools/script/build.bat` (Windows) or `tools/script/build.sh` (Linux/POSIX).
-- **Build (manual):** `cmake --build _BUILD_ --config Debug --target computrender`
+- **Build (required):** `tools/script/build.bat` (Windows) or `tools/script/build.sh` (Linux/POSIX).
 - **Regression tests:** `tools/script/regression/regression.ps1` (Windows) or `regression.sh` (Linux).
 - **Quick test:** `./computrender --trace tests/ogl/trace/glxgears/glxgears.trace --frames 1`
 - **When modifying modules:** update corresponding `CMakeLists.txt` under `arch/`.
@@ -52,7 +55,7 @@ This file gives concise, actionable guidance for AI coding agents working in thi
 
 ## When in Doubt
 - Inspect nearby code examples before changing style (e.g. `arch/perfmodel/*`, `arch/bhavmodel/*`).
-- Run `tools/script/build.*` and `tools/script/regression/*` after changes.
+- Run `tools/script/build.sh` on Linux/POSIX or `tools/script/build.bat` on Windows, then run `tools/script/regression/*` after changes.
 - See `.claude/CLAUDE.md` for detailed architecture deep-dive and development workflows.
 
 ---

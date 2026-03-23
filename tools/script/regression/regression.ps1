@@ -25,6 +25,8 @@ $RegOut     = Join-Path $ScriptDir "regression.out"
 $Simulator  = Join-Path $ProjectRoot "_BUILD_/arch/$Config/computrender.exe"
 $ParamCSV   = Join-Path $ProjectRoot "arch/common/params/archParams.csv"
 $TraceBase  = Join-Path $ProjectRoot "tests"
+$script:D3D9ProbeDone = $false
+$script:D3D9SkipReason = $null
 
 if (-not (Test-Path $Simulator)) {
     Write-Host "ERROR: Simulator not found at $Simulator" -ForegroundColor Red
@@ -52,6 +54,45 @@ function Resolve-TestPath($listDir) {
     $candidate = Join-Path $TraceBase "$api/$rest"
     if (Test-Path $candidate) { return $candidate }
     return $null
+}
+
+function Test-IsD3DCase($listDir) {
+    return $listDir.StartsWith("d3d/") -or $listDir.StartsWith("d3d9/")
+}
+
+function Test-D3D9Support($tracePath, $archVer, $modelFlag) {
+    if ($script:D3D9ProbeDone) { return }
+    $script:D3D9ProbeDone = $true
+
+    $probeDir = Join-Path ([System.IO.Path]::GetTempPath()) ("computrender-d3d9-probe-" + [Guid]::NewGuid().ToString("N"))
+    New-Item -ItemType Directory -Path $probeDir | Out-Null
+
+    try {
+        $probeOut = Join-Path $probeDir "probe.out"
+        $probeErr = Join-Path $probeDir "probe.err"
+        $probeArgs = @()
+        if ($modelFlag) { $probeArgs += $modelFlag }
+        $probeArgs += "--param", $ParamCSV
+        $probeArgs += "--arch", $archVer
+        $probeArgs += "--trace", $tracePath
+        $probeArgs += "--frames", "1"
+
+        $probeProc = Start-Process -FilePath $Simulator -ArgumentList $probeArgs `
+                                  -WorkingDirectory $probeDir `
+                                  -RedirectStandardOutput $probeOut `
+                                  -RedirectStandardError $probeErr `
+                                  -NoNewWindow -Wait -PassThru
+
+        $probeText = ""
+        if (Test-Path $probeOut) { $probeText += (Get-Content $probeOut -Raw) }
+        if (Test-Path $probeErr) { $probeText += (Get-Content $probeErr -Raw) }
+
+        if ($probeText -match "Unsupported API type 'd3d9'") {
+            $script:D3D9SkipReason = "simulator build does not include D3D9 trace support"
+        }
+    } finally {
+        Remove-Item -Recurse -Force $probeDir -ErrorAction SilentlyContinue
+    }
 }
 
 # ---- Helper: compare PPM files ----
@@ -103,6 +144,7 @@ Get-Content $RegList | ForEach-Object {
     $frames     = if ($fields.Count -gt 3) { $fields[3].Trim() } else { "1" }
     $startFrame = if ($fields.Count -gt 4) { $fields[4].Trim() } else { "0" }
     $tolerance  = if ($fields.Count -gt 5) { $fields[5].Trim() } else { "0" }
+    $mode       = if ($fields.Count -gt 6) { $fields[6].Trim().ToLowerInvariant() } else { "image" }
 
     $Total++
 
@@ -121,10 +163,25 @@ Get-Content $RegList | ForEach-Object {
         return
     }
 
-    # Check reference PPM
+    if ($mode -ne "image" -and $mode -ne "smoke") {
+        Write-Host "SKIP: $rawDir (unsupported regression mode '$mode')" -ForegroundColor Yellow
+        $Skip++
+        return
+    }
+
+    if (Test-IsD3DCase $rawDir) {
+        Test-D3D9Support $traceFullPath $archVer $ModelFlag
+        if ($script:D3D9SkipReason) {
+            Write-Host "SKIP: $rawDir ($script:D3D9SkipReason)" -ForegroundColor Yellow
+            $Skip++
+            return
+        }
+    }
+
+    # Check reference PPM for image comparisons
     $refPPM = [System.IO.Path]::GetFileNameWithoutExtension($traceFile) + ".ppm"
     $refFullPath = Join-Path $testPath $refPPM
-    if (-not (Test-Path $refFullPath)) {
+    if ($mode -eq "image" -and -not (Test-Path $refFullPath)) {
         Write-Host "SKIP: $rawDir (reference $refPPM not found)" -ForegroundColor Yellow
         $Skip++
         return
@@ -171,6 +228,28 @@ Get-Content $RegList | ForEach-Object {
     # Compare output — use startFrame to derive the output frame filename
     $frameIdx = "{0:D4}" -f [int]$startFrame
     $testPPM = Join-Path $workDir "frame$frameIdx.$ModelSuffix.ppm"
+
+    if ($mode -eq "smoke") {
+        if ($proc.ExitCode -ne 0) {
+            Write-Host "  FAILED - simulator exited with $($proc.ExitCode)" -ForegroundColor Red
+            "$rawDir : FAILED, simulator exit $($proc.ExitCode)" | Out-File $RegOut -Append
+            $Fail++
+            return
+        }
+
+        if (-not (Test-Path $testPPM)) {
+            Write-Host "  FAILED - output frame$frameIdx.$ModelSuffix.ppm not produced" -ForegroundColor Red
+            "$rawDir : FAILED, missing output" | Out-File $RegOut -Append
+            $Fail++
+            return
+        }
+
+        Write-Host "  PASS: frame$frameIdx.$ModelSuffix.ppm - smoke run completed" -ForegroundColor Green
+        "$rawDir : PASS (smoke output produced)" | Out-File $RegOut -Append
+        $Pass++
+        return
+    }
+
     if (-not (Test-Path $testPPM)) {
         Write-Host "  FAILED - output frame$frameIdx.$ModelSuffix.ppm not produced" -ForegroundColor Red
         "$rawDir : FAILED, missing output" | Out-File $RegOut -Append

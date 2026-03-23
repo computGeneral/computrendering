@@ -61,8 +61,9 @@ if [ -f "$ICMP_SRC" ]; then
 fi
 
 # ---- Map regression_list test_dir to actual filesystem path ----
-# regression_list uses:  ogl/triangle  → actual: tests/ogl/trace/triangle
-# regression_list uses:  d3d/triangle  → actual: tests/d3d/trace/triangle
+# Typical examples:
+#   ogl/glxgears  → tests/ogl/trace/glxgears
+#   d3d9/traces   → tests/d3d9/traces
 resolve_test_path() {
     local list_dir="$1"    # e.g. "ogl/triangle" or "ogl/micropolygon/0_5_size..."
     local api="${list_dir%%/*}"             # "ogl" or "d3d"
@@ -84,6 +85,43 @@ resolve_test_path() {
     echo ""
 }
 
+is_d3d_test() {
+    case "$1" in
+        d3d/*|d3d9/*)
+            return 0
+            ;;
+    esac
+
+    return 1
+}
+
+# Probe the current simulator once to see whether D3D9 traces are built in.
+# Only the explicit "Unsupported API type 'd3d9'" response is treated as a
+# build-time capability miss; other failures are left to the actual test cases.
+D3D9_PROBED=0
+D3D9_DISABLED_REASON=""
+
+probe_d3d9_support() {
+    local probe_trace="$1"
+    local probe_arch="$2"
+
+    [ "$D3D9_PROBED" -eq 1 ] && return 0
+    D3D9_PROBED=1
+
+    local probe_dir=""
+    local probe_log=""
+    probe_dir="$(mktemp -d)"
+    probe_log="$probe_dir/d3d9-probe.log"
+
+    "$SIMULATOR" --pm --param "$PARAM_CSV" --arch "$probe_arch" --trace "$probe_trace" --frames 1 > "$probe_log" 2>&1 || true
+
+    if grep -q "Unsupported API type 'd3d9'" "$probe_log" 2>/dev/null; then
+        D3D9_DISABLED_REASON="simulator build does not include D3D9 trace support"
+    fi
+
+    rm -rf "$probe_dir"
+}
+
 # ---- Initialize results ----
 PASS=0
 FAIL=0
@@ -103,29 +141,27 @@ while IFS= read -r line || [ -n "$line" ]; do
     # Skip blank lines
     trimmed="$(echo "$line" | tr -d '[:space:]')"
     [ -z "$trimmed" ] && continue
+    case "$trimmed" in
+        \#*)
+            continue
+            ;;
+    esac
 
-    # Parse CSV fields: test_dir, config, trace, frames, start_frame, tolerance
-    IFS=',' read -r raw_dir arch_version trace_file frames start_frame tolerance <<< "$line"
+    # Parse CSV fields: test_dir, config, trace, frames, start_frame, tolerance, mode
+    IFS=',' read -r raw_dir arch_version trace_file frames start_frame tolerance mode <<< "$line"
     raw_dir="$(echo "$raw_dir" | xargs)"
     arch_version="$(echo "$arch_version" | xargs)"
     trace_file="$(echo "$trace_file" | xargs)"
     frames="$(echo "$frames" | xargs)"
     start_frame="$(echo "$start_frame" | xargs)"
     tolerance="$(echo "$tolerance" | xargs)"
+    mode="$(echo "${mode:-image}" | xargs | tr '[:upper:]' '[:lower:]')"
     : "${tolerance:=0}"
     : "${start_frame:=0}"
     : "${frames:=1}"
+    : "${mode:=image}"
 
     TOTAL=$((TOTAL + 1))
-
-    # ---- Skip D3D tests on Linux ----
-    case "$raw_dir" in
-        d3d/*)
-            echo "SKIP: $raw_dir (D3D not supported on Linux)"
-            SKIP=$((SKIP + 1))
-            continue
-            ;;
-    esac
 
     # ---- Resolve actual test directory ----
     full_test_path="$(resolve_test_path "$raw_dir")"
@@ -142,9 +178,25 @@ while IFS= read -r line || [ -n "$line" ]; do
         continue
     fi
 
-    # ---- Check reference image ----
+    if [ "$mode" != "image" ] && [ "$mode" != "smoke" ]; then
+        echo "SKIP: $raw_dir (unsupported regression mode '$mode')"
+        SKIP=$((SKIP + 1))
+        continue
+    fi
+
+    # ---- Detect whether this simulator build can run D3D9 traces ----
+    if is_d3d_test "$raw_dir"; then
+        probe_d3d9_support "$full_test_path/$trace_file" "$arch_version"
+        if [ -n "$D3D9_DISABLED_REASON" ]; then
+            echo "SKIP: $raw_dir ($D3D9_DISABLED_REASON)"
+            SKIP=$((SKIP + 1))
+            continue
+        fi
+    fi
+
+    # ---- Check reference image for image-based tests ----
     ref_ppm="${trace_file%.*}.ppm"
-    if [ ! -f "$full_test_path/$ref_ppm" ]; then
+    if [ "$mode" = "image" ] && [ ! -f "$full_test_path/$ref_ppm" ]; then
         echo "SKIP: $raw_dir (reference $ref_ppm not found)"
         SKIP=$((SKIP + 1))
         continue
@@ -202,6 +254,34 @@ while IFS= read -r line || [ -n "$line" ]; do
         echo "done."
     fi
 
+    frame_idx=$(printf "%04d" "$start_frame")
+    test_ppm="frame${frame_idx}.sim.ppm"
+    test_file="$full_test_path/$test_ppm"
+
+    # ---- Smoke-mode tests only require a clean run with the requested frame output ----
+    if [ "$mode" = "smoke" ]; then
+        echo "  Smoke testing $raw_dir ..."
+        echo -n "$raw_dir (smoke): " >> "$REG_OUT"
+
+        if [ $sim_exit -ne 0 ]; then
+            echo "    FAILED — simulator exited with $sim_exit"
+            echo "FAILED, simulator exit $sim_exit" >> "$REG_OUT"
+            FAIL=$((FAIL + 1))
+        elif [ ! -f "$test_file" ]; then
+            echo "    FAILED — output $test_ppm not produced"
+            echo "FAILED, missing output $test_ppm" >> "$REG_OUT"
+            FAIL=$((FAIL + 1))
+        else
+            echo "    PASS:   $test_ppm — smoke run completed"
+            echo "PASS: $test_ppm produced" >> "$REG_OUT"
+            PASS=$((PASS + 1))
+        fi
+
+        echo "" >> "$REG_OUT"
+        cd "$PROJECT_ROOT"
+        continue
+    fi
+
     # ---- Compare output PPMs against reference/ ----
     echo "  Testing $raw_dir (tolerance $tolerance dB)..."
     echo -n "$raw_dir (ref tolerance $tolerance dB): " >> "$REG_OUT"
@@ -211,9 +291,6 @@ while IFS= read -r line || [ -n "$line" ]; do
     # Collect reference PPMs and test PPMs
     ref_ppm="${trace_file%.*}.ppm"
     ref_file="$full_test_path/$ref_ppm"
-    frame_idx=$(printf "%04d" "$start_frame")
-    test_ppm="frame${frame_idx}.sim.ppm"
-    test_file="$full_test_path/$test_ppm"
 
     if [ ! -f "$test_file" ]; then
         test_passed=0

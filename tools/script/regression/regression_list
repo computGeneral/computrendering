@@ -1,2 +1,9 @@
-ogl/glxgears, 1.0, glxgears.trace, 1, 0, 0
-d3d/NinjiaFruit, 1.0, FruitNinja.trace, 1, 2, 69
+# test_dir, arch_version, trace_file, frames, start_frame, tolerance, mode
+ogl/glxgears, 1.0, glxgears.trace, 1, 0, 0, image
+d3d9/traces, 1.0, FruitNinja.trace, 1, 2, 69, image
+d3d9/traces, 1.0, d3d9-garfield-panfrost-bifrost.trace, 1, 0, 0, smoke
+d3d9/traces, 1.0, spv3-installer.trace, 1, 0, 0, smoke
+d3d9/traces, 1.0, spv3-launcher.trace, 1, 0, 0, smoke
+d3d9/traces, 1.0, tokitori.trace, 1, 0, 0, smoke
+d3d9/traces, 1.0, tokitori-dxvk.trace, 1, 0, 0, smoke
+d3d9/traces, 1.0, tokitori-wined3d.trace, 1, 0, 0, smoke

@@ -45,6 +45,7 @@ thirdparty/systemc-2.3.3/
 thirdparty/rapidjson-1.1.0/
 thirdparty/tinyxml2-8.0.0/
 thirdparty/zlib-1.2.13/
+thirdparty/snappy-1.1.10/
 
 # ------ Simulator output ------
 #*.ppm

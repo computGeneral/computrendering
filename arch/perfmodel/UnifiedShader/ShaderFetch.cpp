@@ -241,6 +241,12 @@ cmoShaderFetch::cmoShaderFetch(bmoUnifiedShader &bmShader, U32 nThreads,
     //  Check model.  
     if (unifiedModel)
     {
+        for(U32 t = 0; t < MAX_SHADER_TARGETS; t++)
+        {
+            initPC[t] = 0;
+            threadResources[t] = 0;
+        }
+
         //  Reset default start PCs.  
         initPC[VERTEX_TARGET] = 0;
         initPC[FRAGMENT_TARGET] = 0;
@@ -1628,6 +1634,9 @@ void cmoShaderFetch::processShaderCommand(ShaderCommand *command, U32 partition)
                     case MICROTRIANGLE_TARGET:
                         sprintf(buffer, "MICROTRIANGLE_TARGET");
                         break;
+                    case COMPUTE_TARGET:
+                        sprintf(buffer, "COMPUTE_TARGET");
+                        break;
                     default:
                         CG_ASSERT("Undefined shader target.");
                         break;
@@ -2484,4 +2493,3 @@ void cmoShaderFetch::getState(string &stateString)
 
     stateString.assign(stateStream.str());
 }
-

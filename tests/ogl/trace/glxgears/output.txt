@@ -1,7 +1,0 @@
-[ArchParams] Loaded 303 params from C:\Users\GENE.LI\workspace\computrendering\arch\common\params\archParams.csv (arch=1.0)
-Using Apitrace Binary Trace File as simulation input.
-Using ComputGeneral Graphics Abstraction Layer (GAL) Library.
-Warning: Clear Z implemented as Clear Z and Stencil (optimization)
-GALDeviceImp::swapBuffers() - OK
-HAL => Memory usage : GPU 514 blocks | System 0 blocks
-Simulation clock time = 0 seconds

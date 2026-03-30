@@ -611,6 +611,11 @@ public:
     bool commitFragmentProgram(U32 memDesc, U32 programSize, U32 startPC );
 
     /**
+     * Same generic shader-program load path, but targeting the compute slot.
+     */
+    bool commitComputeProgram(U32 memDesc, U32 programSize, U32 startPC );
+
+    /**
      * Reserves an amount of data of at least 'sizeBytes' bytes from local GPU memory
      *
      * @param sizeBytes amount of data required

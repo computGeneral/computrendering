@@ -1048,6 +1048,25 @@ bool HAL::commitFragmentProgram( U32 memDesc, U32 programSize, U32 startPC )
     return true;
 }
 
+bool HAL::commitComputeProgram( U32 memDesc, U32 programSize, U32 startPC )
+{
+    TRACING_ENTER_REGION("HAL", "", "")
+
+    if ( programSize % ShaderProgramSched::InstructionSize != 0 )
+    {
+        stringstream ss;
+        ss << "program size: " << programSize << " is not multiple of instruction size: "
+           << ShaderProgramSched::InstructionSize;
+        CG_ASSERT(ss.str().c_str());
+    }
+
+    shSched.select(memDesc, programSize / ShaderProgramSched::InstructionSize, COMPUTE_TARGET);
+
+    TRACING_EXIT_REGION()
+
+    return true;
+}
+
 HAL::_MemoryDescriptor* HAL::_createMD( U32 firstAddress, U32 lastAddress, U32 size )
 {
     //  Get a new memory descriptor id.
@@ -2141,4 +2160,3 @@ F64 HAL::logTwo(F64 x)
 {
     return std::log(x)/std::log(2.0);
 }
-

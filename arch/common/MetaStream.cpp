@@ -688,6 +688,17 @@ void cgoMetaStream::dump(std::ostream& os) const
             CASE_PRINT( GPU_BLIT_DST_TX_WIDTH2 )
             CASE_PRINT( GPU_BLIT_DST_TX_FORMAT )
             CASE_PRINT( GPU_BLIT_DST_TX_BLOCK )
+            CASE_PRINT( GPU_COMPUTE_CONFIG )
+            CASE_PRINT( GPU_COMPUTE_GRID_DIM_X )
+            CASE_PRINT( GPU_COMPUTE_GRID_DIM_Y )
+            CASE_PRINT( GPU_COMPUTE_GRID_DIM_Z )
+            CASE_PRINT( GPU_COMPUTE_BLOCK_DIM_X )
+            CASE_PRINT( GPU_COMPUTE_BLOCK_DIM_Y )
+            CASE_PRINT( GPU_COMPUTE_BLOCK_DIM_Z )
+            CASE_PRINT( GPU_COMPUTE_GROUP_CONFIG )
+            CASE_PRINT( GPU_COMPUTE_SHARED_MEM_SIZE )
+            CASE_PRINT( GPU_COMPUTE_PARAM_BUFFER_ADDR )
+            CASE_PRINT( GPU_COMPUTE_PARAM_BUFFER_SIZE )
             
             //  Last GPU register name mark.
             CASE_PRINT( GPU_LAST_REGISTER )
@@ -735,6 +746,7 @@ void cgoMetaStream::dump(std::ostream& os) const
             CASE_PRINT( GPU_RESTORE_ZSTENCIL_STATE )
             CASE_PRINT( GPU_RESET_COLOR_STATE )
             CASE_PRINT( GPU_RESET_ZSTENCIL_STATE )
+            CASE_PRINT( GPU_DISPATCH_COMPUTE )
 
             default:
                 os << gpuCommand << "(unknown command)";

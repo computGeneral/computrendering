@@ -4936,6 +4936,9 @@ void cmoCommandProcessor::processGPURegisterWrite(U64 cycle, GPURegister gpuReg,
                     case MICROTRIANGLE_TARGET:
                         shTarget = MICROTRIANGLE_TARGET;
                         break;
+                    case COMPUTE_TARGET:
+                        shTarget = COMPUTE_TARGET;
+                        break;
                     default:
                         CG_ASSERT("Undefined shader target.");
                         break;
@@ -4957,6 +4960,9 @@ void cmoCommandProcessor::processGPURegisterWrite(U64 cycle, GPURegister gpuReg,
                             break;
                         case MICROTRIANGLE_TARGET:
                             printf("MICROTRIANGLE_TARGET");
+                            break;
+                        case COMPUTE_TARGET:
+                            printf("COMPUTE_TARGET");
                             break;
                         default:
                             CG_ASSERT("Undefined shader target.");
@@ -5006,6 +5012,9 @@ void cmoCommandProcessor::processGPURegisterWrite(U64 cycle, GPURegister gpuReg,
                     case MICROTRIANGLE_TARGET:
                         shTarget = MICROTRIANGLE_TARGET;
                         break;
+                    case COMPUTE_TARGET:
+                        shTarget = COMPUTE_TARGET;
+                        break;
                     default:
                         CG_ASSERT("Undefined shader target.");
                         break;
@@ -5027,6 +5036,9 @@ void cmoCommandProcessor::processGPURegisterWrite(U64 cycle, GPURegister gpuReg,
                             break;
                         case MICROTRIANGLE_TARGET:
                             printf("MICROTRIANGLE_TARGET");
+                            break;
+                        case COMPUTE_TARGET:
+                            printf("COMPUTE_TARGET");
                             break;
                         default:
                             CG_ASSERT("Undefined shader target.");
@@ -5050,6 +5062,82 @@ void cmoCommandProcessor::processGPURegisterWrite(U64 cycle, GPURegister gpuReg,
                     fshFCommandSignal[i]->write(cycle, shComm, 1);
                 }
             }
+
+            break;
+
+        case GPU_COMPUTE_CONFIG:
+
+            state.computeConfig = gpuData.uintVal;
+
+            GPU_DEBUG_BOX(
+                printf("cmoCommandProcessor => GPU_COMPUTE_CONFIG = %08x.\n", gpuData.uintVal);
+            )
+
+            break;
+
+        case GPU_COMPUTE_GRID_DIM_X:
+        case GPU_COMPUTE_GRID_DIM_Y:
+        case GPU_COMPUTE_GRID_DIM_Z:
+
+            state.computeGridDim[gpuReg - GPU_COMPUTE_GRID_DIM_X] = gpuData.uintVal;
+
+            GPU_DEBUG_BOX(
+                printf("cmoCommandProcessor => GPU_COMPUTE_GRID_DIM[%u] = %u.\n",
+                    gpuReg - GPU_COMPUTE_GRID_DIM_X, gpuData.uintVal);
+            )
+
+            break;
+
+        case GPU_COMPUTE_BLOCK_DIM_X:
+        case GPU_COMPUTE_BLOCK_DIM_Y:
+        case GPU_COMPUTE_BLOCK_DIM_Z:
+
+            state.computeBlockDim[gpuReg - GPU_COMPUTE_BLOCK_DIM_X] = gpuData.uintVal;
+
+            GPU_DEBUG_BOX(
+                printf("cmoCommandProcessor => GPU_COMPUTE_BLOCK_DIM[%u] = %u.\n",
+                    gpuReg - GPU_COMPUTE_BLOCK_DIM_X, gpuData.uintVal);
+            )
+
+            break;
+
+        case GPU_COMPUTE_GROUP_CONFIG:
+
+            state.computeGroupConfig = gpuData.uintVal;
+
+            GPU_DEBUG_BOX(
+                printf("cmoCommandProcessor => GPU_COMPUTE_GROUP_CONFIG = %08x.\n", gpuData.uintVal);
+            )
+
+            break;
+
+        case GPU_COMPUTE_SHARED_MEM_SIZE:
+
+            state.computeSharedMemSize = gpuData.uintVal;
+
+            GPU_DEBUG_BOX(
+                printf("cmoCommandProcessor => GPU_COMPUTE_SHARED_MEM_SIZE = %u.\n", gpuData.uintVal);
+            )
+
+            break;
+
+        case GPU_COMPUTE_PARAM_BUFFER_ADDR:
+
+            state.computeParamBufferAddr = gpuData.uintVal;
+
+            GPU_DEBUG_BOX(
+                printf("cmoCommandProcessor => GPU_COMPUTE_PARAM_BUFFER_ADDR = %08x.\n", gpuData.uintVal);
+            )
+
+            break;
+
+        case GPU_COMPUTE_PARAM_BUFFER_SIZE:
+
+            state.computeParamBufferSize = gpuData.uintVal;
+
+            GPU_DEBUG_BOX(
+                printf("cmoCommandProcessor => GPU_COMPUTE_PARAM_BUFFER_SIZE = %u.\n", gpuData.uintVal);
+            )
 
             break;
 
@@ -8068,12 +8156,12 @@ void cmoCommandProcessor::processGPUCommand(U64 cycle, GPUCommand gpuComm)
                     printf("cmoCommandProcessor => LOAD_SHADER_PROGRAM command.\n");
                 )
 
-                //  Request the new fragment shader program code from GPU memory.
+                //  Request the new generic shader program code from GPU memory.
 
                 //  Delete old program code buffer.
                 delete[] programCode;
 
-                //  Allocate memory for the fragment shader code buffer.
+                //  Allocate memory for the shader program code buffer.
                 programCode = new U08[state.programSize];
 
                 //  Check memory allocation.
@@ -8097,7 +8185,7 @@ void cmoCommandProcessor::processGPUCommand(U64 cycle, GPUCommand gpuComm)
                     freeTickets--;
 
                     //  Set requested bytes to memory.
-                    requested = GPU_MIN(state.fragProgramSize, MAX_TRANSACTION_SIZE);
+                    requested = GPU_MIN(state.programSize, MAX_TRANSACTION_SIZE);
 
                     GPU_DEBUG_BOX(
                         printf("cmoCommandProcessor => Requesting from memory at %x %d bytes\n",
@@ -8105,7 +8193,7 @@ void cmoCommandProcessor::processGPUCommand(U64 cycle, GPUCommand gpuComm)
                             requested);
                     )
 
-                    //  Create a memory transaction to request the fragment program from the GPU memory.
+                    //  Create a memory transaction to request the shader program from GPU memory.
                     memTrans = new MemoryTransaction(
                         MT_READ_REQ,
                         state.programMemoryBaseAddr + state.programAddress,
@@ -8140,6 +8228,28 @@ void cmoCommandProcessor::processGPUCommand(U64 cycle, GPUCommand gpuComm)
 
                 //  MetaStream finished, process a new one.
                 processNewTransaction = TRUE;
+            }
+
+            break;
+
+        case GPU_DISPATCH_COMPUTE:
+
+            //  Stub-safe compute dispatch until compute execution is implemented.
+
+            if (state.statusRegister != GPU_READY)
+            {
+                processNewTransaction = false;
+            }
+            else
+            {
+                GPU_DEBUG_BOX(
+                    printf("cmoCommandProcessor => GPU_DISPATCH_COMPUTE command ignored (%ux%ux%u blocks, %ux%ux%u threads, shared=%u).\n",
+                        state.computeGridDim[0], state.computeGridDim[1], state.computeGridDim[2],
+                        state.computeBlockDim[0], state.computeBlockDim[1], state.computeBlockDim[2],
+                        state.computeSharedMemSize);
+                )
+
+                processNewTransaction = true;
             }
 
             break;
@@ -8600,6 +8710,13 @@ void cmoCommandProcessor::reset()
         state.programStartPC[t] = 0;
         state.programResources[t] = 0;
     }
+    state.computeConfig = 0;
+    state.computeGridDim[0] = state.computeGridDim[1] = state.computeGridDim[2] = 0;
+    state.computeBlockDim[0] = state.computeBlockDim[1] = state.computeBlockDim[2] = 0;
+    state.computeGroupConfig = 0;
+    state.computeSharedMemSize = 0;
+    state.computeParamBufferAddr = 0;
+    state.computeParamBufferSize = 0;
 
     //  Initialize reset buffer.
     freeUpdates[GEOM_REG] = freeUpdates[FRAG_REG] = MAX_REGISTER_UPDATES;
@@ -9038,4 +9155,3 @@ void cmoCommandProcessor::setValidationMode(bool enable)
 {
     enableValidation = enable;
 }
-

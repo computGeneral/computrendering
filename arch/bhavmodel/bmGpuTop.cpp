@@ -423,6 +423,14 @@ void bmoGpuTop::emulateCommandProcessor(cgoMetaStream *CurMetaStream)
                     delete CurMetaStream;
                     break;
 
+                case GPU_DISPATCH_COMPUTE:
+                    CG_INFO("GPU_DISPATCH_COMPUTE command ignored (%dx%dx%d blocks, %dx%dx%d threads, shared=%d).",
+                        state.computeGridDim[0], state.computeGridDim[1], state.computeGridDim[2],
+                        state.computeBlockDim[0], state.computeBlockDim[1], state.computeBlockDim[2],
+                        state.computeSharedMemSize);
+                    delete CurMetaStream;
+                    break;
+
                 case GPU_FLUSHZSTENCIL:
                     CG_INFO("GPU_FLUSHZSTENCIL command ignored.");
                     //  Ignore command.
@@ -1836,6 +1844,9 @@ void bmoGpuTop::processRegisterWrite(GPURegister gpuReg, U32 gpuSubReg, GPURegDa
                     case MICROTRIANGLE_TARGET:
                         shTarget = MICROTRIANGLE_TARGET;
                         break;
+                    case COMPUTE_TARGET:
+                        shTarget = COMPUTE_TARGET;
+                        break;
                     default:
                         CG_ASSERT("Undefined shader target.");
                         break;
@@ -1857,6 +1868,9 @@ void bmoGpuTop::processRegisterWrite(GPURegister gpuReg, U32 gpuSubReg, GPURegDa
                             break;
                         case MICROTRIANGLE_TARGET:
                             CG_INFO("MICROTRIANGLE_TARGET");
+                            break;
+                        case COMPUTE_TARGET:
+                            CG_INFO("COMPUTE_TARGET");
                             break;
                         default:
                             CG_ASSERT("Undefined shader target.");
@@ -1891,6 +1905,9 @@ void bmoGpuTop::processRegisterWrite(GPURegister gpuReg, U32 gpuSubReg, GPURegDa
                     case MICROTRIANGLE_TARGET:
                         shTarget = MICROTRIANGLE_TARGET;
                         break;
+                    case COMPUTE_TARGET:
+                        shTarget = COMPUTE_TARGET;
+                        break;
                     default:
                         CG_ASSERT("Undefined shader target.");
                         break;
@@ -1913,6 +1930,9 @@ void bmoGpuTop::processRegisterWrite(GPURegister gpuReg, U32 gpuSubReg, GPURegDa
                         case MICROTRIANGLE_TARGET:
                             CG_INFO("MICROTRIANGLE_TARGET");
                             break;
+                        case COMPUTE_TARGET:
+                            CG_INFO("COMPUTE_TARGET");
+                            break;
                         default:
                             CG_ASSERT("Undefined shader target.");
                             break;
@@ -1921,6 +1941,82 @@ void bmoGpuTop::processRegisterWrite(GPURegister gpuReg, U32 gpuSubReg, GPURegDa
                     CG_INFO("] = %x.", gpuData.uintVal);
                 )
             }
+
+            break;
+
+        case GPU_COMPUTE_CONFIG:
+
+            state.computeConfig = gpuData.uintVal;
+
+            GPU_DEBUG(
+                CG_INFO("Write GPU_COMPUTE_CONFIG = %08x.", gpuData.uintVal);
+            )
+
+            break;
+
+        case GPU_COMPUTE_GRID_DIM_X:
+        case GPU_COMPUTE_GRID_DIM_Y:
+        case GPU_COMPUTE_GRID_DIM_Z:
+
+            state.computeGridDim[gpuReg - GPU_COMPUTE_GRID_DIM_X] = gpuData.uintVal;
+
+            GPU_DEBUG(
+                CG_INFO("Write GPU_COMPUTE_GRID_DIM[%d] = %d.",
+                    gpuReg - GPU_COMPUTE_GRID_DIM_X, gpuData.uintVal);
+            )
+
+            break;
+
+        case GPU_COMPUTE_BLOCK_DIM_X:
+        case GPU_COMPUTE_BLOCK_DIM_Y:
+        case GPU_COMPUTE_BLOCK_DIM_Z:
+
+            state.computeBlockDim[gpuReg - GPU_COMPUTE_BLOCK_DIM_X] = gpuData.uintVal;
+
+            GPU_DEBUG(
+                CG_INFO("Write GPU_COMPUTE_BLOCK_DIM[%d] = %d.",
+                    gpuReg - GPU_COMPUTE_BLOCK_DIM_X, gpuData.uintVal);
+            )
+
+            break;
+
+        case GPU_COMPUTE_GROUP_CONFIG:
+
+            state.computeGroupConfig = gpuData.uintVal;
+
+            GPU_DEBUG(
+                CG_INFO("Write GPU_COMPUTE_GROUP_CONFIG = %08x.", gpuData.uintVal);
+            )
+
+            break;
+
+        case GPU_COMPUTE_SHARED_MEM_SIZE:
+
+            state.computeSharedMemSize = gpuData.uintVal;
+
+            GPU_DEBUG(
+                CG_INFO("Write GPU_COMPUTE_SHARED_MEM_SIZE = %d.", gpuData.uintVal);
+            )
+
+            break;
+
+        case GPU_COMPUTE_PARAM_BUFFER_ADDR:
+
+            state.computeParamBufferAddr = gpuData.uintVal;
+
+            GPU_DEBUG(
+                CG_INFO("Write GPU_COMPUTE_PARAM_BUFFER_ADDR = %08x.", gpuData.uintVal);
+            )
+
+            break;
+
+        case GPU_COMPUTE_PARAM_BUFFER_SIZE:
+
+            state.computeParamBufferSize = gpuData.uintVal;
+
+            GPU_DEBUG(
+                CG_INFO("Write GPU_COMPUTE_PARAM_BUFFER_SIZE = %d.", gpuData.uintVal);
+            )
 
             break;
 
@@ -5253,6 +5349,21 @@ void bmoGpuTop::resetState()
     }
 
     state.modifyDepth = false;
+    state.programAddress = 0;
+    state.programSize = 0;
+    state.programLoadPC = 0;
+    for(U32 t = 0; t < MAX_SHADER_TARGETS; t++)
+    {
+        state.programStartPC[t] = 0;
+        state.programResources[t] = 0;
+    }
+    state.computeConfig = 0;
+    state.computeGridDim[0] = state.computeGridDim[1] = state.computeGridDim[2] = 0;
+    state.computeBlockDim[0] = state.computeBlockDim[1] = state.computeBlockDim[2] = 0;
+    state.computeGroupConfig = 0;
+    state.computeSharedMemSize = 0;
+    state.computeParamBufferAddr = 0;
+    state.computeParamBufferSize = 0;
 
     for (U32 t = 0; t < MAX_TEXTURES; t++)
     {

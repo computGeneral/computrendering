@@ -450,7 +450,8 @@ enum ShaderTarget
     FRAGMENT_TARGET = 1,
     TRIANGLE_TARGET = 2,
     MICROTRIANGLE_TARGET = 3,
-    MAX_SHADER_TARGETS = 4
+    COMPUTE_TARGET = 4,
+    MAX_SHADER_TARGETS = 5
 };
 
 
@@ -554,6 +555,13 @@ struct cgsGpuRegister
     U32 programLoadPC;                           //  Position in the shader instruction memory where the shader program has to be loaded.  
     U32 programStartPC[MAX_SHADER_TARGETS];      //  Initial PC for the different shader targets.  
     U32 programResources[MAX_SHADER_TARGETS];    //  Amount of 'resources' per shader thread for a given shader target.      
+    U32 computeConfig;                           //  Encoded compute launch config (see RegStreamMultiprocessor.h).  
+    U32 computeGridDim[3];                       //  Compute grid dimensions X/Y/Z.  
+    U32 computeBlockDim[3];                      //  Compute block/workgroup dimensions X/Y/Z.  
+    U32 computeGroupConfig;                      //  Encoded workgroup config (barriers/local regs).  
+    U32 computeSharedMemSize;                    //  Dynamic shared memory size in bytes.  
+    U32 computeParamBufferAddr;                  //  Kernel parameter buffer address in GPU memory.  
+    U32 computeParamBufferSize;                  //  Kernel parameter buffer size in bytes.  
     
     //  GPU Texture Unit registers.  
     bool textureEnabled[MAX_TEXTURES];      //  Texture unit enable flag.  
@@ -866,6 +874,19 @@ enum GPURegister
     GPU_BLIT_DST_TX_FORMAT,
     GPU_BLIT_DST_TX_BLOCK,
 
+    //  Compute dispatch registers.  Appended to preserve legacy register IDs.
+    GPU_COMPUTE_CONFIG,
+    GPU_COMPUTE_GRID_DIM_X,
+    GPU_COMPUTE_GRID_DIM_Y,
+    GPU_COMPUTE_GRID_DIM_Z,
+    GPU_COMPUTE_BLOCK_DIM_X,
+    GPU_COMPUTE_BLOCK_DIM_Y,
+    GPU_COMPUTE_BLOCK_DIM_Z,
+    GPU_COMPUTE_GROUP_CONFIG,
+    GPU_COMPUTE_SHARED_MEM_SIZE,
+    GPU_COMPUTE_PARAM_BUFFER_ADDR,
+    GPU_COMPUTE_PARAM_BUFFER_SIZE,
+
     //  Last GPU register name mark.  
     GPU_LAST_REGISTER
 };
@@ -944,7 +965,8 @@ enum GPUCommand
     GPU_SAVE_ZSTENCIL_STATE,    //  Save to memory the block state info for the z and stencil buffer.  
     GPU_RESTORE_ZSTENCIL_STATE, //  Restore from memory the block state info for the z and stencil buffer.  
     GPU_RESET_COLOR_STATE,      //  Sets the color buffer block state info to uncompressed.  
-    GPU_RESET_ZSTENCIL_STATE    //  Sets the z and stencil buffer block state info to uncompressed and clears HZ.  
+    GPU_RESET_ZSTENCIL_STATE,   //  Sets the z and stencil buffer block state info to uncompressed and clears HZ.  
+    GPU_DISPATCH_COMPUTE        //  Dispatch a compute kernel launch.  
 };
 
 

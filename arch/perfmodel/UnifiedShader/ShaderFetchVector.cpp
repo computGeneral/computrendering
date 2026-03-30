@@ -259,6 +259,12 @@ cmoShaderFetchVector::cmoShaderFetchVector(bmoUnifiedShader &bmShader, U32 nThre
     activeOutAttr[TRIANGLE_PARTITION][3] = true;
     activeOutputs[TRIANGLE_PARTITION] = 4;
 
+    for(U32 t = 0; t < MAX_SHADER_TARGETS; t++)
+    {
+        startPC[t] = 0;
+        resourceAlloc[t] = 0;
+    }
+
     //  Reset default start PCs.
     startPC[VERTEX_TARGET] = 0;
     startPC[FRAGMENT_TARGET] = 0;
@@ -266,7 +272,7 @@ cmoShaderFetchVector::cmoShaderFetchVector(bmoUnifiedShader &bmShader, U32 nThre
     startPC[MICROTRIANGLE_TARGET] = 0;
 
     //  Reset the number of resources to allocate per thread for each vertex target/partition.
-    resourceAlloc[VERTEX_TARGET]   = 1;
+    resourceAlloc[VERTEX_TARGET] = 1;
     resourceAlloc[FRAGMENT_TARGET] = 1;
     resourceAlloc[TRIANGLE_TARGET] = 2;
     resourceAlloc[MICROTRIANGLE_TARGET] = 2;
@@ -719,6 +725,9 @@ void cmoShaderFetchVector::processShaderCommand(ShaderCommand *command, U32 part
                     case MICROTRIANGLE_TARGET:
                         printf("MICROTRIANGLE_TARGET");
                         break;
+                    case COMPUTE_TARGET:
+                        printf("COMPUTE_TARGET");
+                        break;
                     default:
                         CG_ASSERT("Undefined shader target.");
                         break;
@@ -756,6 +765,9 @@ void cmoShaderFetchVector::processShaderCommand(ShaderCommand *command, U32 part
                         break;
                     case MICROTRIANGLE_TARGET:
                         sprintf(buffer, "MICROTRIANGLE_TARGET");
+                        break;
+                    case COMPUTE_TARGET:
+                        sprintf(buffer, "COMPUTE_TARGET");
                         break;
                     default:
                         CG_ASSERT("Undefined shader target.");

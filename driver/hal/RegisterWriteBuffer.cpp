@@ -567,6 +567,19 @@ void RegisterWriteBuffer::initAllRegisterStatus ()
     data.txBlocking = GPU_TXBLOCK_TEXTURE;
     initRegisterStatus( GPU_BLIT_DST_TX_BLOCK, 0, data, 0); //GPU_TXBLOCK_TEXTURE
 
+    data.uintVal = 0;
+    initRegisterStatus( GPU_COMPUTE_CONFIG, 0, data, 0);
+    initRegisterStatus( GPU_COMPUTE_GRID_DIM_X, 0, data, 0);
+    initRegisterStatus( GPU_COMPUTE_GRID_DIM_Y, 0, data, 0);
+    initRegisterStatus( GPU_COMPUTE_GRID_DIM_Z, 0, data, 0);
+    initRegisterStatus( GPU_COMPUTE_BLOCK_DIM_X, 0, data, 0);
+    initRegisterStatus( GPU_COMPUTE_BLOCK_DIM_Y, 0, data, 0);
+    initRegisterStatus( GPU_COMPUTE_BLOCK_DIM_Z, 0, data, 0);
+    initRegisterStatus( GPU_COMPUTE_GROUP_CONFIG, 0, data, 0);
+    initRegisterStatus( GPU_COMPUTE_SHARED_MEM_SIZE, 0, data, 0);
+    initRegisterStatus( GPU_COMPUTE_PARAM_BUFFER_ADDR, 0, data, 0);
+    initRegisterStatus( GPU_COMPUTE_PARAM_BUFFER_SIZE, 0, data, 0);
+
     //data.uintVal = 0;
     //initRegisterStatus( GPU_LAST_REGISTER, 0, data, 0);
 
@@ -656,6 +669,17 @@ void RegisterWriteBuffer::dumpRegisterInfo(ofstream& out, GPURegister reg, U32 i
         case GPU_SHADER_PROGRAM_LOAD_PC: out << "GPU_SHADER_PROGRAM_LOAD_PC" << "(Index: " <<index<<", Data: "<<data.uintVal<<", MD:"<< md; break;
         case GPU_SHADER_PROGRAM_PC: out << "GPU_SHADER_PROGRAM_PC" << "(Index: " <<index<<", Data: "<<data.uintVal<<", MD:"<< md; break;
         case GPU_SHADER_THREAD_RESOURCES: out << "GPU_SHADER_THREAD_RESOURCES" << "(Index: " <<index<<", Data: "<<data.uintVal<<", MD:"<< md; break;
+        case GPU_COMPUTE_CONFIG: out << "GPU_COMPUTE_CONFIG" << "(Index: " <<index<<", Data: "<<data.uintVal<<", MD:"<< md; break;
+        case GPU_COMPUTE_GRID_DIM_X: out << "GPU_COMPUTE_GRID_DIM_X" << "(Index: " <<index<<", Data: "<<data.uintVal<<", MD:"<< md; break;
+        case GPU_COMPUTE_GRID_DIM_Y: out << "GPU_COMPUTE_GRID_DIM_Y" << "(Index: " <<index<<", Data: "<<data.uintVal<<", MD:"<< md; break;
+        case GPU_COMPUTE_GRID_DIM_Z: out << "GPU_COMPUTE_GRID_DIM_Z" << "(Index: " <<index<<", Data: "<<data.uintVal<<", MD:"<< md; break;
+        case GPU_COMPUTE_BLOCK_DIM_X: out << "GPU_COMPUTE_BLOCK_DIM_X" << "(Index: " <<index<<", Data: "<<data.uintVal<<", MD:"<< md; break;
+        case GPU_COMPUTE_BLOCK_DIM_Y: out << "GPU_COMPUTE_BLOCK_DIM_Y" << "(Index: " <<index<<", Data: "<<data.uintVal<<", MD:"<< md; break;
+        case GPU_COMPUTE_BLOCK_DIM_Z: out << "GPU_COMPUTE_BLOCK_DIM_Z" << "(Index: " <<index<<", Data: "<<data.uintVal<<", MD:"<< md; break;
+        case GPU_COMPUTE_GROUP_CONFIG: out << "GPU_COMPUTE_GROUP_CONFIG" << "(Index: " <<index<<", Data: "<<data.uintVal<<", MD:"<< md; break;
+        case GPU_COMPUTE_SHARED_MEM_SIZE: out << "GPU_COMPUTE_SHARED_MEM_SIZE" << "(Index: " <<index<<", Data: "<<data.uintVal<<", MD:"<< md; break;
+        case GPU_COMPUTE_PARAM_BUFFER_ADDR: out << "GPU_COMPUTE_PARAM_BUFFER_ADDR" << "(Index: " <<index<<", Data: "<<data.uintVal<<", MD:"<< md; break;
+        case GPU_COMPUTE_PARAM_BUFFER_SIZE: out << "GPU_COMPUTE_PARAM_BUFFER_SIZE" << "(Index: " <<index<<", Data: "<<data.uintVal<<", MD:"<< md; break;
         case GPU_TEXTURE_ENABLE: out << "GPU_TEXTURE_ENABLE" << "(Index: " <<index<<", Data: "<<data.booleanVal<<", MD:"<< md; break;
         case GPU_TEXTURE_ADDRESS: out << "GPU_TEXTURE_ADDRESS" << "(Index: " <<index<<", Data: "<<data.uintVal<<", MD:"<< md; break; 
         case GPU_TEXTURE_WIDTH: out << "GPU_TEXTURE_WIDTH" << "(Index: " <<index<<", Data: "<<data.uintVal<<", MD:"<< md; break;
@@ -740,4 +764,3 @@ void RegisterWriteBuffer::dumpRegisterInfo(ofstream& out, GPURegister reg, U32 i
 
     out << ")" << endl;
 }
-

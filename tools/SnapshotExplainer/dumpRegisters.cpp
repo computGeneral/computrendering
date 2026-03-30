@@ -233,6 +233,13 @@ void dumpRegisters(cgsGpuRegister &state)
         printf("ProgramStartPC[%02d] = %d\n", t, state.programStartPC[t]);
     for(U32 t = 0; t < MAX_SHADER_TARGETS; t++)
         printf("ProgramResources[%02d] = %d\n", t, state.programResources[t]);
+    printf("ComputeConfig = %08x\n", state.computeConfig);
+    printf("ComputeGridDim = {%u, %u, %u}\n", state.computeGridDim[0], state.computeGridDim[1], state.computeGridDim[2]);
+    printf("ComputeBlockDim = {%u, %u, %u}\n", state.computeBlockDim[0], state.computeBlockDim[1], state.computeBlockDim[2]);
+    printf("ComputeGroupConfig = %08x\n", state.computeGroupConfig);
+    printf("ComputeSharedMemSize = %u\n", state.computeSharedMemSize);
+    printf("ComputeParamBufferAddr = %08x\n", state.computeParamBufferAddr);
+    printf("ComputeParamBufferSize = %u\n", state.computeParamBufferSize);
 
     for(U32 t = 0; t < MAX_TEXTURES; t++)
         printf("TextureEnabled[%02d] = %s\n", t, state.textureEnabled[t] ? "T" : "F");
@@ -924,5 +931,4 @@ void dumpRegisters(cgsGpuRegister &state)
 
 
 }
-
 
